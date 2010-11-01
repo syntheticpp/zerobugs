@@ -1,0 +1,236 @@
+# vim: tabstop=4:softtabstop=4:noexpandtab:shiftwidth=4
+# $Id: Common.mak 574 2008-07-20 06:54:53Z root $
+# -------------------------------------------------------------------------
+# This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu
+#
+# Distributed under the Boost Software License, Version 1.0.
+# (See accompanying file LICENSE_1_0.txt or copy at
+# http://www.boost.org/LICENSE_1_0.txt)
+# -------------------------------------------------------------------------
+#
+#ensure that this file does not get included more than once
+ifeq ($(INCLUDED_COMMON_MAK),)
+INCLUDED_COMMON_MAK:=1
+
+SHELL:=/bin/bash
+
+#determine GCC version
+#CXXVER=$(shell $(CXX) --version 2>&1 | head -1 | cut -f3 -d' ')
+CXXVER=$(shell cc $(TOP)/zdk/make/gcc_ver.c -o $(TOP)/gcc_ver && $(TOP)/gcc_ver)
+CXX_MAJOR=$(shell echo $(CXXVER) | cut -f1 -d'.')
+CXX_TARGET=$(shell g++ -v 2>&1  | grep Target | cut -f2 -d' ')
+ICC=icpc
+
+ifeq ($(CXX),)
+ CXX=g++
+endif
+ifeq ($(LINK),)
+ LINK=$(CXX)
+endif
+
+ifeq ($(HOSTNAME),)
+ HOSTNAME=$(shell hostname)
+endif
+
+#where to output libs, binaries, and plug-ins
+LIB_PATH=$(TOP)/lib/
+BIN_PATH=$(TOP)/bin/
+PLUGIN_PATH=$(TOP)/plugin/
+
+OBJS=$(SRCS:%.cpp=%.o)
+DEPSRCS=$(SRCS)
+
+LIB_FILES=$(LIBS:-l%=$(LIB_PATH)lib%.a)
+LIB_DIRS=$(LIBS:-l%=$(TOP)/%)
+LIB_DIRS+=$(SHARED_LIBS:-l%=$(TOP)/%)
+LIB_LIST=$(TOP)/libs_used.txt
+
+REALPATH=realpath
+
+UNAME=$(shell uname)
+#uname -m and arch are equivalent on Linux and FreeBSD, 
+# but not on Darwin
+ifeq ($(UNAME),Darwin)
+ ARCH=$(shell arch)
+else
+ ARCH=$(shell uname -m)
+endif
+ifeq ($(UNAME),Linux)
+ REALPATH=readlink -f
+endif
+MACHINE=$(UNAME)-$(ARCH)
+LIBDIR=lib
+# x86_64 Linux systems have 64-bit libs side-by-side
+# with 32-bit libs, 64-libs are explicitly located in lib64
+ifeq ($(ARCH),x86_64)
+ LIBDIR=lib64
+endif
+# uname -m on 64-bit FreeBSD reports amd64
+ifeq ($(ARCH),amd64)
+ ARCH=x86_64
+endif
+PIC=
+ifeq ($(MACHINE),Linux-x86_64)
+ PIC=-fPIC
+ LDFLAGS+=-fPIC
+endif
+ifeq ($(MACHINE),Linux-ppc)
+ PIC=-fPIC
+ LDFLAGS+=-fPIC
+endif
+#Intel Compiler?
+ifeq ($(CXX),$(ICC))
+ OPTIMIZE+=-O2 -ip -parallel
+else
+ OPTIMIZE+=-O2 -felide-constructors -fno-strict-aliasing
+endif
+
+CXXFLAGS=$(CFLAGS) $(PIC) -D_REENTRANT -D__STDC_CONSTANT_MACROS
+
+include $(TOP)/zdk/make/glibpath.mak
+
+LDFLAGS+=-Wl,-E
+
+ifeq ($(CXX_MAJOR),2)
+ #disable rtti since it conflicts with __attribute__((com_interface))
+ CXXFLAGS+=-fno-rtti
+ # LDFLAGS+=-Wl,-E
+else
+ ifeq ($(CXX_MAJOR),3)
+  # LDFLAGS+=-Wl,-E
+ else 
+  # NOT using the visibilty feature (for now)
+  #this inner ifneq is a workaround for a GCC/linker/AMD64 bug
+  #ifneq ($(ARCH),x86_64)
+   #CXXFLAGS+=-fvisibility=hidden
+   #CXXFLAGS+=-fvisibility-inlines-hidden
+  #endif
+ endif
+endif
+
+ifneq ($(CXX_MAJOR),)
+ CXXFLAGS+=-ftemplate-depth-64
+endif
+
+# Shared libs to build
+SHARED_LIBS=
+
+LDLIBS+=$(SHARED_LIBS) $(LIBS)
+LIBELF=-lelf
+
+LDLIBS+=-ldl
+LIBDL=-ldl
+
+ifeq ($(UNAME),Darwin)
+ SHARED=-dynamiclib
+ BUNDLE=-bundle
+ SHARED_EXT=dylib
+else
+ SHARED=-shared
+ BUNDLE=-shared
+ SHARED_EXT=so
+endif
+
+#LDLIBS+=-ltcmalloc
+LDFLAGS+=-L$(LIB_PATH)
+LDFLAGS+=-L/usr/local/$(LIBDIR)
+
+BOOST_INCLUDE_PATH=-I/usr/include
+
+#set default debugging format
+ifeq ($(DEBUG_FORMAT),)
+ DEBUG_FORMAT=-g
+endif
+LDFLAGS+=$(DEBUG_FORMAT)
+
+INCLUDE+=\
+	-I/usr/local/include \
+	$(BOOST_INCLUDE_PATH) \
+	$(STL_INCLUDE_PATH)	\
+	-I$(TOP) \
+	-I$(TOP)/zdk/include
+
+#Intel Compiler?
+ifeq ($(CXX),$(ICC))
+ CXXFLAGS+=-w 
+ #CXXFLAGS+=-Wall
+ #CXXFLAGS+=-cxxlib-icc
+ #LDFLAGS+=-cxxlib-icc
+
+ LDFLAGS+=-i-static
+ # build with GNU C++ libs rather than Intel's
+ CXXFLAGS+=-cxxlib-gcc
+ LDFLAGS+=-cxxlib-gcc
+ LDFLAGS+=-L/usr/$(LIBDIR)
+else
+ CXXFLAGS+=-Wall -Wno-non-virtual-dtor -Wno-deprecated
+
+ ifneq ($(CXX_MAJOR),2)
+  CXXFLAGS+=-Woverloaded-virtual
+ endif
+ ifeq ($(CXX_MAJOR),4)
+  CXXFLAGS+=-Wno-attributes
+ endif
+endif
+
+CXXFLAGS+=$(INCLUDE)
+
+#ifeq ($(CXX),g++)
+ ifeq ($(RELEASE),)
+  ifeq ($(PROFILE),)
+   CXXFLAGS+=$(DEBUG_FORMAT) -DDEBUG 
+  else
+  ### profile build ###
+   CXXFLAGS+=$(DEBUG_FORMAT) -pg -DNDEBUG 
+   LDFLAGS+=-pg
+  endif
+ else
+  ### release build ###
+  DEBUG_FORMAT+=-DNDEBUG
+  ifeq ($(CXX_MAJOR),2)
+	CXXFLAGS+=-fno-default-inline 
+  endif	
+  CXXFLAGS+=$(DEBUG_FORMAT) $(OPTIMIZE) -DHAVE_EXTRA_UI_FEATURES
+ endif
+#endif
+
+ifneq ($(STL_LIB_PATH),)
+ LDFLAGS+=-L$(STL_LIB_PATH)
+endif
+
+ifneq ($(STL_LIB),)
+ LDLIBS+=-l$(STL_LIB) 
+endif
+
+all: $(TARGET)
+
+.PHONY:
+
+libdep.make:
+	@for dir in $(LIBS); do ($(TOP)/zdk/make/mklibdep $(TOP) $(LIB_PATH) $$dir) >> $@; done;
+
+libclean:
+	dirs=`cat $(LIB_LIST)`; for d in $$dirs; do (cd $$d && $(MAKE) clean) || true; done
+
+#HACK HACK HACK copy the static stdc++ lib locally to build
+#against it rather than the dynamic version, which also pulls
+#libgcc_so (which some systems may not have)
+#See: http://bmrc.berkeley.edu/mhonarc/openmash-developers/msg00360.html
+#
+#ifeq ($(CXX_MAJOR),4)
+# ifneq ($(MACHINE),Linux-x86_64)
+#  COPY_LIBCXX=cp /usr/lib/gcc/$(CXX_TARGET)/$(CXXVER)/libstdc++.a $(LIB_PATH)
+# endif
+#endif
+
+$(LIB_PATH): 
+	mkdir -p $@
+	$(COPY_LIBCXX)
+
+$(PLUGIN_PATH):
+	mkdir -p $@
+
+$(BIN_PATH):
+	mkdir -p $@
+
+endif #ifeq ($(INCLUDED_COMMON_MAK),)

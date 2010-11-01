@@ -1,0 +1,45 @@
+
+The purpose of the hierarchy of Target classes is to help
+with a two-dimensional problem. One dimension covers the
+live versus corefile aspect. We can debug either a "live"
+program (either by attaching to a process that is already
+running, or by starting the process from the debugger).
+We can also load the ashes of a dead process: a corefile.
+
+The second dimension deals with the variations between 
+various unix platforms. Initially, this debugger was 
+developed for Linux only, but there is a certain value
+in making it relatively easy to port to other platforms,
+such as FreeBSD.
+
+In Design Patterns parlance, this is a BRIDGE (deals with 
+abstractions that vary in indepent ways -- thanks Scott Bain)
+
+
+            Target (abstract)
+                   ^
+                   |
+                   |
+                UnixTarget
+                   ^
+                   |
+                   |
+            +------+-------+
+            |              |
+            |              |
+        LinuxTarget      BSDTarget <---- FBSDTarget
+            ^                                ^
+            |                                |
+            |                               ...
+      +-----+------+
+      |            |
+      |            |
+  LinuxCore     LinuxLiveTarget
+
+etc, etc.
+
+Code from DebuggerBase, ProcessImpl and maybe other classes will be
+gradually migrated to the proper target impls.
+
+            
+

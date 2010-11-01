@@ -1,0 +1,33 @@
+#! /usr/bin/env bash
+# Generate dependencies for libraries in subdirectories.
+
+#the top of the source tree
+top=${1:-`pwd`}
+
+#the directory containing the source code for the lib:
+libsrcdir=${top}${3/-l//}
+
+#the library file
+lib=$2${3/-l/lib}.a
+
+function scan_dir()
+{
+for f in ${1}/*.h ${1}/*.cpp ${1}/*.l ${1}/*.y
+do
+	if test -f $f; then
+		echo "  $f \\"
+	fi
+done
+for d in ${1}/*
+do
+	if test -d $d; then
+		scan_dir $d	
+	fi
+done
+}
+
+echo "################################################################"
+echo "${lib}: \\"
+scan_dir $libsrcdir
+echo 
+echo "	cd $libsrcdir && \$(MAKE)"

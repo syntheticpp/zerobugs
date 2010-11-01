@@ -1,0 +1,13 @@
+A script for quickly generating plugin skeletons.
+
+The new-plugin script uses the .tmpl files to create the skeleton
+for a new debugger plugin.
+
+Usage: from this directory, type
+
+./new-plugin --name=<name> [ --debug-reader ] [ --dir=<dir> ]
+
+--debug-reader, if specified, generates a plugin that supports the
+	DebugInfoReader interface, in addition to the DebuggerPlugin interface.
+
+

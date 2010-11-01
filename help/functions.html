@@ -1,0 +1,43 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<body leftmargin="10" topmargin="10" bgcolor="#ffffff">
+<h1>Calling Functions</h1>
+<p>The debugger has a built-in C/C++ expression interpreter that can
+ be used to invoke functions defined inside the debugged program.</p>
+<p>From the menu bar, select <i>Tools -> Evaluate</i>. The 
+ <a href="quickview.html">Evaluate</a> dialog pops up; type
+ the name of the function, with its parameters, then hit the Evaluate button.</p>
+<p>When invoking a method on an object from within another method of the 
+ same object, you must prefix the method with <i>this-></i>.Static methods
+ must be fully-qualified, as in <i>MyClass::some_method()</i></p>
+<p>
+<font color=green><b>Note:</b></font> Some functions such as constructors
+ and user-defined conversion operators may be called behind the scenes when
+ <i>static_cast</i> or C-style cast expressions are evaluated.
+</p>
+<p>
+<font color=green><b>Note:</b></font> The C calling convention is the only one supported
+ at this time. (Parameters are pushed onto the stack starting from the right-most,
+ and the caller is responsible for cleaning up the stack after the function returns).
+</p>
+<p>Other limitations of the expression evaluator:
+<li>functions that are inlined or optimized out cannot be called</li>
+<li>variables that are optimized out cannot be used in expressions</li>
+<li>the comma (,) operator is not supported</li>
+<li>the types used in an expression must exist in the debuggee</li>
+<li>types, variables and functions in a shared library that is not loaded into
+ memory may not be available</li>
+<li><b>true</b> and <b>false</b> are not recognized; use 1 and 0 instead. This is
+ on purpose, for backwards compatibility with C programs</li>
+</p>
+<p>
+<font color="green"><b>Note:</b></font>
+If a function invoked from the debugger causes a signal (such as SIGSEGV) to
+ be raised inside the debugged program, the debugger will do its best to restore
+ the CPU registers and rewind the stack; however, side-effects such as modifications
+ of the memory, or I/O operations cannot be undone.
+ 
+</p>
+</body>
+</html>

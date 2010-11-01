@@ -1,0 +1,23 @@
+# Sample test script for the AutoTest plugin
+#
+call { exec a.out }
+call { break main }
+call continue
+call next
+call list
+call { eval a.sval_ }
+expect { 12
+#bracket is purposely on next line, new-line is expected
+}
+
+call { help eval }
+expect {
+eval [expr [expr]]: evaluate expressions. Expressions that contain
+blank spaces need to be surrounded by double quotes. This command
+can be used to modify variables inside the debugged program.
+Examples: eval i=42
+          eval i++
+          eval x*=3.14159
+
+}
+

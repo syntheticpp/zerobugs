@@ -1,0 +1,6 @@
+This library is a collection of miscellaneous utilities and C++ wrappers 
+on top of libc and system calls such as pipe(), sigaction(), etc.
+
+Basically a catch-all for utilities that don't fit anywhere else.
+
+In Sanskrit, Dharma means "that-which-supports".

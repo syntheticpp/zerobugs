@@ -1,0 +1,173 @@
+#! /usr/bin/env bash
+#
+# Script for configuring and building all zerobugs components
+#
+# -------------------------------------------------------------------------
+# This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu
+#
+# Distributed under the Boost Software License, Version 1.0.
+# (See accompanying file LICENSE_1_0.txt or copy at
+# http://www.boost.org/LICENSE_1_0.txt)
+# -------------------------------------------------------------------------
+
+# libdwarf version
+# For more info, see: http://reality.sgiweb.org/davea/dwarf.html
+DWARF=dwarf-20100930/libdwarf
+
+TOP=`pwd`
+PREFIX=`pwd`/local
+#echo PREFIX=$PREFIX
+INCLUDE=${PREFIX}/include
+LIB=${PREFIX}/lib
+
+source arch.sh
+
+# Global flags
+config=1
+third_party=1
+clean=0
+config_only=0
+shell=0
+
+
+################################################################
+#
+# Build a 3rd party lib, assumed to be under third_party_libs
+# directory, passed it as argument. If preceded by --install,
+# will also install the lib in the ${PREFIX} directory.
+#
+function build_third_party () {
+    let result=0
+    if [ $1 = --install ]
+        then inst=install && shift
+    fi
+
+    lib=$1
+    echo "********************** ${lib} ***************************"
+    pushd third_party_libs/${lib}
+    shift
+    make clean
+    if test $clean -eq 0 
+        then 
+        if !(CFLAGS=${CFLAGS} ./configure --prefix=$PREFIX $@ && make ${inst}) then
+            echo "***** build_third_party: ${lib} failed *****"
+            let result=1
+        fi
+    fi
+    popd
+    return $result
+}
+
+
+function help () {
+    prog=`basename $0`
+    echo
+    echo "$prog: wrapper script for configuring / building / installing the ZeroBUGS debugger."
+    echo -n "Copyright (c) 2010  Cristian Vlasceanu. "
+	echo "Distributed under the Boost Software License, Version 1.0."
+	echo "(See accompanying file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)"
+	echo
+    echo "Usage: $prog [flags]"
+    echo "Flags:"
+    echo "  --no-config:       do not configure, just make"
+    echo "  --no-third-party:  do not build 3rd party libs"
+    echo "  --clean:           make clean"
+    echo "  --configure:       configure only, don't build"
+    echo "  --install:         install"
+    echo "  --shell:           spawn a build environment shell"
+	echo "  --help:            display this help message"
+    echo
+}
+
+
+################################################################
+#
+# Process command line arguments
+#
+for arg in $@
+do
+    if test ${arg} = "--no-config"
+        then let config=0
+    elif test ${arg} = "--no-third-party"
+        then let third_party=0;
+    elif test ${arg} = "--clean"
+        then let clean=1; let config=0;
+    elif test ${arg} = "--shell"
+        then let shell=1; let config=0; let third_party=0;
+    elif test ${arg} = "--configure"
+        then let third_party=0; let config_only=1;
+    elif test ${arg} = "--install"
+        #then if !(make/install.sh); then exit 1; else exit 0; fi
+        then if !(python/install.py); then exit 1; else exit 0; fi
+    elif test ${arg} = "--test"
+        then cd engine/testsuite && make; exit;
+    elif test ${arg} = "--help"
+        then help; exit 0
+	else
+        help; exit 0
+    fi
+    shift
+done
+
+
+################################################################
+#
+# configure and make third party libs
+#
+if test ${third_party} -ne 0
+then
+    if !(build_third_party --install libatomic_ops) then
+           exit 1
+    fi
+
+    if !(build_third_party --install ud) then
+           exit 1
+    fi
+
+    CFLAGS="-D_LARGEFILE64_SOURCE ${CFLAGS}"
+    if !(build_third_party ${DWARF} --enable-shared --disable-nonshared) then
+        exit 1
+    else
+        if test ${clean} -ne 0
+            then echo "--clean: skipping copying lib"
+        elif !(cp third_party_libs/${DWARF}/libdwarf.* ${PREFIX}/lib \
+            && mkdir -p ${TOP}/lib && cp third_party_libs/${DWARF}/libdwarf.* ${TOP}/lib \
+            && cp third_party_libs/${DWARF}/dwarf.h ${INCLUDE} \
+            && cp third_party_libs/${DWARF}/libdwarf.h ${INCLUDE}) then
+            echo "***** failed to copy libdwarf files *****"
+            exit 1
+        fi
+    fi
+fi
+
+if test ${config} -ne 0
+then
+    echo "********************** CONFIGURE ***************************"
+
+    if !(PREFIX=${PREFIX} ./configure) then
+        echo "***** main configure failed *****"
+        exit 1
+    fi
+fi
+
+if test ${config_only} -eq 0
+then
+    export CFLAGS="${CFLAGS} -I${PREFIX}/include"
+    export LDFLAGS="${LDFLAGS} -L${PREFIX}/lib"
+    if test ${shell} -eq 1
+    then
+        echo "**************** BUILD ENVIRONMENT SET *******************"
+        ${SHELL}
+        exit
+    fi
+    echo "*************************** MAKE *****************************"
+
+    if test ${clean} -eq 1
+    then
+        make tidy
+    elif !(make depend && make 2>&1 | tee build.log) then
+        echo Build failed.
+        exit 1
+    fi
+fi
+

@@ -1,0 +1,73 @@
+#! /usr/bin/env bash
+# -------------------------------------------------------------------------
+# This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu
+#
+# Distributed under the Boost Software License, Version 1.0.
+# (See accompanying file LICENSE_1_0.txt or copy at
+# http://www.boost.org/LICENSE_1_0.txt)
+# -------------------------------------------------------------------------
+#
+# Driver script for starting experimental Python GUI
+#
+# Change these to point to your installation dir:
+export INSTALL_PATH=`pwd`
+export ZTOP=${INSTALL_PATH}/plugin/python/zui
+
+ARCH=`uname -m`
+LIB=lib
+if [ "$ARCH" = x86_64 ]; then
+  LIB=lib64
+fi
+export ZERO_HELP_PATH=${INSTALL_PATH}/help
+
+#assumes that libdwarf.so is installed in /usr/local/lib or
+# /usr/local/lib64
+#Change it to suit your system settings.
+LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/${LIB}:.
+
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:${INSTALL_PATH}/lib
+
+#start debugging at main() rather than at CRT start;
+#comment this out if your debugged programs don't have a 
+# main() function
+export ZERO_START_MAIN=1
+
+#do not dive into assembly when stepping from a portion
+#where we do have C/C++ source code, into another one
+#where source is not available
+export ZERO_SOURCE_STEP=1
+
+#set this to use stack frame information from plugins
+#export ZERO_USE_FRAME_HANDLERS=1
+
+#use hardware breakpoints whenever available (default);
+#turn it off on Virtual PC
+#export ZERO_HARDWARE_BREAKPOINTS=1
+export ZERO_HARDWARE_BREAKPOINTS=0
+
+#Support the illusion of stack frame for inlined functions
+#export ZERO_INLINE_HEURISTICS=1
+
+#debug the built-in interpreter
+#export ZERO_DEBUG_INTERP=1
+
+#debug the auto-rtti discovery feature
+#export ZERO_DEBUG_RTTI=1
+
+#debug the FrameHandler part of the DWARF plugin
+#export ZERO_DEBUG_FH=1
+
+#enable expensive type lookups in the DWARF plugin
+export ZERO_USE_EXPENSIVE_LOOKUPS=true
+
+#Uncomment to force immediate loading of symbol tables
+#export ZERO_LAZY_SYMBOLS=false
+
+export ZERO_QUICK_SHUTDOWN=1
+
+#edit this in accordance to where the ui scripts reside
+# on your machine
+UI_SCRIPT="${ZTOP}/app.py"
+
+#export LD_PRELOAD=${INSTALL_PATH}/lib/zpypre.so
+${INSTALL_PATH}/bin/zero --ui-disable --py-run=${UI_SCRIPT} $@

@@ -1,0 +1,3 @@
+This is the source code for the server-side support for remote debugging.
+The functionality shared by the client (implemented in plugin/remote-proxy) and the server
+if factored out in the rpc library.

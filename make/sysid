@@ -1,0 +1,16 @@
+#! /bin/bash
+
+distro="`(
+cat /etc/redhat-release ||
+cat /etc/SuSE-release	||
+cat /etc/issue.net		||
+cat /etc/release  		|| 
+cat /etc/debian_version ||
+echo "generic"
+) 2>/dev/null | head -1 | sed -e 's/ %.//g; s/\//_/g'`"
+
+release=""
+if [ -n "$RELEASE" ]
+	then release="-release"
+fi
+echo "${distro} `uname -m`${release}"

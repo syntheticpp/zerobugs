@@ -1,0 +1,83 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<body leftmargin="10" topmargin="10" bgcolor="#ffffff">
+<h1>Setting Breakpoints</h1>
+<p>
+To set a code breakpoint, go to the <i>Breakpoints</i> menu, then 
+ <i>New Breakpoint</i>. In the entry dialog, type either the fully qualified name
+ of a function, or an address.</p>
+<p>
+Another way of setting a breakpoint is to right-click on a line of code
+ and select <i>Insert Breakpoint</i> from the popup menu.
+</p>
+<a name="#modif_bpnts"><h1>Modifying Breakpoints</h1></a>
+<p>
+Activate the right-click menu on a line of code where a breakpoint
+ exists. Select either <i>Remove Breakpoint</i> or <i>Disable Breakpoint</i>.
+</p>
+<p>An alternative way of deleting and disabling breakpoints is to select
+ <i>Edit</i> from the <i>Breakpoints</i> menu; A dialog box that contains 
+ a list of all breakpoints pops up. Select the breakpoints that you want
+ to modify, then right-click on the list. A popup menu will present you 
+ with the <i>Disable</i> and <i>Remove</i> options. The menu options apply to
+ all selected breakpoints. Press the OK button at the bottom of the dialog
+ box to commit the changes.
+</p>
+<a name="#cond_bpnts"><h1>Conditional Breakpoints</h1></a>
+<p>
+The debugger supports specifying conditions for breakpoints. Conditions
+ are specified as C++ <a href="quickview.html">expressions</a>
+ that are evaluated in the scope of the breakpoint. The debugger will stop the 
+ debugged program at the location of the breakpoint only if the logical condition is met. 
+</p>
+<p>
+ To specify the activation condition for a breakpoint, select <i>Edit</i>
+ from the <i>Breakpoints</i> menu, and select the desired breakpoint from the list.
+ This will enable the bottom part of the dialog, where you can enter the conditions.
+ Hit OK when done. Please note that the changes are not committed if you close the
+ dialog without hitting OK. The bottom part of the dialog is enabled only when
+ exactly one selection is made in the list of breakpoints.
+</p>
+<p>
+ Some bugs may happen only after N iterations through a loop.
+ It is useful to be able to specify the number of hits as a condition for 
+ activating a given breakpoint. You can use the <i>Activate after ... hits</i> 
+ feature to this purpose. The number of hits can be reset by hand (press the
+ <i>Reset</i> button) or automatically, after the threshold value is met
+ (use the <i>Auto-reset</i> check box).
+</p>
+<p>
+If auto-reset is not specified, then the breakpoint will fire every time once the
+ threshold condition is met. Auto-reset downs the hit count back to zero after the
+ threshold is met. By specifying a threshold and auto-reset, you are telling the
+ debugger to activate a breakpoint every N times. 
+</p>
+<p>
+If both a conditional expression and a hit threshold are specified, then hits are
+ counted only when the expression yields true.
+</p>
+<p>
+<font color="green"><b>Note:</b></font>
+Expressions that yield void evaluate to false.
+</p>
+<p>
+<font color="green"><b>Note:</b></font>
+An interesting use for the conditional breakpoints is to test a small patch 
+ without having to rebuild the debugged program. Consider, for example, that
+ you have a theory that some bug may be caused by an uninitialized variable.
+ You can insert a breakpoint and enter <i>i = 0</i> as the condition (or
+ <i>(i = 0) || 1</i> if you want the debugger to stop at the breakpoint). The code
+ will be invoked every time the breakpoint is reached, and thus patch the debuggee
+ on-the-fly. If you need to initialize the value to something else than zero,
+ but do not wish the debugger to stop at the breakpoint, use the expression
+ <i>(i = 42) && 0</i>.
+</p>
+<p>
+<font color="green"><b>Note:</b></font>
+The conditional expression is not validated when entered in the dialog.
+ If any error occurs at evaluation-time, the debugger will stop at the 
+ breakpoint.
+</p>
+</body>
+</html>

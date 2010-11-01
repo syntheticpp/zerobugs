@@ -1,0 +1,234 @@
+#ifndef ${PLUGIN_CLASS}_H__70E93067_9421_4550_8C81_B35381DC19F6
+#define ${PLUGIN_CLASS}_H__70E93067_9421_4550_8C81_B35381DC19F6
+//
+// -*- tab-width: 4; indent-tabs-mode: nil;  -*-
+// vim: tabstop=4:softtabstop=4:expandtab:shiftwidth=4
+//
+// $Id: plugin.h.tmpl 706 2010-10-09 10:42:56Z root $
+//
+#include "zdk/version_info_impl.h"
+#include "zdk/zero.h"
+IF ${DEBUG_IMPL}
+#include "zdk/debug_sym.h"
+
+#undef get_return_symbol
+ENDIF
+
+${BEGIN_NAMESPACE}
+
+
+class ${PLUGIN_CLASS} 
+    : public DebuggerPlugin
+IF ${DEBUG_IMPL}
+    , public DebugInfoReader
+ENDIF
+    , VersionInfoImpl<ZERO_API_MAJOR, ZERO_API_MINOR>
+{
+protected:
+    virtual ~${PLUGIN_CLASS}() throw();
+
+public:
+    ${PLUGIN_CLASS}();
+
+    virtual void release();
+
+BEGIN_INTERFACE_MAP(${PLUGIN_CLASS})
+    INTERFACE_ENTRY(DebuggerPlugin)
+IF ${DEBUG_IMPL}
+    INTERFACE_ENTRY(DebugInfoReader)
+ENDIF
+    INTERFACE_ENTRY(VersionInfo)
+END_INTERFACE_MAP()
+
+    // --- DebuggerPlugin interface
+    /**
+     * Pass pointer to debugger and the command line params
+     * to plug-in module.
+     */
+    virtual bool initialize(Debugger*, int* argc, char*** argv);
+
+    virtual void start() { }
+
+    virtual void shutdown();
+   
+    virtual void register_streamable_objects(ObjectFactory*);
+
+    /**
+     * This method is called whenever the debugger 
+     * is about to read a new symbol table.
+     */
+    virtual void on_table_init(SymbolTable*);
+
+    /**
+     * Called when the debugger has finished reading
+     * a symbol table.
+     */
+    virtual void on_table_done(SymbolTable*);
+
+    /** 
+     * Called when the debugger attaches itself to a new thread
+     */
+    virtual void on_attach(Thread*);
+
+    /**
+     * Called for each thread that finishes, and with a
+     * NULL thread when the debugger detaches from the 
+     * program.
+     */
+    virtual void on_detach(Thread*);
+
+    virtual void on_syscall(Thread*, int);
+
+    /**
+     * Notification sent to plug-ins when the debuggee stops.
+     * The plug-in is given the opportunity to take over
+     * handling the user break point. If this method returns
+     * true, the notification is not passed around to other
+     * plug-ins, and the internal handling is skipped.
+     * This way, a plug-in that implements a GUI can take
+     * control over the user interaction.
+     */
+    virtual bool on_event(Thread*, EventType);
+
+    /**
+     * Plug-in is notified that the debugger is about to resume
+     * all threads in the debugged program.
+     */
+    virtual void on_program_resumed();
+
+    virtual void on_insert_breakpoint(volatile BreakPoint*);
+
+    virtual void on_remove_breakpoint(volatile BreakPoint*);
+   
+    /**
+     * When a plug-in calls Debugger::progress, the 
+     * notification is being passed to all the loaded
+     * plug-ins. The initiator may choose to ignore the
+     * event if it identifies the cookie as being the
+     * same value as passed to the progress() call.
+     */
+    virtual bool on_progress(
+        const char* what, 
+        double percent, 
+        word_t cookie);
+
+
+    virtual bool on_message(const char*, 
+                            Debugger::MessageType, 
+                            Thread*, 
+                            bool async);
+
+    // -- VersionInfo interface
+    const char* description() const;
+
+    const char* copyright() const;
+
+IF ${DEBUG_IMPL}
+    // --- DebugInfoReader interface
+    /**
+     * Enumerates the data objects local to
+     * a given thread and function. The frame base
+     * for the function is also specified. If the
+     * events sink pointer is not null, then its
+     * notify method is invoked for every DebugSymbol
+     * that corresponds to a local. A local datum may
+     * be a function parameter a variable, or a constant.
+     * The count of locals is returned. 
+     */
+    virtual size_t enum_locals(
+        Thread* thread,
+        const char* name,
+        Frame* frame,
+        Symbol* func,
+        DebugSymbolEvents*,
+        bool paramOnly);
+    
+    virtual size_t enum_globals(
+        Thread* thread,
+        const char* name,
+        Symbol* func,
+        DebugSymbolEvents*,
+        LookupScope,
+        bool);
+
+    /**
+     * @return true if the source file and line number
+     * for the given address are found, and call the 
+     * specified EnumCallback2 interface (if not NULL)
+     */
+    virtual size_t addr_to_line(
+        const SymbolTable*,
+        addr_t,
+        addr_t*,
+        EnumCallback2<SharedString*, size_t>*);
+
+    /**
+     * @return the first address generated for the
+     * source line following the line where given 
+     * symbol is defined (supports the debugger's
+     * `next' command).
+     */
+    virtual addr_t next_line_addr(
+        const SymbolTable*,
+        addr_t,
+        SharedString*,
+        size_t) const;
+
+    /**
+     * Enumerate addresses generated for given source line.
+     * @return address count
+     */
+    virtual size_t line_to_addr(
+        Process*                proc,
+        SharedString*           moduleName,
+        loff_t                  moduleAdjust,
+        SharedString*           sourceFileName,
+        size_t                  line,
+        EnumCallback<addr_t>*   observer,
+        bool*                   cancelled);
+
+    virtual DebugSymbol* get_return_symbol(
+        Thread*, 
+        const Symbol*, 
+        ENFORCE_REF_PTR_);
+
+    virtual bool get_return_addr(Thread*  thread, 
+                                addr_t    addr, 
+                                addr_t*   retAddr) const;
+
+    virtual bool get_fun_range(Thread*, addr_t, addr_t*, addr_t*) const;
+
+    virtual const char* format() const
+    {
+        return "TODO: return debug info format";
+    }
+
+    virtual DataType* lookup_type
+      (
+        Thread* thread,
+        const char* name,
+        addr_t addr = 0,
+        LookupScope = LOOKUP_ALL
+      );
+
+    virtual TranslationUnit* lookup_unit_by_addr(
+        Process*,
+        SharedString* moduleName, 
+        addr_t);
+    
+    virtual size_t lookup_unit_by_name
+      (
+        Process*,
+        SharedString* moduleFileName,
+        const char* unitFileName,
+        EnumCallback<TranslationUnit*, bool>*
+      );
+
+ENDIF 
+
+private:
+    Debugger* debugger_;
+};
+
+${END_NAMESPACE}
+#endif // ${PLUGIN_CLASS}_H__70E93067_9421_4550_8C81_B35381DC19F6

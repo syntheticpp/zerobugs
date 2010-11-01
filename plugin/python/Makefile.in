@@ -1,0 +1,49 @@
+# vim: noexpandtab: tabstop=4: shiftwidth=4
+# $Id: Makefile 719 2010-10-22 03:59:11Z root $
+#
+ifeq ($(TOP),)
+ TOP=../..
+endif
+
+include $(TOP)/zdk/make/Common.mak
+include $(TOP)/zdk/make/Python.mak
+
+CXXFLAGS:=$(subst -fvisibility=hidden,-fvisibility=default,$(CXXFLAGS))
+CXXFLAGS+=-Wno-write-strings
+
+LIBS=-lzero_python -lelfz -ldharma -lzdk
+
+#make sure pthread lib comes last, to get the correct malloc:
+LDLIBS+=$(LIBELF) -lutil -lpthread
+
+#useful in development to test for undefined stuff:
+#LDFLAGS+=-Wl,--no-undefined
+
+LDLIBS+=-l@BOOST_PYTHON_LIB@
+
+#platform info, for the updater
+sysid.h:
+	echo "#define BUILDTIME \"`date +'%Y-%m-%d'`\"" > $@
+	echo "#define SYSID \"`$(TOP)/make/sysid`\"" >> $@
+
+SRCS= \
+	filter.cpp \
+	interp.cpp \
+	python_gate.cpp \
+	updater.cpp \
+	$(NULL)
+
+PLUGIN=$(PLUGIN_PATH)zpython.so
+TARGET=$(PLUGIN)
+
+all: $(PLUGIN)
+$(PLUGIN): $(LIB_FILES) $(OBJS)
+	mkdir -p $(PLUGIN_PATH)
+	$(CXX) $(CXXFLAGS) $(LDFLAGS) -shared $(OBJS) -o $@ $(LDLIBS)
+
+depend: sysid.h
+updater.cpp: sysid.h
+EXTRA_CLEAN=sysid.h
+
+include $(TOP)/zdk/make/Epilogue.mak
+

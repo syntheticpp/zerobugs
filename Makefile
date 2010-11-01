@@ -1,0 +1,117 @@
+# vim: noexpandtab: tabstop=4: shiftwidth=4
+# $Id: Makefile 658 2009-10-27 05:46:42Z root $
+# -------------------------------------------------------------------------
+# This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu
+#
+# Distributed under the Boost Software License, Version 1.0.
+# (See accompanying file LICENSE_1_0.txt or copy at
+# http://www.boost.org/LICENSE_1_0.txt)
+# -------------------------------------------------------------------------
+SHELL:=/bin/bash
+ifeq ($(TOP),)
+ TOP:=$(shell pwd)
+endif
+include $(TOP)/zdk/make/Common.mak
+
+#
+# Determine which disassembler plugin to use
+#
+DISASM=disasm
+# Use the udis-based disassembler on intel-compatible platforms
+# x86_64 or i686, use libudis-based disassembler.
+
+# Use the generic disassembler on PowerPC
+ifneq ($(ARCH),ppc)
+ DISASM=udis
+endif
+
+#
+# Modules to build (including the engine)
+#
+ifeq ($(RELEASE),)
+ auto=
+else
+ auto=$(PLUGIN_PATH)autotest
+endif
+gui=$(PLUGIN_PATH)gui
+dwarf=$(PLUGIN_PATH)dwarf
+stabs=$(PLUGIN_PATH)stabs
+disasm=$(PLUGIN_PATH)$(DISASM)
+demangle_d=$(PLUGIN_PATH)libdemangle_d.so
+server=server
+remote=$(PLUGIN_PATH)remote-proxy
+zdb=zdb
+cache=$(PLUGIN_PATH)cache
+#
+# detect boost_python; todo: use AX_BOOST_PYTHON
+#
+ifneq ($(shell ls /usr/include/boost/python 2>/dev/null),)
+ python=$(PLUGIN_PATH)python
+else
+ ifneq ($(shell ls /usr/local/lib/libboost_python.* 2>/dev/null),)
+  python=$(PLUGIN_PATH)python
+ endif
+endif
+modules=engine \
+	$(disasm) \
+	$(dwarf) \
+	$(stabs) \
+	$(python) \
+	$(gui) \
+	$(server) \
+	$(remote) \
+	$(auto)
+
+modules:
+	for m in $(modules); do (cd $$m; $(MAKE); ) done
+	#$(foreach mod, $(modules), cd $(mod); $(MAKE);)
+	
+all: which_disasm $(runtime) modules $(demangle_d) dbginfo
+
+which_disasm: .PHONY
+	@echo disassembler="$(DISASM)"
+
+# Build debug info for use on the web server-side for crash reports, see crash.sh
+dbginfo: .PHONY
+ifneq ($(ZERO_MAKE_DBGINFO),)
+	export LD_LIBRARY_PATH=/usr/local/$(LIBDIR) && cd tools && ./dbi.py $(TOP)
+endif	
+
+$(runtime): .PHONY
+
+$(demangle_d): .PHONY
+	cd demangle_d; $(MAKE)
+
+preclean:
+	rm -rf $(LIB_PATH) $(BIN_PATH) gcc_ver
+	rm -f .zero.config
+	rm -rf .zero *.zero report.html
+	rm -rf tools/$(ARCH)__*
+	rm -rf autom4te.cache config.status config.log build.log
+	find . -name "*.pyc" -exec rm {} \;
+
+clean: preclean libclean
+	$(foreach mod, $(modules) engine/testsuite demangle_d, pushd $(mod); $(MAKE) clean; popd;)
+	rm gcc_ver
+
+tidy: clean
+	find . -name "*.make" -exec rm {} \;
+	find . -name depend.stamp -exec rm {} \;
+	rm -f libs_used.txt
+
+depend:
+	$(foreach mod, $(modules), pushd $(mod); $(MAKE) depend; popd;)
+	@if test -f $(LIB_LIST); then  :; else echo "Did you forget to make tidy?"; exit 1; fi
+	sort -u $(LIB_LIST) > tmp && mv tmp $(LIB_LIST)
+
+# Make TGZ distribution (NOTE this has not been used/tested in a while)
+dist: all
+	sh make/mkdist
+
+# Archive up the source tree
+TARFILE=zero.$(shell date +%m%d%y).tar.bz2
+THIS_DIR=$(notdir $(TOP))
+tar: tidy
+	echo $(THIS_DIR)
+	cd $(TOP)/..; tar jvcf $(TARFILE) $(THIS_DIR)
+

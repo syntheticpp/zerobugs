@@ -1,0 +1,73 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<body leftmargin="10" topmargin="10" bgcolor="#ffffff">
+<h1>Controlling Program Execution</h1>
+<p>
+As soon as the debugger attaches to a program (or a new program is
+ executed from the debugger), the execution of the debuggee is stopped.
+<p>
+At this point, you can:
+<li><a href="breakpoints2.html">insert breakpoints</a></li>
+<li><a href="#step">single step</a> through the program</li>
+<li><a href="#continue">continue</a> executing the program</li>
+<br>
+<p>
+<font color="green"><b>Note:</b></font>
+Most operations require the debugged program to be stopped in the debugger.
+ For example, in order to insert or remove a breakpoint, you need first to select 
+ <i>Program</i> -&gt; <i>Break</i> (or use the <i>Break</i>
+ button from the toolbar). Once the program stops, you may proceed to the
+ <i>Breakpoints</i> menu.
+</p>
+<br>
+<a name="#step"><h1>Single Stepping</h1></a>
+<p>
+ You can execute the program, one step at a time, at either 
+ machine level or source level. At machine level, you can execute 
+ one CPU instruction at a time. This functionality can be accessed
+ by selecting <i>Step Instruction</i> from the <i>Program</i> menu.
+</p>
+<p>
+ To execute one line of source code, select <i>Step</i> from the
+ <i>Program</i> menu, or press the Step button on the toolbar (if the
+ toolbar is not visible, turn it on by selecting <i>Toolbar</i> in the
+ <i>View</i> menu).
+</p>
+<p> 
+ While stepping at the source level, if a function call is encountered,
+ the debugger will step inside of that function. If you want to step over
+ function calls (i.e. not step inside called functions) use the <i>Next</i>
+ menu from the <i>Program</i> menu on the menu bar, or use the Next button
+ from the toolbar.
+</p>
+<p>
+<font color="green"><b>Note:</b></font>
+When running in text mode (no graphical user interface), the
+ following commands are available at the command prompt:
+ <li>instruction</li>
+ <li>next</li>
+ <li>step</li><br>
+ These work esentially the same as the menus; for more information, type:<br>
+ <code>help &lt;command&gt;</code> at the prompt.
+</p>
+<br>
+<p><a name="#continue"><h1>Resuming Execution</h1></a>
+</p>
+<p>To continue executing the program, select <i>Continue</i> from the
+ <i>Program</i> menu. The execution will resume until either a 
+ <a href="breakpoints.html">breakpoint or watchpoint</a> is hit, the program
+ receives a signal, or you stop it. To stop the program, select <i>Break</i>
+ from the <i>Program</i> menu, or from the toolbar.
+</p>
+<p>The <i>Return from function</i> menu (under <i>Program</i>) and the
+ Return toolbar button allow you to resume the execution of the debugged 
+ program until the current function returns to its caller. As soon as the
+ function returns, the program will break into the debugger.
+</p>
+<p>
+To continue executing the program until a given line of code is reached,
+ right-click on that line and select the <i>Run To Cursor</i> menu option.
+</p>
+</body>
+</html>

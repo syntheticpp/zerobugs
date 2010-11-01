@@ -1,0 +1,33 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<body leftmargin="10" topmargin="10" bgcolor="#ffffff">
+<h1>Evaluating Macros</h1>
+<p>
+The "evaluate" feature allows you to view macro-definitions.
+ Currently, evaluating macros is supported with the DWARF format only, and
+ GNU CC 3.2.2 and above.
+ You need to compile your programs on the highest debug info level (use the
+ <i>-g3</i> compiler option). 
+
+<p>
+ <b>Example:</b> Select <i>Tools</i> from the menu bar, then <i>Evaluate</i>.
+ Enter __GNUC__ in the expression field and press the Evaluate button
+ (or hit &lt;ENTER&gt;). The major version number of the compiler that translated
+ the unit in scope will be displayed. To view the minor version number,
+ evaluate the __GNUC_MINOR__ macro.
+<p>
+ Another way of accessing this feature is to right-click on a macro in the
+ source code view, and select the <i>Evaluate</i> entry from the floating menu.
+<p>
+<font color="green"><b>Note:</b></font> Parameter substitution in 
+ function-like macros is not currently supported.
+<p>
+<font color="green"><b>Note:</b></font> Symbols with the same name
+ as a given macro, visible in the current scope of the evaluation,
+ obscure the macro-definition.
+
+<p>See also:<a href="quickview.html">Evaluating Expressions</a>
+</p>
+</body>
+</html>

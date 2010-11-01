@@ -1,0 +1,71 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<body leftmargin="10" topmargin="10" bgcolor="#ffffff">
+<h1>Command Line Options</h1>
+<p>
+<b>Synopsis:</b><br>
+zero [progname | corefile] [arg [arg]]
+<p>
+<i>arg</i> may be either a command line option for the debugger, or
+an argument for the debugged program.
+Arguments that follow the program name, and do not start with a dash,
+are passed as command line arguments to the debugged program. 
+<p>If you need to pass to the debuggee an argument that
+contains spaces, then you need to put double quotes around it.
+<p>
+Arguments starting with a dash are passed to the debugger engine and to the
+plug-ins. If you need to pass command line arguments starting with a dash to
+the debugged program, prefix them with a standalone, double dash.
+For example: <i>zero foo -v --main</i> passes -v and --main to the debugger engine,
+while: <i>zero foo -- -v --main</i> passes -v and --main to the debugged program <i>foo</i>.
+<p>
+Debugger engine command line options:
+<li>
+<i>--break-on-throw</i>: stop target execution before throwing an exception
+</li>
+<li>
+<i>--cache-disable</i>: do not cache debug information from one run to another.
+</li>
+<li>
+<i>--main</i>: automatically position at main, and start debugging
+ from there, skipping the startup code. This is not the default, since
+ it does not apply to: programs that don't have a <b>main</b> function,
+ programs that have not been executed from under the debugger, and 
+ post-mortem debugging.
+ This is equivalent to setting the ZERO_START_MAIN
+ environment variable to true.
+</li>
+<li><i>--no-banner</i>: do not display copyright and version info to console
+when starting up the debugger
+</li>
+<li>
+<i>--no-hw-bp</i>(no hardware breakpoints): disable usage of
+hardware breakpoints, works around a bug in Virtual PC.
+ This is equivalent to setting the ZERO_HARDWARE_BREAKPOINTS
+ environment variable to zero (or false).
+</li>
+<li>
+<i>--no-trace-fork</i>: do not trace into forked processes
+</li>
+<li>
+<i>--syscall-break</i>: break into the debugger each and every time the debugge
+is about to enter and leave a system call.
+</li>
+<li>
+<i>-v</i>: development builds only: print verbose information to console.
+</li>
+<li>
+<i>--dwarf-nofh</i>: disable frame handlers in the dwarf plugin; frame handlers
+read stack unwinding info from the debuggee and work with the stack unwinder.
+Frame handlers are enabled by default.
+</li>
+<li>
+<i>--ui-disable</i>: do not activate the UI plugin even if
+found in the <a href="environ.html#plugin_path">plugin path</a>
+</li>
+
+</p>
+<p>See also:<a href="layout.html">User Interface Layout</a></p>
+</body>
+</html>

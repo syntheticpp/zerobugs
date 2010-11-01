@@ -1,0 +1,7 @@
+This is a C++ wrapper code around libelf; the purposes of
+wrapping the C libelf are:
+
+1) make sure resources are released properly;
+2) provide iterators for traversing ELF sections, program headers, archives, and so on;
+
+

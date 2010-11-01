@@ -1,0 +1,77 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<body leftmargin="10" topmargin="10" bgcolor="#ffffff">
+</body>
+<h1>Python Callbacks</h1>
+<p>The Python plugin allows users to observe interesting events in the debugged program
+(aka target, or debuggee). Users may define any or none of the following callbacks:
+<ul>
+<li>on_init(<a href="pyref.html#Debugger">debugger</a>)<br>
+     Called once when the Python plugin starts up. It is safe to assume
+     that when this callback is invoked, all the plugins have been
+     properly initialized.</li>
+<li>on_process(<a href="pyref.html#Process">process</a>, <a href="pyref.html#Thread">thread</a>)<br>
+
+    Called when the debugger attaches to a new process (either by starting it, attaching to an already running process; process
+    in this context also applies to loading a core file and accessing information about the crashed process).
+</li>
+<li>
+on_thread(<a href="pyref.html#Thread">thread</a>)<br>
+    Called when the debugger attaches to a new thread
+</li>
+<li>
+on_process_detach(<a href="pyref.html#Process">process</a>)<br>Called when detaching from the debugged target.
+The process object may be null, so it is recommended to test for null before using it.
+</li>
+<li>
+on_thread_detach(<a href="pyref.html#Thread">thread</a>)
+</li>
+<li>
+on_event(<a href="pyref.html#DebugEvent">event</a>)<br>
+      A debugging event occurred. event.type() gives the exact cause, which may be one of:
+    <ul>
+    <li>Update -- a notification for the script to update any internal state </li>
+    <li>Signal</li>
+    <li>Breakpoint</li>
+    <li>SysCallEnter -- only received if <code>debugger.set_option(zero.Debugger.Option.TraceSysCalls)</code> is called. 
+        See <a href="pyexample-6.html">example</a>
+
+    </li>
+     <li>SysCallLeave -- ditto</li>
+     <li>SingleStep</li>
+     <li>DoneStepping</li>
+     <li>CallReturned -- debuggee returned from function after <code>thread.step(zero.Step.Return)
+        </code>
+     </li>
+
+    </ul>
+
+     NOTE: on_event is not called for scripted breakpoints (i.e. a breakpoint that has a corresponding callback function in
+     the Python script). When such a <a href="pyexample-3.html">breakpoint</a> is hit, control is passed directly to the
+     callback function without going through the on_event notification.
+</li>
+<li>on_progress(message, percentage)<br>Called as a notification that 
+    a lengthy operation is in progress. Return false to cancel.</li>
+<li>on_error(message) Users may defined this function, and have it return True if they want
+to handle errors that occur during the evaluation of Python script code.
+</li>
+<li>on_table_done(<a href="pyref.html#SymbolTable">table</a>) called when finished
+loading a new symbol table</li>
+<li>on_breakpoint_inserted(<a href="pyref.html#Symbol">symbol</a>, 
+<a href=pyref.html#BreakPoint-type">type</a>)</li>
+<li>on_breakpoint_deleted(<a href="pyref.html#Symbol">symbol</a>, 
+<a href=pyref.html#BreakPoint-type">type</a>)</li>
+<a name="#on_debug_symbol"/>
+<li>on_debug_symbol(<a href="pyref.html#DebugSymbol">debugSymbol</a>)
+This is a special callback that allows users to implement custom visualizations of
+complex data types. Return None if no custom is to be taken, or a newly created
+symbol. See <a href="pyexample.html">examples</a>.
+</li>
+</ul>
+</p>
+
+<p>More info is available at <a href="http://www.zero-bugs.com/python.html">
+http://www.zero-bugs.com/python.html</a>
+</p>
+</html>

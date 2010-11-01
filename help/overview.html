@@ -1,0 +1,47 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<body leftmargin="10" topmargin="10" bgcolor="#ffffff">
+<h1>Overview</h1>
+<p>
+The debugger can work in either text (console) mode, or in graphical user 
+ interface mode. The text-based interface is somewhat GDB-like, and
+ may come in handy on systems that don't have X-Window, or when debugging
+ over a slow dial-up line.</p>
+<p>
+The debugger has a <a name="#ld_path">plug-in (or component-based) architecture</a>. 
+ At its core it has the main executable (the debugger engine).
+<br>
+<br><font face="courier">
+export LD_LIBRARY_PATH=<br>${LD_LIBRARY_PATH}:/usr/local/zero/bin</font></p>
+<p>
+Additional components, or plug-ins, include: the GUI, debug information
+ decoders for the DWARF and STABS formats, and more optional extensions.</p>
+<p>
+If the environment variable named <a name="#plugin_path">
+ZERO_PLUGIN_PATH</a> is set, then it is 
+ treated as a colon-delimited list of paths to be searched for plugins;
+ otherwise, assuming for example, that the debugger is installed in 
+ /usr/local/zero/, all shared objects in /usr/local/zero/plugin will be
+ automatically probed when the program starts; if the path exists, the
+ shared objects that are detected as valid plug-ins are loaded. </p>
+<p>
+The modular architecture gives the user the flexibility to decide what 
+ plug-ins should be used for a given task. Plug-ins can be organized 
+ into different directories, or moved around, so that only the ones that 
+ are needed are loaded.</p>
+<p>
+One can have two plug-in directories, and only one containing the GUI (zgui.so) 
+ plugin; by making ZERO_PLUGIN_PATH to point
+ to one directory or the other, the debugger can be launched in text or graphic mode.
+<br>
+<font color="green"><b>Note:</b></font>
+Another method for selecting between the text and graphic modes is
+ to launch zero with the <i>--ui-disable</i> command line option.
+<br>
+For a similar reason, if you know that your application is built with
+ STABS debug symbols precisely (the default for older compilers such as
+ GCC 2.95), then there's no need to load the DWARF reader into memory.
+</p>
+</body>
+</html>

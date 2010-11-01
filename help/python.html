@@ -1,0 +1,50 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<body leftmargin="10" topmargin="10" bgcolor="#ffffff">
+<h1>Controlling the Debugger with Python</h1>
+<p>
+The Zero debugger ships with a plugin <code>(zpython.so)</code>
+embedding a Python interpreter.</p>
+<p>
+The interpreter is augmented with the <i><a href="pyref.html#zero">zero</a></i> module, 
+which provides access
+to the fundamental building blocks of the debugger. One can access artifacts
+such as <a href="pyref.html#Debugger">zero.Debugger</a>,
+<a href="pyref.html#Process">zero.Process</a>, <a href="pyref.html#Thread">zero.Thread</a>,
+<a href="pyref.html#BreakPoint">zero.BreakPoint</a>, and so on. </p>
+<p>
+The plugin also arranges for user-defined callback functions to be invoked when
+interesting events (such as a breakpoint being hit, for example) occur.  </p>
+<p>
+There are several ways to feed Python scriptlets to the debugger:
+<li>specify a Python source file at the command line, like so:
+    <code>zero --py-run=<em>sourcefile</em></code>;</li>
+<li>
+put the code in a hidden file named <code>.zero.py</code>, in the current directory;</li>
+<li>
+put the code in a hidden file named <code>.zero.py</code> in the plugins directory
+(as specified by the <a href="overview.html#plugin_path">ZERO_PLUGIN_PATH</a> environmental variable).;</li>
+
+<li>type the code interactively in the Python Console 
+<br>
+<font color="green"><b>Note:</b></font>
+the Console is not available in the BETA and DEMO versions of the program).
+</li>
+</p>
+<p>
+<br>
+<font color="green"><b>Note:</b></font>
+The <a href="pyexample.html">.zero.py</a> file that currently ships with the debugger (and is installed in the
+plugins directory) implements the <a href="pycallbacks.html#on_debug_symbol">
+<code>on_debug_symbol</code></a> callback. This allows
+STL string, set and vector objects to be displayed in a more intuitive way.
+Users may extend this file with their own custom visualisations for various
+data types. The callback acts as a filter, returning None if no transformation 
+should be applied.
+</p>
+<p>More info is available at <a href="http://www.zero-bugs.com/python.html">
+http://www.zero-bugs.com/python.html</a>
+</p>
+</body>
+</html>

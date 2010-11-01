@@ -1,0 +1,7 @@
+This directory contains the source code for a Zero Debugger plug-in
+that implements a GUI using the GTK-- library.
+
+The GUI runs in its own separate thread.
+
+The code compiles both with Gtk 1.2 and Gtkmm 2.4 (uses adapter classes
+where needed).

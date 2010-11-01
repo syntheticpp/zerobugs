@@ -1,0 +1,34 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<body leftmargin="10" topmargin="10" bgcolor="#ffffff">
+    <h1><a name="arrays.html#arrays">
+        Evaluating Array Ranges
+    </a></h1>
+    <p>
+    In order to avoid linear complexity in displaying large arrays,
+    the ZeroBUGS' built-in expression interpreter extends the C/C++
+    language rules with a new postfix grammar rule.</p>
+
+    <p>Given an array <code>myArray</code>, you can inspect a range of values
+    by evaluating any of the following expressions:
+    <ol>
+        <li><code>myArray[low:high]</code></li>
+        <li><code>myArray[:high]</code></li>
+        <li><code>myArray[low:]</code></li>
+    </ol>
+    where <code>low</code> and <code>high</code> can be any legal expressions that
+    evaluate to a value of integer type.</p>
+
+    <p>In addition, you can inspect any individual element of the array,
+    by evaluating <code>myArray[index]</code>, where <code>index</code>
+    is some expression that evaluates to an integer.</p>
+
+    <p>The interpreter limits internally the number of elements that are 
+    shown when none of the above subscript postfix expressions are used.
+    The value is determined by the <a href="environ.html#max_array">ZERO_MAX_ARRAY</a>
+    environment variable.</p>
+    
+    <p><em><small>Copyright (c) 2007  Zero Systems LLC </small></em></p>
+</body>
+</html>

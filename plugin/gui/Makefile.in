@@ -1,0 +1,179 @@
+# vim: noexpandtab: tabstop=4: shiftwidth=4
+# $Id: Makefile.in 731 2010-10-31 07:52:59Z root $
+# -------------------------------------------------------------------------
+# This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu
+#
+# Distributed under the Boost Software License, Version 1.0.
+# (See accompanying file LICENSE_1_0.txt or copy at
+# http://www.boost.org/LICENSE_1_0.txt)
+# -------------------------------------------------------------------------
+#
+ifeq ($(TOP),)
+ TOP=../..
+endif
+
+include $(TOP)/zdk/make/Common.mak
+
+LIBS+=-ldharma -ltypez -lunmangle -lzdk
+LDLIBS+=-lpthread
+CXXFLAGS+=-frtti
+@FONT_ATSUI@
+
+GTKMM_2=@GTKMM_2@
+#GTKSVMM_VERSION=@GTKSVMM_VERSION@
+
+ifneq ($(GTKMM_2),)
+  ifeq ($(GTKSOURCEVIEWMM_CFLAGS),)
+	CXXFLAGS+=-I/usr/include/gtksourceviewmm-1.0
+	LDLIBS+=-lgtksourceviewmm-1.0
+  endif
+endif
+
+CXXFLAGS+=@GTKMM_CFLAGS@ @CAIROMM_CFLAGS@ @X11_CFLAGS@ @LIBGTKHTML_CFLAGS@
+LDLIBS+=@LIBGTKHTML_LIBS@ @CAIROMM_LIBS@ @GTKMM_LIBS@ @X11_LIBS@
+
+#GCC 4.2, deprecated conversion from const string to char*
+CXXFLAGS+=-Wno-deprecated
+
+ifneq ($(GTKMM_2),)
+ CXXFLAGS+=-DGTKMM_2
+
+else 
+#
+#gtk--1.2
+#
+ifneq ($(LIBGTKHTML_LIBS),)
+ CXXFLAGS+=\
+	-I/usr/include/gtkhtml-1.1 \
+	-I/usr/include/libgnome-2.0 \
+
+ LDLIBS+=-lgtkhtml-1.1
+
+else
+# Use the old XmHTML;
+# yes, it is buggy, but it is good enough for the
+# help viewer, and it pulls in lesser dependencies
+ CXXFLAGS+=-DUSE_GTK_XmHTML=1 -I/usr/include/gnome-1.0
+
+LDLIBS+=-lgtkxmhtml -lXpm -lz
+
+endif
+endif
+
+include $(TOP)/zdk/make/Gtkmm.mak
+
+LDLIBS+=-lm
+
+LDFLAGS+=-Wl,--no-undefined 
+
+LDLIBS+=
+
+
+################################################################
+SRCS=\
+	all_visible_strategy.cpp\
+	app_slots.cpp			\
+	bool_filter_param.cpp	\
+	check_listitem.cpp		\
+	code_view.cpp			\
+	custom_tooltip.cpp		\
+	dialog_box.cpp			\
+	edit_in_place.cpp		\
+	edit_breakpoint_dlg.cpp \
+	edit_watchpoint_dlg.cpp \
+	ensure_font.cpp			\
+	entry_dialog.cpp		\
+	env_dialog.cpp			\
+	eval_events.cpp			\
+	expr_eval_view.cpp		\
+	expr_eval_dialog.cpp	\
+	file_selection.cpp		\
+	find_dialog.cpp			\
+	fixed_font.cpp			\
+	interpreter_box.cpp		\
+	heap_view.cpp			\
+	help_viewer.cpp			\
+	history_dlg.cpp			\
+	html_view.cpp			\
+	layout_manager.cpp		\
+	left_layout_strategy.cpp\
+	line_wrap.cpp			\
+	locals_view.cpp			\
+	lower_fun.cpp			\
+	main_win_toolbar.cpp	\
+	main_window.cpp			\
+	memory_req_handler.cpp	\
+	memory_view.cpp			\
+	menu_entry.cpp			\
+	message_box.cpp			\
+	modules_view.cpp		\
+	new_breakpoint_dlg.cpp	\
+	options.cpp				\
+	output_dialog.cpp		\
+	popup_list.cpp			\
+	program_toolbar.cpp		\
+	program_toolbar2.cpp	\
+	program_view.cpp		\
+	progress_box.cpp		\
+	radio_group.cpp			\
+	register_view.cpp		\
+	right_click_context.cpp	\
+	right_menu.cpp			\
+	run_dialog.cpp			\
+	gui.cpp					\
+	select_dialog.cpp		\
+	select_pid_dialog.cpp 	\
+	signals_dialog.cpp		\
+	src_tabs.cpp			\
+	stack_view.cpp			\
+	step_over_dialog.cpp	\
+	text_dialog.cpp			\
+	text_entry.cpp			\
+	text_entry_box.cpp		\
+	thread_marshaller.cpp	\
+	thread_view.cpp			\
+	variables_view.cpp		\
+	set_cursor.cpp			\
+	set_watchpoint_dlg.cpp	\
+	symkey.cpp				\
+	split_tab_layout_strategy.cpp \
+	tab_layout_strategy.cpp	\
+	watchpoints.cpp			\
+	watch_view.cpp			\
+	gtkmm/stock.cpp			\
+	$(NULL)
+
+ifeq ($(GTKMM_2),1)
+
+SRCS+=						\
+	code_view_2.cpp			\
+	check_listitem_2.cpp	\
+	gtkmm/clist.cpp			\
+	gtkmm/ctree.cpp			\
+	gtkmm/list.cpp			\
+	gtkmm/listitem.cpp		\
+	gtkmm/notebook.cpp		\
+	gtkmm/text.cpp			\
+	main_window_gtk2.cpp	\
+	text_mark.cpp			\
+	$(NULL)				
+else
+
+SRCS+=						\
+	check_listitem_1.cpp	\
+	code_view_1.cpp			\
+	main_window_gtk1.cpp	\
+	$(NULL)				
+endif
+
+PLUGIN=$(PLUGIN_PATH)zgui.so
+TARGET=$(PLUGIN)
+
+################################################################
+all: $(PLUGIN)
+
+$(PLUGIN): $(LIB_FILES) $(OBJS)
+	mkdir -p $(PLUGIN_PATH); 
+	$(LINK) -shared $(OBJS) $(LDFLAGS) $(LDLIBS) -o $@ 
+
+include $(TOP)/zdk/make/Epilogue.mak

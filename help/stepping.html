@@ -1,0 +1,23 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<body leftmargin="10" topmargin="10" bgcolor="#ffffff">
+    <h1>Stepping Over Common Functions</h1>
+    <p>
+    Modern C++ programs make frequent use of smart pointers and STL.
+    Most of the time, given a statement like
+    <code>
+        p->func();
+    </code>
+    where p is a smart pointer, you may want to step inside function
+    <i>func</i> rather than p's <code>operator->()</code>.
+    </p>
+
+    <p>
+    To this purpose, the contextual menu entry <i>Always Step Over...</i>
+    may be used. The first time the debugger steps inside <code>operator->()</code>
+    code, use the options under this menu to disable future stepping inside
+    the function.
+    </p> 
+</body>
+</html>

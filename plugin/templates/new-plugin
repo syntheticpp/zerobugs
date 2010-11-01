@@ -1,0 +1,96 @@
+#! /bin/bash
+# $Id: new-plugin 531 2008-06-25 16:17:34Z root $
+#
+# Generate plugin skeleton. Copyright(c) 2004 Cristian Vlasceanu
+#
+for arg in $@
+do
+    case $arg in 
+    --name=*) plugin_name=${arg/--name=/};;
+    --ns=*) namespace=${arg/--ns=/};;
+    --dir=*) plugin_dir=${arg/--dir=/};;
+    --debug-reader) debug_impl="yes";;
+	*) echo "Argument not understood: $arg"; exit 1;;
+    esac
+done
+
+if [ -z "$plugin_name" ]
+then
+    echo "plugin name expected"
+	echo "usage: $0 --name=class_name [--ns=namespace] [--dir=dir] [--debug-reader]"
+	echo "--debug-reader generates a plugin that implements DebugInfoReader".
+    exit 1
+fi
+
+plugin_file=`echo $plugin_name | tr [A-Z] [a-z]`
+
+if [ -z "$plugin_dir" ]
+then
+    lwr=`echo $plugin_name | tr [A-Z] [a-z]`
+    plugin_dir=../${lwr}
+fi
+
+if [ -n "$namespace" ]
+then 
+    begin_ns="namespace $namespace{"
+    end_ns="}// namespace $namespace"
+    using_ns="using namespace ${namespace};"
+fi
+        
+if [ `mkdir $plugin_dir` ]
+then 
+    echo "Could not create directory: " $plugin_dir 
+    exit 1
+fi
+
+
+set -o noglob
+#shopt -s extglob 
+IFS=
+
+function process()
+{
+    cat $1 | \
+    while read line 
+    do
+        case $line in
+        'IF ${DEBUG_IMPL}'*) 
+            debug_section="yes";;
+
+        ENDIF*)
+            debug_section="no";;
+
+        *)  if [[ ($debug_section != "yes") || ($debug_impl == "yes") ]]
+            then
+                line=${line//\$'{PLUGIN_CLASS}'/"$plugin_name"}
+                line=${line//\$'{PLUGIN_FILE}'/"$plugin_file"}
+                line=${line//\$'{BEGIN_NAMESPACE}'/"$begin_ns"}
+                line=${line//\$'{END_NAMESPACE}'/"$end_ns"};
+                line=${line//\$'{USING_NAMESPACE}'/"$using_ns"}
+                echo $line
+            fi;;
+        esac
+    done > ${plugin_dir}/$2
+}
+
+
+#
+# Generate the header file
+#
+process plugin.h.tmpl ${plugin_file}.h
+
+#
+# Generate the .cpp file
+#
+process plugin.cpp.tmpl ${plugin_file}.cpp
+
+#
+# Generate the makefile
+#
+cat Makefile.tmpl | \
+while read line 
+do
+    echo $line | sed -e "s/\${PLUGIN_NAME}/${plugin_file}/g"
+done > ${plugin_dir}/Makefile
+
+

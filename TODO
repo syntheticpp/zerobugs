@@ -1,0 +1,3 @@
+ - Unify the dbgout() event logging mechanisms
+ - Support FreeBSD (as of now, the FBSD-related classes in target are just a sketch).
+

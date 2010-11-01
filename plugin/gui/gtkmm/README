@@ -1,0 +1,18 @@
+The GUI plug-in has been developed initially using the Gtkmm 1.2 library.
+
+The reason for not going with 2.x (at that time, 2003-ish) was that I wanted to 
+be able to run on RedHat 7.1 and 7.2 boxes, without having to upgrade to the 2.x 
+suite of Gtk and gnome libraries.
+
+I am now "porting" the UI code to Gtkmm 2.x, for a reverse rationale: I want
+to run on Fedora boxes without having to install the old Gtk stuff.
+
+The strategy that I chose is to make minimum changes to the UI code, and to
+use the ADAPTER PATTERN. Widgets that have been deprecated in Gtk 2 (such as
+List, CList, CTree, Text) are faked by using widgets with close functionality 
+(TreeView, TextView), wrapped in adapter classes. The adapter classes implement
+the same interfaces as the old widgets, in term of the new ones.
+
+The "adapting" of new widgets into old widgets goes only as far as to cover the
+needs for my GUI, it is not a general-purpose implementation.
+

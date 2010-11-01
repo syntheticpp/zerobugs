@@ -1,0 +1,87 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<body leftmargin="10" topmargin="10" bgcolor="#ffffff">
+<h1>Prepare Your Program for Debugging</h1>
+<p>
+<i>See also: </i><a href="http://en.wikipedia.org/wiki/Debugging_data_format">Debug Formats</a>
+</p>
+<p>
+The debugger supports the GNU C/C++ compilers, version 2.95 and up.
+To enable debugging of your programs, the compiler must include 
+debugging information in the executables that it builds. To this end, you can 
+specify one of the following command line options when compiling your programs:</p>
+<p>
+<li><i>-g</i> to generate debug information in the default format</li>
+<li><i>-gstabs+</i> to generate debug information in the extended STABS format. Please note that
+even though the <i>-gstabs</i> option is also supported, it will generate lesser information than the 
+<i>-gstabs+</i> options; namely, member function information for C++ classes will not be
+emitted. For C++ programs, use the <i>-gstabs+</i> option, or</li>
+<li><i>-gdwarf-2</i> for debug information in the DWARF2 format. This is the
+ default for GCC 3.2 and above, and it is the recommended format for large C++ programs. 
+ The DWARF format is superior to STABS. The former allows for accelerated (or indexed)
+ queries, while the latter imposes a linear complexity on accessing symbol and type
+ information.</li>
+</p> 
+<p>It is highly recommended that you turn off code optimizations (with the gcc <i>-O0</i>
+ command line flag).
+</p>
+<p>There are three ways you can debug a program:
+<p>
+<li><a href="#attach">attach</a> to a running process</li>
+<li>execute a process from the debugger</li>
+<li><a href="#core">load a core file</a> that was dumped to disc when a program crashed</li><br></p>
+<p>
+<h1>Executing Programs</h1>
+<p>
+To execute a program from under the debugger, go to the <i>File</i>
+ menu, then select <i>Execute</i>. The dialog box that pops up lets you select the 
+ executable file. If the name of the executable file contains white spaces, 
+ make sure to surround the filename with double quotes.
+</p>
+<b><font color="green">Note:</font></b>
+In text (console) mode, use the <code>exec</code> command.
+<p>
+ By default, the program inherits the current environment, but you can
+ add, remove, or edit the environment variables that are passed to the new process.
+ To do so, in the <i>Execute</i> dialog, press the <i>Environment</i> button.
+</p>
+<br>
+<a name="#attach"><h1>Attaching to Running Programs</h1></a>
+<p>
+To attach to a running process, select <i>File</i>, then <i>Attach</i>. This brings
+ up a dialog that lets you select from a tree of running processes 
+ (processes with higher privileges than your account are not shown).
+</p>
+<br>
+<a name="#core"><h1>Loading a Core Dump</h1></a>
+<p>Core files, or core dumps, are produced by the operating system when an application
+ crashes (typically because it has received a signal that was not handled internally).
+ This debugger can load core files so that applications can be debugged "post-mortem".
+<p><b><font color="green">Note:</font></b>
+Some shells may disable the generation of core dumps by default. To learn 
+ more about how to enable core dumps, please consult your shell's manual pages. For 
+ example, the Bourne Again Shell command for turning on core dumps is:<br>
+ <code>ulimit -c unlimited</code></p>
+<p>
+To load a core file, select <i>File</i>, <i>Open</i>, <i>Core File</i>. The dialog that
+ pops up lets you browse through core files and select the one that you wish to look at.</p>
+<br>
+<b><font color="green">Notes:</font></b>
+<li>When you execute the debugged process from the debugger, when you detach,
+ or quit the debugger, the spawned process and all of its threads will be
+ killed.</li>
+<li>When you attach to an already running process, detaching will not kill it.</li>
+<li>When you load a core file, certain functions such as setting a breakpoint
+ are not available (since they require a live process to work).</li>
+<br>
+<p>In text mode, you can use the following commands:
+<li>attach</li>
+<li>exec</li>
+<li>loadcore</li>
+</p>
+In text mode, type:<br>
+<code>help &lt;command&gt;</code><br>
+(where &lt;command&gt is one of the above) for more details.
+</body>
+</html>

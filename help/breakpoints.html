@@ -1,0 +1,62 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<body leftmargin="10" topmargin="10" bgcolor="#ffffff">
+<h1>Breakpoint Types</h1>
+<p>
+The debugger supports code breakpoints (or simply breakpoints), and 
+ memory breakpoints (also called watchpoints).
+<p>
+A watchpoint is activated when a memory location is read or written, whereas 
+ a code breakpoint is activated when an instruction is being executed.
+<p>
+To set a code breakpoint, go to the <i>Breakpoints</i> menu, and select 
+ <i>New Breakpoint</i>. In the entry dialog, type either the fully qualified name
+ of a function, or an address.</p>
+<p>If the specified function is inside of a shared object that
+has not been loaded into memory yet, the debugger scans recursively
+the DT_NEEDED information in the main executable and all libraries,
+and locates the shared object that contains the specified function.
+It then creates a "deferred breakpoint", which becomes a true breakpoint
+once the shared object is loaded.</p>
+<p>
+Shared objects which are loaded explicitly with <code>dlopen</code> are
+not listed in the DT_NEEDED area of the ELF program, so you need
+to provide the information to the debugger by using the <i>View</i>
+--&gt; <i>Modules</i> menu, then click on the <i>Add Shared Object</i>
+button, at the bottom of the dialog box.
+</p>
+<p>
+<font color="green"><b>Note:</b></font>
+The debugged program has to be stopped in the debugger in order to be able
+ to set or modify breakpoints. When the program is running, the user
+ interface controls for setting and editing breakpoints are disabled 
+ (grayed out).</p>
+<p>
+ Another way for inserting breakpoints is to use the right-click menu. 
+ You can
+ insert a breakpoint at a given source line by right-clicking on it and
+ selectind the <i>Insert Breakpoint</i> menu entry.</p>
+<h1>Setting Watchpoints</h1>
+<p>
+Watchpoints (or memory breakpoints) allow you to monitor when a <a href="locals.html">
+program variable</a> has changed value.</p>
+<p>
+A watchpoint can be set by selecting the <i>Breakpoints</i> --&gt; <i>Watch...</i> menu, 
+ or by right-clicking a variable (in either the local variables view or the expression
+ evaluation view) and selecting <i>Set Watchpoint</i> from the contextual menu.
+<p>
+In the first case, the dialog that pops up will prompt you to enter the address
+ that you wish to monitor. In the second case, the address is automatically assumed
+ to be the address of the variable that you have clicked on. If the variable is
+ local (stack-based), then the watchpoint will fire only when the current function
+ is active.
+</p>
+<p><i>See also:</i> <a href="breakpoints2.html#modif_bpnts">Modifying Breakpoints</a></p>
+<p><i>See also:</i> <a href="breakpoints2.html#cond_bpnts">Conditional Breakpoints</a></p>
+<p><i>See also:</i> <a href="http://www.zerobugs.org/debuggerbreakpoints">
+Article on Debugger Breakpoints</a> and i
+<a href="http://en.wikipedia.org/wiki/Breakpoint">Wikipedia Definition of Breakpoint</a>
+</p>
+</body>
+</html>

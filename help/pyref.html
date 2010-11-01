@@ -1,0 +1,1569 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<body leftmargin="10" topmargin="10" bgcolor="#ffffff">
+
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="heading">
+<tr bgcolor="#7799ee">
+<td valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong>zero</strong></big></big></font></td
+><td align=right valign=bottom
+><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br>(built-in)</font></td></tr></table>
+    <p></p>
+<p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ee77aa">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Classes</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#ee77aa"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl>
+<dt><font face="helvetica, arial">Boost.Python.instance(<a href="__builtin__.html#object">__builtin__.object</a>)
+</font></dt><dd>
+<dl>
+<dt><font face="helvetica, arial"><a href="pyref.html#BreakPoint">BreakPoint</a>
+</font></dt><dt><font face="helvetica, arial"><a href="pyref.html#BreakPointAction">BreakPointAction</a>
+</font></dt><dt><font face="helvetica, arial"><a href="pyref.html#ClassBase">ClassBase</a>
+</font></dt><dt><font face="helvetica, arial"><a href="pyref.html#ClassMember">ClassMember</a>
+</font></dt><dt><font face="helvetica, arial"><a href="pyref.html#ClassMethod">ClassMethod</a>
+</font></dt><dt><font face="helvetica, arial"><a href="pyref.html#DataType">DataType</a>
+</font></dt><dd>
+<dl>
+<dt><font face="helvetica, arial"><a href="pyref.html#ClassType">ClassType</a>
+</font></dt></dl>
+</dd>
+<dt><font face="helvetica, arial"><a href="pyref.html#DebugEvent">DebugEvent</a>
+</font></dt><dt><font face="helvetica, arial"><a href="pyref.html#DebugSymbol">DebugSymbol</a>
+</font></dt><dt><font face="helvetica, arial"><a href="pyref.html#Debugger">Debugger</a>
+</font></dt><dt><font face="helvetica, arial"><a href="pyref.html#DebuggerCommand">DebuggerCommand</a>
+</font></dt><dd>
+<dl>
+<dt><font face="helvetica, arial"><a href="pyref.html#Command">Command</a>
+</font></dt></dl>
+</dd>
+<dt><font face="helvetica, arial"><a href="pyref.html#Elf_Hdr">Elf_Hdr</a>
+</font></dt><dt><font face="helvetica, arial"><a href="pyref.html#Frame">Frame</a>
+</font></dt><dt><font face="helvetica, arial"><a href="pyref.html#Module">Module</a>
+</font></dt><dt><font face="helvetica, arial"><a href="pyref.html#Process">Process</a>
+</font></dt><dt><font face="helvetica, arial"><a href="pyref.html#Properties">Properties</a>
+</font></dt><dt><font face="helvetica, arial"><a href="pyref.html#StackTrace">StackTrace</a>
+</font></dt><dt><font face="helvetica, arial"><a href="pyref.html#Symbol">Symbol</a>
+</font></dt><dt><font face="helvetica, arial"><a href="pyref.html#SymbolMap">SymbolMap</a>
+</font></dt><dt><font face="helvetica, arial"><a href="pyref.html#SymbolTable">SymbolTable</a>
+</font></dt><dt><font face="helvetica, arial"><a href="pyref.html#TemplateType">TemplateType</a>
+</font></dt><dt><font face="helvetica, arial"><a href="pyref.html#Thread">Thread</a>
+</font></dt><dt><font face="helvetica, arial"><a href="pyref.html#TranslationUnit">TranslationUnit</a>
+</font></dt><dt><font face="helvetica, arial"><a href="pyref.html#TypeSystem">TypeSystem</a>
+</font></dt></dl>
+</dd>
+</dl>
+ <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="#BreakPoint">class <strong>BreakPoint</strong></a>(Boost.Python.instance)</font></td></tr>
+    
+<tr><td bgcolor="#ffc8d8"><tt>&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl><dt>Method resolution order:</dt>
+<dd><a href="pyref.html#BreakPoint">BreakPoint</a></dd>
+<dd>Boost.Python.instance</dd>
+<dd><a href="__builtin__.html#object">__builtin__.object</a></dd>
+</dl>
+<hr>
+Methods defined here:<br>
+<dl><dt><a name="#BreakPoint-actions"><strong>actions</strong></a>(...)</dt><dd><tt>C++&nbsp;signature:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#BreakPoint-actions">actions</a>(<a href="#BreakPoint">BreakPoint</a>*,&nbsp;char&nbsp;const*&nbsp;name)&nbsp;-&gt;&nbsp;boost::python::list<br>
+&nbsp;<br>
+Return&nbsp;a&nbsp;list&nbsp;of&nbsp;actions&nbsp;associated&nbsp;with&nbsp;this&nbsp;breakpoint<br>
+C++&nbsp;signature:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#BreakPoint-actions">actions</a>(<a href="#BreakPoint">BreakPoint</a>*)&nbsp;-&gt;&nbsp;boost::python::list</tt></dd></dl>
+
+<dl><dt><a name="#BreakPoint-addr"><strong>addr</strong></a>(...)</dt><dd><tt>return&nbsp;address&nbsp;of&nbsp;this&nbsp;breakpoint<br>
+C++&nbsp;signature:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#BreakPoint-addr">addr</a>(<a href="#BreakPoint">BreakPoint</a>&nbsp;{lvalue})&nbsp;-&gt;&nbsp;unsigned&nbsp;long</tt></dd></dl>
+
+<dl><dt><a name="#BreakPoint-is_enabled"><strong>is_enabled</strong></a>(...)</dt><dd><tt>C++&nbsp;signature:<br>
+<a href="#BreakPoint-is_enabled">is_enabled</a>(<a href="#BreakPoint">BreakPoint</a>&nbsp;{lvalue})&nbsp;-&gt;&nbsp;bool</tt></dd></dl>
+
+<dl><dt><a name="#BreakPoint-owner"><strong>owner</strong></a>(...)</dt><dd><tt>return&nbsp;the&nbsp;thread&nbsp;that&nbsp;owns&nbsp;this&nbsp;breakpoint<br>
+C++&nbsp;signature:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#BreakPoint-owner">owner</a>(<a href="#BreakPoint">BreakPoint</a>&nbsp;{lvalue})&nbsp;-&gt;&nbsp;<a href="#Thread">Thread</a>*</tt></dd></dl>
+
+<dl><dt><a name="#BreakPoint-remove"><strong>remove</strong></a>(...)</dt><dd><tt>Remove&nbsp;the&nbsp;breakpoint&nbsp;if&nbsp;it&nbsp;was&nbsp;set&nbsp;interactively&nbsp;by&nbsp;the&nbsp;user;<br>
+this&nbsp;method&nbsp;has&nbsp;no&nbsp;effect&nbsp;on&nbsp;breakpoints&nbsp;set&nbsp;internally&nbsp;by&nbsp;the<br>
+debugger&nbsp;engine.<br>
+C++&nbsp;signature:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#BreakPoint-remove">remove</a>(<a href="#BreakPoint">BreakPoint</a>*)&nbsp;-&gt;&nbsp;void*</tt></dd></dl>
+
+<dl><dt><a name="#BreakPoint-symbol"><strong>symbol</strong></a>(...)</dt><dd><tt>return&nbsp;the&nbsp;ELF&nbsp;symbol&nbsp;corresponding&nbsp;to&nbsp;this&nbsp;breakpoint<br>
+C++&nbsp;signature:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#BreakPoint-symbol">symbol</a>(<a href="#BreakPoint">BreakPoint</a>&nbsp;{lvalue})&nbsp;-&gt;&nbsp;<a href="#Symbol">Symbol</a>*</tt></dd></dl>
+
+<dl><dt><a name="#BreakPoint-type"><strong>type</strong></a>(...)</dt><dd><tt>return&nbsp;the&nbsp;zero.<a href="#BreakPoint">BreakPoint</a>.Type<br>
+C++&nbsp;signature:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#BreakPoint-type">type</a>(<a href="#BreakPoint">BreakPoint</a>&nbsp;{lvalue})&nbsp;-&gt;&nbsp;<a href="#BreakPoint">BreakPoint</a>::Type</tt></dd></dl>
+
+<hr>
+Data and other attributes defined here:<br>
+<dl><dt><strong>Type</strong> = &lt;class '__main__.zero.Type'&gt;</dl>
+
+<dl><dt><strong>__init__</strong> = &lt;built-in function __init__&gt;<dd><tt>Raises&nbsp;an&nbsp;exception<br>
+This&nbsp;class&nbsp;cannot&nbsp;be&nbsp;instantiated&nbsp;from&nbsp;Python</tt></dl>
+
+<hr>
+Data descriptors inherited from Boost.Python.instance:<br>
+<dl><dt><strong>__dict__</strong></dt>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+</dl>
+<hr>
+Data and other attributes inherited from Boost.Python.instance:<br>
+<dl><dt><strong>__new__</strong> = &lt;built-in method __new__ of Boost.Python.class object at 0x2aaaab9ca080&gt;<dd><tt>T.<a href="#BreakPoint-__new__">__new__</a>(S,&nbsp;...)&nbsp;-&gt;&nbsp;a&nbsp;new&nbsp;object&nbsp;with&nbsp;type&nbsp;S,&nbsp;a&nbsp;subtype&nbsp;of&nbsp;T</tt></dl>
+
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="#BreakPointAction">class <strong>BreakPointAction</strong></a>(Boost.Python.instance)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt>describes&nbsp;an&nbsp;action&nbsp;associated&nbsp;with&nbsp;a&nbsp;breakpoint<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%"><dl><dt>Method resolution order:</dt>
+<dd><a href="pyref.html#BreakPointAction">BreakPointAction</a></dd>
+<dd>Boost.Python.instance</dd>
+<dd><a href="__builtin__.html#object">__builtin__.object</a></dd>
+</dl>
+<hr>
+Methods defined here:<br>
+<dl><dt><a name="#BreakPointAction-activation_counter"><strong>activation_counter</strong></a>(...)</dt><dd><tt>C++&nbsp;signature:<br>
+<a href="#BreakPointAction-activation_counter">activation_counter</a>(<a href="#BreakPointAction">BreakPointAction</a>*)&nbsp;-&gt;&nbsp;unsigned&nbsp;long</tt></dd></dl>
+
+<dl><dt><a name="#BreakPointAction-condition"><strong>condition</strong></a>(...)</dt><dd><tt>return&nbsp;the&nbsp;conditional&nbsp;expression&nbsp;for&nbsp;activating&nbsp;this&nbsp;action,&nbsp;if&nbsp;any<br>
+C++&nbsp;signature:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#BreakPointAction-condition">condition</a>(<a href="#BreakPointAction">BreakPointAction</a>*)&nbsp;-&gt;&nbsp;std::string</tt></dd></dl>
+
+<dl><dt><a name="#BreakPointAction-counter"><strong>counter</strong></a>(...)</dt><dd><tt>return&nbsp;the&nbsp;number&nbsp;of&nbsp;times&nbsp;that&nbsp;the&nbsp;breakpoint&nbsp;has<br>
+been&nbsp;hit&nbsp;to&nbsp;date;&nbsp;NOTE:&nbsp;if&nbsp;a&nbsp;conditional&nbsp;expression<br>
+has&nbsp;been&nbsp;specified,&nbsp;the&nbsp;breakpoint&nbsp;is&nbsp;considered&nbsp;"hit"&nbsp;only<br>
+when&nbsp;the&nbsp;condition&nbsp;evaluates&nbsp;to&nbsp;True&nbsp;(non-zero)<br>
+C++&nbsp;signature:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#BreakPointAction-counter">counter</a>(<a href="#BreakPointAction">BreakPointAction</a>*)&nbsp;-&gt;&nbsp;unsigned&nbsp;long</tt></dd></dl>
+
+<dl><dt><a name="#BreakPointAction-disable"><strong>disable</strong></a>(...)</dt><dd><tt>C++&nbsp;signature:<br>
+<a href="#BreakPointAction-disable">disable</a>(<a href="#BreakPointAction">BreakPointAction</a>*)&nbsp;-&gt;&nbsp;void*</tt></dd></dl>
+
+<dl><dt><a name="#BreakPointAction-enable"><strong>enable</strong></a>(...)</dt><dd><tt>C++&nbsp;signature:<br>
+<a href="#BreakPointAction-enable">enable</a>(<a href="#BreakPointAction">BreakPointAction</a>*)&nbsp;-&gt;&nbsp;void*</tt></dd></dl>
+
+<dl><dt><a name="#BreakPointAction-name"><strong>name</strong></a>(...)</dt><dd><tt>C++&nbsp;signature:<br>
+<a href="#BreakPointAction-name">name</a>(<a href="#BreakPointAction">BreakPointAction</a>&nbsp;{lvalue})&nbsp;-&gt;&nbsp;char&nbsp;const*</tt></dd></dl>
+
+<dl><dt><a name="#BreakPointAction-set_activation_counter"><strong>set_activation_counter</strong></a>(...)</dt><dd><tt>C++&nbsp;signature:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#BreakPointAction-set_activation_counter">set_activation_counter</a>(<a href="#BreakPointAction">BreakPointAction</a>*,&nbsp;unsigned&nbsp;long&nbsp;count,&nbsp;bool&nbsp;autoReset)&nbsp;-&gt;&nbsp;void*<br>
+&nbsp;<br>
+set&nbsp;an&nbsp;activation&nbsp;counter&nbsp;for&nbsp;a&nbsp;breakpoint&nbsp;action;<br>
+the&nbsp;breakpoint&nbsp;must&nbsp;be&nbsp;hit&nbsp;the&nbsp;specified&nbsp;number&nbsp;of&nbsp;times<br>
+before&nbsp;the&nbsp;associated&nbsp;action&nbsp;is&nbsp;executed<br>
+NOTE&nbsp;that&nbsp;if&nbsp;a&nbsp;conditional&nbsp;expression&nbsp;is&nbsp;also&nbsp;in&nbsp;effect,<br>
+it&nbsp;takes&nbsp;precedence,&nbsp;and&nbsp;the&nbsp;breakpoint&nbsp;is&nbsp;considered&nbsp;"hit"<br>
+only&nbsp;when&nbsp;the&nbsp;condition&nbsp;evaluates&nbsp;to&nbsp;True<br>
+C++&nbsp;signature:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#BreakPointAction-set_activation_counter">set_activation_counter</a>(<a href="#BreakPointAction">BreakPointAction</a>*,&nbsp;unsigned&nbsp;long&nbsp;count)&nbsp;-&gt;&nbsp;void*</tt></dd></dl>
+
+<dl><dt><a name="#BreakPointAction-set_condition"><strong>set_condition</strong></a>(...)</dt><dd><tt>set&nbsp;the&nbsp;conditional&nbsp;expression&nbsp;for&nbsp;activating&nbsp;this&nbsp;action<br>
+C++&nbsp;signature:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#BreakPointAction-set_condition">set_condition</a>(<a href="#BreakPointAction">BreakPointAction</a>*,&nbsp;char&nbsp;const*)&nbsp;-&gt;&nbsp;void*</tt></dd></dl>
+
+<dl><dt><a name="#BreakPointAction-set_counter"><strong>set_counter</strong></a>(...)</dt><dd><tt>force&nbsp;counter&nbsp;to&nbsp;given&nbsp;value<br>
+C++&nbsp;signature:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#BreakPointAction-set_counter">set_counter</a>(<a href="#BreakPointAction">BreakPointAction</a>*,&nbsp;unsigned&nbsp;long)&nbsp;-&gt;&nbsp;void*</tt></dd></dl>
+
+<hr>
+Data and other attributes defined here:<br>
+<dl><dt><strong>__init__</strong> = &lt;built-in function __init__&gt;<dd><tt>Raises&nbsp;an&nbsp;exception<br>
+This&nbsp;class&nbsp;cannot&nbsp;be&nbsp;instantiated&nbsp;from&nbsp;Python</tt></dl>
+
+<hr>
+Data descriptors inherited from Boost.Python.instance:<br>
+<dl><dt><strong>__dict__</strong></dt>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+</dl>
+<hr>
+Data and other attributes inherited from Boost.Python.instance:<br>
+<dl><dt><strong>__new__</strong> = &lt;built-in method __new__ of Boost.Python.class object at 0x2aaaab9ca080&gt;<dd><tt>T.<a href="#BreakPointAction-__new__">__new__</a>(S,&nbsp;...)&nbsp;-&gt;&nbsp;a&nbsp;new&nbsp;object&nbsp;with&nbsp;type&nbsp;S,&nbsp;a&nbsp;subtype&nbsp;of&nbsp;T</tt></dl>
+
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="#ClassBase">class <strong>ClassBase</strong></a>(Boost.Python.instance)</font></td></tr>
+    
+<tr><td bgcolor="#ffc8d8"><tt>&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl><dt>Method resolution order:</dt>
+<dd><a href="pyref.html#ClassBase">ClassBase</a></dd>
+<dd>Boost.Python.instance</dd>
+<dd><a href="__builtin__.html#object">__builtin__.object</a></dd>
+</dl>
+<hr>
+Methods defined here:<br>
+<dl><dt><a name="#ClassBase-type"><strong>type</strong></a>(...)</dt><dd><tt>C++&nbsp;signature:<br>
+<a href="#ClassBase-type">type</a>(BaseClass&nbsp;const*)&nbsp;-&gt;&nbsp;RefPtr&lt;<a href="#DataType">DataType</a>&gt;</tt></dd></dl>
+
+<hr>
+Data and other attributes defined here:<br>
+<dl><dt><strong>__init__</strong> = &lt;built-in function __init__&gt;<dd><tt>Raises&nbsp;an&nbsp;exception<br>
+This&nbsp;class&nbsp;cannot&nbsp;be&nbsp;instantiated&nbsp;from&nbsp;Python</tt></dl>
+
+<hr>
+Data descriptors inherited from Boost.Python.instance:<br>
+<dl><dt><strong>__dict__</strong></dt>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+</dl>
+<hr>
+Data and other attributes inherited from Boost.Python.instance:<br>
+<dl><dt><strong>__new__</strong> = &lt;built-in method __new__ of Boost.Python.class object at 0x2aaaab9ca080&gt;<dd><tt>T.<a href="#ClassBase-__new__">__new__</a>(S,&nbsp;...)&nbsp;-&gt;&nbsp;a&nbsp;new&nbsp;object&nbsp;with&nbsp;type&nbsp;S,&nbsp;a&nbsp;subtype&nbsp;of&nbsp;T</tt></dl>
+
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="#ClassMember">class <strong>ClassMember</strong></a>(Boost.Python.instance)</font></td></tr>
+    
+<tr><td bgcolor="#ffc8d8"><tt>&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl><dt>Method resolution order:</dt>
+<dd><a href="pyref.html#ClassMember">ClassMember</a></dd>
+<dd>Boost.Python.instance</dd>
+<dd><a href="__builtin__.html#object">__builtin__.object</a></dd>
+</dl>
+<hr>
+Methods defined here:<br>
+<dl><dt><a name="#ClassMember-is_static"><strong>is_static</strong></a>(...)</dt><dd><tt>C++&nbsp;signature:<br>
+<a href="#ClassMember-is_static">is_static</a>(Member&nbsp;{lvalue})&nbsp;-&gt;&nbsp;bool</tt></dd></dl>
+
+<dl><dt><a name="#ClassMember-name"><strong>name</strong></a>(...)</dt><dd><tt>C++&nbsp;signature:<br>
+<a href="#ClassMember-name">name</a>(Member&nbsp;const*)&nbsp;-&gt;&nbsp;char&nbsp;const*</tt></dd></dl>
+
+<dl><dt><a name="#ClassMember-type"><strong>type</strong></a>(...)</dt><dd><tt>C++&nbsp;signature:<br>
+<a href="#ClassMember-type">type</a>(Member&nbsp;const*)&nbsp;-&gt;&nbsp;RefPtr&lt;<a href="#DataType">DataType</a>&gt;</tt></dd></dl>
+
+<hr>
+Data and other attributes defined here:<br>
+<dl><dt><strong>__init__</strong> = &lt;built-in function __init__&gt;<dd><tt>Raises&nbsp;an&nbsp;exception<br>
+This&nbsp;class&nbsp;cannot&nbsp;be&nbsp;instantiated&nbsp;from&nbsp;Python</tt></dl>
+
+<hr>
+Data descriptors inherited from Boost.Python.instance:<br>
+<dl><dt><strong>__dict__</strong></dt>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+</dl>
+<hr>
+Data and other attributes inherited from Boost.Python.instance:<br>
+<dl><dt><strong>__new__</strong> = &lt;built-in method __new__ of Boost.Python.class object at 0x2aaaab9ca080&gt;<dd><tt>T.<a href="#ClassMember-__new__">__new__</a>(S,&nbsp;...)&nbsp;-&gt;&nbsp;a&nbsp;new&nbsp;object&nbsp;with&nbsp;type&nbsp;S,&nbsp;a&nbsp;subtype&nbsp;of&nbsp;T</tt></dl>
+
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="#ClassMethod">class <strong>ClassMethod</strong></a>(Boost.Python.instance)</font></td></tr>
+    
+<tr><td bgcolor="#ffc8d8"><tt>&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl><dt>Method resolution order:</dt>
+<dd><a href="pyref.html#ClassMethod">ClassMethod</a></dd>
+<dd>Boost.Python.instance</dd>
+<dd><a href="__builtin__.html#object">__builtin__.object</a></dd>
+</dl>
+<hr>
+Methods defined here:<br>
+<dl><dt><a name="#ClassMethod-access"><strong>access</strong></a>(...)</dt><dd><tt>C++&nbsp;signature:<br>
+<a href="#ClassMethod-access">access</a>(Method&nbsp;{lvalue})&nbsp;-&gt;&nbsp;Access</tt></dd></dl>
+
+<dl><dt><a name="#ClassMethod-end_addr"><strong>end_addr</strong></a>(...)</dt><dd><tt>C++&nbsp;signature:<br>
+<a href="#ClassMethod-end_addr">end_addr</a>(Method&nbsp;{lvalue})&nbsp;-&gt;&nbsp;unsigned&nbsp;long</tt></dd></dl>
+
+<dl><dt><a name="#ClassMethod-is_inline"><strong>is_inline</strong></a>(...)</dt><dd><tt>C++&nbsp;signature:<br>
+<a href="#ClassMethod-is_inline">is_inline</a>(Method&nbsp;{lvalue})&nbsp;-&gt;&nbsp;bool</tt></dd></dl>
+
+<dl><dt><a name="#ClassMethod-is_static"><strong>is_static</strong></a>(...)</dt><dd><tt>C++&nbsp;signature:<br>
+<a href="#ClassMethod-is_static">is_static</a>(Method&nbsp;{lvalue})&nbsp;-&gt;&nbsp;bool</tt></dd></dl>
+
+<dl><dt><a name="#ClassMethod-is_virtual"><strong>is_virtual</strong></a>(...)</dt><dd><tt>C++&nbsp;signature:<br>
+<a href="#ClassMethod-is_virtual">is_virtual</a>(Method&nbsp;{lvalue})&nbsp;-&gt;&nbsp;bool</tt></dd></dl>
+
+<dl><dt><a name="#ClassMethod-name"><strong>name</strong></a>(...)</dt><dd><tt>C++&nbsp;signature:<br>
+<a href="#ClassMethod-name">name</a>(Method&nbsp;const*)&nbsp;-&gt;&nbsp;char&nbsp;const*</tt></dd></dl>
+
+<dl><dt><a name="#ClassMethod-start_addr"><strong>start_addr</strong></a>(...)</dt><dd><tt>C++&nbsp;signature:<br>
+<a href="#ClassMethod-start_addr">start_addr</a>(Method&nbsp;{lvalue})&nbsp;-&gt;&nbsp;unsigned&nbsp;long</tt></dd></dl>
+
+<dl><dt><a name="#ClassMethod-type"><strong>type</strong></a>(...)</dt><dd><tt>C++&nbsp;signature:<br>
+<a href="#ClassMethod-type">type</a>(Method&nbsp;const*)&nbsp;-&gt;&nbsp;RefPtr&lt;<a href="#DataType">DataType</a>&gt;</tt></dd></dl>
+
+<hr>
+Data and other attributes defined here:<br>
+<dl><dt><strong>__init__</strong> = &lt;built-in function __init__&gt;<dd><tt>Raises&nbsp;an&nbsp;exception<br>
+This&nbsp;class&nbsp;cannot&nbsp;be&nbsp;instantiated&nbsp;from&nbsp;Python</tt></dl>
+
+<hr>
+Data descriptors inherited from Boost.Python.instance:<br>
+<dl><dt><strong>__dict__</strong></dt>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+</dl>
+<hr>
+Data and other attributes inherited from Boost.Python.instance:<br>
+<dl><dt><strong>__new__</strong> = &lt;built-in method __new__ of Boost.Python.class object at 0x2aaaab9ca080&gt;<dd><tt>T.<a href="#ClassMethod-__new__">__new__</a>(S,&nbsp;...)&nbsp;-&gt;&nbsp;a&nbsp;new&nbsp;object&nbsp;with&nbsp;type&nbsp;S,&nbsp;a&nbsp;subtype&nbsp;of&nbsp;T</tt></dl>
+
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="#ClassType">class <strong>ClassType</strong></a>(<a href="pyref.html#DataType">DataType</a>)</font></td></tr>
+    
+<tr><td bgcolor="#ffc8d8"><tt>&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl><dt>Method resolution order:</dt>
+<dd><a href="pyref.html#ClassType">ClassType</a></dd>
+<dd><a href="pyref.html#DataType">DataType</a></dd>
+<dd>Boost.Python.instance</dd>
+<dd><a href="__builtin__.html#object">__builtin__.object</a></dd>
+</dl>
+<hr>
+Methods defined here:<br>
+<dl><dt><a name="#ClassType-base"><strong>base</strong></a>(...)</dt><dd><tt>C++&nbsp;signature:<br>
+<a href="#ClassType-base">base</a>(<a href="#ClassType">ClassType</a>&nbsp;{lvalue},&nbsp;unsigned&nbsp;long)&nbsp;-&gt;&nbsp;BaseClass&nbsp;const*</tt></dd></dl>
+
+<dl><dt><a name="#ClassType-base_count"><strong>base_count</strong></a>(...)</dt><dd><tt>C++&nbsp;signature:<br>
+<a href="#ClassType-base_count">base_count</a>(<a href="#ClassType">ClassType</a>&nbsp;{lvalue})&nbsp;-&gt;&nbsp;unsigned&nbsp;long</tt></dd></dl>
+
+<dl><dt><a name="#ClassType-is_union"><strong>is_union</strong></a>(...)</dt><dd><tt>C++&nbsp;signature:<br>
+<a href="#ClassType-is_union">is_union</a>(<a href="#ClassType">ClassType</a>&nbsp;{lvalue})&nbsp;-&gt;&nbsp;bool</tt></dd></dl>
+
+<dl><dt><a name="#ClassType-method"><strong>method</strong></a>(...)</dt><dd><tt>C++&nbsp;signature:<br>
+<a href="#ClassType-method">method</a>(<a href="#ClassType">ClassType</a>&nbsp;{lvalue},&nbsp;unsigned&nbsp;long)&nbsp;-&gt;&nbsp;Method&nbsp;const*</tt></dd></dl>
+
+<dl><dt><a name="#ClassType-method_count"><strong>method_count</strong></a>(...)</dt><dd><tt>C++&nbsp;signature:<br>
+<a href="#ClassType-method_count">method_count</a>(<a href="#ClassType">ClassType</a>&nbsp;{lvalue})&nbsp;-&gt;&nbsp;unsigned&nbsp;long</tt></dd></dl>
+
+<dl><dt><a name="#ClassType-template_types"><strong>template_types</strong></a>(...)</dt><dd><tt>C++&nbsp;signature:<br>
+<a href="#ClassType-template_types">template_types</a>(<a href="#ClassType">ClassType</a>&nbsp;const*)&nbsp;-&gt;&nbsp;boost::python::list</tt></dd></dl>
+
+<dl><dt><a name="#ClassType-virtual_base_count"><strong>virtual_base_count</strong></a>(...)</dt><dd><tt>C++&nbsp;signature:<br>
+<a href="#ClassType-virtual_base_count">virtual_base_count</a>(<a href="#ClassType">ClassType</a>&nbsp;{lvalue})&nbsp;-&gt;&nbsp;unsigned&nbsp;long</tt></dd></dl>
+
+<hr>
+Data and other attributes defined here:<br>
+<dl><dt><strong>__init__</strong> = &lt;built-in function __init__&gt;<dd><tt>Raises&nbsp;an&nbsp;exception<br>
+This&nbsp;class&nbsp;cannot&nbsp;be&nbsp;instantiated&nbsp;from&nbsp;Python</tt></dl>
+
+<hr>
+Methods inherited from <a href="pyref.html#DataType">DataType</a>:<br>
+<dl><dt><a name="#ClassType-bit_size"><strong>bit_size</strong></a>(...)</dt><dd><tt>C++&nbsp;signature:<br>
+<a href="#ClassType-bit_size">bit_size</a>(<a href="#DataType">DataType</a>&nbsp;{lvalue})&nbsp;-&gt;&nbsp;unsigned&nbsp;long</tt></dd></dl>
+
+<dl><dt><a name="#ClassType-is_fundamental"><strong>is_fundamental</strong></a>(...)</dt><dd><tt>C++&nbsp;signature:<br>
+<a href="#ClassType-is_fundamental">is_fundamental</a>(<a href="#DataType">DataType</a>&nbsp;{lvalue})&nbsp;-&gt;&nbsp;bool</tt></dd></dl>
+
+<dl><dt><a name="#ClassType-is_pointer"><strong>is_pointer</strong></a>(...)</dt><dd><tt>C++&nbsp;signature:<br>
+<a href="#ClassType-is_pointer">is_pointer</a>(<a href="#DataType">DataType</a>&nbsp;const*)&nbsp;-&gt;&nbsp;bool</tt></dd></dl>
+
+<dl><dt><a name="#ClassType-is_reference"><strong>is_reference</strong></a>(...)</dt><dd><tt>C++&nbsp;signature:<br>
+<a href="#ClassType-is_reference">is_reference</a>(<a href="#DataType">DataType</a>&nbsp;const*)&nbsp;-&gt;&nbsp;bool</tt></dd></dl>
+
+<dl><dt><a name="#ClassType-name"><strong>name</strong></a>(...)</dt><dd><tt>C++&nbsp;signature:<br>
+<a href="#ClassType-name">name</a>(<a href="#DataType">DataType</a>&nbsp;const*)&nbsp;-&gt;&nbsp;std::string</tt></dd></dl>
+
+<dl><dt><a name="#ClassType-pointed_type"><strong>pointed_type</strong></a>(...)</dt><dd><tt>C++&nbsp;signature:<br>
+<a href="#ClassType-pointed_type">pointed_type</a>(<a href="#DataType">DataType</a>&nbsp;const*)&nbsp;-&gt;&nbsp;boost::python::api::object</tt></dd></dl>
+
+<dl><dt><a name="#ClassType-size"><strong>size</strong></a>(...)</dt><dd><tt>C++&nbsp;signature:<br>
+<a href="#ClassType-size">size</a>(<a href="#DataType">DataType</a>&nbsp;{lvalue})&nbsp;-&gt;&nbsp;unsigned&nbsp;long</tt></dd></dl>
+
+<hr>
+Data descriptors inherited from Boost.Python.instance:<br>
+<dl><dt><strong>__dict__</strong></dt>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+</dl>
+<hr>
+Data and other attributes inherited from Boost.Python.instance:<br>
+<dl><dt><strong>__new__</strong> = &lt;built-in method __new__ of Boost.Python.class object at 0x2aaaab9ca080&gt;<dd><tt>T.<a href="#ClassType-__new__">__new__</a>(S,&nbsp;...)&nbsp;-&gt;&nbsp;a&nbsp;new&nbsp;object&nbsp;with&nbsp;type&nbsp;S,&nbsp;a&nbsp;subtype&nbsp;of&nbsp;T</tt></dl>
+
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="#Command">class <strong>Command</strong></a>(<a href="pyref.html#DebuggerCommand">DebuggerCommand</a>)</font></td></tr>
+    
+<tr><td bgcolor="#ffc8d8"><tt>&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl><dt>Method resolution order:</dt>
+<dd><a href="pyref.html#Command">Command</a></dd>
+<dd><a href="pyref.html#DebuggerCommand">DebuggerCommand</a></dd>
+<dd>Boost.Python.instance</dd>
+<dd><a href="__builtin__.html#object">__builtin__.object</a></dd>
+</dl>
+<hr>
+Data and other attributes defined here:<br>
+<dl><dt><strong>__init__</strong> = &lt;built-in function __init__&gt;<dd><tt>Raises&nbsp;an&nbsp;exception<br>
+This&nbsp;class&nbsp;cannot&nbsp;be&nbsp;instantiated&nbsp;from&nbsp;Python</tt></dl>
+
+<hr>
+Methods inherited from <a href="pyref.html#DebuggerCommand">DebuggerCommand</a>:<br>
+<dl><dt><a name="#Command-name"><strong>name</strong></a>(...)</dt><dd><tt>C++&nbsp;signature:<br>
+<a href="#Command-name">name</a>(<a href="#DebuggerCommand">DebuggerCommand</a>&nbsp;{lvalue})&nbsp;-&gt;&nbsp;char&nbsp;const*</tt></dd></dl>
+
+<hr>
+Data descriptors inherited from Boost.Python.instance:<br>
+<dl><dt><strong>__dict__</strong></dt>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+</dl>
+<hr>
+Data and other attributes inherited from Boost.Python.instance:<br>
+<dl><dt><strong>__new__</strong> = &lt;built-in method __new__ of Boost.Python.class object at 0x2aaaab9ca080&gt;<dd><tt>T.<a href="#Command-__new__">__new__</a>(S,&nbsp;...)&nbsp;-&gt;&nbsp;a&nbsp;new&nbsp;object&nbsp;with&nbsp;type&nbsp;S,&nbsp;a&nbsp;subtype&nbsp;of&nbsp;T</tt></dl>
+
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="#DataType">class <strong>DataType</strong></a>(Boost.Python.instance)</font></td></tr>
+    
+<tr><td bgcolor="#ffc8d8"><tt>&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl><dt>Method resolution order:</dt>
+<dd><a href="pyref.html#DataType">DataType</a></dd>
+<dd>Boost.Python.instance</dd>
+<dd><a href="__builtin__.html#object">__builtin__.object</a></dd>
+</dl>
+<hr>
+Methods defined here:<br>
+<dl><dt><a name="#DataType-bit_size"><strong>bit_size</strong></a>(...)</dt><dd><tt>C++&nbsp;signature:<br>
+<a href="#DataType-bit_size">bit_size</a>(<a href="#DataType">DataType</a>&nbsp;{lvalue})&nbsp;-&gt;&nbsp;unsigned&nbsp;long</tt></dd></dl>
+
+<dl><dt><a name="#DataType-is_fundamental"><strong>is_fundamental</strong></a>(...)</dt><dd><tt>C++&nbsp;signature:<br>
+<a href="#DataType-is_fundamental">is_fundamental</a>(<a href="#DataType">DataType</a>&nbsp;{lvalue})&nbsp;-&gt;&nbsp;bool</tt></dd></dl>
+
+<dl><dt><a name="#DataType-is_pointer"><strong>is_pointer</strong></a>(...)</dt><dd><tt>C++&nbsp;signature:<br>
+<a href="#DataType-is_pointer">is_pointer</a>(<a href="#DataType">DataType</a>&nbsp;const*)&nbsp;-&gt;&nbsp;bool</tt></dd></dl>
+
+<dl><dt><a name="#DataType-is_reference"><strong>is_reference</strong></a>(...)</dt><dd><tt>C++&nbsp;signature:<br>
+<a href="#DataType-is_reference">is_reference</a>(<a href="#DataType">DataType</a>&nbsp;const*)&nbsp;-&gt;&nbsp;bool</tt></dd></dl>
+
+<dl><dt><a name="#DataType-name"><strong>name</strong></a>(...)</dt><dd><tt>C++&nbsp;signature:<br>
+<a href="#DataType-name">name</a>(<a href="#DataType">DataType</a>&nbsp;const*)&nbsp;-&gt;&nbsp;std::string</tt></dd></dl>
+
+<dl><dt><a name="#DataType-pointed_type"><strong>pointed_type</strong></a>(...)</dt><dd><tt>C++&nbsp;signature:<br>
+<a href="#DataType-pointed_type">pointed_type</a>(<a href="#DataType">DataType</a>&nbsp;const*)&nbsp;-&gt;&nbsp;boost::python::api::object</tt></dd></dl>
+
+<dl><dt><a name="#DataType-size"><strong>size</strong></a>(...)</dt><dd><tt>C++&nbsp;signature:<br>
+<a href="#DataType-size">size</a>(<a href="#DataType">DataType</a>&nbsp;{lvalue})&nbsp;-&gt;&nbsp;unsigned&nbsp;long</tt></dd></dl>
+
+<hr>
+Data and other attributes defined here:<br>
+<dl><dt><strong>__init__</strong> = &lt;built-in function __init__&gt;<dd><tt>Raises&nbsp;an&nbsp;exception<br>
+This&nbsp;class&nbsp;cannot&nbsp;be&nbsp;instantiated&nbsp;from&nbsp;Python</tt></dl>
+
+<hr>
+Data descriptors inherited from Boost.Python.instance:<br>
+<dl><dt><strong>__dict__</strong></dt>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+</dl>
+<hr>
+Data and other attributes inherited from Boost.Python.instance:<br>
+<dl><dt><strong>__new__</strong> = &lt;built-in method __new__ of Boost.Python.class object at 0x2aaaab9ca080&gt;<dd><tt>T.<a href="#DataType-__new__">__new__</a>(S,&nbsp;...)&nbsp;-&gt;&nbsp;a&nbsp;new&nbsp;object&nbsp;with&nbsp;type&nbsp;S,&nbsp;a&nbsp;subtype&nbsp;of&nbsp;T</tt></dl>
+
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="#DebugEvent">class <strong>DebugEvent</strong></a>(Boost.Python.instance)</font></td></tr>
+    
+<tr><td bgcolor="#ffc8d8"><tt>&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl><dt>Method resolution order:</dt>
+<dd><a href="pyref.html#DebugEvent">DebugEvent</a></dd>
+<dd>Boost.Python.instance</dd>
+<dd><a href="__builtin__.html#object">__builtin__.object</a></dd>
+</dl>
+<hr>
+Methods defined here:<br>
+<dl><dt><a name="#DebugEvent-__init__"><strong>__init__</strong></a>(...)</dt><dd><tt>C++&nbsp;signature:<br>
+<a href="#DebugEvent-__init__">__init__</a>(_object*)&nbsp;-&gt;&nbsp;void*</tt></dd></dl>
+
+<dl><dt><a name="#DebugEvent-process"><strong>process</strong></a>(...)</dt><dd><tt>return&nbsp;the&nbsp;target&nbsp;process&nbsp;on&nbsp;which&nbsp;the&nbsp;event&nbsp;occurred<br>
+C++&nbsp;signature:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#DebugEvent-process">process</a>(<a href="#DebugEvent">DebugEvent</a>&nbsp;{lvalue})&nbsp;-&gt;&nbsp;RefPtr&lt;<a href="#Process">Process</a>&gt;</tt></dd></dl>
+
+<dl><dt><a name="#DebugEvent-syscall"><strong>syscall</strong></a>(...)</dt><dd><tt>C++&nbsp;signature:<br>
+<a href="#DebugEvent-syscall">syscall</a>(<a href="#DebugEvent">DebugEvent</a>&nbsp;{lvalue})&nbsp;-&gt;&nbsp;int</tt></dd></dl>
+
+<dl><dt><a name="#DebugEvent-thread"><strong>thread</strong></a>(...)</dt><dd><tt>return&nbsp;the&nbsp;target&nbsp;thread&nbsp;on&nbsp;which&nbsp;the&nbsp;event&nbsp;occurred<br>
+C++&nbsp;signature:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#DebugEvent-thread">thread</a>(<a href="#DebugEvent">DebugEvent</a>&nbsp;{lvalue})&nbsp;-&gt;&nbsp;RefPtr&lt;<a href="#Thread">Thread</a>&gt;</tt></dd></dl>
+
+<dl><dt><a name="#DebugEvent-type"><strong>type</strong></a>(...)</dt><dd><tt>return&nbsp;the&nbsp;type&nbsp;of&nbsp;the&nbsp;event<br>
+C++&nbsp;signature:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#DebugEvent-type">type</a>(<a href="#DebugEvent">DebugEvent</a>&nbsp;{lvalue})&nbsp;-&gt;&nbsp;<a href="#DebugEvent">DebugEvent</a>::Type</tt></dd></dl>
+
+<hr>
+Data and other attributes defined here:<br>
+<dl><dt><strong>Type</strong> = &lt;class '__main__.zero.Type'&gt;</dl>
+
+<dl><dt><strong>__instance_size__</strong> = 72</dl>
+
+<hr>
+Data descriptors inherited from Boost.Python.instance:<br>
+<dl><dt><strong>__dict__</strong></dt>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+</dl>
+<hr>
+Data and other attributes inherited from Boost.Python.instance:<br>
+<dl><dt><strong>__new__</strong> = &lt;built-in method __new__ of Boost.Python.class object at 0x2aaaab9ca080&gt;<dd><tt>T.<a href="#DebugEvent-__new__">__new__</a>(S,&nbsp;...)&nbsp;-&gt;&nbsp;a&nbsp;new&nbsp;object&nbsp;with&nbsp;type&nbsp;S,&nbsp;a&nbsp;subtype&nbsp;of&nbsp;T</tt></dl>
+
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="#DebugSymbol">class <strong>DebugSymbol</strong></a>(Boost.Python.instance)</font></td></tr>
+    
+<tr><td bgcolor="#ffc8d8"><tt>&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl><dt>Method resolution order:</dt>
+<dd><a href="pyref.html#DebugSymbol">DebugSymbol</a></dd>
+<dd>Boost.Python.instance</dd>
+<dd><a href="__builtin__.html#object">__builtin__.object</a></dd>
+</dl>
+<hr>
+Methods defined here:<br>
+<dl><dt><a name="#DebugSymbol-add_child"><strong>add_child</strong></a>(...)</dt><dd><tt>C++&nbsp;signature:<br>
+<a href="#DebugSymbol-add_child">add_child</a>(DebugSymbolWrap&nbsp;{lvalue},&nbsp;RefPtr&lt;DebugSymbolWrap&gt;)&nbsp;-&gt;&nbsp;void*</tt></dd></dl>
+
+<dl><dt><a name="#DebugSymbol-addr"><strong>addr</strong></a>(...)</dt><dd><tt>C++&nbsp;signature:<br>
+<a href="#DebugSymbol-addr">addr</a>(DebugSymbolWrap&nbsp;{lvalue})&nbsp;-&gt;&nbsp;unsigned&nbsp;long</tt></dd></dl>
+
+<dl><dt><a name="#DebugSymbol-children"><strong>children</strong></a>(...)</dt><dd><tt>C++&nbsp;signature:<br>
+<a href="#DebugSymbol-children">children</a>(DebugSymbolWrap&nbsp;{lvalue})&nbsp;-&gt;&nbsp;boost::python::list</tt></dd></dl>
+
+<dl><dt><a name="#DebugSymbol-create"><strong>create</strong></a>(...)</dt><dd><tt>C++&nbsp;signature:<br>
+<a href="#DebugSymbol-create">create</a>(DebugSymbolWrap&nbsp;{lvalue},&nbsp;char&nbsp;const*,&nbsp;<a href="#DataType">DataType</a>*,&nbsp;unsigned&nbsp;long)&nbsp;-&gt;&nbsp;RefPtr&lt;DebugSymbolWrap&gt;</tt></dd></dl>
+
+<dl><dt><a name="#DebugSymbol-has_children"><strong>has_children</strong></a>(...)</dt><dd><tt>C++&nbsp;signature:<br>
+<a href="#DebugSymbol-has_children">has_children</a>(DebugSymbolWrap&nbsp;{lvalue})&nbsp;-&gt;&nbsp;bool</tt></dd></dl>
+
+<dl><dt><a name="#DebugSymbol-is_const"><strong>is_const</strong></a>(...)</dt><dd><tt>C++&nbsp;signature:<br>
+<a href="#DebugSymbol-is_const">is_const</a>(DebugSymbolWrap&nbsp;{lvalue})&nbsp;-&gt;&nbsp;bool</tt></dd></dl>
+
+<dl><dt><a name="#DebugSymbol-is_expanded"><strong>is_expanded</strong></a>(...)</dt><dd><tt>C++&nbsp;signature:<br>
+<a href="#DebugSymbol-is_expanded">is_expanded</a>(DebugSymbolWrap&nbsp;{lvalue})&nbsp;-&gt;&nbsp;bool</tt></dd></dl>
+
+<dl><dt><a name="#DebugSymbol-is_expanding"><strong>is_expanding</strong></a>(...)</dt><dd><tt>C++&nbsp;signature:<br>
+<a href="#DebugSymbol-is_expanding">is_expanding</a>(DebugSymbolWrap&nbsp;{lvalue})&nbsp;-&gt;&nbsp;bool</tt></dd></dl>
+
+<dl><dt><a name="#DebugSymbol-name"><strong>name</strong></a>(...)</dt><dd><tt>C++&nbsp;signature:<br>
+<a href="#DebugSymbol-name">name</a>(DebugSymbolWrap&nbsp;{lvalue})&nbsp;-&gt;&nbsp;char&nbsp;const*</tt></dd></dl>
+
+<dl><dt><a name="#DebugSymbol-process"><strong>process</strong></a>(...)</dt><dd><tt>return&nbsp;the&nbsp;process&nbsp;that&nbsp;owns&nbsp;this&nbsp;symbol<br>
+C++&nbsp;signature:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#DebugSymbol-process">process</a>(DebugSymbolWrap&nbsp;{lvalue})&nbsp;-&gt;&nbsp;boost::python::api::object</tt></dd></dl>
+
+<dl><dt><a name="#DebugSymbol-read"><strong>read</strong></a>(...)</dt><dd><tt>C++&nbsp;signature:<br>
+<a href="#DebugSymbol-read">read</a>(DebugSymbolWrap&nbsp;{lvalue})&nbsp;-&gt;&nbsp;void*</tt></dd></dl>
+
+<dl><dt><a name="#DebugSymbol-set_constant"><strong>set_constant</strong></a>(...)</dt><dd><tt>C++&nbsp;signature:<br>
+<a href="#DebugSymbol-set_constant">set_constant</a>(DebugSymbolWrap&nbsp;{lvalue})&nbsp;-&gt;&nbsp;void*</tt></dd></dl>
+
+<dl><dt><a name="#DebugSymbol-set_expanded"><strong>set_expanded</strong></a>(...)</dt><dd><tt>C++&nbsp;signature:<br>
+<a href="#DebugSymbol-set_expanded">set_expanded</a>(DebugSymbolWrap&nbsp;{lvalue},&nbsp;bool)&nbsp;-&gt;&nbsp;void*</tt></dd></dl>
+
+<dl><dt><a name="#DebugSymbol-set_type_name"><strong>set_type_name</strong></a>(...)</dt><dd><tt>C++&nbsp;signature:<br>
+<a href="#DebugSymbol-set_type_name">set_type_name</a>(DebugSymbolWrap&nbsp;{lvalue},&nbsp;<a href="#DataType">DataType</a>*)&nbsp;-&gt;&nbsp;void*</tt></dd></dl>
+
+<dl><dt><a name="#DebugSymbol-set_value"><strong>set_value</strong></a>(...)</dt><dd><tt>C++&nbsp;signature:<br>
+<a href="#DebugSymbol-set_value">set_value</a>(DebugSymbolWrap&nbsp;{lvalue},&nbsp;char&nbsp;const*)&nbsp;-&gt;&nbsp;void*</tt></dd></dl>
+
+<dl><dt><a name="#DebugSymbol-thread"><strong>thread</strong></a>(...)</dt><dd><tt>return&nbsp;the&nbsp;process&nbsp;that&nbsp;owns&nbsp;this&nbsp;symbol<br>
+C++&nbsp;signature:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#DebugSymbol-thread">thread</a>(DebugSymbolWrap&nbsp;{lvalue})&nbsp;-&gt;&nbsp;boost::python::api::object</tt></dd></dl>
+
+<dl><dt><a name="#DebugSymbol-type"><strong>type</strong></a>(...)</dt><dd><tt>C++&nbsp;signature:<br>
+<a href="#DebugSymbol-type">type</a>(DebugSymbolWrap&nbsp;{lvalue})&nbsp;-&gt;&nbsp;boost::python::api::object</tt></dd></dl>
+
+<dl><dt><a name="#DebugSymbol-type_name"><strong>type_name</strong></a>(...)</dt><dd><tt>C++&nbsp;signature:<br>
+<a href="#DebugSymbol-type_name">type_name</a>(DebugSymbolWrap&nbsp;{lvalue})&nbsp;-&gt;&nbsp;char&nbsp;const*</tt></dd></dl>
+
+<dl><dt><a name="#DebugSymbol-type_system"><strong>type_system</strong></a>(...)</dt><dd><tt>C++&nbsp;signature:<br>
+<a href="#DebugSymbol-type_system">type_system</a>(DebugSymbolWrap&nbsp;{lvalue})&nbsp;-&gt;&nbsp;boost::python::api::object</tt></dd></dl>
+
+<dl><dt><a name="#DebugSymbol-typesys"><strong>typesys</strong></a>(...)</dt><dd><tt>C++&nbsp;signature:<br>
+<a href="#DebugSymbol-typesys">typesys</a>(DebugSymbolWrap&nbsp;{lvalue})&nbsp;-&gt;&nbsp;boost::python::api::object</tt></dd></dl>
+
+<dl><dt><a name="#DebugSymbol-value"><strong>value</strong></a>(...)</dt><dd><tt>C++&nbsp;signature:<br>
+<a href="#DebugSymbol-value">value</a>(DebugSymbolWrap&nbsp;{lvalue})&nbsp;-&gt;&nbsp;char&nbsp;const*</tt></dd></dl>
+
+<hr>
+Data and other attributes defined here:<br>
+<dl><dt><strong>__init__</strong> = &lt;built-in function __init__&gt;<dd><tt>Raises&nbsp;an&nbsp;exception<br>
+This&nbsp;class&nbsp;cannot&nbsp;be&nbsp;instantiated&nbsp;from&nbsp;Python</tt></dl>
+
+<hr>
+Data descriptors inherited from Boost.Python.instance:<br>
+<dl><dt><strong>__dict__</strong></dt>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+</dl>
+<hr>
+Data and other attributes inherited from Boost.Python.instance:<br>
+<dl><dt><strong>__new__</strong> = &lt;built-in method __new__ of Boost.Python.class object at 0x2aaaab9ca080&gt;<dd><tt>T.<a href="#DebugSymbol-__new__">__new__</a>(S,&nbsp;...)&nbsp;-&gt;&nbsp;a&nbsp;new&nbsp;object&nbsp;with&nbsp;type&nbsp;S,&nbsp;a&nbsp;subtype&nbsp;of&nbsp;T</tt></dl>
+
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="#Debugger">class <strong>Debugger</strong></a>(Boost.Python.instance)</font></td></tr>
+    
+<tr><td bgcolor="#ffc8d8"><tt>&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl><dt>Method resolution order:</dt>
+<dd><a href="pyref.html#Debugger">Debugger</a></dd>
+<dd>Boost.Python.instance</dd>
+<dd><a href="__builtin__.html#object">__builtin__.object</a></dd>
+</dl>
+<hr>
+Methods defined here:<br>
+<dl><dt><a name="#Debugger-clear_option"><strong>clear_option</strong></a>(...)</dt><dd><tt>C++&nbsp;signature:<br>
+<a href="#Debugger-clear_option">clear_option</a>(<a href="#Debugger">Debugger</a>*,&nbsp;<a href="#Debugger">Debugger</a>::Option)&nbsp;-&gt;&nbsp;void*</tt></dd></dl>
+
+<dl><dt><a name="#Debugger-command"><strong>command</strong></a>(...)</dt><dd><tt>C++&nbsp;signature:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#Debugger-command">command</a>(<a href="#Debugger">Debugger</a>*,&nbsp;char&nbsp;const*&nbsp;cmd,&nbsp;<a href="#Thread">Thread</a>*&nbsp;thread)&nbsp;-&gt;&nbsp;bool<br>
+&nbsp;<br>
+execute&nbsp;a&nbsp;debugger&nbsp;shell&nbsp;command,&nbsp;as&nbsp;if&nbsp;typed&nbsp;at&nbsp;the&nbsp;prompt<br>
+C++&nbsp;signature:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#Debugger-command">command</a>(<a href="#Debugger">Debugger</a>*,&nbsp;char&nbsp;const*&nbsp;cmd)&nbsp;-&gt;&nbsp;bool</tt></dd></dl>
+
+<dl><dt><a name="#Debugger-current_thread"><strong>current_thread</strong></a>(...)</dt><dd><tt>C++&nbsp;signature:<br>
+<a href="#Debugger-current_thread">current_thread</a>(<a href="#Debugger">Debugger</a>*)&nbsp;-&gt;&nbsp;RefPtr&lt;<a href="#Thread">Thread</a>&gt;</tt></dd></dl>
+
+<dl><dt><a name="#Debugger-def_command"><strong>def_command</strong></a>(...)</dt><dd><tt>C++&nbsp;signature:<br>
+<a href="#Debugger-def_command">def_command</a>(<a href="#Debugger">Debugger</a>*,&nbsp;char&nbsp;const*,&nbsp;_object*,&nbsp;_object*)&nbsp;-&gt;&nbsp;void*</tt></dd></dl>
+
+<dl><dt><a name="#Debugger-detach"><strong>detach</strong></a>(...)</dt><dd><tt>detach&nbsp;from&nbsp;debugged&nbsp;program<br>
+C++&nbsp;signature:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#Debugger-detach">detach</a>(<a href="#Debugger">Debugger</a>*)&nbsp;-&gt;&nbsp;void*</tt></dd></dl>
+
+<dl><dt><a name="#Debugger-get_thread"><strong>get_thread</strong></a>(...)</dt><dd><tt>C++&nbsp;signature:<br>
+<a href="#Debugger-get_thread">get_thread</a>(<a href="#Debugger">Debugger</a>*,&nbsp;int,&nbsp;unsigned&nbsp;long)&nbsp;-&gt;&nbsp;RefPtr&lt;<a href="#Thread">Thread</a>&gt;</tt></dd></dl>
+
+<dl><dt><a name="#Debugger-line_to_addr"><strong>line_to_addr</strong></a>(...)</dt><dd><tt>C++&nbsp;signature:<br>
+<a href="#Debugger-line_to_addr">line_to_addr</a>(<a href="#Debugger">Debugger</a>*,&nbsp;char&nbsp;const*,&nbsp;unsigned&nbsp;long)&nbsp;-&gt;&nbsp;boost::python::list</tt></dd></dl>
+
+<dl><dt><a name="#Debugger-load_core"><strong>load_core</strong></a>(...)</dt><dd><tt>C++&nbsp;signature:<br>
+<a href="#Debugger-load_core">load_core</a>(<a href="#Debugger">Debugger</a>*,&nbsp;char&nbsp;const*,&nbsp;char&nbsp;const*)&nbsp;-&gt;&nbsp;void*</tt></dd></dl>
+
+<dl><dt><a name="#Debugger-load_exec"><strong>load_exec</strong></a>(...)</dt><dd><tt>C++&nbsp;signature:<br>
+<a href="#Debugger-load_exec">load_exec</a>(<a href="#Debugger">Debugger</a>*,&nbsp;char&nbsp;const*)&nbsp;-&gt;&nbsp;void*</tt></dd></dl>
+
+<dl><dt><a name="#Debugger-lookup_unit_by_addr"><strong>lookup_unit_by_addr</strong></a>(...)</dt><dd><tt>lookup&nbsp;the&nbsp;compilation&nbsp;unit&nbsp;(<a href="#TranslationUnit">TranslationUnit</a>)&nbsp;that&nbsp;contains&nbsp;given&nbsp;address<br>
+C++&nbsp;signature:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#Debugger-lookup_unit_by_addr">lookup_unit_by_addr</a>(<a href="#Debugger">Debugger</a>*,&nbsp;unsigned&nbsp;long)&nbsp;-&gt;&nbsp;RefPtr&lt;<a href="#TranslationUnit">TranslationUnit</a>&gt;</tt></dd></dl>
+
+<dl><dt><a name="#Debugger-lookup_unit_by_name"><strong>lookup_unit_by_name</strong></a>(...)</dt><dd><tt>lookup&nbsp;the&nbsp;compilation&nbsp;unit&nbsp;(<a href="#TranslationUnit">TranslationUnit</a>)&nbsp;by&nbsp;canonical&nbsp;name<br>
+C++&nbsp;signature:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#Debugger-lookup_unit_by_name">lookup_unit_by_name</a>(<a href="#Debugger">Debugger</a>*,&nbsp;char&nbsp;const*)&nbsp;-&gt;&nbsp;RefPtr&lt;<a href="#TranslationUnit">TranslationUnit</a>&gt;</tt></dd></dl>
+
+<dl><dt><a name="#Debugger-message"><strong>message</strong></a>(...)</dt><dd><tt>C++&nbsp;signature:<br>
+<a href="#Debugger-message">message</a>(<a href="#Debugger">Debugger</a>*,&nbsp;char&nbsp;const*,&nbsp;<a href="#Debugger">Debugger</a>::MessageType)&nbsp;-&gt;&nbsp;void*</tt></dd></dl>
+
+<dl><dt><a name="#Debugger-properties"><strong>properties</strong></a>(...)</dt><dd><tt>C++&nbsp;signature:<br>
+<a href="#Debugger-properties">properties</a>(<a href="#Debugger">Debugger</a>&nbsp;{lvalue})&nbsp;-&gt;&nbsp;<a href="#Properties">Properties</a>*</tt></dd></dl>
+
+<dl><dt><a name="#Debugger-quit"><strong>quit</strong></a>(...)</dt><dd><tt>C++&nbsp;signature:<br>
+<a href="#Debugger-quit">quit</a>(<a href="#Debugger">Debugger</a>*)&nbsp;-&gt;&nbsp;void*</tt></dd></dl>
+
+<dl><dt><a name="#Debugger-read_settings"><strong>read_settings</strong></a>(...)</dt><dd><tt>read&nbsp;settings&nbsp;from&nbsp;disk<br>
+C++&nbsp;signature:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#Debugger-read_settings">read_settings</a>(<a href="#Debugger">Debugger</a>*)&nbsp;-&gt;&nbsp;boost::python::list</tt></dd></dl>
+
+<dl><dt><a name="#Debugger-select_thread"><strong>select_thread</strong></a>(...)</dt><dd><tt>C++&nbsp;signature:<br>
+<a href="#Debugger-select_thread">select_thread</a>(<a href="#Debugger">Debugger</a>*,&nbsp;int,&nbsp;unsigned&nbsp;long)&nbsp;-&gt;&nbsp;void*</tt></dd></dl>
+
+<dl><dt><a name="#Debugger-set_breakpoint"><strong>set_breakpoint</strong></a>(...)</dt><dd><tt>set&nbsp;global&nbsp;breakpoint&nbsp;that&nbsp;calls&nbsp;user&nbsp;defined&nbsp;function<br>
+C++&nbsp;signature:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#Debugger-set_breakpoint">set_breakpoint</a>(<a href="#Debugger">Debugger</a>*,&nbsp;unsigned&nbsp;long,&nbsp;_object*)&nbsp;-&gt;&nbsp;void*<br>
+&nbsp;<br>
+set&nbsp;global&nbsp;breakpoint&nbsp;that&nbsp;starts&nbsp;user&nbsp;interactive&nbsp;mode<br>
+C++&nbsp;signature:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#Debugger-set_breakpoint">set_breakpoint</a>(<a href="#Debugger">Debugger</a>*,&nbsp;unsigned&nbsp;long)&nbsp;-&gt;&nbsp;void*</tt></dd></dl>
+
+<dl><dt><a name="#Debugger-set_option"><strong>set_option</strong></a>(...)</dt><dd><tt>C++&nbsp;signature:<br>
+<a href="#Debugger-set_option">set_option</a>(<a href="#Debugger">Debugger</a>*,&nbsp;<a href="#Debugger">Debugger</a>::Option)&nbsp;-&gt;&nbsp;void*</tt></dd></dl>
+
+<hr>
+Data descriptors defined here:<br>
+<dl><dt><strong>environ</strong></dt>
+</dl>
+<hr>
+Data and other attributes defined here:<br>
+<dl><dt><strong>Environ</strong> = &lt;class 'zero.Environ'&gt;</dl>
+
+<dl><dt><strong>Option</strong> = &lt;class '__main__.zero.Option'&gt;</dl>
+
+<dl><dt><strong>__init__</strong> = &lt;built-in function __init__&gt;<dd><tt>Raises&nbsp;an&nbsp;exception<br>
+This&nbsp;class&nbsp;cannot&nbsp;be&nbsp;instantiated&nbsp;from&nbsp;Python</tt></dl>
+
+<dl><dt><strong>map_indexing_suite_Environ_entry</strong> = &lt;class 'zero.map_indexing_suite_Environ_entry'&gt;</dl>
+
+<hr>
+Data descriptors inherited from Boost.Python.instance:<br>
+<dl><dt><strong>__dict__</strong></dt>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+</dl>
+<hr>
+Data and other attributes inherited from Boost.Python.instance:<br>
+<dl><dt><strong>__new__</strong> = &lt;built-in method __new__ of Boost.Python.class object at 0x2aaaab9ca080&gt;<dd><tt>T.<a href="#Debugger-__new__">__new__</a>(S,&nbsp;...)&nbsp;-&gt;&nbsp;a&nbsp;new&nbsp;object&nbsp;with&nbsp;type&nbsp;S,&nbsp;a&nbsp;subtype&nbsp;of&nbsp;T</tt></dl>
+
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="#DebuggerCommand">class <strong>DebuggerCommand</strong></a>(Boost.Python.instance)</font></td></tr>
+    
+<tr><td bgcolor="#ffc8d8"><tt>&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl><dt>Method resolution order:</dt>
+<dd><a href="pyref.html#DebuggerCommand">DebuggerCommand</a></dd>
+<dd>Boost.Python.instance</dd>
+<dd><a href="__builtin__.html#object">__builtin__.object</a></dd>
+</dl>
+<hr>
+Methods defined here:<br>
+<dl><dt><a name="#DebuggerCommand-name"><strong>name</strong></a>(...)</dt><dd><tt>C++&nbsp;signature:<br>
+<a href="#DebuggerCommand-name">name</a>(<a href="#DebuggerCommand">DebuggerCommand</a>&nbsp;{lvalue})&nbsp;-&gt;&nbsp;char&nbsp;const*</tt></dd></dl>
+
+<hr>
+Data and other attributes defined here:<br>
+<dl><dt><strong>__init__</strong> = &lt;built-in function __init__&gt;<dd><tt>Raises&nbsp;an&nbsp;exception<br>
+This&nbsp;class&nbsp;cannot&nbsp;be&nbsp;instantiated&nbsp;from&nbsp;Python</tt></dl>
+
+<hr>
+Data descriptors inherited from Boost.Python.instance:<br>
+<dl><dt><strong>__dict__</strong></dt>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+</dl>
+<hr>
+Data and other attributes inherited from Boost.Python.instance:<br>
+<dl><dt><strong>__new__</strong> = &lt;built-in method __new__ of Boost.Python.class object at 0x2aaaab9ca080&gt;<dd><tt>T.<a href="#DebuggerCommand-__new__">__new__</a>(S,&nbsp;...)&nbsp;-&gt;&nbsp;a&nbsp;new&nbsp;object&nbsp;with&nbsp;type&nbsp;S,&nbsp;a&nbsp;subtype&nbsp;of&nbsp;T</tt></dl>
+
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="#Elf_Hdr">class <strong>Elf_Hdr</strong></a>(Boost.Python.instance)</font></td></tr>
+    
+<tr><td bgcolor="#ffc8d8"><tt>&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl><dt>Method resolution order:</dt>
+<dd><a href="pyref.html#Elf_Hdr">Elf_Hdr</a></dd>
+<dd>Boost.Python.instance</dd>
+<dd><a href="__builtin__.html#object">__builtin__.object</a></dd>
+</dl>
+<hr>
+Methods defined here:<br>
+<dl><dt><a name="#Elf_Hdr-klass"><strong>klass</strong></a>(...)</dt><dd><tt>C++&nbsp;signature:<br>
+<a href="#Elf_Hdr-klass">klass</a>(Header)&nbsp;-&gt;&nbsp;Convert&lt;int,&nbsp;&amp;(ELF::ElfHdr::<a href="#Elf_Hdr-klass">klass</a>()&nbsp;const)&gt;::E</tt></dd></dl>
+
+<dl><dt><a name="#Elf_Hdr-machine"><strong>machine</strong></a>(...)</dt><dd><tt>C++&nbsp;signature:<br>
+<a href="#Elf_Hdr-machine">machine</a>(Header)&nbsp;-&gt;&nbsp;Convert&lt;unsigned&nbsp;short,&nbsp;&amp;(ELF::ElfHdr::<a href="#Elf_Hdr-machine">machine</a>()&nbsp;const)&gt;::E</tt></dd></dl>
+
+<dl><dt><a name="#Elf_Hdr-type"><strong>type</strong></a>(...)</dt><dd><tt>C++&nbsp;signature:<br>
+<a href="#Elf_Hdr-type">type</a>(Header)&nbsp;-&gt;&nbsp;Convert&lt;unsigned&nbsp;short,&nbsp;&amp;(ELF::ElfHdr::<a href="#Elf_Hdr-type">type</a>()&nbsp;const)&gt;::E</tt></dd></dl>
+
+<hr>
+Data and other attributes defined here:<br>
+<dl><dt><strong>Class</strong> = &lt;class '__main__.zero.Class'&gt;</dl>
+
+<dl><dt><strong>Machine</strong> = &lt;class '__main__.zero.Machine'&gt;</dl>
+
+<dl><dt><strong>Type</strong> = &lt;class '__main__.zero.Type'&gt;</dl>
+
+<dl><dt><strong>__init__</strong> = &lt;built-in function __init__&gt;<dd><tt>Raises&nbsp;an&nbsp;exception<br>
+This&nbsp;class&nbsp;cannot&nbsp;be&nbsp;instantiated&nbsp;from&nbsp;Python</tt></dl>
+
+<hr>
+Data descriptors inherited from Boost.Python.instance:<br>
+<dl><dt><strong>__dict__</strong></dt>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+</dl>
+<hr>
+Data and other attributes inherited from Boost.Python.instance:<br>
+<dl><dt><strong>__new__</strong> = &lt;built-in method __new__ of Boost.Python.class object at 0x2aaaab9ca080&gt;<dd><tt>T.<a href="#Elf_Hdr-__new__">__new__</a>(S,&nbsp;...)&nbsp;-&gt;&nbsp;a&nbsp;new&nbsp;object&nbsp;with&nbsp;type&nbsp;S,&nbsp;a&nbsp;subtype&nbsp;of&nbsp;T</tt></dl>
+
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="#Frame">class <strong>Frame</strong></a>(Boost.Python.instance)</font></td></tr>
+    
+<tr><td bgcolor="#ffc8d8"><tt>&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl><dt>Method resolution order:</dt>
+<dd><a href="pyref.html#Frame">Frame</a></dd>
+<dd>Boost.Python.instance</dd>
+<dd><a href="__builtin__.html#object">__builtin__.object</a></dd>
+</dl>
+<hr>
+Methods defined here:<br>
+<dl><dt><a name="#Frame-frame_pointer"><strong>frame_pointer</strong></a>(...)</dt><dd><tt>C++&nbsp;signature:<br>
+<a href="#Frame-frame_pointer">frame_pointer</a>(<a href="#Frame">Frame</a>&nbsp;{lvalue})&nbsp;-&gt;&nbsp;unsigned&nbsp;long</tt></dd></dl>
+
+<dl><dt><a name="#Frame-function"><strong>function</strong></a>(...)</dt><dd><tt>return&nbsp;the&nbsp;function&nbsp;in&nbsp;scope&nbsp;at&nbsp;this&nbsp;frame<br>
+C++&nbsp;signature:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#Frame-function">function</a>(<a href="#Frame">Frame</a>*)&nbsp;-&gt;&nbsp;<a href="#Symbol">Symbol</a>*</tt></dd></dl>
+
+<dl><dt><a name="#Frame-index"><strong>index</strong></a>(...)</dt><dd><tt>C++&nbsp;signature:<br>
+<a href="#Frame-index">index</a>(<a href="#Frame">Frame</a>&nbsp;{lvalue})&nbsp;-&gt;&nbsp;unsigned&nbsp;long</tt></dd></dl>
+
+<dl><dt><a name="#Frame-is_signal_handler"><strong>is_signal_handler</strong></a>(...)</dt><dd><tt>C++&nbsp;signature:<br>
+<a href="#Frame-is_signal_handler">is_signal_handler</a>(<a href="#Frame">Frame</a>&nbsp;{lvalue})&nbsp;-&gt;&nbsp;bool</tt></dd></dl>
+
+<dl><dt><a name="#Frame-program_count"><strong>program_count</strong></a>(...)</dt><dd><tt>C++&nbsp;signature:<br>
+<a href="#Frame-program_count">program_count</a>(<a href="#Frame">Frame</a>&nbsp;{lvalue})&nbsp;-&gt;&nbsp;unsigned&nbsp;long</tt></dd></dl>
+
+<dl><dt><a name="#Frame-stack_pointer"><strong>stack_pointer</strong></a>(...)</dt><dd><tt>C++&nbsp;signature:<br>
+<a href="#Frame-stack_pointer">stack_pointer</a>(<a href="#Frame">Frame</a>&nbsp;{lvalue})&nbsp;-&gt;&nbsp;unsigned&nbsp;long</tt></dd></dl>
+
+<dl><dt><a name="#Frame-symbol"><strong>symbol</strong></a>(...)</dt><dd><tt>return&nbsp;the&nbsp;function&nbsp;in&nbsp;scope&nbsp;at&nbsp;this&nbsp;frame<br>
+C++&nbsp;signature:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#Frame-symbol">symbol</a>(<a href="#Frame">Frame</a>*)&nbsp;-&gt;&nbsp;<a href="#Symbol">Symbol</a>*</tt></dd></dl>
+
+<hr>
+Data and other attributes defined here:<br>
+<dl><dt><strong>__init__</strong> = &lt;built-in function __init__&gt;<dd><tt>Raises&nbsp;an&nbsp;exception<br>
+This&nbsp;class&nbsp;cannot&nbsp;be&nbsp;instantiated&nbsp;from&nbsp;Python</tt></dl>
+
+<hr>
+Data descriptors inherited from Boost.Python.instance:<br>
+<dl><dt><strong>__dict__</strong></dt>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+</dl>
+<hr>
+Data and other attributes inherited from Boost.Python.instance:<br>
+<dl><dt><strong>__new__</strong> = &lt;built-in method __new__ of Boost.Python.class object at 0x2aaaab9ca080&gt;<dd><tt>T.<a href="#Frame-__new__">__new__</a>(S,&nbsp;...)&nbsp;-&gt;&nbsp;a&nbsp;new&nbsp;object&nbsp;with&nbsp;type&nbsp;S,&nbsp;a&nbsp;subtype&nbsp;of&nbsp;T</tt></dl>
+
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="#Module">class <strong>Module</strong></a>(Boost.Python.instance)</font></td></tr>
+    
+<tr><td bgcolor="#ffc8d8"><tt>&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl><dt>Method resolution order:</dt>
+<dd><a href="pyref.html#Module">Module</a></dd>
+<dd>Boost.Python.instance</dd>
+<dd><a href="__builtin__.html#object">__builtin__.object</a></dd>
+</dl>
+<hr>
+Methods defined here:<br>
+<dl><dt><a name="#Module-addr"><strong>addr</strong></a>(...)</dt><dd><tt>C++&nbsp;signature:<br>
+<a href="#Module-addr">addr</a>(<a href="#Module">Module</a>&nbsp;{lvalue})&nbsp;-&gt;&nbsp;unsigned&nbsp;long</tt></dd></dl>
+
+<dl><dt><a name="#Module-name"><strong>name</strong></a>(...)</dt><dd><tt>C++&nbsp;signature:<br>
+<a href="#Module-name">name</a>(<a href="#Module">Module</a>&nbsp;const*)&nbsp;-&gt;&nbsp;std::string</tt></dd></dl>
+
+<dl><dt><a name="#Module-symbol_table"><strong>symbol_table</strong></a>(...)</dt><dd><tt>return&nbsp;the&nbsp;symbol&nbsp;table&nbsp;for&nbsp;this&nbsp;module<br>
+C++&nbsp;signature:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#Module-symbol_table">symbol_table</a>(<a href="#Module">Module</a>&nbsp;{lvalue})&nbsp;-&gt;&nbsp;<a href="#SymbolTable">SymbolTable</a>*</tt></dd></dl>
+
+<dl><dt><a name="#Module-translation_units"><strong>translation_units</strong></a>(...)</dt><dd><tt>C++&nbsp;signature:<br>
+<a href="#Module-translation_units">translation_units</a>(<a href="#Module">Module</a>*)&nbsp;-&gt;&nbsp;boost::python::list</tt></dd></dl>
+
+<dl><dt><a name="#Module-upper"><strong>upper</strong></a>(...)</dt><dd><tt>C++&nbsp;signature:<br>
+<a href="#Module-upper">upper</a>(<a href="#Module">Module</a>&nbsp;{lvalue})&nbsp;-&gt;&nbsp;unsigned&nbsp;long</tt></dd></dl>
+
+<hr>
+Data and other attributes defined here:<br>
+<dl><dt><strong>__init__</strong> = &lt;built-in function __init__&gt;<dd><tt>Raises&nbsp;an&nbsp;exception<br>
+This&nbsp;class&nbsp;cannot&nbsp;be&nbsp;instantiated&nbsp;from&nbsp;Python</tt></dl>
+
+<hr>
+Data descriptors inherited from Boost.Python.instance:<br>
+<dl><dt><strong>__dict__</strong></dt>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+</dl>
+<hr>
+Data and other attributes inherited from Boost.Python.instance:<br>
+<dl><dt><strong>__new__</strong> = &lt;built-in method __new__ of Boost.Python.class object at 0x2aaaab9ca080&gt;<dd><tt>T.<a href="#Module-__new__">__new__</a>(S,&nbsp;...)&nbsp;-&gt;&nbsp;a&nbsp;new&nbsp;object&nbsp;with&nbsp;type&nbsp;S,&nbsp;a&nbsp;subtype&nbsp;of&nbsp;T</tt></dl>
+
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="#Process">class <strong>Process</strong></a>(Boost.Python.instance)</font></td></tr>
+    
+<tr><td bgcolor="#ffc8d8"><tt>&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl><dt>Method resolution order:</dt>
+<dd><a href="pyref.html#Process">Process</a></dd>
+<dd>Boost.Python.instance</dd>
+<dd><a href="__builtin__.html#object">__builtin__.object</a></dd>
+</dl>
+<hr>
+Methods defined here:<br>
+<dl><dt><a name="#Process-add_module"><strong>add_module</strong></a>(...)</dt><dd><tt>C++&nbsp;signature:<br>
+<a href="#Process-add_module">add_module</a>(<a href="#Process">Process</a>*,&nbsp;char&nbsp;const*)&nbsp;-&gt;&nbsp;void*</tt></dd></dl>
+
+<dl><dt><a name="#Process-breakpoints"><strong>breakpoints</strong></a>(...)</dt><dd><tt>C++&nbsp;signature:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#Process-breakpoints">breakpoints</a>(<a href="#Process">Process</a>*,&nbsp;unsigned&nbsp;long&nbsp;addr,&nbsp;<a href="#BreakPoint">BreakPoint</a>::Type&nbsp;type)&nbsp;-&gt;&nbsp;boost::python::list<br>
+C++&nbsp;signature:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#Process-breakpoints">breakpoints</a>(<a href="#Process">Process</a>*,&nbsp;unsigned&nbsp;long&nbsp;addr)&nbsp;-&gt;&nbsp;boost::python::list<br>
+&nbsp;<br>
+return&nbsp;a&nbsp;list&nbsp;of&nbsp;breakpoints&nbsp;for&nbsp;the&nbsp;process<br>
+C++&nbsp;signature:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#Process-breakpoints">breakpoints</a>(<a href="#Process">Process</a>*)&nbsp;-&gt;&nbsp;boost::python::list</tt></dd></dl>
+
+<dl><dt><a name="#Process-command_line"><strong>command_line</strong></a>(...)</dt><dd><tt>C++&nbsp;signature:<br>
+<a href="#Process-command_line">command_line</a>(<a href="#Process">Process</a>&nbsp;const*)&nbsp;-&gt;&nbsp;char&nbsp;const*</tt></dd></dl>
+
+<dl><dt><a name="#Process-debugger"><strong>debugger</strong></a>(...)</dt><dd><tt>return&nbsp;the&nbsp;debugger&nbsp;attached&nbsp;to&nbsp;this&nbsp;process<br>
+C++&nbsp;signature:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#Process-debugger">debugger</a>(<a href="#Process">Process</a>&nbsp;{lvalue})&nbsp;-&gt;&nbsp;<a href="#Debugger">Debugger</a>*</tt></dd></dl>
+
+<dl><dt><a name="#Process-environ"><strong>environ</strong></a>(...)</dt><dd><tt>C++&nbsp;signature:<br>
+<a href="#Process-environ">environ</a>(<a href="#Process">Process</a>*)&nbsp;-&gt;&nbsp;boost::python::dict</tt></dd></dl>
+
+<dl><dt><a name="#Process-line_info"><strong>line_info</strong></a>(...)</dt><dd><tt>C++&nbsp;signature:<br>
+<a href="#Process-line_info">line_info</a>(<a href="#Process">Process</a>*,&nbsp;unsigned&nbsp;long)&nbsp;-&gt;&nbsp;boost::python::api::object</tt></dd></dl>
+
+<dl><dt><a name="#Process-modules"><strong>modules</strong></a>(...)</dt><dd><tt>return&nbsp;a&nbsp;list&nbsp;of&nbsp;modules&nbsp;that&nbsp;are&nbsp;loaded&nbsp;by&nbsp;this&nbsp;process<br>
+C++&nbsp;signature:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#Process-modules">modules</a>(<a href="#Process">Process</a>*)&nbsp;-&gt;&nbsp;boost::python::list</tt></dd></dl>
+
+<dl><dt><a name="#Process-name"><strong>name</strong></a>(...)</dt><dd><tt>C++&nbsp;signature:<br>
+<a href="#Process-name">name</a>(<a href="#Process">Process</a>&nbsp;{lvalue})&nbsp;-&gt;&nbsp;char&nbsp;const*</tt></dd></dl>
+
+<dl><dt><a name="#Process-origin"><strong>origin</strong></a>(...)</dt><dd><tt>describe&nbsp;how&nbsp;the&nbsp;process&nbsp;was&nbsp;loaded<br>
+C++&nbsp;signature:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#Process-origin">origin</a>(<a href="#Process">Process</a>&nbsp;{lvalue})&nbsp;-&gt;&nbsp;ProcessOrigin</tt></dd></dl>
+
+<dl><dt><a name="#Process-pid"><strong>pid</strong></a>(...)</dt><dd><tt>C++&nbsp;signature:<br>
+<a href="#Process-pid">pid</a>(<a href="#Process">Process</a>&nbsp;{lvalue})&nbsp;-&gt;&nbsp;int</tt></dd></dl>
+
+<dl><dt><a name="#Process-set_breakpoint"><strong>set_breakpoint</strong></a>(...)</dt><dd><tt>C++&nbsp;signature:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#Process-set_breakpoint">set_breakpoint</a>(<a href="#Process">Process</a>*,&nbsp;unsigned&nbsp;long&nbsp;addr,&nbsp;_object*&nbsp;callback)&nbsp;-&gt;&nbsp;void*<br>
+&nbsp;<br>
+set&nbsp;global&nbsp;breakpoint&nbsp;at&nbsp;specified&nbsp;address<br>
+C++&nbsp;signature:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#Process-set_breakpoint">set_breakpoint</a>(<a href="#Process">Process</a>*,&nbsp;unsigned&nbsp;long&nbsp;addr)&nbsp;-&gt;&nbsp;void*</tt></dd></dl>
+
+<dl><dt><a name="#Process-symbols"><strong>symbols</strong></a>(...)</dt><dd><tt>return&nbsp;the&nbsp;symbol&nbsp;map&nbsp;for&nbsp;the&nbsp;process<br>
+C++&nbsp;signature:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#Process-symbols">symbols</a>(<a href="#Process">Process</a>&nbsp;{lvalue})&nbsp;-&gt;&nbsp;<a href="#SymbolMap">SymbolMap</a>*</tt></dd></dl>
+
+<dl><dt><a name="#Process-threads"><strong>threads</strong></a>(...)</dt><dd><tt>C++&nbsp;signature:<br>
+<a href="#Process-threads">threads</a>(<a href="#Process">Process</a>*)&nbsp;-&gt;&nbsp;boost::python::list</tt></dd></dl>
+
+<hr>
+Data and other attributes defined here:<br>
+<dl><dt><strong>Origin</strong> = &lt;class '__main__.zero.Origin'&gt;</dl>
+
+<dl><dt><strong>__init__</strong> = &lt;built-in function __init__&gt;<dd><tt>Raises&nbsp;an&nbsp;exception<br>
+This&nbsp;class&nbsp;cannot&nbsp;be&nbsp;instantiated&nbsp;from&nbsp;Python</tt></dl>
+
+<hr>
+Data descriptors inherited from Boost.Python.instance:<br>
+<dl><dt><strong>__dict__</strong></dt>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+</dl>
+<hr>
+Data and other attributes inherited from Boost.Python.instance:<br>
+<dl><dt><strong>__new__</strong> = &lt;built-in method __new__ of Boost.Python.class object at 0x2aaaab9ca080&gt;<dd><tt>T.<a href="#Process-__new__">__new__</a>(S,&nbsp;...)&nbsp;-&gt;&nbsp;a&nbsp;new&nbsp;object&nbsp;with&nbsp;type&nbsp;S,&nbsp;a&nbsp;subtype&nbsp;of&nbsp;T</tt></dl>
+
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="#Properties">class <strong>Properties</strong></a>(Boost.Python.instance)</font></td></tr>
+    
+<tr><td bgcolor="#ffc8d8"><tt>&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl><dt>Method resolution order:</dt>
+<dd><a href="pyref.html#Properties">Properties</a></dd>
+<dd>Boost.Python.instance</dd>
+<dd><a href="__builtin__.html#object">__builtin__.object</a></dd>
+</dl>
+<hr>
+Methods defined here:<br>
+<dl><dt><a name="#Properties-get_double"><strong>get_double</strong></a>(...)</dt><dd><tt>C++&nbsp;signature:<br>
+<a href="#Properties-get_double">get_double</a>(<a href="#Properties">Properties</a>&nbsp;{lvalue},&nbsp;char&nbsp;const*,&nbsp;double)&nbsp;-&gt;&nbsp;double</tt></dd></dl>
+
+<dl><dt><a name="#Properties-get_string"><strong>get_string</strong></a>(...)</dt><dd><tt>C++&nbsp;signature:<br>
+<a href="#Properties-get_string">get_string</a>(<a href="#Properties">Properties</a>&nbsp;{lvalue},&nbsp;char&nbsp;const*,&nbsp;char&nbsp;const*)&nbsp;-&gt;&nbsp;char&nbsp;const*</tt></dd></dl>
+
+<dl><dt><a name="#Properties-get_word"><strong>get_word</strong></a>(...)</dt><dd><tt>C++&nbsp;signature:<br>
+<a href="#Properties-get_word">get_word</a>(<a href="#Properties">Properties</a>&nbsp;{lvalue},&nbsp;char&nbsp;const*,&nbsp;long)&nbsp;-&gt;&nbsp;long</tt></dd></dl>
+
+<dl><dt><a name="#Properties-set_double"><strong>set_double</strong></a>(...)</dt><dd><tt>C++&nbsp;signature:<br>
+<a href="#Properties-set_double">set_double</a>(<a href="#Properties">Properties</a>&nbsp;{lvalue},&nbsp;char&nbsp;const*,&nbsp;double)&nbsp;-&gt;&nbsp;void*</tt></dd></dl>
+
+<dl><dt><a name="#Properties-set_string"><strong>set_string</strong></a>(...)</dt><dd><tt>C++&nbsp;signature:<br>
+<a href="#Properties-set_string">set_string</a>(<a href="#Properties">Properties</a>&nbsp;{lvalue},&nbsp;char&nbsp;const*,&nbsp;char&nbsp;const*)&nbsp;-&gt;&nbsp;void*</tt></dd></dl>
+
+<dl><dt><a name="#Properties-set_word"><strong>set_word</strong></a>(...)</dt><dd><tt>C++&nbsp;signature:<br>
+<a href="#Properties-set_word">set_word</a>(<a href="#Properties">Properties</a>&nbsp;{lvalue},&nbsp;char&nbsp;const*,&nbsp;long)&nbsp;-&gt;&nbsp;void*</tt></dd></dl>
+
+<hr>
+Data and other attributes defined here:<br>
+<dl><dt><strong>__init__</strong> = &lt;built-in function __init__&gt;<dd><tt>Raises&nbsp;an&nbsp;exception<br>
+This&nbsp;class&nbsp;cannot&nbsp;be&nbsp;instantiated&nbsp;from&nbsp;Python</tt></dl>
+
+<hr>
+Data descriptors inherited from Boost.Python.instance:<br>
+<dl><dt><strong>__dict__</strong></dt>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+</dl>
+<hr>
+Data and other attributes inherited from Boost.Python.instance:<br>
+<dl><dt><strong>__new__</strong> = &lt;built-in method __new__ of Boost.Python.class object at 0x2aaaab9ca080&gt;<dd><tt>T.<a href="#Properties-__new__">__new__</a>(S,&nbsp;...)&nbsp;-&gt;&nbsp;a&nbsp;new&nbsp;object&nbsp;with&nbsp;type&nbsp;S,&nbsp;a&nbsp;subtype&nbsp;of&nbsp;T</tt></dl>
+
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="#StackTrace">class <strong>StackTrace</strong></a>(Boost.Python.instance)</font></td></tr>
+    
+<tr><td bgcolor="#ffc8d8"><tt>&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl><dt>Method resolution order:</dt>
+<dd><a href="pyref.html#StackTrace">StackTrace</a></dd>
+<dd>Boost.Python.instance</dd>
+<dd><a href="__builtin__.html#object">__builtin__.object</a></dd>
+</dl>
+<hr>
+Methods defined here:<br>
+<dl><dt><a name="#StackTrace-frame"><strong>frame</strong></a>(...)</dt><dd><tt>return&nbsp;frame&nbsp;of&nbsp;specified&nbsp;index<br>
+C++&nbsp;signature:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#StackTrace-frame">frame</a>(<a href="#StackTrace">StackTrace</a>&nbsp;{lvalue},&nbsp;unsigned&nbsp;long)&nbsp;-&gt;&nbsp;<a href="#Frame">Frame</a>*</tt></dd></dl>
+
+<dl><dt><a name="#StackTrace-frames"><strong>frames</strong></a>(...)</dt><dd><tt>return&nbsp;a&nbsp;the&nbsp;list&nbsp;of&nbsp;stack&nbsp;frame<br>
+C++&nbsp;signature:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#StackTrace-frames">frames</a>(<a href="#StackTrace">StackTrace</a>*)&nbsp;-&gt;&nbsp;boost::python::list</tt></dd></dl>
+
+<dl><dt><a name="#StackTrace-select_frame"><strong>select_frame</strong></a>(...)</dt><dd><tt>select&nbsp;frame&nbsp;by&nbsp;index<br>
+C++&nbsp;signature:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#StackTrace-select_frame">select_frame</a>(<a href="#StackTrace">StackTrace</a>&nbsp;{lvalue},&nbsp;unsigned&nbsp;long)&nbsp;-&gt;&nbsp;void*</tt></dd></dl>
+
+<dl><dt><a name="#StackTrace-selection"><strong>selection</strong></a>(...)</dt><dd><tt>C++&nbsp;signature:<br>
+<a href="#StackTrace-selection">selection</a>(<a href="#StackTrace">StackTrace</a>&nbsp;{lvalue})&nbsp;-&gt;&nbsp;<a href="#Frame">Frame</a>*</tt></dd></dl>
+
+<dl><dt><a name="#StackTrace-size"><strong>size</strong></a>(...)</dt><dd><tt>return&nbsp;the&nbsp;number&nbsp;of&nbsp;frames&nbsp;in&nbsp;this&nbsp;stack&nbsp;trace<br>
+C++&nbsp;signature:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#StackTrace-size">size</a>(<a href="#StackTrace">StackTrace</a>&nbsp;{lvalue})&nbsp;-&gt;&nbsp;unsigned&nbsp;long</tt></dd></dl>
+
+<hr>
+Data and other attributes defined here:<br>
+<dl><dt><strong>__init__</strong> = &lt;built-in function __init__&gt;<dd><tt>Raises&nbsp;an&nbsp;exception<br>
+This&nbsp;class&nbsp;cannot&nbsp;be&nbsp;instantiated&nbsp;from&nbsp;Python</tt></dl>
+
+<hr>
+Data descriptors inherited from Boost.Python.instance:<br>
+<dl><dt><strong>__dict__</strong></dt>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+</dl>
+<hr>
+Data and other attributes inherited from Boost.Python.instance:<br>
+<dl><dt><strong>__new__</strong> = &lt;built-in method __new__ of Boost.Python.class object at 0x2aaaab9ca080&gt;<dd><tt>T.<a href="#StackTrace-__new__">__new__</a>(S,&nbsp;...)&nbsp;-&gt;&nbsp;a&nbsp;new&nbsp;object&nbsp;with&nbsp;type&nbsp;S,&nbsp;a&nbsp;subtype&nbsp;of&nbsp;T</tt></dl>
+
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="#Symbol">class <strong>Symbol</strong></a>(Boost.Python.instance)</font></td></tr>
+    
+<tr><td bgcolor="#ffc8d8"><tt>&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl><dt>Method resolution order:</dt>
+<dd><a href="pyref.html#Symbol">Symbol</a></dd>
+<dd>Boost.Python.instance</dd>
+<dd><a href="__builtin__.html#object">__builtin__.object</a></dd>
+</dl>
+<hr>
+Methods defined here:<br>
+<dl><dt><a name="#Symbol-addr"><strong>addr</strong></a>(...)</dt><dd><tt>symbol's&nbsp;address<br>
+C++&nbsp;signature:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#Symbol-addr">addr</a>(<a href="#Symbol">Symbol</a>&nbsp;{lvalue})&nbsp;-&gt;&nbsp;unsigned&nbsp;long</tt></dd></dl>
+
+<dl><dt><a name="#Symbol-demangle"><strong>demangle</strong></a>(...)</dt><dd><tt>C++&nbsp;signature:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#Symbol-demangle">demangle</a>(<a href="#Symbol">Symbol</a>&nbsp;const*,&nbsp;DemangleOptions&nbsp;options)&nbsp;-&gt;&nbsp;std::string<br>
+&nbsp;<br>
+return&nbsp;demangled&nbsp;symbol&nbsp;name<br>
+C++&nbsp;signature:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#Symbol-demangle">demangle</a>(<a href="#Symbol">Symbol</a>&nbsp;const*)&nbsp;-&gt;&nbsp;std::string</tt></dd></dl>
+
+<dl><dt><a name="#Symbol-filename"><strong>filename</strong></a>(...)</dt><dd><tt>source&nbsp;file&nbsp;name&nbsp;where&nbsp;symbol&nbsp;is&nbsp;defined<br>
+C++&nbsp;signature:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#Symbol-filename">filename</a>(<a href="#Symbol">Symbol</a>&nbsp;const*)&nbsp;-&gt;&nbsp;char&nbsp;const*</tt></dd></dl>
+
+<dl><dt><a name="#Symbol-line"><strong>line</strong></a>(...)</dt><dd><tt>source&nbsp;line&nbsp;where&nbsp;symbol&nbsp;is&nbsp;defined<br>
+C++&nbsp;signature:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#Symbol-line">line</a>(<a href="#Symbol">Symbol</a>&nbsp;{lvalue})&nbsp;-&gt;&nbsp;unsigned&nbsp;int</tt></dd></dl>
+
+<dl><dt><a name="#Symbol-name"><strong>name</strong></a>(...)</dt><dd><tt>symbol&nbsp;name&nbsp;(possibly&nbsp;mangled)<br>
+C++&nbsp;signature:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#Symbol-name">name</a>(<a href="#Symbol">Symbol</a>&nbsp;const*)&nbsp;-&gt;&nbsp;std::string</tt></dd></dl>
+
+<dl><dt><a name="#Symbol-offset"><strong>offset</strong></a>(...)</dt><dd><tt>symbol's&nbsp;offset&nbsp;from&nbsp;nearest&nbsp;function<br>
+C++&nbsp;signature:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#Symbol-offset">offset</a>(<a href="#Symbol">Symbol</a>&nbsp;{lvalue})&nbsp;-&gt;&nbsp;unsigned&nbsp;long</tt></dd></dl>
+
+<dl><dt><a name="#Symbol-table"><strong>table</strong></a>(...)</dt><dd><tt>return&nbsp;the&nbsp;table&nbsp;that&nbsp;owns&nbsp;this&nbsp;symbol<br>
+C++&nbsp;signature:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#Symbol-table">table</a>(<a href="#Symbol">Symbol</a>&nbsp;{lvalue})&nbsp;-&gt;&nbsp;<a href="#SymbolTable">SymbolTable</a>*</tt></dd></dl>
+
+<dl><dt><a name="#Symbol-value"><strong>value</strong></a>(...)</dt><dd><tt>value&nbsp;in&nbsp;symbol&nbsp;table<br>
+C++&nbsp;signature:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#Symbol-value">value</a>(<a href="#Symbol">Symbol</a>&nbsp;{lvalue})&nbsp;-&gt;&nbsp;unsigned&nbsp;long</tt></dd></dl>
+
+<hr>
+Data and other attributes defined here:<br>
+<dl><dt><strong>Demangle</strong> = &lt;class '__main__.zero.Demangle'&gt;</dl>
+
+<dl><dt><strong>__init__</strong> = &lt;built-in function __init__&gt;<dd><tt>Raises&nbsp;an&nbsp;exception<br>
+This&nbsp;class&nbsp;cannot&nbsp;be&nbsp;instantiated&nbsp;from&nbsp;Python</tt></dl>
+
+<hr>
+Data descriptors inherited from Boost.Python.instance:<br>
+<dl><dt><strong>__dict__</strong></dt>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+</dl>
+<hr>
+Data and other attributes inherited from Boost.Python.instance:<br>
+<dl><dt><strong>__new__</strong> = &lt;built-in method __new__ of Boost.Python.class object at 0x2aaaab9ca080&gt;<dd><tt>T.<a href="#Symbol-__new__">__new__</a>(S,&nbsp;...)&nbsp;-&gt;&nbsp;a&nbsp;new&nbsp;object&nbsp;with&nbsp;type&nbsp;S,&nbsp;a&nbsp;subtype&nbsp;of&nbsp;T</tt></dl>
+
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="#SymbolMap">class <strong>SymbolMap</strong></a>(Boost.Python.instance)</font></td></tr>
+    
+<tr><td bgcolor="#ffc8d8"><tt>&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl><dt>Method resolution order:</dt>
+<dd><a href="pyref.html#SymbolMap">SymbolMap</a></dd>
+<dd>Boost.Python.instance</dd>
+<dd><a href="__builtin__.html#object">__builtin__.object</a></dd>
+</dl>
+<hr>
+Methods defined here:<br>
+<dl><dt><a name="#SymbolMap-lookup"><strong>lookup</strong></a>(...)</dt><dd><tt>lookup&nbsp;symbol&nbsp;by&nbsp;address<br>
+C++&nbsp;signature:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#SymbolMap-lookup">lookup</a>(<a href="#SymbolMap">SymbolMap</a>*,&nbsp;unsigned&nbsp;long)&nbsp;-&gt;&nbsp;RefPtr&lt;<a href="#Symbol">Symbol</a>&gt;<br>
+&nbsp;<br>
+lookup&nbsp;symbols&nbsp;by&nbsp;name,&nbsp;return&nbsp;a&nbsp;list&nbsp;of&nbsp;matches<br>
+C++&nbsp;signature:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#SymbolMap-lookup">lookup</a>(<a href="#SymbolMap">SymbolMap</a>*,&nbsp;char&nbsp;const*)&nbsp;-&gt;&nbsp;boost::python::list</tt></dd></dl>
+
+<hr>
+Data and other attributes defined here:<br>
+<dl><dt><strong>__init__</strong> = &lt;built-in function __init__&gt;<dd><tt>Raises&nbsp;an&nbsp;exception<br>
+This&nbsp;class&nbsp;cannot&nbsp;be&nbsp;instantiated&nbsp;from&nbsp;Python</tt></dl>
+
+<hr>
+Data descriptors inherited from Boost.Python.instance:<br>
+<dl><dt><strong>__dict__</strong></dt>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+</dl>
+<hr>
+Data and other attributes inherited from Boost.Python.instance:<br>
+<dl><dt><strong>__new__</strong> = &lt;built-in method __new__ of Boost.Python.class object at 0x2aaaab9ca080&gt;<dd><tt>T.<a href="#SymbolMap-__new__">__new__</a>(S,&nbsp;...)&nbsp;-&gt;&nbsp;a&nbsp;new&nbsp;object&nbsp;with&nbsp;type&nbsp;S,&nbsp;a&nbsp;subtype&nbsp;of&nbsp;T</tt></dl>
+
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="#SymbolTable">class <strong>SymbolTable</strong></a>(Boost.Python.instance)</font></td></tr>
+    
+<tr><td bgcolor="#ffc8d8"><tt>&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl><dt>Method resolution order:</dt>
+<dd><a href="pyref.html#SymbolTable">SymbolTable</a></dd>
+<dd>Boost.Python.instance</dd>
+<dd><a href="__builtin__.html#object">__builtin__.object</a></dd>
+</dl>
+<hr>
+Methods defined here:<br>
+<dl><dt><a name="#SymbolTable-__len__"><strong>__len__</strong></a>(...)</dt><dd><tt>C++&nbsp;signature:<br>
+<a href="#SymbolTable-__len__">__len__</a>(<a href="#SymbolTable">SymbolTable</a>&nbsp;{lvalue})&nbsp;-&gt;&nbsp;unsigned&nbsp;long</tt></dd></dl>
+
+<dl><dt><a name="#SymbolTable-addr"><strong>addr</strong></a>(...)</dt><dd><tt>C++&nbsp;signature:<br>
+<a href="#SymbolTable-addr">addr</a>(<a href="#SymbolTable">SymbolTable</a>&nbsp;{lvalue})&nbsp;-&gt;&nbsp;unsigned&nbsp;long</tt></dd></dl>
+
+<dl><dt><a name="#SymbolTable-filename"><strong>filename</strong></a>(...)</dt><dd><tt>C++&nbsp;signature:<br>
+<a href="#SymbolTable-filename">filename</a>(<a href="#SymbolTable">SymbolTable</a>&nbsp;const*)&nbsp;-&gt;&nbsp;std::string</tt></dd></dl>
+
+<dl><dt><a name="#SymbolTable-is_dynamic"><strong>is_dynamic</strong></a>(...)</dt><dd><tt>C++&nbsp;signature:<br>
+<a href="#SymbolTable-is_dynamic">is_dynamic</a>(<a href="#SymbolTable">SymbolTable</a>&nbsp;{lvalue})&nbsp;-&gt;&nbsp;bool</tt></dd></dl>
+
+<dl><dt><a name="#SymbolTable-lookup"><strong>lookup</strong></a>(...)</dt><dd><tt>lookup&nbsp;symbol&nbsp;by&nbsp;address<br>
+C++&nbsp;signature:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#SymbolTable-lookup">lookup</a>(<a href="#SymbolTable">SymbolTable</a>*,&nbsp;unsigned&nbsp;long)&nbsp;-&gt;&nbsp;RefPtr&lt;<a href="#Symbol">Symbol</a>&gt;<br>
+&nbsp;<br>
+lookup&nbsp;symbol&nbsp;by&nbsp;name<br>
+C++&nbsp;signature:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#SymbolTable-lookup">lookup</a>(<a href="#SymbolTable">SymbolTable</a>*,&nbsp;char&nbsp;const*)&nbsp;-&gt;&nbsp;boost::python::list</tt></dd></dl>
+
+<dl><dt><a name="#SymbolTable-module"><strong>module</strong></a>(...)</dt><dd><tt>return&nbsp;the&nbsp;module&nbsp;that&nbsp;owns&nbsp;this&nbsp;table<br>
+C++&nbsp;signature:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#SymbolTable-module">module</a>(<a href="#SymbolTable">SymbolTable</a>&nbsp;{lvalue})&nbsp;-&gt;&nbsp;<a href="#Module">Module</a>*</tt></dd></dl>
+
+<dl><dt><a name="#SymbolTable-next"><strong>next</strong></a>(...)</dt><dd><tt>get&nbsp;next&nbsp;table<br>
+C++&nbsp;signature:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#SymbolTable-next">next</a>(<a href="#SymbolTable">SymbolTable</a>&nbsp;{lvalue})&nbsp;-&gt;&nbsp;<a href="#SymbolTable">SymbolTable</a>*</tt></dd></dl>
+
+<dl><dt><a name="#SymbolTable-process"><strong>process</strong></a>(...)</dt><dd><tt>get&nbsp;the&nbsp;process&nbsp;to&nbsp;which&nbsp;this&nbsp;table&nbsp;belongs<br>
+C++&nbsp;signature:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#SymbolTable-process">process</a>(<a href="#SymbolTable">SymbolTable</a>&nbsp;{lvalue})&nbsp;-&gt;&nbsp;<a href="#Process">Process</a>*</tt></dd></dl>
+
+<hr>
+Data and other attributes defined here:<br>
+<dl><dt><strong>__init__</strong> = &lt;built-in function __init__&gt;<dd><tt>Raises&nbsp;an&nbsp;exception<br>
+This&nbsp;class&nbsp;cannot&nbsp;be&nbsp;instantiated&nbsp;from&nbsp;Python</tt></dl>
+
+<hr>
+Data descriptors inherited from Boost.Python.instance:<br>
+<dl><dt><strong>__dict__</strong></dt>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+</dl>
+<hr>
+Data and other attributes inherited from Boost.Python.instance:<br>
+<dl><dt><strong>__new__</strong> = &lt;built-in method __new__ of Boost.Python.class object at 0x2aaaab9ca080&gt;<dd><tt>T.<a href="#SymbolTable-__new__">__new__</a>(S,&nbsp;...)&nbsp;-&gt;&nbsp;a&nbsp;new&nbsp;object&nbsp;with&nbsp;type&nbsp;S,&nbsp;a&nbsp;subtype&nbsp;of&nbsp;T</tt></dl>
+
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="#TemplateType">class <strong>TemplateType</strong></a>(Boost.Python.instance)</font></td></tr>
+    
+<tr><td bgcolor="#ffc8d8"><tt>&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl><dt>Method resolution order:</dt>
+<dd><a href="pyref.html#TemplateType">TemplateType</a></dd>
+<dd>Boost.Python.instance</dd>
+<dd><a href="__builtin__.html#object">__builtin__.object</a></dd>
+</dl>
+<hr>
+Methods defined here:<br>
+<dl><dt><a name="#TemplateType-name"><strong>name</strong></a>(...)</dt><dd><tt>C++&nbsp;signature:<br>
+<a href="#TemplateType-name">name</a>(TemplateTypeParam&nbsp;const*)&nbsp;-&gt;&nbsp;char&nbsp;const*</tt></dd></dl>
+
+<dl><dt><a name="#TemplateType-type"><strong>type</strong></a>(...)</dt><dd><tt>C++&nbsp;signature:<br>
+<a href="#TemplateType-type">type</a>(TemplateTypeParam&nbsp;const*)&nbsp;-&gt;&nbsp;RefPtr&lt;<a href="#DataType">DataType</a>&gt;</tt></dd></dl>
+
+<hr>
+Data and other attributes defined here:<br>
+<dl><dt><strong>__init__</strong> = &lt;built-in function __init__&gt;<dd><tt>Raises&nbsp;an&nbsp;exception<br>
+This&nbsp;class&nbsp;cannot&nbsp;be&nbsp;instantiated&nbsp;from&nbsp;Python</tt></dl>
+
+<hr>
+Data descriptors inherited from Boost.Python.instance:<br>
+<dl><dt><strong>__dict__</strong></dt>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+</dl>
+<hr>
+Data and other attributes inherited from Boost.Python.instance:<br>
+<dl><dt><strong>__new__</strong> = &lt;built-in method __new__ of Boost.Python.class object at 0x2aaaab9ca080&gt;<dd><tt>T.<a href="#TemplateType-__new__">__new__</a>(S,&nbsp;...)&nbsp;-&gt;&nbsp;a&nbsp;new&nbsp;object&nbsp;with&nbsp;type&nbsp;S,&nbsp;a&nbsp;subtype&nbsp;of&nbsp;T</tt></dl>
+
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="#Thread">class <strong>Thread</strong></a>(Boost.Python.instance)</font></td></tr>
+    
+<tr><td bgcolor="#ffc8d8"><tt>&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl><dt>Method resolution order:</dt>
+<dd><a href="pyref.html#Thread">Thread</a></dd>
+<dd>Boost.Python.instance</dd>
+<dd><a href="__builtin__.html#object">__builtin__.object</a></dd>
+</dl>
+<hr>
+Methods defined here:<br>
+<dl><dt><a name="#Thread-breakpoints"><strong>breakpoints</strong></a>(...)</dt><dd><tt>C++&nbsp;signature:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#Thread-breakpoints">breakpoints</a>(<a href="#Thread">Thread</a>*,&nbsp;unsigned&nbsp;long&nbsp;args,&nbsp;<a href="#BreakPoint">BreakPoint</a>::Type&nbsp;type)&nbsp;-&gt;&nbsp;boost::python::list<br>
+C++&nbsp;signature:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#Thread-breakpoints">breakpoints</a>(<a href="#Thread">Thread</a>*,&nbsp;unsigned&nbsp;long&nbsp;args)&nbsp;-&gt;&nbsp;boost::python::list<br>
+&nbsp;<br>
+return&nbsp;a&nbsp;list&nbsp;of&nbsp;breakpoints&nbsp;per&nbsp;thread<br>
+C++&nbsp;signature:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#Thread-breakpoints">breakpoints</a>(<a href="#Thread">Thread</a>*)&nbsp;-&gt;&nbsp;boost::python::list</tt></dd></dl>
+
+<dl><dt><a name="#Thread-debugger"><strong>debugger</strong></a>(...)</dt><dd><tt>return&nbsp;the&nbsp;debugger&nbsp;instance&nbsp;attached&nbsp;to&nbsp;this&nbsp;thread<br>
+C++&nbsp;signature:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#Thread-debugger">debugger</a>(<a href="#Thread">Thread</a>&nbsp;{lvalue})&nbsp;-&gt;&nbsp;<a href="#Debugger">Debugger</a>*</tt></dd></dl>
+
+<dl><dt><a name="#Thread-disassemble"><strong>disassemble</strong></a>(...)</dt><dd><tt>disassemble&nbsp;starting&nbsp;at&nbsp;the&nbsp;specified&nbsp;symbol<br>
+returns&nbsp;3-tuples&nbsp;of&nbsp;address,&nbsp;text,&nbsp;length&nbsp;of&nbsp;opcode<br>
+&nbsp;<br>
+C++&nbsp;signature:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#Thread-disassemble">disassemble</a>(<a href="#Thread">Thread</a>*,&nbsp;<a href="#Symbol">Symbol</a>*,&nbsp;unsigned&nbsp;long,&nbsp;DisasmFormat)&nbsp;-&gt;&nbsp;boost::python::list</tt></dd></dl>
+
+<dl><dt><a name="#Thread-eval"><strong>eval</strong></a>(...)</dt><dd><tt>evaluate&nbsp;C++&nbsp;expression&nbsp;in&nbsp;the&nbsp;context&nbsp;of&nbsp;the&nbsp;given&nbsp;thread<br>
+C++&nbsp;signature:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#Thread-eval">eval</a>(<a href="#Thread">Thread</a>*,&nbsp;char&nbsp;const*,&nbsp;(anonymous&nbsp;namespace)::NumericBase)&nbsp;-&gt;&nbsp;boost::python::list<br>
+&nbsp;<br>
+evaluate&nbsp;C++&nbsp;expression&nbsp;in&nbsp;the&nbsp;context&nbsp;of&nbsp;the&nbsp;given&nbsp;thread<br>
+C++&nbsp;signature:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#Thread-eval">eval</a>(<a href="#Thread">Thread</a>*,&nbsp;char&nbsp;const*)&nbsp;-&gt;&nbsp;boost::python::list</tt></dd></dl>
+
+<dl><dt><a name="#Thread-finished"><strong>finished</strong></a>(...)</dt><dd><tt>return&nbsp;true&nbsp;if&nbsp;the&nbsp;thread&nbsp;has&nbsp;finished<br>
+C++&nbsp;signature:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#Thread-finished">finished</a>(<a href="#Thread">Thread</a>*)&nbsp;-&gt;&nbsp;bool</tt></dd></dl>
+
+<dl><dt><a name="#Thread-frame_pointer"><strong>frame_pointer</strong></a>(...)</dt><dd><tt>return&nbsp;the&nbsp;current&nbsp;frame&nbsp;pointer<br>
+C++&nbsp;signature:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#Thread-frame_pointer">frame_pointer</a>(<a href="#Thread">Thread</a>*)&nbsp;-&gt;&nbsp;unsigned&nbsp;long</tt></dd></dl>
+
+<dl><dt><a name="#Thread-fun_range"><strong>fun_range</strong></a>(...)</dt><dd><tt>C++&nbsp;signature:<br>
+<a href="#Thread-fun_range">fun_range</a>(<a href="#Thread">Thread</a>*,&nbsp;unsigned&nbsp;long)&nbsp;-&gt;&nbsp;boost::python::api::object</tt></dd></dl>
+
+<dl><dt><a name="#Thread-gid"><strong>gid</strong></a>(...)</dt><dd><tt>C++&nbsp;signature:<br>
+<a href="#Thread-gid">gid</a>(<a href="#Thread">Thread</a>&nbsp;{lvalue})&nbsp;-&gt;&nbsp;int</tt></dd></dl>
+
+<dl><dt><a name="#Thread-group_id"><strong>group_id</strong></a>(...)</dt><dd><tt>C++&nbsp;signature:<br>
+<a href="#Thread-group_id">group_id</a>(<a href="#Thread">Thread</a>&nbsp;{lvalue})&nbsp;-&gt;&nbsp;int</tt></dd></dl>
+
+<dl><dt><a name="#Thread-id"><strong>id</strong></a>(...)</dt><dd><tt>return&nbsp;pthread&nbsp;ID<br>
+C++&nbsp;signature:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#Thread-id">id</a>(<a href="#Thread">Thread</a>&nbsp;{lvalue})&nbsp;-&gt;&nbsp;unsigned&nbsp;long</tt></dd></dl>
+
+<dl><dt><a name="#Thread-is_32_bit"><strong>is_32_bit</strong></a>(...)</dt><dd><tt>C++&nbsp;signature:<br>
+<a href="#Thread-is_32_bit">is_32_bit</a>(<a href="#Thread">Thread</a>&nbsp;{lvalue})&nbsp;-&gt;&nbsp;bool</tt></dd></dl>
+
+<dl><dt><a name="#Thread-is_done_stepping"><strong>is_done_stepping</strong></a>(...)</dt><dd><tt>return&nbsp;true&nbsp;if&nbsp;finished&nbsp;stepping<br>
+C++&nbsp;signature:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#Thread-is_done_stepping">is_done_stepping</a>(<a href="#Thread">Thread</a>&nbsp;{lvalue})&nbsp;-&gt;&nbsp;bool</tt></dd></dl>
+
+<dl><dt><a name="#Thread-is_execed"><strong>is_execed</strong></a>(...)</dt><dd><tt>C++&nbsp;signature:<br>
+<a href="#Thread-is_execed">is_execed</a>(<a href="#Thread">Thread</a>&nbsp;{lvalue})&nbsp;-&gt;&nbsp;bool</tt></dd></dl>
+
+<dl><dt><a name="#Thread-is_forked"><strong>is_forked</strong></a>(...)</dt><dd><tt>C++&nbsp;signature:<br>
+<a href="#Thread-is_forked">is_forked</a>(<a href="#Thread">Thread</a>&nbsp;{lvalue})&nbsp;-&gt;&nbsp;bool</tt></dd></dl>
+
+<dl><dt><a name="#Thread-is_live"><strong>is_live</strong></a>(...)</dt><dd><tt>C++&nbsp;signature:<br>
+<a href="#Thread-is_live">is_live</a>(<a href="#Thread">Thread</a>&nbsp;{lvalue})&nbsp;-&gt;&nbsp;bool</tt></dd></dl>
+
+<dl><dt><a name="#Thread-is_traceable"><strong>is_traceable</strong></a>(...)</dt><dd><tt>C++&nbsp;signature:<br>
+<a href="#Thread-is_traceable">is_traceable</a>(<a href="#Thread">Thread</a>&nbsp;{lvalue})&nbsp;-&gt;&nbsp;bool</tt></dd></dl>
+
+<dl><dt><a name="#Thread-lookup_type"><strong>lookup_type</strong></a>(...)</dt><dd><tt>C++&nbsp;signature:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#Thread-lookup_type">lookup_type</a>(<a href="#Thread">Thread</a>*,&nbsp;char&nbsp;const*&nbsp;name,&nbsp;LookupScope&nbsp;scope)&nbsp;-&gt;&nbsp;RefPtr&lt;<a href="#DataType">DataType</a>&gt;<br>
+&nbsp;<br>
+lookup&nbsp;a&nbsp;data&nbsp;type&nbsp;by&nbsp;name,&nbsp;in&nbsp;the&nbsp;virtual&nbsp;space&nbsp;of&nbsp;this&nbsp;thread<br>
+C++&nbsp;signature:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#Thread-lookup_type">lookup_type</a>(<a href="#Thread">Thread</a>*,&nbsp;char&nbsp;const*&nbsp;name)&nbsp;-&gt;&nbsp;RefPtr&lt;<a href="#DataType">DataType</a>&gt;</tt></dd></dl>
+
+<dl><dt><a name="#Thread-lwpid"><strong>lwpid</strong></a>(...)</dt><dd><tt>return&nbsp;the&nbsp;ID&nbsp;of&nbsp;the&nbsp;lightweight&nbsp;process&nbsp;associated&nbsp;with&nbsp;this&nbsp;thread<br>
+C++&nbsp;signature:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#Thread-lwpid">lwpid</a>(<a href="#Thread">Thread</a>&nbsp;{lvalue})&nbsp;-&gt;&nbsp;int</tt></dd></dl>
+
+<dl><dt><a name="#Thread-param"><strong>param</strong></a>(...)</dt><dd><tt>C++&nbsp;signature:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#Thread-param">param</a>(<a href="#Thread">Thread</a>*,&nbsp;<a href="#Frame">Frame</a>*&nbsp;frame,&nbsp;char&nbsp;const*&nbsp;name)&nbsp;-&gt;&nbsp;boost::python::list<br>
+&nbsp;<br>
+return&nbsp;a&nbsp;list&nbsp;of&nbsp;parameters&nbsp;in&nbsp;specified&nbsp;frame<br>
+C++&nbsp;signature:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#Thread-param">param</a>(<a href="#Thread">Thread</a>*,&nbsp;<a href="#Frame">Frame</a>*&nbsp;frame)&nbsp;-&gt;&nbsp;boost::python::list</tt></dd></dl>
+
+<dl><dt><a name="#Thread-parent_id"><strong>parent_id</strong></a>(...)</dt><dd><tt>C++&nbsp;signature:<br>
+<a href="#Thread-parent_id">parent_id</a>(<a href="#Thread">Thread</a>&nbsp;{lvalue})&nbsp;-&gt;&nbsp;int</tt></dd></dl>
+
+<dl><dt><a name="#Thread-ppid"><strong>ppid</strong></a>(...)</dt><dd><tt>C++&nbsp;signature:<br>
+<a href="#Thread-ppid">ppid</a>(<a href="#Thread">Thread</a>&nbsp;{lvalue})&nbsp;-&gt;&nbsp;int</tt></dd></dl>
+
+<dl><dt><a name="#Thread-process"><strong>process</strong></a>(...)</dt><dd><tt>return&nbsp;the&nbsp;process&nbsp;the&nbsp;thread&nbsp;belongs&nbsp;to<br>
+C++&nbsp;signature:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#Thread-process">process</a>(<a href="#Thread">Thread</a>&nbsp;{lvalue})&nbsp;-&gt;&nbsp;<a href="#Process">Process</a>*</tt></dd></dl>
+
+<dl><dt><a name="#Thread-program_count"><strong>program_count</strong></a>(...)</dt><dd><tt>return&nbsp;the&nbsp;current&nbsp;program&nbsp;counter<br>
+C++&nbsp;signature:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#Thread-program_count">program_count</a>(<a href="#Thread">Thread</a>*)&nbsp;-&gt;&nbsp;unsigned&nbsp;long</tt></dd></dl>
+
+<dl><dt><a name="#Thread-read_as_ucs2"><strong>read_as_ucs2</strong></a>(...)</dt><dd><tt>C++&nbsp;signature:<br>
+<a href="#Thread-read_as_ucs2">read_as_ucs2</a>(<a href="#Thread">Thread</a>*,&nbsp;unsigned&nbsp;long,&nbsp;unsigned&nbsp;long)&nbsp;-&gt;&nbsp;std::string</tt></dd></dl>
+
+<dl><dt><a name="#Thread-read_as_ucs4"><strong>read_as_ucs4</strong></a>(...)</dt><dd><tt>C++&nbsp;signature:<br>
+<a href="#Thread-read_as_ucs4">read_as_ucs4</a>(<a href="#Thread">Thread</a>*,&nbsp;unsigned&nbsp;long,&nbsp;unsigned&nbsp;long)&nbsp;-&gt;&nbsp;std::string</tt></dd></dl>
+
+<dl><dt><a name="#Thread-regs"><strong>regs</strong></a>(...)</dt><dd><tt>C++&nbsp;signature:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#Thread-regs">regs</a>(<a href="#Thread">Thread</a>*,&nbsp;<a href="#Frame">Frame</a>*&nbsp;frame)&nbsp;-&gt;&nbsp;boost::python::dict<br>
+&nbsp;<br>
+return&nbsp;CPU&nbsp;regs&nbsp;for&nbsp;a&nbsp;given&nbsp;thread&nbsp;and&nbsp;(optional)&nbsp;stack&nbsp;frame<br>
+C++&nbsp;signature:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#Thread-regs">regs</a>(<a href="#Thread">Thread</a>*)&nbsp;-&gt;&nbsp;boost::python::dict</tt></dd></dl>
+
+<dl><dt><a name="#Thread-set_breakpoint"><strong>set_breakpoint</strong></a>(...)</dt><dd><tt>C++&nbsp;signature:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#Thread-set_breakpoint">set_breakpoint</a>(<a href="#Thread">Thread</a>*,&nbsp;unsigned&nbsp;long,&nbsp;_object*)&nbsp;-&gt;&nbsp;void*<br>
+C++&nbsp;signature:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#Thread-set_breakpoint">set_breakpoint</a>(<a href="#Thread">Thread</a>*,&nbsp;unsigned&nbsp;long)&nbsp;-&gt;&nbsp;void*</tt></dd></dl>
+
+<dl><dt><a name="#Thread-set_traceable"><strong>set_traceable</strong></a>(...)</dt><dd><tt>C++&nbsp;signature:<br>
+<a href="#Thread-set_traceable">set_traceable</a>(<a href="#Thread">Thread</a>*,&nbsp;bool)&nbsp;-&gt;&nbsp;void*</tt></dd></dl>
+
+<dl><dt><a name="#Thread-stack_pointer"><strong>stack_pointer</strong></a>(...)</dt><dd><tt>return&nbsp;the&nbsp;current&nbsp;stack&nbsp;pointer<br>
+C++&nbsp;signature:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#Thread-stack_pointer">stack_pointer</a>(<a href="#Thread">Thread</a>*)&nbsp;-&gt;&nbsp;unsigned&nbsp;long</tt></dd></dl>
+
+<dl><dt><a name="#Thread-stack_trace"><strong>stack_trace</strong></a>(...)</dt><dd><tt>return&nbsp;the&nbsp;current&nbsp;stack&nbsp;trace<br>
+C++&nbsp;signature:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#Thread-stack_trace">stack_trace</a>(<a href="#Thread">Thread</a>*)&nbsp;-&gt;&nbsp;RefPtr&lt;<a href="#StackTrace">StackTrace</a>&gt;</tt></dd></dl>
+
+<dl><dt><a name="#Thread-step"><strong>step</strong></a>(...)</dt><dd><tt>C++&nbsp;signature:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#Thread-step">step</a>(<a href="#Thread">Thread</a>*,&nbsp;<a href="#Debugger">Debugger</a>::StepMode&nbsp;mode,&nbsp;int&nbsp;count)&nbsp;-&gt;&nbsp;void*<br>
+&nbsp;<br>
+step&nbsp;through&nbsp;the&nbsp;debugged&nbsp;program<br>
+C++&nbsp;signature:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#Thread-step">step</a>(<a href="#Thread">Thread</a>*,&nbsp;<a href="#Debugger">Debugger</a>::StepMode&nbsp;mode)&nbsp;-&gt;&nbsp;void*</tt></dd></dl>
+
+<dl><dt><a name="#Thread-symbols"><strong>symbols</strong></a>(...)</dt><dd><tt>return&nbsp;the&nbsp;symbol&nbsp;map&nbsp;for&nbsp;the&nbsp;process<br>
+C++&nbsp;signature:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#Thread-symbols">symbols</a>(<a href="#Thread">Thread</a>&nbsp;{lvalue})&nbsp;-&gt;&nbsp;<a href="#SymbolMap">SymbolMap</a>*</tt></dd></dl>
+
+<dl><dt><a name="#Thread-variables"><strong>variables</strong></a>(...)</dt><dd><tt>C++&nbsp;signature:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#Thread-variables">variables</a>(<a href="#Thread">Thread</a>*,&nbsp;LookupScope&nbsp;scope,&nbsp;char&nbsp;const*&nbsp;name)&nbsp;-&gt;&nbsp;boost::python::list<br>
+&nbsp;<br>
+return&nbsp;the&nbsp;variables&nbsp;that&nbsp;match&nbsp;the&nbsp;given&nbsp;name&nbsp;and&nbsp;scope,<br>
+in&nbsp;the&nbsp;context&nbsp;of&nbsp;the&nbsp;currently&nbsp;selected&nbsp;frame&nbsp;of&nbsp;the&nbsp;given&nbsp;thread;<br>
+an&nbsp;empty&nbsp;name&nbsp;string&nbsp;matches&nbsp;everything<br>
+C++&nbsp;signature:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#Thread-variables">variables</a>(<a href="#Thread">Thread</a>*,&nbsp;LookupScope&nbsp;scope)&nbsp;-&gt;&nbsp;boost::python::list</tt></dd></dl>
+
+<hr>
+Data and other attributes defined here:<br>
+<dl><dt><strong>__init__</strong> = &lt;built-in function __init__&gt;<dd><tt>Raises&nbsp;an&nbsp;exception<br>
+This&nbsp;class&nbsp;cannot&nbsp;be&nbsp;instantiated&nbsp;from&nbsp;Python</tt></dl>
+
+<hr>
+Data descriptors inherited from Boost.Python.instance:<br>
+<dl><dt><strong>__dict__</strong></dt>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+</dl>
+<hr>
+Data and other attributes inherited from Boost.Python.instance:<br>
+<dl><dt><strong>__new__</strong> = &lt;built-in method __new__ of Boost.Python.class object at 0x2aaaab9ca080&gt;<dd><tt>T.<a href="#Thread-__new__">__new__</a>(S,&nbsp;...)&nbsp;-&gt;&nbsp;a&nbsp;new&nbsp;object&nbsp;with&nbsp;type&nbsp;S,&nbsp;a&nbsp;subtype&nbsp;of&nbsp;T</tt></dl>
+
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="#TranslationUnit">class <strong>TranslationUnit</strong></a>(Boost.Python.instance)</font></td></tr>
+    
+<tr><td bgcolor="#ffc8d8"><tt>&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl><dt>Method resolution order:</dt>
+<dd><a href="pyref.html#TranslationUnit">TranslationUnit</a></dd>
+<dd>Boost.Python.instance</dd>
+<dd><a href="__builtin__.html#object">__builtin__.object</a></dd>
+</dl>
+<hr>
+Methods defined here:<br>
+<dl><dt><a name="#TranslationUnit-filename"><strong>filename</strong></a>(...)</dt><dd><tt>C++&nbsp;signature:<br>
+<a href="#TranslationUnit-filename">filename</a>(<a href="#TranslationUnit">TranslationUnit</a>&nbsp;{lvalue})&nbsp;-&gt;&nbsp;char&nbsp;const*</tt></dd></dl>
+
+<dl><dt><a name="#TranslationUnit-language"><strong>language</strong></a>(...)</dt><dd><tt>C++&nbsp;signature:<br>
+<a href="#TranslationUnit-language">language</a>(<a href="#TranslationUnit">TranslationUnit</a>*)&nbsp;-&gt;&nbsp;Language</tt></dd></dl>
+
+<dl><dt><a name="#TranslationUnit-lower_addr"><strong>lower_addr</strong></a>(...)</dt><dd><tt>C++&nbsp;signature:<br>
+<a href="#TranslationUnit-lower_addr">lower_addr</a>(<a href="#TranslationUnit">TranslationUnit</a>&nbsp;{lvalue})&nbsp;-&gt;&nbsp;unsigned&nbsp;long</tt></dd></dl>
+
+<dl><dt><a name="#TranslationUnit-producer"><strong>producer</strong></a>(...)</dt><dd><tt>C++&nbsp;signature:<br>
+<a href="#TranslationUnit-producer">producer</a>(<a href="#TranslationUnit">TranslationUnit</a>&nbsp;{lvalue})&nbsp;-&gt;&nbsp;char&nbsp;const*</tt></dd></dl>
+
+<dl><dt><a name="#TranslationUnit-upper_addr"><strong>upper_addr</strong></a>(...)</dt><dd><tt>C++&nbsp;signature:<br>
+<a href="#TranslationUnit-upper_addr">upper_addr</a>(<a href="#TranslationUnit">TranslationUnit</a>&nbsp;{lvalue})&nbsp;-&gt;&nbsp;unsigned&nbsp;long</tt></dd></dl>
+
+<hr>
+Data and other attributes defined here:<br>
+<dl><dt><strong>Language</strong> = &lt;class '__main__.zero.Language'&gt;</dl>
+
+<dl><dt><strong>__init__</strong> = &lt;built-in function __init__&gt;<dd><tt>Raises&nbsp;an&nbsp;exception<br>
+This&nbsp;class&nbsp;cannot&nbsp;be&nbsp;instantiated&nbsp;from&nbsp;Python</tt></dl>
+
+<hr>
+Data descriptors inherited from Boost.Python.instance:<br>
+<dl><dt><strong>__dict__</strong></dt>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+</dl>
+<hr>
+Data and other attributes inherited from Boost.Python.instance:<br>
+<dl><dt><strong>__new__</strong> = &lt;built-in method __new__ of Boost.Python.class object at 0x2aaaab9ca080&gt;<dd><tt>T.<a href="#TranslationUnit-__new__">__new__</a>(S,&nbsp;...)&nbsp;-&gt;&nbsp;a&nbsp;new&nbsp;object&nbsp;with&nbsp;type&nbsp;S,&nbsp;a&nbsp;subtype&nbsp;of&nbsp;T</tt></dl>
+
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="#TypeSystem">class <strong>TypeSystem</strong></a>(Boost.Python.instance)</font></td></tr>
+    
+<tr><td bgcolor="#ffc8d8"><tt>&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl><dt>Method resolution order:</dt>
+<dd><a href="pyref.html#TypeSystem">TypeSystem</a></dd>
+<dd>Boost.Python.instance</dd>
+<dd><a href="__builtin__.html#object">__builtin__.object</a></dd>
+</dl>
+<hr>
+Methods defined here:<br>
+<dl><dt><a name="#TypeSystem-array_type"><strong>array_type</strong></a>(...)</dt><dd><tt>C++&nbsp;signature:<br>
+<a href="#TypeSystem-array_type">array_type</a>(<a href="#TypeSystem">TypeSystem</a>*,&nbsp;unsigned&nbsp;long,&nbsp;RefPtr&lt;<a href="#DataType">DataType</a>&gt;)&nbsp;-&gt;&nbsp;boost::python::api::object</tt></dd></dl>
+
+<dl><dt><a name="#TypeSystem-class_type"><strong>class_type</strong></a>(...)</dt><dd><tt>C++&nbsp;signature:<br>
+<a href="#TypeSystem-class_type">class_type</a>(<a href="#TypeSystem">TypeSystem</a>*,&nbsp;std::string,&nbsp;unsigned&nbsp;long)&nbsp;-&gt;&nbsp;boost::python::api::object</tt></dd></dl>
+
+<dl><dt><a name="#TypeSystem-int_type"><strong>int_type</strong></a>(...)</dt><dd><tt>C++&nbsp;signature:<br>
+<a href="#TypeSystem-int_type">int_type</a>(<a href="#TypeSystem">TypeSystem</a>*,&nbsp;std::string,&nbsp;unsigned&nbsp;long,&nbsp;bool)&nbsp;-&gt;&nbsp;boost::python::api::object</tt></dd></dl>
+
+<dl><dt><a name="#TypeSystem-pointer_type"><strong>pointer_type</strong></a>(...)</dt><dd><tt>C++&nbsp;signature:<br>
+<a href="#TypeSystem-pointer_type">pointer_type</a>(<a href="#TypeSystem">TypeSystem</a>*,&nbsp;RefPtr&lt;<a href="#DataType">DataType</a>&gt;)&nbsp;-&gt;&nbsp;boost::python::api::object</tt></dd></dl>
+
+<dl><dt><a name="#TypeSystem-reference_type"><strong>reference_type</strong></a>(...)</dt><dd><tt>C++&nbsp;signature:<br>
+<a href="#TypeSystem-reference_type">reference_type</a>(<a href="#TypeSystem">TypeSystem</a>*,&nbsp;RefPtr&lt;<a href="#DataType">DataType</a>&gt;)&nbsp;-&gt;&nbsp;boost::python::api::object</tt></dd></dl>
+
+<dl><dt><a name="#TypeSystem-string_type"><strong>string_type</strong></a>(...)</dt><dd><tt>C++&nbsp;signature:<br>
+<a href="#TypeSystem-string_type">string_type</a>(<a href="#TypeSystem">TypeSystem</a>*)&nbsp;-&gt;&nbsp;boost::python::api::object</tt></dd></dl>
+
+<dl><dt><a name="#TypeSystem-wstring_type"><strong>wstring_type</strong></a>(...)</dt><dd><tt>C++&nbsp;signature:<br>
+<a href="#TypeSystem-wstring_type">wstring_type</a>(<a href="#TypeSystem">TypeSystem</a>*)&nbsp;-&gt;&nbsp;boost::python::api::object</tt></dd></dl>
+
+<hr>
+Data and other attributes defined here:<br>
+<dl><dt><strong>__init__</strong> = &lt;built-in function __init__&gt;<dd><tt>Raises&nbsp;an&nbsp;exception<br>
+This&nbsp;class&nbsp;cannot&nbsp;be&nbsp;instantiated&nbsp;from&nbsp;Python</tt></dl>
+
+<hr>
+Data descriptors inherited from Boost.Python.instance:<br>
+<dl><dt><strong>__dict__</strong></dt>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+</dl>
+<hr>
+Data and other attributes inherited from Boost.Python.instance:<br>
+<dl><dt><strong>__new__</strong> = &lt;built-in method __new__ of Boost.Python.class object at 0x2aaaab9ca080&gt;<dd><tt>T.<a href="#TypeSystem-__new__">__new__</a>(S,&nbsp;...)&nbsp;-&gt;&nbsp;a&nbsp;new&nbsp;object&nbsp;with&nbsp;type&nbsp;S,&nbsp;a&nbsp;subtype&nbsp;of&nbsp;T</tt></dl>
+
+</td></tr></table></td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#eeaa77">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Functions</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#eeaa77"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl><dt><a name="#-bypass_builtin_command_interpreter"><strong>bypass_builtin_command_interpreter</strong></a>(...)</dt><dd><tt>C++&nbsp;signature:<br>
+<a href="#-bypass_builtin_command_interpreter">bypass_builtin_command_interpreter</a>(bool)&nbsp;-&gt;&nbsp;void*</tt></dd></dl>
+ <dl><dt><a name="#-debugger"><strong>debugger</strong></a>(...)</dt><dd><tt>return&nbsp;current&nbsp;debugger&nbsp;instance<br>
+C++&nbsp;signature:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#-debugger">debugger</a>(void)&nbsp;-&gt;&nbsp;<a href="#Debugger">Debugger</a>*</tt></dd></dl>
+ <dl><dt><a name="#-event_iteration"><strong>event_iteration</strong></a>(...)</dt><dd><tt>C++&nbsp;signature:<br>
+<a href="#-event_iteration">event_iteration</a>(void)&nbsp;-&gt;&nbsp;void*</tt></dd></dl>
+ <dl><dt><a name="#-event_pipe"><strong>event_pipe</strong></a>(...)</dt><dd><tt>C++&nbsp;signature:<br>
+<a href="#-event_pipe">event_pipe</a>(void)&nbsp;-&gt;&nbsp;int</tt></dd></dl>
+ <dl><dt><a name="#-get_elf_header"><strong>get_elf_header</strong></a>(...)</dt><dd><tt>C++&nbsp;signature:<br>
+<a href="#-get_elf_header">get_elf_header</a>(char&nbsp;const*)&nbsp;-&gt;&nbsp;Header</tt></dd></dl>
+</td></tr></table>
+</body>
+</html>

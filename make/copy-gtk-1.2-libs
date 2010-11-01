@@ -1,0 +1,22 @@
+#! /bin/bash
+echo "__${LIB}__"
+if test -z "$LIB"; then
+   echo "$LIB not set"
+   exit 1
+fi
+mkdir -p tmp/lib
+for i in `cat plugin/gui/gtk-1.2-libs`
+do
+	i=${i/\$LIB/$LIB}
+	#echo $i
+	if test -f $i; then
+		DEST=tmp/lib/`basename $i`
+		echo $DEST
+		#cp $i $DEST 
+		cp $i $DEST 2>/dev/null
+		strip $DEST 2>/dev/null
+	else
+		echo $i not found
+		exit 1
+	fi
+done

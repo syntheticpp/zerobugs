@@ -1,0 +1,36 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<body leftmargin="10" topmargin="10" bgcolor="#ffffff">
+<h1>The Threads View</h1>
+<p>
+The threads view is located in the right-upper side of the debugger window
+ (under the <a href="locals.html">local variables view</a> and above the
+ <a href="registers.html">registers view</a>).
+</p>
+ <p><font color="green"><b>Note:</b></font> 
+ The ID displayed under the "Thread" column is the internal task ID
+ by which threads are known to the kernel, and not the id returned by the 
+  <code>pthread_create()</code> call. The pthread ID can be seen in a tooltip, 
+  when moving the mouse over the items.</p>
+<p><font color="green"><b>Note:</b></font> 
+ The pthread ID is not available for threads read from a core dump.
+ No pthread ID is available for single-threaded programs.
+</p>
+<p>Single-clicking on a thread in the tree switches the view to the context of
+ that thread (this includes code code, <a href="stackview.html">stack view</a>,
+ registers and variables).
+</p>
+<p>
+For simplicity, processes created with the <code>fork</code> system call
+are shown in this view as well (they are marked distinctively from threads created with 
+the <code>clone</code> call).
+</p>
+<p>
+The "Debug" column allows the user to control which threads
+are of interest for debugging. If a box in this column is not checked, 
+then the execution will not break into the debugger when signals occur in 
+the corresponding thread.
+</p>
+</body>
+</html>

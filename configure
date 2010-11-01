@@ -1,0 +1,44 @@
+#! /usr/bin/env bash
+
+# Wrapper script for calling configure, set some environment
+# variable that I could not figure how to detect and set from
+# within configure itself
+
+# the SHELL after shebang MUST be bash on FreeBSD, so that
+# LDFLAGS is exported before invoking other configure scripts;
+# the /usr/lib/libdwarf.a that comes with the system needs to
+# be overriden with Dave A's lib
+default_prefix=/usr/local
+PREFIX=${PREFIX:-${default_prefix}}
+echo PREFIX=$PREFIX
+
+for arg in "$@"; do
+    if test "$arg" = "--help"; then
+        zdk/make/configure --help
+        exit 0
+    fi
+done
+
+LIB=lib
+source arch.sh
+
+
+export LDFLAGS="-L${PREFIX}/$LIB $LDFLAGS"
+export CFLAGS="-I${PREFIX}/include -D__USE_POSIX $CFLAGS"
+export CXXFLAGS="-I${PREFIX}/include $CXXFLAGS"
+
+if test -d /opt/gnome/${LIB}; then
+        LDFLAGS="$LDFLAGS -L/opt/gnome/${LIB}"
+fi
+
+pushd zdk/make
+
+if PKG_CONFIG_PATH=$PKG_CONFIG_PATH:${PREFIX}/${LIB}/pkgconfig ./configure "$@"; then
+        echo "Configured successfully"
+else
+        echo "Configure failed. Is there some package missing?"
+        popd
+        exit 1
+fi
+popd
+

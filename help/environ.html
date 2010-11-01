@@ -1,0 +1,210 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<body leftmargin="10" topmargin="10" bgcolor="#ffffff">
+<h1>Environment Variables</h1>
+<p>
+    <a href="overview.html#ld_path"><code>LD_LIBRARY_PATH</code></a>
+<br>This is a system variable, a colon-delimited list of paths.
+</p>
+
+<p><code>ZERO_AUTO_RTTI</code> 
+<br><b>Type:</b> boolean <b>Default:</b> true
+<br>By default, the debugger attempts to determine the dynamic
+type of objects referred to by pointers or references. For example,
+when debugging a function that takes a pointer-to-base argument, the
+debugger may display it as a pointer-to-derived. Use this environment
+variable if you want to turn off this feature.
+</p>
+
+<p><code>ZERO_CONFIG_PATH</code> 
+ <br><b>Type:</b> string <b>Default:</b> current installation directory.
+ <br>Points to a directory where a directory named .zero is
+ automatically created (and updated, after each execution
+ of the debugger). The .zero/config file stores state and
+ history information that include, for example, the 
+ <a href="breakpoints.html">breakpoints</a>
+ that are currently set in the debugged program, so that they
+ can be restored automatically in a future debugging session.
+ If the variable is not set, the current installation directory
+ is assumed.
+</p>
+<p><code>ZERO_CUSTOM_THEME</code>
+<br><b>Type:</b> boolean <b>Default:</b> true
+<br>Enable the custom look of certain controls, such as notebook tabs.
+</p>
+<p><code>ZERO_D_SUPPORT</code>
+<br><b>Type:</b> boolean <b>Default:</b> false
+<br>When true, support for the <a href="http://www.digitalmars.com/d/index.html">The D Programming Language</a> is enabled.
+</p>
+<p><code>ZERO_DEBUG_SYMBOLS_DIR</code> 
+ <br><b>Type:</b> string <b>Default:</b> <code>/usr/lib/debug</code>
+ <br>Points to a directory where external debug symbols files reside.
+</p>
+<p><code>ZERO_ENABLE_GCC_WORKAROUNDS</code>
+<br><b>Type:</b> boolean <b>Default:</b> false
+<br>Enable miscellaneous workarounds -- for example: gcc 2.95 generates incorrect
+ source line information in DWARF (symptom: instead of the source code listing you see
+ assembly instructions).
+</p>
+
+<p><code>ZERO_EXPENSIVE_TYPE_LOOKUPS</code>
+<br><b>Type:</b> unsigned int <b>Default:</b> 1
+<br>
+If set, attempt to find the full type definition, rather than just
+being happy with a forward declaration that matches.
+Values: <li>1: look for type definition inside functions;</li>
+<li>2: if a full definition is not found in the current module, lookup all
+program modules.</li>
+You may turn it off (set to 0) for better performance when debugging
+large programs.
+</p>
+
+<p><code>ZERO_HARDWARE_BREAKPOINTS</code> 
+<br><b>Type:</b> boolean <b>Default:</b> true
+<br>Turn on/off use of hardware support for breakpoints.
+Useful when debugging the engine and when running on some
+ broken hardware emulators.
+</p>
+
+<p><code>ZERO_HIGHLIGHT_CHANGES</code> 
+<br><b>Type:</b> string <b>Default:</b> magenta
+<br>The color to use for showing changes in variables, registers, and raw memory.
+</p>
+
+<p><code>ZERO_HELP_PATH</code> 
+ <br><b>Type:</b> string <b>Default:</b> <i>install-path</i>/help
+ <br>Points to the directory that contains the online help files.
+</P>
+
+<!--
+<p><code>ZERO_INLINE_HEURISTICS</code>
+<br><b>Type:</b> boolean <b>Default:</b> false
+<br>Enables some heuristics for debugging optimized,
+ inlined code (supported with the DWARF debug format only).
+ Largely, this means that the illusion of a call stack is
+ created when tracing through inlined functions.
+<font color="green"><b>Note:</b></font> Works only for programs
+ compiled with GCC 4.1.0 or higher.
+</p -->
+
+<p><code>ZERO_LICENSE_FILE</code> 
+ <br><b>Type:</b> string <b>Default:</b> <i>/usr/local/zero/license</i>
+ <br>This environment setting allows the user to specify
+which license file to use. On 64-bit systems, if a file named
+/usr/local/zero/license64 exists, then it trumps the environment-defined
+value; use --license=<license-file-name> in the command line to override.
+</p>
+<p><code>ZERO_LINE_NEAREST_MATCH</code> 
+ <br><b>Type:</b> bool <b>Default:</b> <i>true</i>.
+ <br>Zero uses some heuristics to determine the nearest match
+when looking up the source line that corresponds to an arbitrary
+code address. To disable this behavior and get results that 
+are closer to what GDB would produce (albeit not necessarily
+correct), you may set this variable to 0, or "false".
+</P>
+<p>
+<a name="#max_array"> 
+    <a href="arrays.html#arrays"><code>ZERO_MAX_ARRAY</code></a></a>
+</code>
+<br><b>Type:</b> integer <b>Default:</b> 100
+<br>Maximum array elements to be shown. 
+Once the maximum number is reached a <i>"..."</i> element
+is displayed, followed by the last two
+array elements.
+</p>
+
+<p><code>ZERO_MAX_MACRO</code>
+<br><b>Type:</b> integer <b>Default:</b> 5000
+<br>Maximum macroprocessor definitions, per compilation unit, looked up
+by the built-in expression interpreter. 
+When evaluating an expression like min(a,b) the interpreter looks up
+the first N macros in the current compilation unit, trying to find a
+match for "min". If no match is found, the symbol tables are then searched.
+Set it to 0 for unlimited macros.
+</p>
+<p><code>ZERO_MAX_STACK</code>
+<br><b>Type:</b> integer <b>Default:</b> 1024
+<br>Maximum size of stack traces. It is useful to limit the the size of
+the stack traces when dealing with infinite recursion bugs. 
+</p>
+
+<!-- DEPRECATED
+<p><code>ZERO_NO_DYNAMIC_SYMBOLS</code> 
+<br><b>Type:</b> boolean <b>Default:</b> false
+<br>When set to true, the engine ignores dynamic symbols in
+ the debuggee's symbol tables.
+</p -->
+
+<p><code>ZERO_PATH_MAP</code> 
+<br><b>Type:</b> string <b>Default:</b> empty
+<br>A list of semicolon-separated string pairs; the delimiter between the
+first element and the second is a colon. 
+</p>
+
+<p><code>ZERO_PROCFS</code> 
+<br><b>Type:</b> string <b>Default:</b> /proc/
+<br>Tell the debugger what is the root of the procfs filesystem.
+Useful on systems that mount the proc filesystem in a non-standard
+location (see the mount_linprocfs on FreeBSD).
+</p>
+
+<p>
+ <a href="overview.html#plugin_path"><code>ZERO_PLUGIN_PATH</code></a>
+ <br><b>Type:</b> string <b>Default:</b> <i>install-path</i>/plugin.
+ <br>Tells the engine where to look for plugins; it is
+ a colon delimited list of paths.</p>
+
+<p><code>ZERO_RIGHT_CLICK_SCOPE</code>
+<br><b>Type:</b> string <b>Default: <em>unit</em>
+</b>
+<br>Legal values are <b><em>all</em>, <em>module</em>, <em>unit</em></b>.
+Sets the scope for looking up symbols under the cur"sor when
+the third mouse button is clicked.
+</p>
+<p><code>ZERO_START_MAIN</code>
+<br><b>Type:</b> boolean <b>Default:</b> false
+<br>Start debugging at main(). Equivalent to using the --main command line
+ option.
+</p>
+<p><code>ZERO_STABS_LAZY</code>
+<br><b>Type:</b> boolean <b>Default:</b> true
+<br>Applies to the default STABS reader plugin. If set, stabs are 
+read lazily. The command line option <i>--stabs-now</i> overrides this
+environment variable.
+</p>
+
+<p><code>ZERO_SOURCE_STEP</code>
+<br><b>Type:</b> boolean <b>Default:</b> true
+<br>Step over when coming from
+region of code that has source code, into a portion
+where there's no available source code (thus avoiding tracing
+thru library and compiler-generated code, such as operator new, for
+example).
+</p>
+
+<p><code>ZERO_SYMBOL_DB</code>
+<br><b>Type:</b> boolean <b>Default:</b> false
+<br>Turn on caching symbolic info using sqlite.
+</p>
+
+<p><code>ZERO_USE_FRAME_HANDLERS</code>
+<br><b>Type:</b> boolean <b>Default:</b> false
+<br>When set, instructs the debugger to use the stack unwinding
+ information generated by the compiler, when available, rather than using
+ the frame pointer register. This feature enables debugging programs
+ compiled with <i>-fomit-frame-pointer</i>.
+<br>
+<font color="green"><b>Note:</b></font> The STABS debug format <b>does
+ not</b> provide frame unwinding information. Older versions of GCC such 
+ as 2.95 did not use the DWARF format by default. If you have an older
+ GCC, compile your programs with <i>-gdwarf-2</i>, or <i>-gdwarf-2<b>n</b></i>, 
+ where n is the debug level, 3 being the most verbose.
+</p>
+<!-- p><code>ZERO_USE_EXPENSIVE_LOOKUPS</code>
+<br><b>Type:</b> boolean <b>Default:</b> true
+<br -->
+<br>
+<small>Copyright (c) 2007  Zero Systems LLC</small>
+</body>
+</html>

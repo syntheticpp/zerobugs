@@ -1,0 +1,49 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<body leftmargin="10" topmargin="10" bgcolor="#ffffff">
+<h1>Evaluating Expressions</h1>
+<p>
+The "evaluate" feature allows you to view the value of a variable (local, global or 
+ a class member); it also allows you to evaluate a C++ expression. To access this
+ feature, select <i>Tools</i>, then <i>Evaluate</i> from the menu bar, then type
+ in the variable name or expression, and click the Evaluate button.
+<p>
+Another, quicker way to bring up the Evaluate dialog is to point the mouse at a variable
+ name in the source code view, and then click the right mouse button; from the floating
+ menu that pops up, select <i>Evaluate</i>.
+<p>
+The built-in expression interpreter can evaluate a one-line C++ expression that may
+ contain C-style or C++ casts and function calls. The expression may also contain
+ array subscripts, and pointer dereferencing; the comma operator is currently not supported.
+<p>
+Evaluating expressions that contain C++ operators may result in a function call, if any of 
+ the operators has been overriden.
+<p>
+When a virtual member function call appears in an expression, and the function is called
+ by pointer or reference, the interpreter tries to locate the function by its offset
+ in the virtual table; if not found, it falls back to trying the statically bound function.
+When the function is called via the dot operator and the left side of the dot is an object,
+ then the interpreter uses static binding, and the virtual table is not used.
+<p>
+Type and variable declarations are not allowed. The interpreter uses the ELF symbol tables
+ and the available debugging information to locate variables and type information.
+<p>
+Templates that have not been instantiated in the debugged code cannot be evaluated.
+<p>
+Expressions are evaluated in the scope of the currently selected stack frame; as an exception
+ to this rule, expressions may be evaluated in the scope of a breakpoint, when used as conditions
+ for activating the breakpoint. 
+<p>
+In addition to variables, you can also reference CPU registers in expressions (esp, eip, 
+ and so on). It is recommended that you prefix the register name with a percentage sign
+ (prefer <i>%eax</i> to <i>eax</i>) to avoid possible conflicts with variable names. 
+ Variables declared in your program always take precedence over register names, if the
+ percent sign is not used.
+ 
+<p>See also:<a href="locals.html">Local Variables View</a>,
+ <a href="functions.html">Calling Functions</a>,
+ <a href="breakpoints2.html#cond_bpnts">Conditional Breakpoints</a>
+</p>
+</body>
+</html>

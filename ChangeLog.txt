@@ -1,0 +1,290 @@
+[07/01/08]
+- variables are now shown in tooltips when hovering over source code
+- begun working on a utility for saving debug into to external database
+
+[06/08/08]
+- added missing headers (fixed compilation errors with g++ 4.3.0)
+- added autoconfig test for unordered_map
+
+[04/23/08]
+- fixed bugs in RPC::RemoteIO, added test-client,
+- moved object_factory.h from engine/ to dharma/
+
+[01/23/08]
+- Added license management, fixed bugs related to fork w/
+multiple threads
+
+[08/17/07]
+- Added mutex to Dwarf::get_debug_handle, so only one thread
+may operate on a Dwarf::Debug object.
+- SymbolTable relatead tweaks, more experimentation with
+caching
+
+[07/21/07]
+- Support for FPU regs in DWARF expressions on 32-bit systems
+- UI fixes, gtk-- 1.2 related
+- set "new_program" flag when thread is execv-ed
+- made read_register non const, to allow for caching, etc.
+
+[07/19/07]
+- Fixed race conditions in symbol_table.cpp
+- Fixed potential deadlock in UI
+- Do not allow changing the view type for CodeView instances
+that do now have a current scope function (symbol) set
+- Added support in DebuggerShell for dumping symbol tables
+- Revisited support for deferred breakpoints (i.e. insertion of
+breakpoints in shared objects that have not yet been loaded) and
+cleaned up the design; some small UI improvements entailed
+TODO: persist deferred breakpoints
+- Experimental feature (useful for own debugging): escape
+temporarily from UI mode into text mode command line
+
+[07/04/07]
+Handle DW_FRAME_EXPRESSION, stack unwinding now works much better 
+on AMD64
+
+[06/27/07]
+Do not install breakpoint for TD_DEATH, it seems to crash the main
+thread, is this a known glibc bug?
+
+And use SIGKILL rather than PTRACE_KILL to terminate the target,
+PTRACE_KILL is flaky.
+
+[06/23/07]
+Migrated to SVN
+
+[06/21/07]
+Added support for reading symbols and debug info 
+from separate file, when .gnu_debuglink is used
+
+Remove threads from internal list upon PTRACE_EVENT_EXIT.
+
+[06/19/07]
+Fixed bug with displaying STL containers as arrays when aggregated
+as struct/class members.
+
+Added Watch window in bottom tab.
+Added copyright note
+
+[06/14/07]
+Debugged core file are now properly added to the history.
+Removed some compile-time dependencies in the UI.
+Sorting in the SymbolTableImpl is now fully multi-threaded
+
+[06/13/07]
+Tinkered with ELF error reporting in minielf
+
+[06/11/07]
+Fixed unmangler assertion failure
+Fixed bug in STAB parser: could not deal with nested structs/classes
+Fixed problem with evaluating members of anonymous structs.
+Fixed bug in DWARF reader wrt bit-fields
+Experimenting with google::dense_hash_map, Hsieh function 
+
+[06/07/07]
+Fixed bugs in handling coredumps of 32-bit apps on AMD64
+Fixed bugs in returning objects by value in the interpreter, on AMD64
+
+Some small architectural cleanups: renamed the Task interface Runnable
+and moved most methods that do not work on corefiles from Thread to Runnable
+
+[05/06/07]
+UI Fixes, assembly code is now tabbed nicely
+Engine fix for returning from function when the PC is at func prologue
+bumped revision to 54
+ todo: test cases (would be interesting to play with recursive funcs)
+
+[04/23/07]
+Fixed install.py script
+Fixed problem with the expression interpreter, which used to throw an
+exception when attempting to pass an object by value, and the class did
+not have a copy constructor defined.
+A couple of things left to do in that area:
+  Make it work with small (<= 16 bytes) objects on the x86-64, and
+  use a member-wise copy rather than a bit-wise copy
+
+[04/22/07]
+Moved the pass_by_arg logic out of the interp library, to the target
+directory (since it is architecture-specific)
+
+[04/20/07]
+Configure script exits if flex not found
+Updated build instructions with libudis86 entry
+
+[04/14/07]
+Modified RPM spec file to invoke alien -k, if the alien program
+is present
+
+[04/12/07]
+Fixed bug in eventlog (hex and dec modifiers applied to incorrect debug
+levels)
+
+Fixed the DynamicArray type (parse method used default implementation); to
+prevent further errors, DataTypeImpl no longer provides a default
+implementation for the parse method.
+
+[04/07/07]
+Fixed race condition in UI (related to right-menu)
+Fixed DWARF-related BUG (module base was wrapping around)
+FIXED UI bug (there was an attempt to update a stacktrace from the UI thread)
+Support for D dynamic arrays
+FIXED D demangling
+New eventlog facility for the main engine and dwarf plugin (soon 
+to be added to other modules)
+
+DWARF plugin does not lookup all units in the module when looking
+up line info by address (can be forced to do so with ZERO_AGGRESSIVE_LINEINFO,
+just in case)
+
+[03/39/07]
+
+ 1) fixed a bug in the parsing of STAB debug info (affected gcc 3.3.5 compiled
+ code)
+ 2) fixed a bug in my implementation of ELF
+ 3) reduced the memory footprint for type information
+ 4) (internal) cleaned up my autoconfig scripts
+ 5) evaluation of logical expressions is now short-circuited (to better
+ imitate the compiled-code); previously, both left-handside and righthandside
+ operands were always being evaluated
+ 6) and fixed a bug that under certian conditions caused the debugger to hang
+ after the debugged program exited successfully
+
+ The stable version of Debian (Sarge) is now supported.
+
+
+[12/24/06]
+-- Fixed __x86_64__ / thread_db-related issue.
+
+[08/24/06]
+-- Allow static and implicit conversions from int and double
+   to bool in the expression interpreter
+
+[08/23/06]
+-- Moved the TypeSystem instance to UnixTarget from under DebuggerEngine,
+   this way when a process is forked the type system is not shared
+-- Fixed a bug in step_until_current_func_returns dealing with recursive
+   functions
+-- Added  the E_THREAD_RETURNED event type to indicate that 
+step_until_current_func_returns asynchronously completed
+
+-- Fixed SEGV in zero_python error handling,
+-- Fixed threading-related bug in the python plugin
+
+-- Fixed bug in x86-64 stack trace unwinding
+
+[08/17/06]
+-- Fixed bug that prevented streamable object factories to load
+the settings 
+-- Updated unit tests
+
+[08/09/06]
+-- Fixed a bug that prevented symbol lookups from working correctly
+with core files.
+-- Experimental Python binding library and plugin
+
+[07/22/06]
+-- Fixed bug in reading core files
+
+[07/15/06]
+-- Fixed SymKey in GUI to handle objects of zero address.
+-- Fixed loop in FwdType (the list of linked types was closing
+upon itself).
+-- ExceptionHandlingContext should now be thread-safe with respect
+to handling user-defined exceptions throw symultaneously on different
+threads.
+-- Added #pragma GCC visibility to ZDK headers which include <stdexception>
+
+[07/14/06]
+-- Stabilized the UI:
+	fixed bug with sorting, then editing a CList adapter
+	fixed bug in disassembler that threw code viewer off
+	fixed bugs in history navigation
+-- fixed test for PLT jump on x86_64
+-- symbol table calls Events::on_done even when loaded lazily, so that
+module breakpoints can be restored
+-- fixed ZERO_QUICK_SHUTDOWN
+-- Cleaned up command line parsing code
+-- NOTE: dropped libunwind experiments, libdwarf works now.
+
+[05/07/06]
+-- moved the check for pending system calls from interp/cpu_state_saver.cpp
+to the target implementation;
+-- fixed bug in the DWARF plug-in which caused local variables to be seen
+at the global scope;
+-- removed check for function prologue for x86-64 because it is hard to
+keep up with compiler changes, it causes more problems than it solves;
+as a result, stack unwinding works much better on the x64 now;
+-- better implementation for Thread::ret_addr(), which works in the
+context of the current stack frame, and does not used platform-dependent
+code;
+-- added support for passing doubles and floats in functions
+(via XMM0-5 regs) for x64
+
+[03/01/06]
+-- building the engine as a big shared object (optional)
+-- the memory view window accepts expressions
+
+[02/25/06]
+-- libelf no longer required, rolled out my minimalistic implementation
+
+[02/05/06]
+-- Fixed a bug in the interpreter having to do with combining
+macros and function calls
+-- Fixed the support for overloaded operator->
+
+[02/02/06]
+-- Better layers of abstraction, for ease of porting; moved processor
+specific stuff to the target directory
+-- support for macros in the expression evaluator/interpreter
+-- gtkmm 2.x code uses the source view widget
+
+[11/12/05]
+-- Improved the object model, bug fixes
+-- Investigating the possibility of porting to FreeBSD 5.3 and up
+
+[10/26/05]
+-- Support for exec-ed threads
+-- Fixed emulated breakpoint bug (clone was not overriden)
+
+-- Command line arguments are saved in the history. Also added support
+for saving a the debugged process' environment in the history. 
+When the history entry is executed, the same command line
+and environment will be used.
+
+-- More UI porting/adapting from Gtkmm 1.2 to Gtkmm 2.x
+
+-- Command line more compatible with GDB
+
+-- augmented the Process interface
+The enum_modules method of Process enumerates just the 
+modules in that process, whereas Debugger::enum_modules 
+enumerates ALL loaded shared objects.
+
+-- added Debugger::enum_processes(), removed Debugger::command_line()
+(it is a method of the Process interface now).
+
+-- added SymbolTable::process()
+
+-- the interpreter in the expression evaluator issues warnings 
+when comparing signed to unsigned and for negative shift arguments
+
+-- Started experimental FrameHandler plug-in (using libunwind)
+
+-- Fixed bug that affected the handling of forked threads in 64-bit
+
+[05/18/05]
+-- Skip per-thread breakpoints when restoring the state of 
+a debugged program from the .zero.config file, since it is hard, 
+if not impossible, to match the saved thread task IDs with the 
+threads that are currently running.
+
+-- Memory can be scanned for bytes pattern (the functionality is 
+NOT available from the GUI, though).
+
+-- FPU registers are now displayed (by default in the GUI, and with 
+the undocummented flag "/all" appended to the console-mode 
+"show registers" command).
+
+-- Command line arguments following a double-dash ("--") are passed
+verbatim to the debugged program.
+

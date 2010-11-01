@@ -1,0 +1,11 @@
+style "zero-help-view"
+{
+	font_name = "Italic"
+}
+style "zero-memory-view"
+{
+	font_name = "Monospace 11"
+}
+
+widget "*HelpView*" style "zero-help-view"
+#widget "*MemoryView*" style "zero-memory-view"

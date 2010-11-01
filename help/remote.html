@@ -1,0 +1,83 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<body leftmargin="10" topmargin="10" bgcolor="#ffffff">
+<h1>Remote Debugging</h1>
+<p>
+This page describes the support for remote debugging in ZeroBUGS (as shipped
+with the commercial versions -- beta binaries do not include any remote
+debugging support).
+Currently, the remote debugger is not a cross-debugger, that is 
+to say it only works between Linux systems with the same type of CPU. </p>
+<p>
+For full scale systems, remote debugging may be as simple as ssh-ing into
+the target.
+Installing a full-fledged debugger, with a UI-module that depends 
+heavily on Gnome may not be a feasible option for small (possibly embedded) 
+systems where resources are scarce.</p>
+<p>
+ZeroBUGS' solution for remote debugging is to install a thin, lightweight 
+server on the target system, and have the debugger on a Linux workstation 
+do the heavy lifting of building symbol tables, managing breakpoints, and so on.</p>
+<p>
+In order to read debug information, the debugger needs access to the executable and 
+shared objects on the target system.  The simplest solution is just mount the remote 
+target onto the machine where the debugger runs. SSHFS is ideal for this job. Because
+ the debug info may contain references to absolute path, ZeroBUGS provides the 
+ZERO_REMOTE_PATH environmental variable, which creates an internal mapping between 
+the mount point and the original paths.</p>
+<p>
+Here are the steps for a remote debugging sessions, with an example where the debugger 
+runs on a system named "zulu", and the target executable(s) reside on another  machine
+named "arnold":</p>
+<p>
+1) Mount the filesystem of the target computer onto the debugger system. Example:
+<code><pre>
+cristiv@zulu:~/workspace/sandbox$ sudo chown cristiv /dev/fuse
+[sudo] password for cristiv:
+cristiv@zulu:~/workspace/sandbox$ sshfs root@10.0.1.10:/ ~/workspace/remote/
+root@10.0.1.10's password:
+cristiv@zulu:~/workspace/sandbox$
+</pre></code></p>
+<p>
+2) Add mount point to remote map. Example:
+<code><pre>
+export ZERO_REMOTE_MAP="10.0.1.10:/home/cristiv/workspace/remote;"
+</pre></code>
+<br>
+<font color="green"><b>Note:</b></font> each entry must be ended with a semicolon 
+(even when there is only one entry in the map).</p>
+<p>
+3) Start the ZeroBUGS server on the remote (debug target) system:
+<code><pre>
+cristiv@arnold:~/workspace/zero$ zserver
+*** ZeroBUGS Remote Debug Server V. 1.0 ***
+*** Copyright (c) 2008 Zero Systems LLC ***
+cristiv@arnold:~/workspace/zero$
+</pre></code></p>
+<p>
+To debug remotely programs running on host 10.0.1.10:<br />
+4) Run a remote program and debug it, using the command line:
+<code><pre>
+zero remote://10.0.1.10/home/cristiv/workspace/zero/a.out
+</pre></code></p>
+<p>
+<font color="green"><b>Note:</b></font>
+The default port used for remote debugging is 30000. To use a different port, 
+start the server passing a different port number in the command line, like this:
+<code><pre>
+zserver --port=1234
+</pre></code>
+Specify the port in the client command line like this:
+<code><pre>
+zero remote://10.0.1.10:1234/home/cristiv/workspace/zero/a.out
+</pre></code>
+</p>
+<p>
+<font color="green"><b>Note:</b></font>
+Finally, please remember that <strong>the debug server opens a security whole on 
+the target systems</strong>, since the client debugger can execute any program 
+that the user who started the server can. It is your responsibility to ensure
+the security of the system being debugged.
+</p>
+</body>
+</html>

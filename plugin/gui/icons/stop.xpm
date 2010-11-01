@@ -1,0 +1,36 @@
+#if GTKMM_2
+#include <gtk/gtkstock.h>
+static const char * stop_xpm[] = {
+	GTK_STOCK_DIALOG_ERROR
+};
+#else
+/* XPM */
+static const char * stop_xpm[] = {
+"21 22 4 1",
+" 	c None",
+".	c #000000",
+"X	c #FFFFFF",
+"o	c #FF0000",
+"      .........      ",
+"     .XXXXXXXXX.     ",
+"    .XXoooooooXX.    ",
+"   .XXoooooooooXX.   ",
+"  .XXoooooooooooXX.  ",
+" .XXoooooooooooooXX. ",
+".XXoooooooooooooooXX.",
+".XoooooooooooooooooX.",
+".XooXXoXXXoXXooXXooX.",
+".XoXooXoXoXooXoXoXoX.",
+".XoXooooXoXooXoXoXoX.",
+".XooXXooXoXooXoXXooX.",
+".XooooXoXoXooXoXoooX.",
+".XoXooXoXoXooXoXoooX.",
+".XooXXooXooXXooXoooX.",
+".XXoooooooooooooooXX.",
+" .XXoooooooooooooXX. ",
+"  .XXoooooooooooXX.  ",
+"   .XXoooooooooXX.   ",
+"    .XXoooooooXX.    ",
+"     .XXXXXXXXX.     ",
+"      .........      "};
+#endif

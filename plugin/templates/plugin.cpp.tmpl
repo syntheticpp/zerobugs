@@ -1,0 +1,313 @@
+// -*- tab-width: 4; indent-tabs-mode: nil;  -*-
+// vim: tabstop=4:softtabstop=4:expandtab:shiftwidth=4 
+//
+// $Id: plugin.cpp.tmpl 706 2010-10-09 10:42:56Z root $
+//
+#include "zdk/argv_util.h"
+#include "zdk/check_ptr.h"
+
+#include "${PLUGIN_FILE}.h"
+
+using namespace std;
+${USING_NAMESPACE}
+
+
+/**
+ * Advertise the interfaces supported by this plugin
+ */
+void query_plugin(InterfaceRegistry* registry)
+{
+    registry->update(DebuggerPlugin::_uuid());
+}
+
+
+
+Plugin* create_plugin(uuidref_t iid)
+{
+    Plugin* plugin = 0;
+   
+    if (uuid_equal(DebuggerPlugin::_uuid(), iid))
+    {
+        plugin = new ${PLUGIN_CLASS}();
+    }
+    return plugin;
+}
+
+
+
+${PLUGIN_CLASS}::${PLUGIN_CLASS}() 
+    : debugger_(0)
+{
+}
+
+
+
+${PLUGIN_CLASS}::~${PLUGIN_CLASS}() throw()
+{
+}
+
+
+
+void ${PLUGIN_CLASS}::release()
+{
+    delete this;
+}
+
+
+
+/**
+ * Parse command line and other initializing stuff
+ */
+bool ${PLUGIN_CLASS}::initialize(
+    Debugger*   debugger,
+    int*        argc,
+    char***     argv)
+{
+    debugger_ = debugger;
+    
+BEGIN_ARG_PARSE(argc, argv)
+/*    
+    ON_ARG("--foo")
+        {
+            cout << __func__ << ": foo\n";
+        }
+    ON_ARG("--bar")
+        {
+            cout << __func__ << ": bar\n";
+        }
+ */
+END_ARG_PARSE
+    return true;
+}
+
+
+
+void ${PLUGIN_CLASS}::shutdown()
+{
+}
+
+
+
+void ${PLUGIN_CLASS}::register_streamable_objects(ObjectFactory* /* factory */)
+{
+}
+
+
+
+void ${PLUGIN_CLASS}::on_table_init(SymbolTable*)
+{
+}
+
+
+
+void ${PLUGIN_CLASS}::on_table_done(SymbolTable*)
+{
+}
+
+
+
+void ${PLUGIN_CLASS}::on_attach(Thread* thread)
+{
+}
+
+
+
+void ${PLUGIN_CLASS}::on_detach(Thread* thread)
+{
+    // if (thread == 0) // detached from all threads?
+    // {
+    // } 
+}
+
+
+
+void ${PLUGIN_CLASS}::on_syscall(Thread*, int32_t)
+{
+}
+
+
+
+bool ${PLUGIN_CLASS}::on_event(Thread*, EventType)
+{
+    return false;
+}
+
+
+
+void ${PLUGIN_CLASS}::on_program_resumed()
+{
+}
+
+
+
+void ${PLUGIN_CLASS}::on_insert_breakpoint(volatile BreakPoint*)
+{
+}
+
+
+
+void ${PLUGIN_CLASS}::on_remove_breakpoint(volatile BreakPoint*)
+{
+}
+
+
+
+bool ${PLUGIN_CLASS}::on_progress(const char* what, double percent, word_t cookie)
+{
+    return true;
+}
+
+
+bool ${PLUGIN_CLASS}::on_message (
+    const char* what,
+    Debugger::MessageType type,
+    Thread* thread,
+    bool async)
+{
+    return false;
+}
+
+
+
+const char* ${PLUGIN_CLASS}::description() const
+{
+    return "${PLUGIN_CLASS}";
+}
+
+
+const char* ${PLUGIN_CLASS}::copyright() const
+{
+    return "Copyright 2008 $USER@$HOST";
+}
+
+
+
+IF ${DEBUG_IMPL}
+size_t ${PLUGIN_CLASS}::enum_locals(
+    Thread* thread,
+    const char* name,
+    Frame* frame,
+    Symbol* func,
+    DebugSymbolEvents*,
+    bool paramOnly
+)
+{
+    return 0;
+}
+
+
+
+size_t ${PLUGIN_CLASS}::enum_globals(
+    Thread* thread,
+    const char* name,
+    Symbol* func,
+    DebugSymbolEvents*,
+    LookupScope,
+    bool)
+{
+    return 0;
+}
+
+
+
+size_t ${PLUGIN_CLASS}::addr_to_line(
+    const SymbolTable* symTable,
+    addr_t addr,
+    addr_t* nearest,
+    EnumCallback2<SharedString*, size_t>*)
+{
+    return false;
+}
+
+
+
+addr_t ${PLUGIN_CLASS}::next_line_addr (
+    const SymbolTable*,
+    addr_t,
+    SharedString*,
+    size_t) const
+{
+    return 0;
+}
+
+
+
+size_t ${PLUGIN_CLASS}::line_to_addr (
+    Process*                proc,
+    SharedString*           moduleName,
+    loff_t                  moduleAdjust,
+    SharedString*           sourceFileName,
+    size_t                  line,
+    EnumCallback<addr_t>*   observer,
+    bool*                   cancel)
+{
+    return 0;
+}
+
+
+
+DebugSymbol* ${PLUGIN_CLASS}::get_return_symbol(
+    Thread*, 
+    const Symbol* sym, 
+    RefTracker*)
+{
+    return 0;
+}
+
+
+
+bool ${PLUGIN_CLASS}::get_return_addr (
+    Thread*  thread, 
+    addr_t    addr, 
+    addr_t*   retAddr
+    ) const
+{
+    return false;
+}
+
+
+    
+bool ${PLUGIN_CLASS}::get_fun_range(
+    Thread*, 
+    addr_t, 
+    addr_t*, 
+    addr_t*
+    ) const
+{
+    return false;
+}
+
+
+
+DataType* ${PLUGIN_CLASS}::lookup_type(
+    Thread*     thread, 
+    const char* typeName,
+    addr_t      addr,
+    LookupScope scope)
+{
+    return 0;
+}
+ 
+
+
+TranslationUnit* ${PLUGIN_CLASS}::lookup_unit_by_addr (
+    Process* proc,
+    SharedString* module,
+    addr_t addr)
+{
+    return 0;
+}
+
+
+
+size_t ${PLUGIN_CLASS}::lookup_unit_by_name(
+    Process* proc,
+    SharedString* moduleFileName,
+    const char* unitFileName,
+    EnumCallback<TranslationUnit*, bool>*
+)
+{
+    return 0;
+}
+
+ENDIF
