@@ -11,7 +11,29 @@
 // http://www.boost.org/LICENSE_1_0.txt)
 // -------------------------------------------------------------------------
 
-#include "symbolz/private/symbol_map_impl.h"
+/* forward decls */
+namespace ELF
+{
+    class CoreFile;
+}
+class DynLibList;
+class Process;
+class SymbolTableEvents;
+
+
+/**
+ * Read the symbol map for a core file.
+ */
+RefPtr<SymbolMap>
+ReadSymbolsFromCoreDump(Process&, const ELF::CoreFile&, SymbolTableEvents&);
+
+
+/**
+ * Read the symbol map of a running program.
+ */
+RefPtr<SymbolMap>
+ReadSymbolsFromProcess(Process&, SymbolTableEvents&);
+
 
 #endif // SYMBOL_MAP_H__316D8291_4A2D_4147_8004_E1F67E3193EA
 // vim: tabstop=4:softtabstop=4:expandtab:shiftwidth=4

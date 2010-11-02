@@ -48,11 +48,4 @@ SymbolTableEvents::line_to_addr(const SymbolTable&,
 }
 
 
-/*
-Platform::addr_t SymbolTableEvents::next_line(RefPtr<Symbol>) const
-{
-    return 0;
-}
-*/
-
 // vim: tabstop=4:softtabstop=4:expandtab:shiftwidth=4

@@ -98,15 +98,6 @@ public:
     {
         return false;
     }
-
-    /**
-     * @note experimental, may go away in the future
-     */
-    /*
-    virtual size_t enum_tables_by_source(
-        SharedString* source,
-        EnumCallback<SymbolTable*>*) const = 0;
-    */
 };
 
 

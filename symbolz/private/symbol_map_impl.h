@@ -18,19 +18,16 @@
 #include "zdk/symbol_map.h"
 #include "zdk/zobject_impl.h"
 #include "symbolz/private/symbol_table_impl.h"
+#include "symbolz/public/symbol_map.h"
 #include "symbolz/public/symbol_table_events.h"
 
 #undef file_list
 
 
-namespace ELF
-{
-    class CoreFile;
-}
-class DynLibList;
-class Process;
-
-
+/**
+ * Implement map of symbol tables. Each module mapped in the process space
+ * has one or more symbol tables.
+ */
 CLASS SymbolMapImpl : public ZObjectImpl<SymbolMap>
 {
 public:

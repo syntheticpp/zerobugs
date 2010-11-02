@@ -967,4 +967,29 @@ void SymbolMapImpl::scan_needed_tables() const
     scannedNeededTables_ = true;
 }
 
+
+/**
+ * Read the symbol map for a core file.
+ */
+RefPtr<SymbolMap>
+ReadSymbolsFromCoreDump(
+    Process& process,
+    const ELF::CoreFile& coreFile,
+    SymbolTableEvents& events)
+{
+    return new SymbolMapImpl(process, coreFile, events);
+}
+
+
+/**
+ * Read the symbol map of a running program.
+ */
+RefPtr<SymbolMap>
+ReadSymbolsFromProcess(Process& process, SymbolTableEvents& events)
+{
+    RefPtr<SymbolMapImpl> symbols(new SymbolMapImpl(process, events));
+
+    symbols->read();
+    return symbols;
+}
 // vim: tabstop=4:softtabstop=4:expandtab:shiftwidth=4

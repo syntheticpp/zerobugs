@@ -212,9 +212,10 @@ LinuxCoreTarget::new_process(pid_t pid,
 RefPtr<SymbolMap> LinuxCoreTarget::read_symbols()
 {
     assert(process());
-    return new SymbolMapImpl(*process(),
-                            *core_,
-                            *debugger().symbol_table_events());
+
+    return ReadSymbolsFromCoreDump(*process(),
+                                   *core_,
+                                   *debugger().symbol_table_events());
 }
 
 

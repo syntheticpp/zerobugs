@@ -32,6 +32,17 @@ shell=0
 
 ################################################################
 #
+# Archiving the source code as a ZIP file may mess up the 
+# eXecute flag
+#
+function ensure_exec () {
+	find . -name configure -exec chmod +x {} \;
+	find . -name "*.sh" -exec chmod +x {} \;
+	chmod +x zdk/make/mklibdep
+}
+
+################################################################
+#
 # Build a 3rd party lib, assumed to be under third_party_libs
 # directory, passed it as argument. If preceded by --install,
 # will also install the lib in the ${PREFIX} directory.
@@ -79,6 +90,7 @@ function help () {
     echo
 }
 
+ensure_exec
 
 ################################################################
 #

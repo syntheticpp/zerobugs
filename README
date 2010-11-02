@@ -4,8 +4,6 @@ applications (not kernel) written in C/C++ under Linux.
 At its core is an engine that the user can interact with in a console,
 somewhat like GDB. It also has a Gtk UI.
 
-All code, except where otherwise stated, is Copyright (c) 2010 Cristian L. Vlasceanu
-
 BUILDING THE SOURCE:
 	Use the build script in this directory, type ./build --help for help
 
@@ -25,9 +23,6 @@ The following are required:
 
 
 SOURCE CODE LAYOUT:
-Here are the sources for various libraries used by
-the Zero debugger, and by some of the plug-in components.
-
 engine: the debugger engine code
 
 typez: an implementation of the DebugSymbol interface, used by the stabs and

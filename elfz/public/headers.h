@@ -77,8 +77,6 @@ namespace ELF
 
         SectionHdr(Elf*, Elf_Scn*);
 
-        // SectionHdr() : hdr32_(0) { }
-
         bool is_null() const { return hdr32_ == 0; }
 
     private:
