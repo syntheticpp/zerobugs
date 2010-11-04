@@ -41,5 +41,9 @@ etc, etc.
 Code from DebuggerBase, ProcessImpl and maybe other classes will be
 gradually migrated to the proper target impls.
 
+
+----------------------------------------------------------------
+NOTE: Code for non-Linux platforms is very sketchy, DO NOT
+	  expect it to work!
             
 

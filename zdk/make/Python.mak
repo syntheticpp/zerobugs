@@ -1,2 +1,2 @@
-CFLAGS+=-I/usr/include/python2.6
-LDLIBS+=-lpython2.6
+CFLAGS+=-I/usr/include/python2.7
+LDLIBS+=-lpython2.7

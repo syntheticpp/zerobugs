@@ -258,7 +258,7 @@
 /* #undef HAVE_UUID_H */
 
 /* Define to 1 if you have the <uuid/uuid.h> header file. */
-#define HAVE_UUID_UUID_H 1
+/* #undef HAVE_UUID_UUID_H */
 
 /* Define to 1 if you have the `vfork' function. */
 #define HAVE_VFORK 1
