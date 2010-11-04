@@ -213,9 +213,8 @@ RefPtr<SymbolMap> LinuxCoreTarget::read_symbols()
 {
     assert(process());
 
-    return ReadSymbolsFromCoreDump(*process(),
-                                   *core_,
-                                   *debugger().symbol_table_events());
+    return read_symbols_from_core_dump(
+        *process(), *core_, *debugger().symbol_table_events());
 }
 
 

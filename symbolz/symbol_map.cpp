@@ -972,7 +972,7 @@ void SymbolMapImpl::scan_needed_tables() const
  * Read the symbol map for a core file.
  */
 RefPtr<SymbolMap>
-ReadSymbolsFromCoreDump(
+read_symbols_from_core_dump(
     Process& process,
     const ELF::CoreFile& coreFile,
     SymbolTableEvents& events)
@@ -985,7 +985,7 @@ ReadSymbolsFromCoreDump(
  * Read the symbol map of a running program.
  */
 RefPtr<SymbolMap>
-ReadSymbolsFromProcess(Process& process, SymbolTableEvents& events)
+read_symbols_from_process(Process& process, SymbolTableEvents& events)
 {
     RefPtr<SymbolMapImpl> symbols(new SymbolMapImpl(process, events));
 

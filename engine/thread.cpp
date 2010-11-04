@@ -933,10 +933,7 @@ void ThreadImpl::read_symbols(SymbolTableEvents* events)
     assert(process()->pid() == this->lwpid());
 #endif
 
-    RefPtr<SymbolMapImpl> symbols(new SymbolMapImpl(*process(), *events));
-    symbols->read();
-
-    symbols_ = symbols;
+    symbols_ = read_symbols_from_process(*process(), *events);
 }
 
 

@@ -812,7 +812,7 @@ RefPtr<SymbolMap> LinuxLiveTarget::read_symbols()
 {
     SymbolTableEvents* events = debugger().symbol_table_events();
 
-    return ReadSymbolsFromProcess(*CHKPTR(process()), *CHKPTR(events));
+    return read_symbols_from_process(*CHKPTR(process()), *CHKPTR(events));
 }
 
 

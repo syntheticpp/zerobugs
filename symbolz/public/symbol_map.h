@@ -25,14 +25,14 @@ class SymbolTableEvents;
  * Read the symbol map for a core file.
  */
 RefPtr<SymbolMap>
-ReadSymbolsFromCoreDump(Process&, const ELF::CoreFile&, SymbolTableEvents&);
+read_symbols_from_core_dump(Process&, const ELF::CoreFile&, SymbolTableEvents&);
 
 
 /**
  * Read the symbol map of a running program.
  */
 RefPtr<SymbolMap>
-ReadSymbolsFromProcess(Process&, SymbolTableEvents&);
+read_symbols_from_process(Process&, SymbolTableEvents&);
 
 
 #endif // SYMBOL_MAP_H__316D8291_4A2D_4147_8004_E1F67E3193EA
