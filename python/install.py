@@ -75,6 +75,15 @@ script_text = """#! /usr/bin/env bash
 export GLIBCXX_FORCE_NEW=1
 export GLIBCPP_FORCE_NEW=1
 
+# Gotta be careful with empty LD_LIBRARY_PATH, because of
+# this bug: http://sourceware.org/bugzilla/show_bug.cgi?id=4776
+#
+if test -n "$LD_LIBRARY_PATH"; then
+  export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$PREFIX/zero/lib
+else
+  export LD_LIBRARY_PATH=$PREFIX/zero/lib
+fi
+
 if test -n "$LD_LIBRARY_PATH"; then
   export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$PREFIX/zero/lib
 else
