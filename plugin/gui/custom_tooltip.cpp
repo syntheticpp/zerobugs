@@ -72,11 +72,11 @@ void CustomToolTip::position_tooltip(int x, int y)
 
 int CustomToolTip::on_pointer_motion(GdkEventMotion* event)
 {
+#if !GTKMM_2
     // silence off compiler warnings about converting doubles to ints
     const int x_root = static_cast<int>(event->x_root);
     const int y_root = static_cast<int>(event->y_root);
 
-#if !GTKMM_2
     if (tooltip_.get())
     {
         position_tooltip(x_root, y_root);

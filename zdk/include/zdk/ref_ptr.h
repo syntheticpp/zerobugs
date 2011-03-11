@@ -48,7 +48,7 @@ public:
     }
 
     /**
-     * Implicit conversion from RefPtr<Derived> to RefPtr<Base>
+     * Generalized copy ctor
      */
     template<typename U>
     RefPtr(const RefPtr<U>& other) : ptr_(other.ptr_)
@@ -61,6 +61,12 @@ public:
         inc_ref();
     }
 */
+/*
+    RefPtr(RefPtr&& other) : ptr_(other.ptr_)
+    {
+        other.ptr_ = 0;
+    }
+ */
     RefPtr(const volatile RefPtr& other) : ptr_(other.ptr_)
     {
         inc_ref();
@@ -95,6 +101,13 @@ public:
         this->swap(tmp);
         return *this;
     }
+   /* 
+    RefPtr& operator=(RefPtr&& that)
+    {
+        RefPtr tmp(std::forward<RefPtr>(that));
+        this->swap(tmp);
+        return *this;
+    } */
 
     template<typename U>
     RefPtr& operator=(const RefPtr<U>& that)

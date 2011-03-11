@@ -90,7 +90,7 @@ using namespace eventlog;
 
 
 static const char copyrightText[] =
-  "Copyright (C) 2006 - 2010 Cristian L. Vlasceanu.\n";
+  "Copyright (C) 2006 - 2011 Cristian L. Vlasceanu.\n";
 
 
 /**

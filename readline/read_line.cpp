@@ -47,7 +47,11 @@ void display_strings(const vector<string>& matches, FILE* file)
     // a nice side-effect is that division by zero is also prevented
     ++cwidth;
 
-    const size_t columns = Term::screen_width(fileno(file)) / cwidth;
+    size_t columns = Term::screen_width(fileno(file)) / cwidth;
+    if (columns == 0)
+    {
+        columns = 78; // default to something sane
+    }
 
     for (size_t j(0); j != matches.size(); ++j)
     {
