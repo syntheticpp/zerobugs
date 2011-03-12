@@ -303,6 +303,10 @@ void ELF::CoreFile::read_notes(const ELF::ProgramHeader& phdr)
             break;
 
     #ifdef HAVE_STRUCT_USER_FPXREGS_STRUCT
+        // /usr/include/linux/elf.h copied this from
+        // gdb5.1/include/elf/common.h
+        case /* NT_PRXFPREG */ 0x46e62b7f: 
+
         case NT_PRFPXREG: // 20
             read_fpxregs(note);
             break;

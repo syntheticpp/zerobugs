@@ -41,7 +41,8 @@ Note::Note(const File& elf, const unsigned char* data)
         assert(false);
     }
 
-    name_.assign((const char*)data + totalRoundedSize_, namesz());
+    const size_t size = namesz();
+    name_.assign(reinterpret_cast<const char*>(data) + totalRoundedSize_, size);
 
     totalRoundedSize_ += align(namesz(), 2);
     const unsigned char* begin = data + totalRoundedSize_;
