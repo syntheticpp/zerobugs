@@ -3251,6 +3251,9 @@ bool DebuggerShell::cmd_where(Thread* thread, const vector<string>& argv)
     size_t height = 1;
     const size_t w = Term::screen_width(STDOUT_FILENO);
 
+    // screen_width should never return 0, by contract
+    assert(w);
+
     maxDepth = min(maxDepth, trace->size());
     for (size_t i = 0; i != maxDepth; ++i)
     {

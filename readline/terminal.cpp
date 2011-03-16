@@ -32,6 +32,10 @@
 
 using namespace std;
 
+static const unsigned int DEFAULT_SCREEN_WIDTH = 78;
+static const unsigned int DEFAULT_SCREEN_HEIGHT = 25;
+
+
 namespace Term
 {
     void init();
@@ -174,7 +178,7 @@ unsigned int Term::screen_width(int file)
             return static_cast<unsigned int>(-1);
         }
     }
-    return ws.ws_col;
+    return ws.ws_col ? ws.ws_col : DEFAULT_SCREEN_WIDTH;
 }
 
 
@@ -189,7 +193,7 @@ unsigned int Term::screen_height(int file)
             return static_cast<unsigned int>(-1);
         }
     }
-    return ws.ws_row;
+    return ws.ws_row ? ws.ws_row : DEFAULT_SCREEN_HEIGHT;
 }
 
 
