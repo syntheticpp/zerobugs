@@ -196,7 +196,7 @@ static void pre_gtk_init()
 {
 }
 
-static void post_gtk_init()
+static void install_exception_handler()
 {
 }
 
@@ -221,7 +221,7 @@ static void pre_gtk_init()
     }
 }
 
-static void post_gtk_init()
+static void install_exception_handler()
 {
     Glib::add_exception_handler(&GUI::handle_exception);
 }
@@ -265,7 +265,7 @@ END_ARG_PARSE
         pre_gtk_init();
         new Gtk::Main(*ac, *av);
 
-        post_gtk_init();
+        install_exception_handler();
 
         // pre-condition: main window not created
         assert(!mainWindow_);
@@ -665,6 +665,8 @@ static int announce_started()
 //
 void* GUI::run(void* p)
 {
+    install_exception_handler();
+
     try
     {
         GLIB_SIGNAL_IDLE.connect(Gtk_PTR_FUN(&announce_started));

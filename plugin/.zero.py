@@ -61,8 +61,11 @@ def to_long(param):
 		return 0
 
 
-def find_child_by_name(sym, tokens, recursive):
+def find_child_by_name(sym, tokens, recursive, depth = 1):
 	"Find a child of a DebugSymbol object"
+	# print "find_child_by_name:",depth
+	if depth > 1024:
+		return None
 
 	for child in sym.children():
 		if child.name() == tokens[0]:
@@ -73,7 +76,7 @@ def find_child_by_name(sym, tokens, recursive):
 				return child
 		if recursive:
 			#recursively descend into children
-			tmp = find_child_by_name(child, tokens, recursive)
+			tmp = find_child_by_name(child, tokens, recursive, depth + 1)
 			if tmp:
 				return tmp
 		if sym.type().is_pointer() and sym.value() <> "_M_parent":

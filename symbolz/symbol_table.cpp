@@ -553,14 +553,14 @@ Symbol* SymbolTableImpl::lookup_symbol(addr_t addr) const
             return 0;
         }
         --i;
-        if (addr >= upper_)
+        /*if (addr >= upper_)
         {
             IF_DEBUG
             (
                 clog << __func__ << ": warning: " << hex << addr;
                 clog << " is above upper limit: " << upper_ << dec << endl
             );
-        }
+        }*/
         assert(*i);
         sym = new OffsetSymbolImpl(**i, addr - (*i)->value());
     }
