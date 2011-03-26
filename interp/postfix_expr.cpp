@@ -857,7 +857,14 @@ void
 PostfixExpr::initiate_fun_call(Context& ctxt, CallSetup& setup)
 {
     set_strict_type(setup.is_return_type_strict());
-
+    
+    if (Thread* thread = ctxt.thread())
+    {
+        if (Debugger* dbg = thread->debugger())
+        {
+            dbg->set_breakpoint_at_throw(thread, false);
+        }
+    }
     // Context::call_function does not return, so if there are
     // any other things to setup, here is the place to do it
     // ...

@@ -589,7 +589,7 @@ void DebuggerEngine::on_attach(Thread& thread)
             }
             if ((options() & OPT_BREAK_ON_THROW))
             {
-                set_breakpoint_at_throw(thread);
+                set_breakpoint_at_throw(&thread);
             }
         }
     }
@@ -1490,7 +1490,8 @@ namespace
 
 
 ////////////////////////////////////////////////////////////////
-void DebuggerEngine::remove_breakpoint_action(BreakPoint::Action* action)
+void
+DebuggerEngine::remove_breakpoint_action(BreakPoint::Action* action)
 {
     if (breakPointMgr_.get())
     {
@@ -3698,17 +3699,20 @@ void DebuggerEngine::enable_command(DebuggerCommand* cmd, bool enable)
 
 
 ////////////////////////////////////////////////////////////////
-void DebuggerEngine::set_breakpoint_at_throw(Thread& thread)
+void DebuggerEngine::set_breakpoint_at_throw(
+    Thread* thread,
+    bool permanent)
 {
-    // todo: should the name of the throw func be user-configurable?
+    // todo: should the name of the throw func be configurable?
 
     static const char* throwFunc[] = {
         "__cxa_throw",  // Itanium-ABI conforming C++ compilers
         "__throw",      // GCC 2.95
         "_d_throw@4",   // Digital Mars D
     };
+    const char* actionName = permanent ? "__throw" : "__throw_once";
 
-    RefPtr<BreakPointAction> action = interactive_action("__throw");
+    RefPtr<BreakPointAction> action(interactive_action(actionName, permanent));
     FunctionEnum funcs;
 
     for (size_t i = 0; i != sizeof(throwFunc)/sizeof(throwFunc[0]); ++i)
@@ -3718,8 +3722,8 @@ void DebuggerEngine::set_breakpoint_at_throw(Thread& thread)
             SymbolTable::LKUP_UNMAPPED  |
             SymbolTable::LKUP_ISMANGLED;
 
-        thread.symbols()->enum_symbols(throwFunc[i], &funcs, mode);
-        set_breakpoint(thread, funcs, action.get());
+        thread->symbols()->enum_symbols(throwFunc[i], &funcs, mode);
+        set_breakpoint(*thread, funcs, action.get());
     }
 }
 
@@ -3770,6 +3774,7 @@ void DebuggerEngine::set_options(uint64_t opts)
     if (opts != options())
     {
         DebuggerBase::set_options(opts);
+        assert(options() == opts);
 
         if (opts & OPT_BREAK_ON_THROW)
         {
@@ -3777,7 +3782,7 @@ void DebuggerEngine::set_options(uint64_t opts)
             {
                 if (thread->is_live())
                 {
-                    set_breakpoint_at_throw(*thread);
+                    set_breakpoint_at_throw(thread);
                 }
             }
         }

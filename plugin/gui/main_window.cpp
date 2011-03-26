@@ -4236,12 +4236,22 @@ bool MainWindow::on_invalid_utf8(const char* text, size_t lineNum)
 
 bool MainWindow::is_at_debug_event() const
 {
-    Lock<Mutex> lock(mutex(), TryLock());
-    if (!lock)
+    for (int retry = 0; retry < 3; ++retry)
     {
-        return false;
+        Lock<Mutex> lock(mutex(), TryLock());
+        if (lock)
+        {
+            return atDebugEvent_;
+        }
+#if DEBUG
+        else
+        {
+            clog << __func__ << ": failed to acquire lock, owner=" 
+                 << mutex().get_owner() << " maintid=" << maintid << endl;
+        }
+#endif
     }
-    return atDebugEvent_;
+    return false;
 }
 
 

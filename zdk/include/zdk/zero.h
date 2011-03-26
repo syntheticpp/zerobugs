@@ -12,7 +12,7 @@
 // -------------------------------------------------------------------------
 
 #define ZERO_API_MAJOR  1
-#define ZERO_API_MINOR 19
+#define ZERO_API_MINOR 20
 
 #define ZDK_MAJOR ZERO_API_MAJOR
 #define ZDK_MINOR ZERO_API_MINOR
@@ -914,6 +914,8 @@ DECLARE_ZDK_INTERFACE_(Debugger, Unknown2)
      */
     virtual void enter() = 0;
     virtual void leave() = 0;
+
+    virtual void set_breakpoint_at_throw(Thread*, bool permanent = true) = 0;
 };
 
 

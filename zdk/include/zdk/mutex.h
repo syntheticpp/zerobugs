@@ -46,14 +46,34 @@ public:
     void leave() throw();
     bool leave(std::nothrow_t);
 
-    bool trylock()
-    {
-        const bool result = (pthread_mutex_trylock(&mutex_) == 0);
+    bool trylock();
 
-        inc_lock_count();
-        return result;
-    }
     void assert_locked() volatile { assert_lock_count(); }
+
+    pthread_t get_owner() const volatile
+    {
+        return owner_;
+    }
+
+#ifdef DEBUG
+    // return source file name and line where acquired
+    const char* file() const volatile
+    {
+        return file_;
+    }
+    size_t line() const volatile
+    {
+        return line_;
+    }
+    void set_file_attempt(const char* file) 
+    {
+        fileAttempt_ = file;
+    }
+    void set_line_attempt(size_t line)
+    {
+        lineAttempt_ = line;
+    }
+#endif // DEBUG
 
 protected:
     void wait(pthread_cond_t&);
@@ -61,11 +81,18 @@ protected:
     void wait(pthread_cond_t&, long milliseconds);
 
 private:
+    void set_owner();
+
     pthread_mutex_t mutex_;
+    pthread_t owner_;
 
 #ifdef DEBUG
     atomic_t lock_;
-
+    const char* fileAttempt_;
+    size_t lineAttempt_;
+    const char* file_;
+    size_t line_;
+    
     void inc_lock_count() { atomic_inc(lock_); }
     void dec_lock_count() { atomic_dec(lock_); }
     //void init_lock_count() { atomic_set(lock_, 0); }
@@ -73,7 +100,7 @@ private:
 #else
     static void inc_lock_count() { }
     static void dec_lock_count() { }
-    //static void init_lock_count() { }
+    static void init_lock_count() { }
     static void assert_lock_count() { }
 #endif
 };

@@ -823,7 +823,7 @@ END_TEST()
 
 
 ////////////////////////////////////////////////////////////////
-BEGIN_TEST(test_abstract_decl,(Context& context))
+/* BEGIN_TEST(test_abstract_decl,(Context& context))
 {
 // todo: elaborate
     evaluate(context, "(int (*))0");
@@ -838,7 +838,7 @@ BEGIN_TEST(test_abstract_decl,(Context& context))
     evaluate(context, "(int (*)[])0");
     evaluate(context, "(int (*)[]())0");
 }
-END_TEST()
+END_TEST() */
 
 
 ////////////////////////////////////////////////////////////////

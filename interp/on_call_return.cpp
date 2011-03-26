@@ -221,6 +221,11 @@ bool OnCallReturn::execute(Thread* thread, BreakPoint* bpnt)
         return true;
     }
 
+    if (BreakPointManager* mgr = interface_cast<BreakPointManager*>(thread->debugger()))
+    {
+        mgr->remove_breakpoint_actions(0, 0, 0, "__throw_once");
+    }
+
     // invoked as signal action upon a SEGV?
     if (!bpnt
         && (thread->signal() == SIGSEGV)
@@ -289,7 +294,6 @@ bool OnCallReturn::execute(Thread* thread, BreakPoint* bpnt)
 
     // the interpreter must resume in the same stack context
     restore_selected_frame(thread, frame_);
-    // addr = thread->stack_trace()->selection()->program_count();
 
     int result = interp_->resume(addr, this, &interactive);
     DEBUG_OUT << "interactive=" << boolalpha << interactive << endl;

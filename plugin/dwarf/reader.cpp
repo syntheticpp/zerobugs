@@ -124,12 +124,13 @@ Plugin* create_plugin(uuidref_t iid)
 }
 
 
+/*
 static time_t module_time(const string& filename)
 {
     struct stat stbuf;
     sys::stat(filename, stbuf);
     return stbuf.st_mtime;
-}
+} */
 
 
 namespace

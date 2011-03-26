@@ -109,7 +109,8 @@ do
     elif test ${arg} = "--configure"
         then let third_party=0; let config_only=1;
     elif test ${arg} = "--install"
-        #then if !(make/install.sh); then exit 1; else exit 0; fi
+        then if !(make/install.sh); then exit 1; else exit 0; fi
+    elif test ${arg} = "--gui-install"
         then if !(python/install.py); then exit 1; else exit 0; fi
     elif test ${arg} = "--test"
         then cd engine/testsuite && make; exit;

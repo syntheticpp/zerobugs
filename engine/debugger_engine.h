@@ -384,8 +384,9 @@ public:
      * If the permanent flag is set to false, the action is temporary,
      * i.e. it is automatically removed after being executed once.
      */
-    RefPtr<BreakPointAction> interactive_action(const char* name,
-                                                bool permanent = true);
+    RefPtr<BreakPointAction> interactive_action(
+        const char* name,
+        bool permanent = true);
 
     void set_options(uint64_t);
 
@@ -496,7 +497,7 @@ private:
 
     bool next_line_hack(ThreadImpl&, const RefPtr<BreakPoint>&, EventType);
 
-    void set_breakpoint_at_throw(Thread&);
+    void set_breakpoint_at_throw(Thread*, bool permanent = true);
     void set_breakpoint(Thread&, const SymbolEnum&, BreakPoint::Action*);
 
     void check_unknown_cmdline_opts();

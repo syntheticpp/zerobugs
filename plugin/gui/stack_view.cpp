@@ -24,7 +24,7 @@
 
 
 using namespace std;
-
+static const size_t max_stack_depth = 1024;
 
 struct StackToolTipTraits
 {
@@ -192,11 +192,11 @@ void StackView::display()
 
     size_t n = trace_.get() ? trace_->size() : 0;
 
-    if (n > 1024)
+    if (n > max_stack_depth)
     {
         clog << "Stack depth is too large (" << n;
-        clog << " frames), limiting to 1024" << endl;
-        n = 1024;
+        clog << " frames), limiting to " << max_stack_depth << endl;
+        n = max_stack_depth;
     }
     for (size_t i = 0; i != n; ++i)
     {
@@ -214,6 +214,11 @@ void StackView::display()
         }
         else
     #endif
+        if (pc == INVALID_PC_ADDR)
+        {
+            outs << "<Expression Interpreter Frame>";
+        }
+        else
         {
             print_symbol(outs, pc, frame->function());
         }

@@ -78,7 +78,12 @@ public:
 };
 
 
-Mutex::Mutex(bool recursive)
+Mutex::Mutex(bool recursive) 
+    : owner_(-1)
+    , fileAttempt_("")
+    , lineAttempt_(0)
+    , file_("")
+    , line_(0)
 {
     MutexAttr attr(recursive);
     PTHREAD_ENFORCE(pthread_mutex_init, &mutex_, attr);
@@ -97,12 +102,14 @@ Mutex::~Mutex()
 void Mutex::enter()
 {
     PTHREAD_ENFORCE(pthread_mutex_lock, &mutex_);
+    set_owner();
     inc_lock_count();
 }
 
 
 void Mutex::leave() throw()
 {
+    owner_ = -1;
     dec_lock_count();
     PTHREAD_ENFORCE(pthread_mutex_unlock, &mutex_);
 }
@@ -112,10 +119,23 @@ bool Mutex::leave(nothrow_t)
 {
     if (pthread_mutex_unlock(&mutex_) == 0)
     {
+        owner_ = -1;
         dec_lock_count();
         return true;
     }
     return false;
+}
+
+
+bool Mutex::trylock()
+{
+    const bool result = (pthread_mutex_trylock(&mutex_) == 0);
+    if (result)
+    {
+        set_owner();
+    }
+    inc_lock_count();
+    return result;
 }
 
 
@@ -170,6 +190,15 @@ void Mutex::wait(pthread_cond_t& c, long milliseconds)
     }
 }
 
+
+void Mutex::set_owner()
+{
+#if DEBUG
+    owner_ = pthread_self();
+    file_ = fileAttempt_;
+    line_ = lineAttempt_;
+#endif
+}
 
 
 Condition::Condition()
