@@ -417,7 +417,9 @@ private:
     }; // ActionScope
 
     void break_into_interactive_mode(RefPtr<Thread>, RefPtr<BreakPoint>);
+
     void break_at_catch(RefPtr<Thread>, RefPtr<BreakPoint>);
+    void break_at_throw(RefPtr<Thread>, RefPtr<BreakPoint>);
 
     void schedule_actions(Runnable&, Thread&, BreakPoint&);
 
@@ -497,7 +499,9 @@ private:
 
     bool next_line_hack(ThreadImpl&, const RefPtr<BreakPoint>&, EventType);
 
+    void set_breakpoint_at_catch(Thread*);
     void set_breakpoint_at_throw(Thread*, bool permanent = true);
+
     void set_breakpoint(Thread&, const SymbolEnum&, BreakPoint::Action*);
 
     void check_unknown_cmdline_opts();

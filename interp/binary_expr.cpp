@@ -134,7 +134,7 @@ void BinaryExpr::set_int_type(const Variant& lval, const Variant& rval)
     {
         set_type(rhs()->type());
     }
-    else if (is_signed(lval))
+    else if (is_signed_int(lval))
     {
         // Types are of the same size. For consistency
         // with the rule "if one out of the two operands

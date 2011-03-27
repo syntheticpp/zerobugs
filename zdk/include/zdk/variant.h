@@ -130,7 +130,7 @@ bool inline is_float(const Variant& v)
 }
 
 
-bool inline is_signed(const Variant& v)
+bool inline is_signed_int(const Variant& v)
 {
     switch (v.type_tag())
     {

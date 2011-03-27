@@ -91,14 +91,14 @@ RefPtr<Variant> BitExpr::eval_impl(Context& context)
 
     uint64_t rbits = rval->bits();
     // warn if shift rbits is negative
-    if (is_signed(*rval) && (rbits & 0x8000000000000000ULL))
+    if (is_signed_int(*rval) && (rbits & 0x8000000000000000ULL))
     {
         context.notify_warning_event("Warning: negative shift count");
     }
 
     RefPtr<DataType> unsignedType;
-    if (!is_signed(*lval)) unsignedType = lhs()->type();
-    if (!is_signed(*rval)) unsignedType = rhs()->type();
+    if (!is_signed_int(*lval)) unsignedType = lhs()->type();
+    if (!is_signed_int(*rval)) unsignedType = rhs()->type();
 
     if (lval->size() >= sizeof(int32_t))
     {
@@ -136,7 +136,7 @@ RefPtr<Variant> BitExpr::eval_impl(Context& context)
         else
         {
             unsignedType.reset();
-            tp = context.get_int_type(is_signed(*lval));
+            tp = context.get_int_type(is_signed_int(*lval));
         }
         assert(tp);
         set_type(tp);

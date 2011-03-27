@@ -55,18 +55,12 @@ public:
     {
         inc_ref();
     }
-/* -VS 2010 doesn't like this
-    RefPtr(const RefPtr& other) : ptr_(other.ptr_)
-    {
-        inc_ref();
-    }
-*/
-/*
+#ifdef __GXX_EXPERIMENTAL_CXX0X__
     RefPtr(RefPtr&& other) : ptr_(other.ptr_)
     {
         other.ptr_ = 0;
     }
- */
+#endif
     RefPtr(const volatile RefPtr& other) : ptr_(other.ptr_)
     {
         inc_ref();
@@ -101,13 +95,15 @@ public:
         this->swap(tmp);
         return *this;
     }
-   /* 
+
+#ifdef __GXX_EXPERIMENTAL_CXX0X__
     RefPtr& operator=(RefPtr&& that)
     {
         RefPtr tmp(std::forward<RefPtr>(that));
         this->swap(tmp);
         return *this;
-    } */
+    }
+#endif
 
     template<typename U>
     RefPtr& operator=(const RefPtr<U>& that)

@@ -105,7 +105,7 @@ static void set_event_description
     const char* detail = 0
 )
 {
-    boost::format fmt("%s: %p");
+    boost::format fmt("%s at: %p");
     string str = (fmt % event % (void*)addr).str();
 
     if (detail)
@@ -575,18 +575,9 @@ void DebuggerEngine::on_attach(Thread& thread)
 
         if (thread.is_live())
         {
-            static const SymbolTable::LookupMode mode =
-                SymbolTable::LKUP_DYNAMIC   |
-                SymbolTable::LKUP_UNMAPPED  |
-                SymbolTable::LKUP_ISMANGLED;
+            // helpful when stepping over functions that throw
+            set_breakpoint_at_catch(&thread);
 
-            FunctionEnum funcs;
-            if (thread.symbols()->enum_symbols("__cxa_begin_catch", &funcs, mode))
-            {
-                RefPtr<BreakPointAction> act(new EngineAction(
-                    *this, "__catch", &DebuggerEngine::break_at_catch, true));
-                set_breakpoint(thread, funcs, act.get());
-            }
             if ((options() & OPT_BREAK_ON_THROW))
             {
                 set_breakpoint_at_throw(&thread);
@@ -1246,7 +1237,14 @@ void DebuggerEngine::schedule_actions(
 
     runnable.set_program_count(pc);
 
-    set_event_description(thread, pc, "Breakpoint");
+    if (bpnt.enum_actions("__throw") || bpnt.enum_actions("__throw_once"))
+    {
+        set_event_description(thread, pc, "Exception");
+    }
+    else
+    {
+        set_event_description(thread, pc, "Breakpoint");
+    }
     schedule_actions(runnable, thread, bpnt);
 }
 
@@ -2086,12 +2084,15 @@ void DebuggerEngine::break_into_interactive_mode(
 ////////////////////////////////////////////////////////////////
 void DebuggerEngine::break_at_catch(
     RefPtr<Thread>      thread,
-    RefPtr<BreakPoint>  bptr
+    RefPtr<BreakPoint>  breakpoint
     )
 {
     // pre-conditions
     assert(thread);
-    assert(bptr);
+    assert(breakpoint);
+
+    const addr_t addr = breakpoint->addr();
+    set_event_description(*thread, addr, "Exception caught");
 
     if (thread->is_line_stepping())
     {
@@ -2109,10 +2110,27 @@ void DebuggerEngine::break_at_catch(
                     return;
                 }
             }
-            //schedule_interactive_mode(&threadImpl, E_THREAD_BREAK);
             set_temp_breakpoint(&threadImpl.runnable(), thread->ret_addr());
         }
     }
+    else if ((options() & OPT_BREAK_ON_THROW))
+    {
+        ThreadImpl& threadImpl = interface_cast<ThreadImpl&>(*thread);
+        schedule_interactive_mode(&threadImpl, E_THREAD_BREAK);
+    }
+}
+
+
+////////////////////////////////////////////////////////////////
+void DebuggerEngine::break_at_throw(
+    RefPtr<Thread>      thread,
+    RefPtr<BreakPoint>  breakpoint
+    )
+{
+    addr_t addr = breakpoint->addr();
+    set_event_description(*thread, addr, "Throwing exception");
+
+    break_into_interactive_mode(thread, breakpoint);
 }
 
 
@@ -3699,6 +3717,26 @@ void DebuggerEngine::enable_command(DebuggerCommand* cmd, bool enable)
 
 
 ////////////////////////////////////////////////////////////////
+void DebuggerEngine::set_breakpoint_at_catch(Thread* thread)
+{
+    // todo: support other compilers than GCC,
+    static const SymbolTable::LookupMode mode =
+        SymbolTable::LKUP_DYNAMIC   |
+        SymbolTable::LKUP_UNMAPPED  |
+        SymbolTable::LKUP_ISMANGLED;
+
+    FunctionEnum funcs;
+    if (thread->symbols()->enum_symbols("__cxa_begin_catch", &funcs, mode))
+    {
+        RefPtr<BreakPointAction> act(new EngineAction(
+            *this, "__catch", &DebuggerEngine::break_at_catch, true));
+
+        set_breakpoint(*thread, funcs, act.get());
+    }
+}
+
+
+////////////////////////////////////////////////////////////////
 void DebuggerEngine::set_breakpoint_at_throw(
     Thread* thread,
     bool permanent)
@@ -3710,9 +3748,15 @@ void DebuggerEngine::set_breakpoint_at_throw(
         "__throw",      // GCC 2.95
         "_d_throw@4",   // Digital Mars D
     };
+    // A good use for temporary breakpoints at __throw is in
+    // the expression interpreter which sets one before calling
+    // a function, and removes it upon returning from the call.
+
     const char* actionName = permanent ? "__throw" : "__throw_once";
 
-    RefPtr<BreakPointAction> action(interactive_action(actionName, permanent));
+    RefPtr<BreakPointAction> action(new EngineAction(
+            *this, actionName, &DebuggerEngine::break_at_throw, permanent));
+    
     FunctionEnum funcs;
 
     for (size_t i = 0; i != sizeof(throwFunc)/sizeof(throwFunc[0]); ++i)

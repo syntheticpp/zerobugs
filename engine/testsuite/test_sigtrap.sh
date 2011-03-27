@@ -37,8 +37,8 @@ cat > script << '---end---'
 eip = ( eval /x %eip )
 rip = ( eval /x %rip )
 call ( show status )
-expect ( Thread received SIGTRAP: $rip )
-or ( Thread received SIGTRAP: $eip )
+expect ( Thread received SIGTRAP at: $rip )
+or ( Thread received SIGTRAP at: $eip )
 call quit
 ---end---
 
@@ -56,8 +56,8 @@ cat > script << '---end---'
 eip = ( eval /x %eip )
 rip = ( eval /x %rip )
 call ( show status )
-expect ( SIGSEGV: $rip )
-or ( SIGSEGV: $eip )
+expect ( SIGSEGV at: $rip )
+or ( SIGSEGV at: $eip )
 call quit
 ---end---
 

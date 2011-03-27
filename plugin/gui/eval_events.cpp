@@ -90,8 +90,15 @@ bool EvalEvents::on_event(Thread* thread, addr_t addr)
     {
         ostringstream msg;
 
-        msg << "Expression evaluation interrupted by signal ";
-        msg << thread->signal() << " at " << hex << addr;
+        if (RefPtr<SharedString> ss = thread_get_event_description(*thread))
+        {
+             msg << ss->c_str();
+        }
+        else
+        {
+            msg << "Expression evaluation interrupted by signal ";
+            msg << thread->signal() << " at " << hex << addr;
+        }
         msg << " in thread " << dec << thread->lwpid() << ". ";
 
         if (thread_finished(*thread))

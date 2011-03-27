@@ -158,12 +158,12 @@ int RelationalExpr::compare_integers(Context& context,
     assert(is_integer(lhs));
     assert(is_integer(rhs));
 
-    if (is_signed(lhs) && !is_signed(rhs))
+    if (is_signed_int(lhs) && !is_signed_int(rhs))
     {
         context.notify_warning_event(
             "Warning: comparing signed to unsigned");
     }
-    else if (!is_signed(lhs) && is_signed(rhs))
+    else if (!is_signed_int(lhs) && is_signed_int(rhs))
     {
         context.notify_warning_event(
             "Warning: comparing unsigned to signed");
