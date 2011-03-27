@@ -419,7 +419,7 @@ lookup_unit_by_addr(Debugger* debugger, addr_t addr)
     // bounce the call onto the main thread, DebugInfo readers
     // may need to read from the debugged program's memory space
     ThreadMarshaller::instance().send_command(
-        bind(lookup_unit_by_addr_, debugger, addr, ref(unit)),
+        bind(lookup_unit_by_addr_, debugger, addr, boost::ref(unit)),
         __func__);
 
     return unit;
@@ -453,7 +453,7 @@ lookup_unit_by_name(Debugger* debugger, const char* name)
     // bounce the call onto the main thread, DebugInfo readers
     // may need to read from the debugged program's memory space
     ThreadMarshaller::instance().send_command(
-        bind(lookup_unit_by_name_, debugger, name, ref(unit)),
+        bind(lookup_unit_by_name_, debugger, name, boost::ref(unit)),
         __func__);
 
     return unit;

@@ -467,7 +467,7 @@ namespace
 ////////////////////////////////////////////////////////////////
 void GUI::on_program_resumed()
 {
-    if (shared_ptr<MainWindow> w = mainWindow_)
+    if (boost::shared_ptr<MainWindow> w = mainWindow_)
     {
         w->set_debuggee_running(true);
         //

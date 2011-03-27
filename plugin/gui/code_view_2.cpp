@@ -596,7 +596,7 @@ BEGIN_SLOT_(bool, CodeView::on_mouse_timer,())
             if (RefPtr<SharedString> val = sym->value())
             {
                 buf << sym->name() << "=";
-                if (is_reference(sym))
+                if (is_ref(sym))
                 {
                     sym = sym->nth_child(0);
                     read_symbol(sym, NULL);

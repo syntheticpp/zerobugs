@@ -20,7 +20,6 @@
  #define __PRETTY_FUNCTION__ __func__
 #endif
 
-using namespace boost;
 using namespace std;
 using namespace ELF;
 
@@ -67,21 +66,21 @@ ProgramHeader::ProgramHeader
 }
 
 
-shared_ptr<ProgramHeader> ProgramHeader::next() const
+boost::shared_ptr<ProgramHeader> ProgramHeader::next() const
 {
     Binary::Header header(elf());
     return next(header);
 }
 
 
-shared_ptr<ProgramHeader>
+boost::shared_ptr<ProgramHeader>
 ProgramHeader::next(const Binary::Header& header) const
 {
     if (is_null())
     {
         throw out_of_range(__PRETTY_FUNCTION__);
     }
-    shared_ptr<ProgramHeader> ph;
+    boost::shared_ptr<ProgramHeader> ph;
 
     if (index_ + 1 < header.phnum())
     {
@@ -103,7 +102,7 @@ ProgramHeader::next(const Binary::Header& header) const
 
         if (nxt)
         {
-            shared_ptr<ProgramHeader> p(
+            boost::shared_ptr<ProgramHeader> p(
                 new ProgramHeader(*this, nxt, index_ + 1));
             ph = p;
         }
@@ -160,11 +159,11 @@ ElfW(Xword) ProgramHeader::align() const
 }
 
 
-shared_ptr<ProgramHeader>
+boost::shared_ptr<ProgramHeader>
 IterationTraits<ProgramHeader>::first(File& file)
 {
     assert(file.elf());
-    return shared_ptr<ProgramHeader>(new ProgramHeader(file.elf()));
+    return boost::shared_ptr<ProgramHeader>(new ProgramHeader(file.elf()));
 }
 
 

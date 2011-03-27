@@ -17,10 +17,9 @@
 #include "redirect.h"
 
 using namespace std;
-using namespace boost;
 
 
-typedef std::vector<shared_ptr<Redirect::Undo> > RedirectStack;
+typedef std::vector<boost::shared_ptr<Redirect::Undo> > RedirectStack;
 
 static bool redirectForkHandlersSet = false;
 static RedirectStack& redirect_stack()
@@ -79,7 +78,7 @@ void Redirect::init(int fd, int file)
         pthread_atfork(NULL, NULL, undo_all_redirects);
         redirectForkHandlersSet = true;
     }
-    shared_ptr<Undo> undo(new Undo(fd));
+    boost::shared_ptr<Undo> undo(new Undo(fd));
     undo_ = undo.get();
     redirect_stack().push_back(undo);
 

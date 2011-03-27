@@ -11,7 +11,7 @@
 // http://www.boost.org/LICENSE_1_0.txt)
 // -------------------------------------------------------------------------
 //
-#if defined(linux)
+#if defined(linux) || defined(__linux__)
  #include "arch-linux.h"
 #elif defined(__FreeBSD__)
  #include "arch-fbsd.h"

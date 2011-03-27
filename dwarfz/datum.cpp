@@ -30,9 +30,9 @@ Datum::Datum(Dwarf_Debug dbg, Dwarf_Die die) : Die(dbg, die)
 }
 
 
-shared_ptr<Type> Datum::type() const
+boost::shared_ptr<Type> Datum::type() const
 {
-    shared_ptr<Type> type = Utils::type(*this);
+    boost::shared_ptr<Type> type = Utils::type(*this);
 
     if (type)
     {
@@ -47,7 +47,7 @@ char* Datum::name_impl() const
     char* name = Die::name_impl();
     if (!name)
     {
-        if (shared_ptr<Die> indirect = check_indirect())
+        if (boost::shared_ptr<Die> indirect = check_indirect())
         {
             name = strdup(indirect->name());
         }
@@ -60,13 +60,13 @@ char* Datum::name_impl() const
 }
 
 
-shared_ptr<Location> Datum::loc(bool indirect) const
+boost::shared_ptr<Location> Datum::loc(bool indirect) const
 {
-    shared_ptr<Location> lp = Utils::loc(dbg(), die());
+    boost::shared_ptr<Location> lp = Utils::loc(dbg(), die());
     if (!lp && indirect)
     {
-        shared_ptr<Die> tmp = check_indirect(false);
-        if (shared_ptr<Datum> dat = shared_dynamic_cast<Datum>(tmp))
+        boost::shared_ptr<Die> tmp = check_indirect(false);
+        if (boost::shared_ptr<Datum> dat = shared_dynamic_cast<Datum>(tmp))
         {
             lp = dat->loc(indirect);
         }
@@ -82,7 +82,7 @@ Dwarf_Off Datum::start_scope() const
 }
 
 
-void Datum::set_global(const shared_ptr<Global>& global)
+void Datum::set_global(const boost::shared_ptr<Global>& global)
 {
     assert(!global_ || global_ == global);
     global_ = global;
@@ -111,7 +111,7 @@ RefPtr<SharedString> Datum::linkage_name() const
 
         if (!get_linkage_name(dbg(), die(), name))
         {
-            if (shared_ptr<Die> tmp = check_indirect())
+            if (boost::shared_ptr<Die> tmp = check_indirect())
             {
                 get_linkage_name(dbg(), tmp->die(), name);
             }
@@ -122,9 +122,9 @@ RefPtr<SharedString> Datum::linkage_name() const
 }
 
 
-shared_ptr<ConstValue> Datum::const_value() const
+boost::shared_ptr<ConstValue> Datum::const_value() const
 {
-    shared_ptr<ConstValue> val;
+    boost::shared_ptr<ConstValue> val;
     if (Utils::has_attr(dbg(), die(), DW_AT_const_value))
     {
         GenericAttr<DW_AT_const_value, Dwarf_Unsigned> attr(dbg(), die());

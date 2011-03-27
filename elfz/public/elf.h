@@ -26,17 +26,17 @@
  typedef int64_t Elf64_Sxword;
 #endif
 
-#ifndef HAVE_ELF_NHDR
+#if !HAVE_ELF_NHDR
 /*
  * Note entry header
  */
-struct Elf32_Nhdr {
+typedef struct Elf32_Nhdr {
     Elf32_Word		n_namesz;	/* name size */
     Elf32_Word		n_descsz;	/* descriptor size */
     Elf32_Word		n_type;		/* descriptor type */
 };
 
-struct Elf64_Nhdr {
+typedef struct Elf64_Nhdr {
     Elf64_Word		n_namesz;	/* name size */
     Elf64_Word		n_descsz;	/* descriptor size */
     Elf64_Word		n_type;		/* descriptor type */

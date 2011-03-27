@@ -50,16 +50,17 @@ MacroEvents::~MacroEvents()
 }
 
 
-CompileUnit::TypeEnumeration::TypeEnumeration(const shared_ptr<CompileUnit>& unit)
+CompileUnit::TypeEnumeration::TypeEnumeration(
+    const boost::shared_ptr<CompileUnit>& unit)
     : unit_(unit)
     , iterByOffs_(unit->tspecs_.begin())
     , iterByName_(unit->types_.begin())
 {
 }
 
-shared_ptr<Type> CompileUnit::TypeEnumeration::next()
+boost::shared_ptr<Type> CompileUnit::TypeEnumeration::next()
 {
-    shared_ptr<Type> type;
+    boost::shared_ptr<Type> type;
 
     if (iterByOffs_ != unit_->tspecs_.end())
     {
@@ -127,10 +128,10 @@ const CompileUnit::LineInfoCache& CompileUnit::line_info_cache() const
 }
 
 
-shared_ptr<CompileUnit>
+boost::shared_ptr<CompileUnit>
 CompileUnit::next_unit(Dwarf_Debug dbg, Dwarf_Unsigned offs)
 {
-    shared_ptr<CompileUnit> result;
+    boost::shared_ptr<CompileUnit> result;
     if (dbg)
     {
         Dwarf_Error err = 0;
@@ -376,7 +377,7 @@ const FunList& CompileUnit::functions() const
             {
                 throw Error("dwarf_offdie", dbg(), err);
             }
-            shared_ptr<Function> f(new Function(dbg(), die));
+            boost::shared_ptr<Function> f(new Function(dbg(), die));
             f->unit_ = this;
 
             funcs_.push_back(f);
@@ -389,9 +390,9 @@ const FunList& CompileUnit::functions() const
 /**
  * lookup type by declaration
  */
-shared_ptr<Type> CompileUnit::lookup_type(const Type& decl) const
+boost::shared_ptr<Type> CompileUnit::lookup_type(const Type& decl) const
 {
-    shared_ptr<Type> type;
+    boost::shared_ptr<Type> type;
     if (!populated_)
     {
         read_children();
@@ -411,9 +412,9 @@ shared_ptr<Type> CompileUnit::lookup_type(const Type& decl) const
 }
 
 
-shared_ptr<Type> CompileUnit::lookup_type(const char* name) const
+boost::shared_ptr<Type> CompileUnit::lookup_type(const char* name) const
 {
-    shared_ptr<Type> type;
+    boost::shared_ptr<Type> type;
     if (!populated_)
     {
         read_children();
@@ -538,14 +539,14 @@ const VarList& CompileUnit::variables() const
 }
 
 
-shared_ptr<Function>
+boost::shared_ptr<Function>
 CompileUnit::lookup_function(Dwarf_Addr addr, const char* linkage) const
 {
     return Utils::lookup_function(functions(), addr, linkage);
 }
 
 
-shared_ptr<CompileUnit>
+boost::shared_ptr<CompileUnit>
 IterationTraits<CompileUnit>::first(Dwarf_Debug dbg, Dwarf_Die)
 {
     return CompileUnit::next_unit(dbg, 0);
@@ -554,7 +555,7 @@ IterationTraits<CompileUnit>::first(Dwarf_Debug dbg, Dwarf_Die)
 
 void IterationTraits<CompileUnit>::next
 (
-    shared_ptr<CompileUnit>& elem
+    boost::shared_ptr<CompileUnit>& elem
 )
 {
     assert(elem);
@@ -614,7 +615,7 @@ void CompileUnit::read_children(Dwarf_Die die,
 
     for (Dwarf_Die trash = 0; child;)
     {
-        shared_ptr<Die> ptr = process_entry(child, tag, prefix, ignoreVars);
+        boost::shared_ptr<Die> ptr = process_entry(child, tag, prefix, ignoreVars);
         if (!ptr)
         {
             trash = child;
@@ -632,7 +633,7 @@ void CompileUnit::read_children(Dwarf_Die die,
 }
 
 
-shared_ptr<Die>
+boost::shared_ptr<Die>
 CompileUnit::process_entry( Dwarf_Die die,
                             Dwarf_Half tag,
                             const char* prefix,
@@ -640,7 +641,7 @@ CompileUnit::process_entry( Dwarf_Die die,
 {
     assert(die);
     assert(tag);
-    shared_ptr<Die> child;
+    boost::shared_ptr<Die> child;
 
     switch (tag)
     {
@@ -674,7 +675,7 @@ CompileUnit::process_entry( Dwarf_Die die,
 
     case DW_TAG_namespace:
         {
-            shared_ptr<Namespace> ns(new Namespace(dbg(), die));
+            boost::shared_ptr<Namespace> ns(new Namespace(dbg(), die));
 
             child = ns;
             string name;
@@ -703,7 +704,7 @@ CompileUnit::process_entry( Dwarf_Die die,
     case DW_TAG_variable:
         if (!ignoreVars)
         {
-            shared_ptr<Variable> v(new Variable(dbg(), die));
+            boost::shared_ptr<Variable> v(new Variable(dbg(), die));
             child = v;
             vars_.push_back(v);
         }
@@ -724,7 +725,7 @@ CompileUnit::process_entry( Dwarf_Die die,
             name += "::";
             read_children(die, name.c_str(), ignoreVars);
         /*
-            if (shared_ptr<KlassType> klass =
+            if (boost::shared_ptr<KlassType> klass =
                 shared_dynamic_cast<KlassType>(child))
             {
                 const MethodList& memFun = klass->methods();
@@ -742,11 +743,11 @@ CompileUnit::process_entry( Dwarf_Die die,
 
     case DW_TAG_imported_declaration:
         child = Factory::instance().create(dbg(), die, tag, false);
-        if (shared_ptr<ImportedDecl> decl =
+        if (boost::shared_ptr<ImportedDecl> decl =
             shared_dynamic_cast<ImportedDecl>(child))
         {
             cout << __func__ << ": " << decl->name() << endl;
-            if (shared_ptr<Type> import =
+            if (boost::shared_ptr<Type> import =
                 shared_dynamic_cast<Type>(decl->get_import()))
             {
                 if (prefix)
@@ -773,13 +774,13 @@ CompileUnit::process_entry( Dwarf_Die die,
         {
             child = Factory::instance().create(dbg(), die, tag, false);
 
-            if (shared_ptr<Type> type = shared_dynamic_cast<Type>(child))
+            if (boost::shared_ptr<Type> type = shared_dynamic_cast<Type>(child))
             {
                 Dwarf_Off offset = type->decl_offset();
                 assert(offset);
                 tspecs_.insert(make_pair(offset, type));
             }
-            else if (shared_ptr<KlassType> klass =
+            else if (boost::shared_ptr<KlassType> klass =
                 shared_dynamic_cast<KlassType>(child))
             {
                 types_.insert(make_pair(klass->name(), klass));
@@ -805,7 +806,7 @@ CompileUnit::add_struct(Dwarf_Die die, const char* prefix) const
     Dwarf_Off off = Die::offset(dbg(), die);
     boost::shared_ptr<Die> child(owner().get_object(off));
 
-    if (shared_ptr<Type> type = shared_dynamic_cast<Type>(child))
+    if (boost::shared_ptr<Type> type = shared_dynamic_cast<Type>(child))
     {
         if (prefix)
         {

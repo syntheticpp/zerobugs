@@ -328,7 +328,7 @@ link_all_deplibs=unknown
 sys_lib_search_path_spec=" /usr/lib/gcc/x86_64-linux-gnu/4.4.5/ /usr/lib/gcc/x86_64-linux-gnu/4.4.5/ /usr/lib/gcc/x86_64-linux-gnu/4.4.5/../../../../x86_64-linux-gnu/lib/x86_64-linux-gnu/4.4.5/ /usr/lib/gcc/x86_64-linux-gnu/4.4.5/../../../../x86_64-linux-gnu/lib/../lib/ /usr/lib/gcc/x86_64-linux-gnu/4.4.5/../../../x86_64-linux-gnu/4.4.5/ /usr/lib/gcc/x86_64-linux-gnu/4.4.5/../../../../lib/ /lib/x86_64-linux-gnu/4.4.5/ /lib/../lib/ /usr/lib/x86_64-linux-gnu/4.4.5/ /usr/lib/../lib/ /usr/lib/x86_64-linux-gnu/x86_64-linux-gnu/4.4.5/ /usr/lib/x86_64-linux-gnu/../lib/ /usr/lib/gcc/x86_64-linux-gnu/4.4.5/../../../../x86_64-linux-gnu/lib/ /usr/lib/gcc/x86_64-linux-gnu/4.4.5/../../../ /lib/ /usr/lib/ /usr/lib/x86_64-linux-gnu/"
 
 # Run-time system search path for libraries
-sys_lib_dlsearch_path_spec="/lib /usr/lib /usr/lib/mesa /usr/lib32/mesa /opt/CodeAnalyst/lib /usr/lib32/alsa-lib /usr/lib/alsa-lib /usr/local/lib /lib/x86_64-linux-gnu /usr/lib/x86_64-linux-gnu "
+sys_lib_dlsearch_path_spec="/lib /usr/lib /usr/lib/mesa /usr/lib32/mesa /opt/CodeAnalyst/lib /usr/lib32/alsa-lib /usr/lib/alsa-lib /usr/local/lib /lib/x86_64-linux-gnu /usr/lib/x86_64-linux-gnu /opt/CodeAnalyst/lib "
 
 # Fix the shell variable $srcfile for the compiler.
 fix_srcfile_path=""
@@ -7496,7 +7496,7 @@ link_all_deplibs=unknown
 sys_lib_search_path_spec=" /usr/lib/gcc/x86_64-linux-gnu/4.4.5/ /usr/lib/gcc/x86_64-linux-gnu/4.4.5/ /usr/lib/gcc/x86_64-linux-gnu/4.4.5/../../../../x86_64-linux-gnu/lib/x86_64-linux-gnu/4.4.5/ /usr/lib/gcc/x86_64-linux-gnu/4.4.5/../../../../x86_64-linux-gnu/lib/../lib/ /usr/lib/gcc/x86_64-linux-gnu/4.4.5/../../../x86_64-linux-gnu/4.4.5/ /usr/lib/gcc/x86_64-linux-gnu/4.4.5/../../../../lib/ /lib/x86_64-linux-gnu/4.4.5/ /lib/../lib/ /usr/lib/x86_64-linux-gnu/4.4.5/ /usr/lib/../lib/ /usr/lib/x86_64-linux-gnu/x86_64-linux-gnu/4.4.5/ /usr/lib/x86_64-linux-gnu/../lib/ /usr/lib/gcc/x86_64-linux-gnu/4.4.5/../../../../x86_64-linux-gnu/lib/ /usr/lib/gcc/x86_64-linux-gnu/4.4.5/../../../ /lib/ /usr/lib/ /usr/lib/x86_64-linux-gnu/"
 
 # Run-time system search path for libraries
-sys_lib_dlsearch_path_spec="/lib /usr/lib /usr/lib/mesa /usr/lib32/mesa /opt/CodeAnalyst/lib /usr/lib32/alsa-lib /usr/lib/alsa-lib /usr/local/lib /lib/x86_64-linux-gnu /usr/lib/x86_64-linux-gnu "
+sys_lib_dlsearch_path_spec="/lib /usr/lib /usr/lib/mesa /usr/lib32/mesa /opt/CodeAnalyst/lib /usr/lib32/alsa-lib /usr/lib/alsa-lib /usr/local/lib /lib/x86_64-linux-gnu /usr/lib/x86_64-linux-gnu /opt/CodeAnalyst/lib "
 
 # Fix the shell variable $srcfile for the compiler.
 fix_srcfile_path=""

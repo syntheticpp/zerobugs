@@ -549,7 +549,7 @@ static void read_topics(
             // treat the line as a comment
             continue;
         }
-        shared_ptr<Topic> topic(
+        boost::shared_ptr<Topic> topic(
             new Topic(tmp.front(), tmp.back(), subtree));
 
         topics.push_back(topic);

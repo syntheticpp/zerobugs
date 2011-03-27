@@ -26,10 +26,10 @@ InlinedInstance::InlinedInstance(Dwarf_Debug dbg, Dwarf_Die die)
 }
 
 
-shared_ptr<Dwarf::Function> InlinedInstance::function() const
+boost::shared_ptr<Dwarf::Function> InlinedInstance::function() const
 {
     // use DW_AT_abstract origin to get the inlined function die
-    shared_ptr<Dwarf::Function> fun(
+    boost::shared_ptr<Dwarf::Function> fun(
         shared_dynamic_cast<Function>(check_indirect(false)));
     if (fun)
     {
@@ -48,7 +48,7 @@ shared_ptr<Dwarf::Function> InlinedInstance::function() const
 List<Parameter> InlinedInstance::params() const
 {
 #ifdef DEBUG
-    if (shared_ptr<Function> fun = function())
+    if (boost::shared_ptr<Function> fun = function())
     {
         clog << __func__ << ": " << fun->name() << endl;
     }
@@ -60,7 +60,7 @@ List<Parameter> InlinedInstance::params() const
 List<VariableT<InlinedInstance> > InlinedInstance::variables() const
 {
 #ifdef DEBUG
-    if (shared_ptr<Function> fun = function())
+    if (boost::shared_ptr<Function> fun = function())
     {
         clog << __func__ << ": " << fun->name() << endl;
     }

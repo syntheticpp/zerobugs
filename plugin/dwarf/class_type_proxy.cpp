@@ -324,8 +324,8 @@ void ClassTypeProxy::adapt_deep(Thread* thread, addr_t addr)  const
         throw logic_error("could not get handle by inode");
     }
 
-    shared_ptr<Die> die = dbg->get_object(offset_);
-    shared_ptr<Type> type = shared_dynamic_cast<Type>(die);
+    boost::shared_ptr<Die> die = dbg->get_object(offset_);
+    boost::shared_ptr<Type> type = shared_dynamic_cast<Type>(die);
     if (!type)
     {
         throw logic_error("could not get type by offset");

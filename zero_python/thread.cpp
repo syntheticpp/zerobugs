@@ -866,7 +866,7 @@ lookup_type(Thread* thread, const char* name, LookupScope scope = LOOKUP_MODULE)
     RefPtr<DataType> type;
 
     ThreadMarshaller::instance().send_command(
-            bind(lookup_type_, thread, name, scope, ref(type)),
+            bind(lookup_type_, thread, name, scope, boost::ref(type)),
             __func__);
     return type;
 }

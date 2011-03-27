@@ -55,7 +55,7 @@ Function::params() const
 }
 
 
-shared_ptr<Type>
+boost::shared_ptr<Type>
 Dwarf::Function::ret_type() const
 {
     return Utils::type(*this);
@@ -68,7 +68,7 @@ Dwarf::Function::name_impl() const
     char* name = Die::name_impl();
     if (!name)
     {
-        if (shared_ptr<Die> indirect = check_indirect())
+        if (boost::shared_ptr<Die> indirect = check_indirect())
         {
             name = strdup(indirect->name());
         }
@@ -131,7 +131,7 @@ Dwarf::Function::cache_params() const
                 //
                 isMemFun_ = true;
             }
-            if (shared_ptr<Type> type = i->type())
+            if (boost::shared_ptr<Type> type = i->type())
             {
                 paramTypes_->push_back(type);
                 params_->push_back(i);
@@ -253,9 +253,9 @@ Dwarf::Function::inline_not_inlined() const
             return true;
         }
     }
-    if (shared_ptr<Die> tmp = check_indirect())
+    if (boost::shared_ptr<Die> tmp = check_indirect())
     {
-        if (shared_ptr<Function> fun = shared_dynamic_cast<Function>(tmp))
+        if (boost::shared_ptr<Function> fun = shared_dynamic_cast<Function>(tmp))
         {
             if (fun->inline_not_inlined())
             {

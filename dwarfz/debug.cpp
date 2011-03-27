@@ -331,7 +331,7 @@ public:
 };
 
 
-CLASS Debug::UnitMap : public map<Dwarf_Off, shared_ptr<CompileUnit> >
+CLASS Debug::UnitMap : public map<Dwarf_Off, boost::shared_ptr<CompileUnit> >
 {
     // empty
 };
@@ -456,7 +456,7 @@ ino_t Debug::inode() const
 ////////////////////////////////////////////////////////////////
 Dwarf::FunList Debug::lookup_global_funcs(const char* name) const
 {
-    vector<shared_ptr<Function> > funcs;
+    vector<boost::shared_ptr<Function> > funcs;
 
     if ((globalCache_ == 0) && dbg_)
     {
@@ -480,9 +480,9 @@ Dwarf::FunList Debug::lookup_global_funcs(const char* name) const
         for (; i != r.second; ++i)
         {
             Dwarf_Off off = i->second->die_offset();
-            shared_ptr<Die> die = get_object(off);
+            boost::shared_ptr<Die> die = get_object(off);
 
-            if (shared_ptr<Function> fp =
+            if (boost::shared_ptr<Function> fp =
                     shared_dynamic_cast<Function>(die))
             {
                 funcs.push_back(fp);
@@ -530,9 +530,9 @@ Debug::Data Debug::lookup_global_data(const char* name) const
         for (; i != r.second; ++i)
         {
             Dwarf_Off off = i->second->die_offset();
-            shared_ptr<Die> die = get_object(off);
+            boost::shared_ptr<Die> die = get_object(off);
 
-            if (shared_ptr<Datum> datum = shared_dynamic_cast<Datum>(die))
+            if (boost::shared_ptr<Datum> datum = shared_dynamic_cast<Datum>(die))
             {
                 datum->set_global(i->second);
                 result.push_back(datum);
@@ -544,12 +544,12 @@ Debug::Data Debug::lookup_global_data(const char* name) const
 
 
 ////////////////////////////////////////////////////////////////
-shared_ptr<Function>
+boost::shared_ptr<Function>
 Debug::lookup_function(Dwarf_Addr addr, const char* linkage) const
 {
-    shared_ptr<Function> result;
+    boost::shared_ptr<Function> result;
     // first, find the compile-unit where the addr belongs
-    if (shared_ptr<CompileUnit> unit = lookup_unit(addr))
+    if (boost::shared_ptr<CompileUnit> unit = lookup_unit(addr))
     {
         // lookup function within the compile-unit
         result = unit->lookup_function(addr, linkage);
@@ -582,7 +582,7 @@ bool Debug::units_from_unit_headers() const
     bool result = false;
     if (!headers.empty())
     {
-        shared_ptr<CompileUnit> unit = CompileUnit::next_unit(dbg_, 0);
+        boost::shared_ptr<CompileUnit> unit = CompileUnit::next_unit(dbg_, 0);
         if (unit)
         {
             CHKPTR(units_)->push_back(unit);
@@ -698,10 +698,10 @@ public:
 
 
 ////////////////////////////////////////////////////////////////
-shared_ptr<CompileUnit>
+boost::shared_ptr<CompileUnit>
 Debug::lookup_unit_by_arange(Dwarf_Addr addr) const
 {
-    shared_ptr<CompileUnit> unit; // result
+    boost::shared_ptr<CompileUnit> unit; // result
 
     AddressRanges ranges(dbg_);
     if (Dwarf_Arange arange = ranges.get_range(addr))
@@ -739,10 +739,10 @@ Debug::lookup_unit_by_arange(Dwarf_Addr addr) const
 
 
 ////////////////////////////////////////////////////////////////
-shared_ptr<CompileUnit>
+boost::shared_ptr<CompileUnit>
 Debug::lookup_unit(Dwarf_Addr addr) const
 {
-    shared_ptr<CompileUnit> unit;
+    boost::shared_ptr<CompileUnit> unit;
 
     if (units().size())
     {
@@ -806,10 +806,10 @@ Debug::lookup_unit(Dwarf_Addr addr) const
 
 
 ////////////////////////////////////////////////////////////////
-shared_ptr<CompileUnit>
+boost::shared_ptr<CompileUnit>
 Debug::lookup_unit(const char* fname) const
 {
-    shared_ptr<CompileUnit> unit; // result
+    boost::shared_ptr<CompileUnit> unit; // result
 
     UnitList::const_iterator i = units().begin();
     for (; i != units().end(); ++i)
@@ -826,11 +826,11 @@ Debug::lookup_unit(const char* fname) const
 
 
 ////////////////////////////////////////////////////////////////
-shared_ptr<CompileUnit>
+boost::shared_ptr<CompileUnit>
 Debug::get_compile_unit(Dwarf_Die die,
                         Dwarf_Off nextUnitHdr)const
 {
-    shared_ptr<CompileUnit> unit;
+    boost::shared_ptr<CompileUnit> unit;
 
     Dwarf_Off off = Die::offset(dbg_, die);
 
@@ -858,7 +858,7 @@ bool Debug::line_to_addr(
 
     if (!validate_line_map(filename))
     {
-        if (shared_ptr<CompileUnit> unit = lookup_unit(filename))
+        if (boost::shared_ptr<CompileUnit> unit = lookup_unit(filename))
         {
             srcLineMap_ = new SrcLineMap(*this, *unit);
         }
@@ -879,7 +879,7 @@ Dwarf_Addr Debug::next_line(
     Dwarf_Addr  addr,
     size_t*     next) const
 {
-    if (shared_ptr<CompileUnit> unit = lookup_unit(addr))
+    if (boost::shared_ptr<CompileUnit> unit = lookup_unit(addr))
     {
         return unit->next_line(file, line, addr, next);
     }
@@ -889,10 +889,10 @@ Dwarf_Addr Debug::next_line(
 
 
 ////////////////////////////////////////////////////////////////
-shared_ptr<Die>
+boost::shared_ptr<Die>
 Debug::get_object(Dwarf_Off off, bool useSpec, bool indirect) const
 {
-    shared_ptr<Die> object;
+    boost::shared_ptr<Die> object;
     DieCache::iterator i = dieCache_.find(off);
     if (i != dieCache_.end())
     {
@@ -917,7 +917,7 @@ Debug::get_object(Dwarf_Off off, bool useSpec, bool indirect) const
 
             if (indirect)
             {
-                if (shared_ptr<Die> tmp = object->check_indirect(useSpec))
+                if (boost::shared_ptr<Die> tmp = object->check_indirect(useSpec))
                 {
                     object = get_object(tmp->offset());
                 }
@@ -956,8 +956,8 @@ compare_types(const char* type, const char* name, size_t len)
 
 
 ////////////////////////////////////////////////////////////////
-static shared_ptr<Type>
-compare_types(shared_ptr<Type> type, const char* name, size_t length)
+static boost::shared_ptr<Type>
+compare_types(boost::shared_ptr<Type> type, const char* name, size_t length)
 {
     assert(type);
     assert(name);
@@ -977,17 +977,17 @@ compare_types(shared_ptr<Type> type, const char* name, size_t length)
         }
         type = d->type();
     }
-    return shared_ptr<Type>();
+    return boost::shared_ptr<Type>();
 }
 
 
 /**
  * Helper that looks up a type by name inside of a lexical block
  */
-static shared_ptr<Type>
+static boost::shared_ptr<Type>
 find_type(const Block& block, const char* name, size_t length)
 {
-    shared_ptr<Type> type;
+    boost::shared_ptr<Type> type;
 
     if (name && *name)
     {
@@ -1033,10 +1033,10 @@ find_type(const Block& block, const char* name, size_t length)
 
 
 ////////////////////////////////////////////////////////////////
-static shared_ptr<Type>
+static boost::shared_ptr<Type>
 find_type_in_function(const Function& func, const char* name)
 {
-    shared_ptr<Type> type; // result
+    boost::shared_ptr<Type> type; // result
     if (name && *name)
     {
         const size_t length = strlen(name);
@@ -1062,12 +1062,12 @@ find_type_in_function(const Function& func, const char* name)
 
 
 ////////////////////////////////////////////////////////////////
-shared_ptr<Type>
+boost::shared_ptr<Type>
 Dwarf::lookup_type( const FunList& funcs,
                     const char* name,
                     bool complete )
 {
-    shared_ptr<Type> type;
+    boost::shared_ptr<Type> type;
 
     FunList::const_iterator i = funcs.begin();
     FunList::const_iterator end = funcs.end();
@@ -1091,12 +1091,12 @@ Dwarf::lookup_type( const FunList& funcs,
 /**
  * Given a type declaration, lookup the complete definition
  */
-shared_ptr<Type>
+boost::shared_ptr<Type>
 Debug::lookup_type_by_decl(const Type& decl) const
 {
     static const bool completeTypes = true;
 
-    shared_ptr<Type> type =
+    boost::shared_ptr<Type> type =
         Dwarf::lookup_type(global_funcs(), decl.name(), completeTypes);
 
     if (!type)
@@ -1127,10 +1127,10 @@ Debug::lookup_type_by_decl(const Type& decl) const
 /**
  * Lookup a type, by name, in a list of compilation units
  */
-static shared_ptr<Type>
+static boost::shared_ptr<Type>
 lookup_type_in_units(const Debug::UnitList& units, const char* name)
 {
-    shared_ptr<Type> type;
+    boost::shared_ptr<Type> type;
 
     Debug::UnitList::const_iterator i = units.begin(),
         end = units.end();
@@ -1141,7 +1141,7 @@ lookup_type_in_units(const Debug::UnitList& units, const char* name)
         {
             if (type->is_incomplete())
             {
-                if (shared_ptr<Type> tmp = (*i)->lookup_type(*type))
+                if (boost::shared_ptr<Type> tmp = (*i)->lookup_type(*type))
                 {
                     type.swap(tmp);
                 }
@@ -1154,9 +1154,9 @@ lookup_type_in_units(const Debug::UnitList& units, const char* name)
 
 
 ////////////////////////////////////////////////////////////////
-shared_ptr<Type> Debug::lookup_type(const char* name, int level) const
+boost::shared_ptr<Type> Debug::lookup_type(const char* name, int level) const
 {
-    shared_ptr<Type> type;
+    boost::shared_ptr<Type> type;
 
     {
         type = lookup_type_by_ctor(name);
@@ -1183,7 +1183,7 @@ shared_ptr<Type> Debug::lookup_type(const char* name, int level) const
 
     if (type && type->is_incomplete() /* && useExpensiveLookup */)
     {
-        if (shared_ptr<Type> tmp = lookup_type_by_decl(*type))
+        if (boost::shared_ptr<Type> tmp = lookup_type_by_decl(*type))
         {
             assert(tmp->is_complete());
             type.swap(tmp);
@@ -1228,13 +1228,13 @@ string Debug::infer_ctor_name(const char* name)
 
 
 ////////////////////////////////////////////////////////////////
-shared_ptr<Type>
+boost::shared_ptr<Type>
 Debug::lookup_type_by_ctor(const string& ctor) const
 {
-    shared_ptr<Type> result;
+    boost::shared_ptr<Type> result;
 
     // look for constructor(s)
-    vector<shared_ptr<Function> > funcs =
+    vector<boost::shared_ptr<Function> > funcs =
         lookup_global_funcs(ctor.c_str());
 
     // in case the compiler does not generate .debug_pubnames,
@@ -1258,7 +1258,7 @@ Debug::lookup_type_by_ctor(const string& ctor) const
                 if ((ctor == (*j)->name() || ctor == (*j)->name())
                     && !(*j)->params().empty())
                 {
-                    shared_ptr<Parameter> tp = *(*j)->params().begin();
+                    boost::shared_ptr<Parameter> tp = *(*j)->params().begin();
                     result = tp->type();
                     break;
                 }
@@ -1269,7 +1269,7 @@ Debug::lookup_type_by_ctor(const string& ctor) const
     // got at least one ctor?
     else if (!funcs.front()->params().empty())
     {
-        shared_ptr<Parameter> tp = *funcs.front()->params().begin();
+        boost::shared_ptr<Parameter> tp = *funcs.front()->params().begin();
         result = tp->type();
     }
     if (result)
@@ -1277,7 +1277,7 @@ Debug::lookup_type_by_ctor(const string& ctor) const
         for (;;)
         {
             // expect const-pointer to type; remove decorators
-            shared_ptr<DecoratedType> deco =
+            boost::shared_ptr<DecoratedType> deco =
                 shared_dynamic_cast<DecoratedType>(result);
 
             if (!deco)
@@ -1292,7 +1292,7 @@ Debug::lookup_type_by_ctor(const string& ctor) const
 
 
 ////////////////////////////////////////////////////////////////
-shared_ptr<Type> Debug::lookup_type_by_ctor(const char* name) const
+boost::shared_ptr<Type> Debug::lookup_type_by_ctor(const char* name) const
 {
     assert(name);
 
@@ -1344,7 +1344,7 @@ void Debug::cache_object(Dwarf_Die die) const
 
     if (i == dieCache_.end())
     {
-        if (shared_ptr<Die> object = Factory::instance().create(dbg_, die))
+        if (boost::shared_ptr<Die> object = Factory::instance().create(dbg_, die))
         {
             dieCache_.insert(make_pair(off, object));
         }

@@ -2361,7 +2361,7 @@ bool DebuggerShell::cmd_loadcore(Thread*, const vector<string>& argv)
 }
 
 
-static bool is_pointer(DebugSymbol* sym, bool* isString = 0)
+static bool sym_is_pointer(DebugSymbol* sym, bool* isString = 0)
 {
     assert(sym);
     PointerType* ptr = interface_cast<PointerType*>(sym->type());
@@ -2409,7 +2409,7 @@ void DebuggerShell::print_debug_symbol(
         isLargeArray = aType->elem_count() > max_array_range();
         cout << '[' << aType->elem_count() << ']';
     }
-    if (sym->enum_children(0) && (!is_pointer(sym) || sym->depth() < 2))
+    if (sym->enum_children(0) && (!sym_is_pointer(sym) || sym->depth() < 2))
     {
         DebugSymbolHelpers::Print print;
         print.set_numeric_base(base);
@@ -2419,7 +2419,7 @@ void DebuggerShell::print_debug_symbol(
             cout << '=';
         }
         bool isString = false;
-        if (is_pointer(sym, &isString))
+        if (sym_is_pointer(sym, &isString))
         {
             RefPtr<SharedString> value = sym->value();
             if (value)

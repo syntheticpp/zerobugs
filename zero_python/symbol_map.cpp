@@ -64,7 +64,7 @@ static RefPtr<Symbol> lookup_by_addr(SymbolMap* symbols, addr_t addr)
     if (addr)
     {
         ThreadMarshaller::instance().exec_command(
-            bind(lookup_by_addr_, symbols, addr, ref(sym)), __func__);
+            bind(lookup_by_addr_, symbols, addr, boost::ref(sym)), __func__);
     }
     return sym;
 }

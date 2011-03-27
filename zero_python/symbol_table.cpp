@@ -59,7 +59,7 @@ static RefPtr<Symbol> lookup_by_addr(SymbolTable* symtab, addr_t addr)
     if (addr)
     {
         ThreadMarshaller::instance().send_command(
-            bind(lookup_by_addr_, symtab, addr, ref(sym)),
+            bind(lookup_by_addr_, symtab, addr, boost::ref(sym)),
             __func__);
     }
     return sym;

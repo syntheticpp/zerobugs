@@ -789,7 +789,7 @@ size_t PointerTypeImpl::parse(const char* str, Unknown2* unk) const
 ////////////////////////////////////////////////////////////////
 void PointerTypeImpl::update_name()
 {
-    char buf[2] = { pointerOrReference_, 0 };
+    char buf[2] = { (char)pointerOrReference_, 0 };
     set_name(*type().make_pointer_name(buf));
 }
 

@@ -14,7 +14,7 @@
 // http://www.boost.org/LICENSE_1_0.txt)
 // -------------------------------------------------------------------------
 
-inline bool is_reference(const RefPtr<DebugSymbol>& sym)
+inline bool is_ref(const RefPtr<DebugSymbol>& sym)
 {
     bool isRef = false;
     if (PointerType* pt = interface_cast<PointerType*>(sym->type()))

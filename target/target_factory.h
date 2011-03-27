@@ -27,7 +27,7 @@ public:
     {
         Linux,
         FreeBSD,
-    #ifdef linux
+    #ifdef __linux__
         NativeOS = Linux
     #elif defined(__FreeBSD__)
         NativeOS = FreeBSD

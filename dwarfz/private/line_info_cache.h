@@ -351,7 +351,7 @@ is_block_start(
         return true;
     }
 
-    shared_ptr<Function> fun = unit.lookup_function(addr);
+    boost::shared_ptr<Function> fun = unit.lookup_function(addr);
 
     if (fun && fun->low_pc() == addr)
     {

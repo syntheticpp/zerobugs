@@ -53,7 +53,7 @@ MemoryRequest::~MemoryRequest() throw()
 MemoryRequestHandler::MemoryRequestHandler
 (
     AppSlots& marshaller,
-    shared_ptr<ProgramViewSignals> progView
+    boost::shared_ptr<ProgramViewSignals> progView
 )
     : marshaller_(marshaller)
     , reqPending_(0)

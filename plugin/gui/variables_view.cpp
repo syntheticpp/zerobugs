@@ -606,7 +606,7 @@ void VariablesView::add_symbol(Gtk::CTree::RowList rows,
     // Do not create an extra node for the reference object,
     // just show the referred variable (child object).
 
-    if (is_reference(symbol.get()))
+    if (is_ref(symbol.get()))
     {
         assert(!ref);
         isRef = true;

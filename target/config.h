@@ -4,7 +4,7 @@
 // $Id: config.h 720 2010-10-28 06:37:54Z root $
 //
 ////////////////////////////////////////////////////////////////
-#if defined (linux)
+#if defined (__linux__)
 
 #include "linux_core.h"
 #include "linux_live.h"

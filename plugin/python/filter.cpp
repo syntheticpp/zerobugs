@@ -173,7 +173,7 @@ UserDataFilter::enum_params(EnumCallback3<const char*,
 void
 UserDataFilter::on_param_change(Properties* prop, const char* name)
 {
-    call_<void>("on_param_change", ref(*prop), name);
+    call_<void>("on_param_change", boost::ref(*prop), name);
 }
 
 // vim: tabstop=4:softtabstop=4:expandtab:shiftwidth=4

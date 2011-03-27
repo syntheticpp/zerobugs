@@ -23,10 +23,10 @@ using namespace ELF;
 
 class Header : public ElfHdr
 {
-    shared_ptr<Binary> bin_;
+    boost::shared_ptr<Binary> bin_;
 
 public:
-    Header(const ElfHdr& hdr, const shared_ptr<Binary>& bin)
+    Header(const ElfHdr& hdr, const boost::shared_ptr<Binary>& bin)
         : ElfHdr(hdr)
         , bin_(bin)
     { }
@@ -35,7 +35,7 @@ public:
 
 Header get_elf_header(const char* file)
 {
-    shared_ptr<Binary> bin(new Binary(file));
+    boost::shared_ptr<Binary> bin(new Binary(file));
 //#if DEBUG
 //    bin->header();
 //    clog << __func__ << ": " << file << " ";

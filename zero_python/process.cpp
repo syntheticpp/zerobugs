@@ -72,7 +72,7 @@ static python::list enum_modules(Process* proc)
     Collector<Module> collector;
 
     ThreadMarshaller::instance().send_command(
-        bind(enum_program_modules, proc, ref(collector)),
+        bind(enum_program_modules, proc, boost::ref(collector)),
         __func__);
 
     return collector.get();

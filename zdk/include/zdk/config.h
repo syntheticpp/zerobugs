@@ -87,7 +87,7 @@
 #ifdef HAVE_SYS_TYPES_H
  #include <sys/types.h>
 #endif
-#if defined(linux)
+#if defined(linux) || defined(__linux__)
  #include "zdk/config/linux.h"
 #elif defined(__FreeBSD__)
  #include "zdk/config/bsd.h"

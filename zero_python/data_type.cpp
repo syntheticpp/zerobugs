@@ -30,13 +30,13 @@ static string type_name(const DataType* type)
 }
 
 
-bool is_pointer(const DataType* type)
+static bool is_ptr(const DataType* type)
 {
     return interface_cast<const PointerType*>(type);
 }
 
 
-bool is_reference(const DataType* type)
+static bool is_ref(const DataType* type)
 {
     if (const PointerType* p = interface_cast<const PointerType*>(type))
     {
@@ -46,7 +46,7 @@ bool is_reference(const DataType* type)
 }
 
 
-object pointed_type(const DataType* type)
+static object pointed_type(const DataType* type)
 {
     RefPtr<DataType> result;
 
@@ -58,7 +58,7 @@ object pointed_type(const DataType* type)
 }
 
 
-object as_class(DataType* type)
+static object as_class(DataType* type)
 {
     RefPtr<ClassType> result;
 
@@ -76,8 +76,8 @@ void export_data_type()
         .def("as_class", as_class)
         .def("bit_size", &DataType::bit_size)
         .def("is_fundamental", &DataType::is_fundamental)
-        .def("is_pointer", is_pointer)
-        .def("is_reference", is_pointer)
+        .def("is_pointer", is_ptr)
+        .def("is_reference", is_ref)
         .def("name", type_name)
         .def("pointed_type", pointed_type)
         .def("size", &DataType::size)

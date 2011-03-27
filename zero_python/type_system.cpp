@@ -87,7 +87,7 @@ call_on_main_thread
     RefPtr<DataType> type;
 
     ThreadMarshaller::instance().send_command(
-        bind(CallMethod0<R>(), typeSys, mfun, ref(type)),
+        bind(CallMethod0<R>(), typeSys, mfun, boost::ref(type)),
         __func__);
 
     return object(type);
@@ -106,7 +106,7 @@ call_on_main_thread
     RefPtr<DataType> type;
 
     ThreadMarshaller::instance().send_command(
-        bind(CallMethod1<A0, R>(), typeSys, mfun, a0, ref(type)),
+        bind(CallMethod1<A0, R>(), typeSys, mfun, a0, boost::ref(type)),
         __func__);
 
     return object(type);
@@ -127,7 +127,7 @@ call_on_main_thread
     RefPtr<DataType> type;
 
     ThreadMarshaller::instance().send_command(
-        bind(CallMethod3<A0, A1, A2, R>(), typeSys, mfun, a0, a1, a2, ref(type)),
+        bind(CallMethod3<A0, A1, A2, R>(), typeSys, mfun, a0, a1, a2, boost::ref(type)),
         __func__);
     return object(type);
 }

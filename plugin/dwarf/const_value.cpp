@@ -28,7 +28,7 @@ Dwarf::const_value( Thread& thread,
                     SharedString* name)
 {
     RefPtr<DebugSymbolImpl> value;
-    if (shared_ptr<ConstValue> constVal = datum.const_value())
+    if (boost::shared_ptr<ConstValue> constVal = datum.const_value())
     {
         ostringstream buf;
         if (interface_cast<FloatType*>(&type))

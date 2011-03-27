@@ -220,7 +220,7 @@ static void wake_up(volatile bool& flag)
 
 void Marshaller::unblock_waiting_threads() volatile
 {
-    send_event(bind(wake_up, ref(wakeup_)), "__wake_up__");
+    send_event(bind(wake_up, boost::ref(wakeup_)), "__wake_up__");
 }
 
 namespace

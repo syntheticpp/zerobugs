@@ -302,7 +302,7 @@ DebugSymbolWrap::create(const char* name, DataType* type, addr_t addr)
     if (sym_)
     {
         ThreadMarshaller::instance().send_command(
-            bind(create_symbol, sym_, type, name, addr, ref(sym)),
+            bind(create_symbol, sym_, type, name, addr, boost::ref(sym)),
             __func__);
     }
     return new DebugSymbolWrap(sym, events());
