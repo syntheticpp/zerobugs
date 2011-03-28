@@ -6,6 +6,7 @@ somewhat like GDB. It also has a Gtk UI.
 
 BUILDING THE SOURCE:
 	Use the build script in this directory, type ./build --help for help
+	DO NOT run "./configure; make" by hand!
 
 BUILD ENVIRONMENT:
 The following are required:

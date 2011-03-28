@@ -80,10 +80,12 @@ public:
 
 Mutex::Mutex(bool recursive) 
     : owner_(-1)
+#if DEBUG
     , fileAttempt_("")
     , lineAttempt_(0)
     , file_("")
     , line_(0)
+#endif
 {
     MutexAttr attr(recursive);
     PTHREAD_ENFORCE(pthread_mutex_init, &mutex_, attr);

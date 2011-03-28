@@ -17,7 +17,7 @@
 using namespace std;
 
 
-#ifdef linux
+#ifdef __linux__
 bool
 thread_syscall_pending(const Thread& thread, reg_t pc)
 {

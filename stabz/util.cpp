@@ -26,7 +26,7 @@ const char* Stab::get_name(int type)
 
     if (names.empty())
     {
-#ifdef linux
+#ifdef __linux__
  #define __define_stab(code, val, str) names[val] = str;
  #include <bits/stab.def>
 #else

@@ -11,7 +11,7 @@
 
 #include <errno.h>
 #include <fcntl.h>
-#ifdef linux
+#ifdef __linux__
  #include <linux/unistd.h> // tkill, _syscall2
 #endif
 #include <signal.h>

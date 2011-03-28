@@ -186,7 +186,7 @@ bool AutoTest::on_event(Thread* thread, EventType)
 {
     if (!commands_.empty())
     {
-        shared_ptr<Command> cmd = commands_.front();
+        boost::shared_ptr<Command> cmd = commands_.front();
 
         if (cmd->input() == "quit") // hack!
         {
@@ -302,7 +302,7 @@ parse_error(const string& filename, size_t line, const string& token)
     cmd.clear(); \
     if (command) \
         commands_.push_back(command); \
-    shared_ptr<Command>(new Command(vars_)).swap(command);\
+    boost::shared_ptr<Command>(new Command(vars_)).swap(command);\
     assert(command.get()); \
     command->assign_to(var); \
     var.clear(); } while (0)
@@ -351,7 +351,7 @@ static void set_expect(State& state, string& expect)
 
 
 static void
-set_expect(Arch& arch, State& state, shared_ptr<Command> command, string& expect)
+set_expect(Arch& arch, State& state, boost::shared_ptr<Command> command, string& expect)
 {
     set_expect(state, expect);
 
@@ -392,7 +392,7 @@ void AutoTest::read_script(const string& filename)
     State  state = START;
     Arch   arch = ARCH_ALL;
 
-    shared_ptr<Command> command;
+    boost::shared_ptr<Command> command;
 
     for (char c = 0; (script >> c); )
     {
@@ -603,7 +603,7 @@ void AutoTest::read_script(const string& filename)
 
                     if (!command)
                     {
-                        shared_ptr<Command>(new Command(vars_)).swap(command);
+                        boost::shared_ptr<Command>(new Command(vars_)).swap(command);
                     }
                     command->add_echo(echo);
                     echo.clear(); // echo arguments end at end of line

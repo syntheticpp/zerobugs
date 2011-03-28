@@ -10,6 +10,9 @@
 # http://www.boost.org/LICENSE_1_0.txt)
 # -------------------------------------------------------------------------
 
+# comment out to build debug
+export RELEASE=1
+
 # libdwarf version
 # For more info, see: http://reality.sgiweb.org/davea/dwarf.html
 DWARF=dwarf-20100930/libdwarf
