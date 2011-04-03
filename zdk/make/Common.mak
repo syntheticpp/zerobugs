@@ -170,7 +170,7 @@ else
  endif
  ifeq ($(CXX_MAJOR),4)
   CXXFLAGS+=-Wno-attributes
-  #CXXFLAGS+=-std=c++0x
+  CXXFLAGS+=-std=c++0x
  endif
 endif
 

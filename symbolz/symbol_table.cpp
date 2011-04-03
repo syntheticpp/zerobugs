@@ -493,11 +493,6 @@ bool SymbolTableImpl::lazy_load(const char* func, bool warn) const
             // on_done method
             for (; head; head = head->next())
             {
-               /* TODO: cleanup
-                if (head->upper() > upper_)
-                {
-                    upper_ = head->upper();
-                } */
                 events_->on_done(*head);
             }
             return true;

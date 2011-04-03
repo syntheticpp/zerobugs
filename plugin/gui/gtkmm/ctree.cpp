@@ -70,9 +70,6 @@ Gtk::CTree::CTree(const Glib::SArray& columnTitles)
 
     model_ = Gtk::TreeStore::create(*this);
     set_model(model_);
-    //sortModel_ = TreeModelSort::create(model_);
-    //set_model(sortModel_);
-    //set_fixed_height_mode(true);
 }
 
 

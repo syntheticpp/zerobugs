@@ -196,6 +196,10 @@ DECLARE_ZDK_INTERFACE_(Runnable, Unknown2)
     virtual void set_next(Symbol*) = 0;
 
     virtual void set_stepping(bool) = 0;
+    
+    virtual pid_t euid() const = 0;
+    virtual pid_t ruid() const = 0;
+    virtual pid_t suid() const = 0;
 };
 
 

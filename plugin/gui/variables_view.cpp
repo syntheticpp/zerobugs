@@ -89,7 +89,7 @@ VariablesView::VariablesView(Debugger& /* debugger */)
 
     ctree_->set_line_style(Gtk_FLAG(CTREE_LINES_DOTTED));
 #if GTKMM_2
-    ctree_->set_grid_lines(Gtk::TREE_VIEW_GRID_LINES_BOTH);
+    ctree_->set_line_style(Gtk_FLAG(CTREE_LINES_SOLID));
 #endif
 
     // connect CTree signals to internal slots

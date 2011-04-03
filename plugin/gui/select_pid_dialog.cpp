@@ -9,6 +9,8 @@
 // http://www.boost.org/LICENSE_1_0.txt)
 // -------------------------------------------------------------------------
 //
+#include <pwd.h>
+
 #include <vector>
 #include <boost/format.hpp>
 #include "zdk/zero.h"
@@ -53,26 +55,29 @@ SelectPidDialog::SelectPidDialog
     titles.push_back("PID");
     titles.push_back("Full Path");
     titles.push_back("Name");
+    titles.push_back("RUID");
 
     tree_ = manage(new Gtk::CTree(titles));
     sw->add(*tree_);
 
     tree_->column(0).set_width(140);
-    tree_->column(1).set_width(340);
+    tree_->column(1).set_width(300);
+    tree_->column(2).set_width(120);
 
-    Gtk_set_size(tree_, 590, 340);
+    Gtk_set_size(tree_, 640, 450);
 #ifdef GTKMM_2
     set_resizable(true);
 
     tree_->get_column(0)->set_sort_column(0);
     tree_->get_column(1)->set_sort_column(1);
     tree_->get_column(2)->set_sort_column(2);
+    tree_->get_column(3)->set_sort_column(3);
 #else
-    tree_->set_line_style(GTK_CTREE_LINES_DOTTED);
     tree_->column(0).set_width(150);
     tree_->column(0).set_passive();
     tree_->column(1).set_passive();
 #endif
+    tree_->set_line_style(Gtk::CTREE_LINES_DOTTED);
     set_numeric_sort(*tree_, 0, 10);
 
     Gtk::Button* btn = add_button("_Refresh");
@@ -170,6 +175,15 @@ void SelectPidDialog::notify(const Runnable* task)
     sv.push_back((boost::format("%1%") % task->pid()).str());
     sv.push_back(task->name());
     sv.push_back(name);
+    
+    if (const passwd* pw = getpwuid( task->ruid() ))
+    {
+        sv.push_back(pw->pw_name);
+    }
+    else
+    {
+        sv.push_back("");
+    }
 
     const string ppid((boost::format("%1%") % task->ppid()).str());
     Gtk::CTree::RowList rows = tree_->rows();

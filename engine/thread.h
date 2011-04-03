@@ -155,7 +155,9 @@ END_INTERFACE_MAP()
      */
     virtual bool is_frozen() const;
 
-    // virtual bool is_exiting() const { return false; }
+    virtual pid_t euid() const { return euid_; }
+    virtual pid_t ruid() const { return ruid_; }
+    virtual pid_t suid() const { return suid_; }
 
     friend std::istream& operator>>(std::istream&, RunnableImpl&);
 

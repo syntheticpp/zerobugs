@@ -45,6 +45,7 @@
  #include <vector>
  #include <boost/shared_ptr.hpp>
  #include <gtkmm/treestore.h>
+ #include <gtkmm/treeview.h>
  #include "color.h"
  #include "column_adapter.h"
  #include "tree_adapter.h"
@@ -54,7 +55,9 @@
  {
     enum LineStyle
     {
-        CTREE_LINES_DOTTED,
+        CTREE_LINES_NONE =      Gtk::TREE_VIEW_GRID_LINES_NONE,
+        CTREE_LINES_DOTTED =    Gtk::TREE_VIEW_GRID_LINES_VERTICAL,
+        CTREE_LINES_SOLID =     Gtk::TREE_VIEW_GRID_LINES_BOTH
     };
 
 
@@ -343,8 +346,10 @@
 
         void on_cursor_changed();
 
-        void set_line_style(LineStyle)
-        { /* no-op, just for compatib. with 1.2 */ }
+        void set_line_style(LineStyle style)
+        { 
+            set_grid_lines(static_cast<TreeViewGridLines>(style));
+        }
 
         TreeModel::Children children()
         {

@@ -22,9 +22,10 @@ extern void procname(pid_t pid, char name[PATH_MAX], bool throwOnError);
 
 string get_process_name(pid_t pid)
 {
+    const bool throwOnError = false;
     char name[PATH_MAX] = { 0 };
 
-    procname(pid, name, true /* throw exceptions */);
+    procname(pid, name, throwOnError);
     return name;
 }
 

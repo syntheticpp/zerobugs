@@ -1230,24 +1230,75 @@ void LinuxLiveTarget::read_environment(SArray& env) const
 }
 
 
-
 ////////////////////////////////////////////////////////////////
-bool LinuxLiveTarget::read_state(
-    pid_t lwpid,
-    RunnableState& state,
-    string& comm) const
+static inline auto_ptr<istream>
+get_ifstream (
+    const Target&   target,
+    const string&   filename )
 {
-    ostringstream fn;
-    fn << "/proc/" << lwpid << "/stat";
-    auto_ptr<istream> in(get_ifstream(fn.str().c_str()));
-    if (!*in)
+    auto_ptr<istream> inp(target.get_ifstream(filename.c_str()));
+
+    if (!inp.get() || !*inp)
     {
         // ENOENT may occur when the thread is about to exit
         if (errno == ENOENT)
         {
-            return false;
+            return auto_ptr<istream>();
         }
-        throw SystemError(errno, __func__ + (": " + fn.str()), false);
+
+        throw SystemError(errno, __func__ + (": " + filename), false);
+    }
+    return inp;
+}
+
+
+////////////////////////////////////////////////////////////////
+// Read real, effective and saved uif from /proc/<pid>/status
+static void
+read_uids( 
+    const Target&   target,
+    pid_t           lwpid,
+    RunnableState&  state )
+{
+    ostringstream fn;
+    fn << "/proc/" << lwpid << "/status";
+
+    auto_ptr<istream> inp = get_ifstream(target, fn.str());
+
+    if (inp.get() == NULL)
+    {
+        return;
+    }
+
+    string key;
+    while ( *inp >> key )
+    {
+        if (key == "Uid:")
+        {
+            *inp >> state.ruid_;
+            *inp >> state.euid_;
+            *inp >> state.suid_;
+            break;
+        }
+    }
+}
+
+
+////////////////////////////////////////////////////////////////
+bool
+LinuxLiveTarget::read_state(
+    pid_t           lwpid,
+    RunnableState&  state,
+    string&         comm
+    ) const
+{
+    ostringstream fn;
+    fn << "/proc/" << lwpid << "/stat";
+    auto_ptr<istream> in(::get_ifstream(*this, fn.str()));
+
+    if (in.get() == NULL)
+    {
+        return false;
     }
 
 #ifdef DEBUG
@@ -1326,6 +1377,7 @@ bool LinuxLiveTarget::read_state(
 #undef EXTRACT
 #undef EXTRACT_AND_IGNORE
 
+    read_uids( *this, lwpid, state );
     return *in;
 }
 

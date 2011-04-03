@@ -38,7 +38,7 @@ class ZDK_LOCAL GUI
     : public DebuggerPlugin
     , public CommandCenter
     , public Priority
-    , public VersionInfoImpl<ZERO_API_MAJOR, ZERO_API_MINOR, 105>
+    , public VersionInfoImpl<ZERO_API_MAJOR, ZERO_API_MINOR, 106>
     , private boost::noncopyable
 {
 public:

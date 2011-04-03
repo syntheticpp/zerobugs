@@ -20,6 +20,7 @@
 using Platform::addr_t;
 using Platform::reg_t;
 
+BOOST_STATIC_ASSERT(sizeof(pid_t) == sizeof(int32_t));
 
 struct RunnableState
 {
@@ -37,6 +38,10 @@ struct RunnableState
     uint64_t    vmemSize_;  // virtual mem size in bytes
     uint64_t    stackStart_;
 
+    int32_t     euid_;
+    int32_t     ruid_;
+    int32_t     suid_;
+
     explicit RunnableState(pid_t lwpid)
         : state_(Runnable::RUNNING)
         , lwpid_(lwpid)
@@ -50,6 +55,9 @@ struct RunnableState
         , sysTicks_(0)
         , vmemSize_(0)
         , stackStart_(0)
+        , euid_(-1)
+        , ruid_(-1)
+        , suid_(-1)
     { }
 };
 

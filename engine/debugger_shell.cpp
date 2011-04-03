@@ -12,6 +12,7 @@
 #include <assert.h>
 #include <errno.h>
 #include <fcntl.h>
+#include <pwd.h>
 #include <stdio.h>              // for FILE, needed by readline
 #include <signal.h>
 #ifdef HAVE_UNISTD_H
@@ -468,6 +469,10 @@ auto_complete_pid(const char* text, vector<string>& matches)
 
             outs << task->pid() << " (" << task->name() << ")";
 
+            if (passwd* pwd = getpwuid( task->ruid() ))
+            {
+                outs << " [" << pwd->pw_name << "]";
+            }
             if (strncmp(outs.str().c_str(), text_, len_) == 0
              || strncmp(task->name(), text_, len_) == 0)
             {
@@ -840,7 +845,7 @@ static void bug_report()
             "(cat /proc/%d/maps && echo \"%s-release\") > maps.zero";
     #endif
         snprintf(buf, sizeof buf - 1, cmd, getpid(), SYSID);
-        (void)system(buf);
+        system(buf);
     }
     else
     {
@@ -852,7 +857,7 @@ static void bug_report()
             fprintf(stderr, "%p\n", trace[i]);
         }
         snprintf(buf, sizeof buf, "cat /proc/%d/maps", getpid());
-        (void)system(buf);
+        system(buf);
     }
 #endif
 }
