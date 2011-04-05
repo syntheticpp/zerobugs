@@ -12,6 +12,8 @@
 
 # comment out to build debug
 export RELEASE=1
+export CFLAGS=-O3
+export CPPFLAGS=-O3
 
 # libdwarf version
 # For more info, see: http://reality.sgiweb.org/davea/dwarf.html

@@ -80,7 +80,7 @@ CCASFLAGS = -fPIC
 CCDEPMODE = depmode=gcc3
 CFLAGS = -fPIC -DNDEBUG
 CPP = gcc -E
-CPPFLAGS = 
+CPPFLAGS = -O3
 CYGPATH_W = echo
 DEFS = -DHAVE_CONFIG_H
 DEPDIR = .deps
@@ -95,7 +95,7 @@ INSTALL_DATA = ${INSTALL} -m 644
 INSTALL_PROGRAM = ${INSTALL}
 INSTALL_SCRIPT = ${INSTALL}
 INSTALL_STRIP_PROGRAM = $(install_sh) -c -s
-LDFLAGS =  -L/home/cristian/workspace/codeplex/zero/local/lib
+LDFLAGS = 
 LIBOBJS = 
 LIBS = 
 LTLIBOBJS = 

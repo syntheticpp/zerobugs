@@ -66,7 +66,7 @@ CC = gcc
 CCDEPMODE = depmode=gcc3
 CFLAGS = -fPIC -Wall
 CPP = gcc -E
-CPPFLAGS = 
+CPPFLAGS = -O3
 CXX = g++
 CXXCPP = g++ -E
 CXXDEPMODE = depmode=gcc3
@@ -89,7 +89,7 @@ INSTALL_DATA = ${INSTALL} -m 644
 INSTALL_PROGRAM = ${INSTALL}
 INSTALL_SCRIPT = ${INSTALL}
 INSTALL_STRIP_PROGRAM = $(install_sh) -c -s
-LDFLAGS =  -L/home/cristian/workspace/codeplex/zero/local/lib
+LDFLAGS = 
 LIBOBJS = 
 LIBS = 
 LIBTOOL = $(SHELL) $(top_builddir)/libtool

@@ -3608,7 +3608,7 @@ ac_compiler_gnu=$ac_cv_cxx_compiler_gnu
 
  CPPFLAGS_SAVE=$CPPFLAGS
  if test x$PYTHON_INCLUDE_DIR != x; then
-   CPPFLAGS=-I$PYTHON_INCLUDE_DIR $CPPFLAGS
+   CPPFLAGS="-I$PYTHON_INCLUDE_DIR $CPPFLAGS"
  fi
  cat confdefs.h - <<_ACEOF >conftest.$ac_ext
 /* end confdefs.h.  */
@@ -3698,8 +3698,6 @@ eval ac_res=\$$as_ac_Lib
 $as_echo "$ac_res" >&6; }
 if eval test \"x\$"$as_ac_Lib"\" = x"yes"; then :
   BOOST_PYTHON_LIB=$ax_lib break
-else
-  $ax_python_lib
 fi
 
   done

@@ -82,7 +82,8 @@ endif
 ifeq ($(CXX),$(ICC))
  OPTIMIZE+=-O2 -ip -parallel
 else
- OPTIMIZE+=-O2 -felide-constructors -fno-strict-aliasing
+ #OPTIMIZE+=-O2 -felide-constructors -fno-strict-aliasing
+ OPTIMIZE+=-O3 -felide-constructors -fno-strict-aliasing
 endif
 
 CXXFLAGS=$(CFLAGS) $(PIC) -D_REENTRANT -D__STDC_CONSTANT_MACROS
