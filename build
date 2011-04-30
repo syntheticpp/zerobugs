@@ -90,6 +90,7 @@ function help () {
     echo "  --clean:           make clean"
     echo "  --configure:       configure only, don't build"
     echo "  --install:         install"
+    echo "  --gui-install:     install using Python gtk script"
     echo "  --shell:           spawn a build environment shell"
 	echo "  --help:            display this help message"
     echo
