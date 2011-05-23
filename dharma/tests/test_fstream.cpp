@@ -52,7 +52,7 @@ class ZDK_LOCAL MyStreamEvents : public InputStreamEvents
             const char* name,
             uuidref_t   uuid,
             size_t      size)
-    { assert(false); }
+    { assert(false); return 0; }
 
     virtual void on_opaque(const char*, uuidref_t, const uint8_t*, size_t) { assert(false); }
 

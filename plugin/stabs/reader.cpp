@@ -236,10 +236,10 @@ public:
             ((addr <= blk->end_addr()) || (blk->end_addr() == 0)))
         {
             // emit variables in block (or function)
-            blk->for_each_var<EmitVar&>(*this).count();
+            blk->for_each_var(*this).count();
 
             // dig into sub-blocks
-            blk->for_each_block<EmitVar&>(*this).count();
+            blk->for_each_block(*this).count();
         }
  /* #if DEBUG
         else
@@ -484,10 +484,15 @@ size_t Reader::enum_locals (
     EmitParam emitParam(this, unit, events, thread, funcSym, frame, name);
 
     const Block::VarList& param = func->params();
-
+#ifdef HAVE_LAMBDA_SUPPORT
+    for_each(param.begin(), param.end(), 
+        [&emitParam](const Block::VarList::value_type& p) {
+            emitParam(p);
+        });
+#else
     for_each<Block::VarList::const_iterator, EmitParam&>(
         param.begin(), param.end(), emitParam);
-
+#endif
     count += emitParam.count();
     return count;
 }

@@ -2003,6 +2003,9 @@ int dwarf_get_macro_details(Dwarf_Debug /*dbg*/,
 int dwarf_get_address_size(Dwarf_Debug /*dbg*/,
     Dwarf_Half  *    /*addr_size*/,
     Dwarf_Error *    /*error*/);
+int dwarf_get_die_address_size(Dwarf_Die /*die*/,
+    Dwarf_Half  *    /*addr_size*/,
+    Dwarf_Error *    /*error*/);
 
 /* The dwarf specification separates FORMs into
 different classes.  To do the seperation properly

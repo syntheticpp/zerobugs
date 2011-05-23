@@ -45,6 +45,8 @@ public:
     FdeRegs(Dwarf_Fde fde,struct dwconf_s *config_data):
        fde_(fde),interfaceNumber_(config_data->cf_interface_number),
        confData_(*config_data),pcAddr_(0),rowPc_(0) {
+       // regTable_ is a C struct from libdwarf.h
+       memset(&regTable_,0,sizeof(regTable_));
        unsigned count = confData_.cf_table_entry_count;
        regTable_.rt3_reg_table_size = count;
        regTable_.rt3_rules = new Dwarf_Regtable_Entry3_s[count];
@@ -126,6 +128,7 @@ private:
     void zeroRegTab() {
         memset( regTable_.rt3_rules,0, tableByteCount_);
         memset( &regTable_.rt3_cfa_rule,0, sizeof(Dwarf_Regtable_Entry3_s));
+        // Do not set rt3_reg_table_size  here. Set already.
     }
 
     // Unimplemented.

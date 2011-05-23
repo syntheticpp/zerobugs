@@ -488,7 +488,8 @@ dwarf_global_formref(Dwarf_Attribute attr,
     case DW_FORM_sec_offset:
         {
             /* DW_FORM_sec_offset first exists in DWARF4.*/
-            /* It is up to the caller to know what the offset refers to,
+            /* It is up to the caller to know what the offset 
+               of DW_FORM_sec_offset refers to,
                the offset is not going to refer to .debug_info! */
             unsigned length_size = cu_context->cc_length_size;
             if(length_size == 4) {
@@ -661,7 +662,7 @@ dwarf_formudata(Dwarf_Attribute attr,
             *return_uval = ret_value;
             return DW_DLV_OK;
         }
-
+        break;
     case DW_FORM_udata:
         ret_value =
             (_dwarf_decode_u_leb128(attr->ar_debug_info_ptr, NULL));
@@ -948,7 +949,7 @@ dwarf_formexprloc(Dwarf_Attribute attr,
         return (DW_DLV_ERROR);
     }
 
-    if (attr->ar_attribute_form == DW_FORM_udata ) {
+    if (attr->ar_attribute_form == DW_FORM_exprloc ) {
         Dwarf_Unsigned exprlen =
             (_dwarf_decode_u_leb128(attr->ar_debug_info_ptr, NULL));
         Dwarf_Small * addr = attr->ar_debug_info_ptr;

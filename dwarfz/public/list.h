@@ -24,6 +24,8 @@ namespace Dwarf
 
     template<typename T> CLASS List
     {
+        typedef T value_type;
+
         typedef boost::shared_ptr<T> ptr_type;
         typedef typename Traits<T>::parent_type parent_type;
 

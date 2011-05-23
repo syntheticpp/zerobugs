@@ -8,7 +8,7 @@
 .nr Hb 5
 \." ==============================================
 \." Put current date in the following at each rev
-.ds vE rev 1.90, 28 March 2010
+.ds vE rev 1.91, 12 January 2011
 \." ==============================================
 \." ==============================================
 .ds | |
@@ -5585,6 +5585,38 @@ the \f(CW*addr_size\fP
 to the size in bytes of an address.
 In case of error, it returns \f(CWDW_DLV_ERROR\fP
 and does not set \f(CW*addr_size\fP.
+
+The address size returned is the overall address size,
+which can be misleading if different compilation
+units have different address sizes.
+Many ABIs have only a single address size per
+executable, but differing address sizes are
+becoming more common.
+
+Use \f(CWdwarf_get_die_address_size()\fP 
+instead whenever possible.
+
+.H 3 "dwarf_get_die_address_size()"
+.DS
+\f(CWint dwarf_get_die_address_size(Dwarf_Die die,
+	Dwarf_Half  *addr_size,
+        Dwarf_Error *error)\fP
+.DE
+The function \f(CWdwarf_get_die_address_size()\fP 
+returns \f(CWDW_DLV_OK\fP on success and sets 
+the \f(CW*addr_size\fP
+to the size in bytes of an address.
+In case of error, it returns \f(CWDW_DLV_ERROR\fP
+and does not set \f(CW*addr_size\fP.
+
+The address size returned is the address size 
+of the compilation unit owning the \f(CWdie\fP
+
+This is the preferred way to get address size when the
+\f(CWDwarf_Die\fP is known.
+
+
+.H 2 "Ranges Operations (.debug_ranges)"
 
 
 .H 2 "Ranges Operations (.debug_ranges)"

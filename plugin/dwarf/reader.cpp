@@ -1016,12 +1016,18 @@ static void emit_var( Reader&           plugin,
                       const T&          func,
                       bool              paramsOnly )
 {
-    typedef typename T::ParamList::const_iterator Iter;
-
     // emit the formal params
     const typename T::ParamList& p = func.params();
-    for_each<Iter, EmitDebugSymbol&>(p.begin(), p.end(), emit);
+#if HAVE_LAMBDA_SUPPORT
+    typedef typename T::ParamList::value_type V;
+    for_each(p.begin(), p.end(), [&emit](const V& v) {
+        emit(v);
+    });
+#else
+    typedef typename T::ParamList::const_iterator Iter;
 
+    for_each<Iter, EmitDebugSymbol&>(p.begin(), p.end(), emit);
+#endif
     if (!paramsOnly)
     {
         plugin.enum_var(emit, func); // emit automatic vars
@@ -1424,13 +1430,18 @@ size_t Reader::enum_unit_globals(
                                 &stackFrame,
                                 &sym,
                                 events);
+        const VarList& vars = unit->variables();
+    #ifndef HAVE_LAMBDA_SUPPORT
+        // Note: predicate passed by reference
         // get the variables at compilation unit scope
         typedef VarList::const_iterator Iter;
 
-        const VarList& vars = unit->variables();
-
-        // Note: predicate passed by reference
         for_each<Iter, EmitDebugSymbol&>(vars.begin(), vars.end(), emit);
+    #else
+        for_each(vars.begin(), vars.end(), [&emit](const boost::shared_ptr<Dwarf::Variable>& v) {
+            emit(v);
+            });
+    #endif
 
         // dig into namespaces
         if (!emit.count())

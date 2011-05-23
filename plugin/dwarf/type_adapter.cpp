@@ -171,6 +171,29 @@ namespace
         void operator()(const Dwarf::TemplateType<Type>& templ) const;
 
     private:
+        template<typename T>
+        void add_static_member(const T& part) const
+        {
+            boost::shared_ptr<Type> type = part.type();
+            if (!type)
+            {
+                clog << "unknown type: " << part.name() << endl;
+                return;
+            }
+            TypeAdapter adapter(reader_, thread_, baseAddr_, typeMap_);
+            RefPtr<DataType> adaptedType = adapter.apply(type);
+            if (!adaptedType)
+            {
+                throw_null_type("static member", part);
+            }
+            RefPtr<SharedString> name(shared_string(part.name()));
+            RefPtr<SharedString> linkName = part.linkage_name();
+
+            RefPtr<DebugSymbol> v = const_value(*thread_, part, *adaptedType, name.get());
+            clog << "const_value: " << v.get() << endl;
+            klass_->add_member(name, linkName, 0, 0, *adaptedType, true, v.get());
+        }
+
         Reader*                 reader_;
         RefPtr<Thread>          thread_;
         addr_t                  baseAddr_;
@@ -286,7 +309,8 @@ void Aggregator::operator()(const Dwarf::DataMember& part) const
         }
         else if (!klass_->is_union())
         {
-            cerr << part.name() << ": location not found." << endl;
+            cerr << part.name() << ": Location not found." << endl;
+            add_static_member(part);
         }
 
         adaptedType = adapter.apply(type);
@@ -388,7 +412,8 @@ void Aggregator::operator()(const Inheritance& part) const
 
 
 ////////////////////////////////////////////////////////////////
-void Aggregator::operator()(const boost::shared_ptr<StaticMember>& part)
+void
+Aggregator::operator()(const boost::shared_ptr<StaticMember>& part)
 {
     assert(part);
 
@@ -399,23 +424,7 @@ void Aggregator::operator()(const boost::shared_ptr<StaticMember>& part)
     assert(part->type());
     assert(part->name());
 
-    if (boost::shared_ptr<Type> type = part->type())
-    {
-        TypeAdapter adapter(reader_, thread_, baseAddr_, typeMap_);
-        RefPtr<DataType> adaptedType = adapter.apply(type);
-        if (!adaptedType)
-        {
-            throw_null_type("static member", *part);
-        }
-        RefPtr<SharedString> name(shared_string(part->name()));
-        RefPtr<SharedString> linkName = part->linkage_name();
-
-        RefPtr<DebugSymbol> value
-            = const_value(*thread_, *part, *adaptedType, name.get());
-
-        klass_->add_member(name, linkName, 0, 0,
-                           *adaptedType, true, value.get());
-    }
+    add_static_member(*part);
 }
 
 
@@ -757,9 +766,16 @@ aggregate_member_data(Aggregator& agg, const KlassType& klass)
     {   LOG_SCOPE(klass.name(), "visiting members");
 
         List<DataMember> members = klass.members();
-
+#if HAVE_LAMBDA_SUPPORT
+        for_each(members.begin(), members.end(), 
+            [&agg](const DataMember& m) {
+                //clog << "member: " << m.name() << endl;
+                agg(m);
+            });
+#else
         for_each<List<DataMember>::iterator, Aggregator&>(
             members.begin(), members.end(), agg);
+#endif
     }
 
     // aggregate static members
@@ -767,9 +783,19 @@ aggregate_member_data(Aggregator& agg, const KlassType& klass)
         const KlassType::StaticMemData& staticMembers =
             klass.static_members();
 
+        clog << staticMembers.size() << " static member(s) in "
+             << klass.name() << endl;
+
+#if HAVE_LAMBDA_SUPPORT
+        for_each(staticMembers.begin(), staticMembers.end(), 
+            [&agg](const boost::shared_ptr<StaticMember>& m) {
+                agg(m);
+            });
+#else
         typedef KlassType::StaticMemData::const_iterator Iter;
         for_each<Iter, Aggregator&>(
             staticMembers.begin(), staticMembers.end(), agg);
+#endif
     }
 }
 
@@ -822,10 +848,17 @@ void TypeAdapter::visit(const Dwarf::KlassType& type)
             typedef List<TemplateType<Type> > TemplateTypeParams;
 
             TemplateTypeParams templateTypes = type.template_types();
+#if HAVE_LAMBDA_SUPPORT
+            for_each(templateTypes.begin(), templateTypes.end(),
+                     [&aggregate](const TemplateType<Type>& t) {
+                        aggregate(t); 
+                     });
+#else
             for_each<TemplateTypeParams::iterator, Aggregator&>(
                     templateTypes.begin(),
                     templateTypes.end(),
                     aggregate);
+#endif
         }
 
         ////////////////////////////////////////////////////////
@@ -1225,10 +1258,14 @@ void TypeAdapter::visit(const Dwarf::UnionType& type)
         Aggregator aggregate(reader_, thread_, baseAddr_, impl, typeMap_);
 
         List<DataMember> members = type.members();
-
+#if HAVE_LAMBDA_SUPPORT
+        for_each(members.begin(), members.end(), [&aggregate](const DataMember& m) {
+            aggregate(m);
+        });
+#else
         for_each<List<DataMember>::iterator, Aggregator&>(
             members.begin(), members.end(), aggregate);
-
+#endif
         type_ = klass;
     }
 }

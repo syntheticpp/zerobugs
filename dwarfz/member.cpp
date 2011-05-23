@@ -9,8 +9,10 @@
 // http://www.boost.org/LICENSE_1_0.txt)
 // -------------------------------------------------------------------------
 
+#include "zdk/shared_string_impl.h"
 #include "attr.h"
 #include "private/generic_attr.h"
+#include "const_value.h"
 #include "error.h"
 #include "type.h"
 #include "utils.h"
@@ -48,6 +50,56 @@ Dwarf_Off DataMember::bit_offset() const
 }
 
 
+static bool
+get_linkage_name(Dwarf_Debug dbg, Dwarf_Die die, string& name)
+{
+    bool result = false;
+    if (Utils::has_attr(dbg, die, DW_AT_MIPS_linkage_name))
+    {
+        GenericAttr<DW_AT_MIPS_linkage_name, char*> attr(dbg, die);
+        name = attr.str();
+        result = true;
+    }
+    return result;
+}
+
+
+RefPtr<SharedString> DataMember::linkage_name() const
+{
+    if (linkageName_.is_null())
+    {
+        string name;
+
+        if (!get_linkage_name(dbg(), die(), name))
+        {
+            if (boost::shared_ptr<Die> tmp = check_indirect())
+            {
+                get_linkage_name(dbg(), tmp->die(), name);
+            }
+        }
+        linkageName_ = shared_string(name);
+    }
+    return linkageName_;
+}
+
+
+boost::shared_ptr<ConstValue> DataMember::const_value() const
+{
+    boost::shared_ptr<ConstValue> val;
+    if (Utils::has_attr(dbg(), die(), DW_AT_const_value))
+    {
+        GenericAttr<DW_AT_const_value, Dwarf_Unsigned> attr(dbg(), die());
+        if (attr.is_block())
+        {
+            val.reset(new ConstValue(attr.block()));
+        }
+        else
+        {
+            val.reset(new ConstValue(attr.value()));
+        }
+    }
+    return val;
+}
 // Copyright (c) 2004, 2005 Cristian L. Vlasceanu
 
 // vim: tabstop=4:softtabstop=4:expandtab:shiftwidth=4

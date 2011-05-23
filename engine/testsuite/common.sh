@@ -42,7 +42,8 @@ outfile=testsuite.out
 config=.zero/config
 
 #opts="--no-hw-bp --ui-disable --test=script --log=$logfile --no-banner"
-opts="--ui-disable --test=script --log=$logfile --no-banner --cache-disable"
+#opts="--ui-disable --test=script --log=$logfile --no-banner --cache-disable"
+opts="--ui-disable --test=script --log=$logfile --no-banner"
 
 compiler=g++
 #compiler=/usr/lib/gcc-snapshot/bin/g++

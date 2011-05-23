@@ -73,8 +73,7 @@ void ensure_abs_lib_path(const char* const* env, string& path)
         {
             char buf[PATH_MAX];
             memset(buf, 0, sizeof buf);
-            getcwd(buf, sizeof buf - 1);
-            workDirectory = buf;
+            workDirectory = getcwd(buf, sizeof buf - 1);
         }
         size_t n = path.rfind('/');
         if (n != path.npos)

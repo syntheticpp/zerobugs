@@ -66,8 +66,21 @@ dwarf_get_address_size(Dwarf_Debug dbg,
         _dwarf_error(NULL, error, DW_DLE_DBG_NULL);
         return (DW_DLV_ERROR);
     }
-    /* length size same as address size */
     address_size = dbg->de_pointer_size;
+    *ret_addr_size = address_size;
+    return DW_DLV_OK;
+}
+
+/* This will be correct in all contexts where the
+   CU context of a DIE is known.
+*/
+int
+dwarf_get_die_address_size(Dwarf_Die die,
+    Dwarf_Half * ret_addr_size, Dwarf_Error * error)
+{
+    Dwarf_Half address_size = 0;
+    CHECK_DIE(die, DW_DLV_ERROR);
+    address_size = die->di_cu_context->cc_address_size;
     *ret_addr_size = address_size;
     return DW_DLV_OK;
 }
@@ -202,11 +215,15 @@ dwarf_attrlist(Dwarf_Die die,
             new_attr->ar_cu_context = die->di_cu_context;
             new_attr->ar_debug_info_ptr = info_ptr;
 
-            info_ptr += _dwarf_get_size_of_val(dbg, 
-                attr_form, 
-                die->di_cu_context->cc_address_size,
-                info_ptr,
-                die->di_cu_context->cc_length_size);
+            {
+                Dwarf_Unsigned sov = _dwarf_get_size_of_val(dbg, 
+                    attr_form, 
+                    die->di_cu_context->cc_address_size,
+                    info_ptr,
+                    die->di_cu_context->cc_length_size);
+                info_ptr += sov;
+            }
+ 
 
             if (head_attr == NULL)
                 head_attr = curr_attr = new_attr;

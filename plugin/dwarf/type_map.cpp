@@ -44,7 +44,7 @@ TypeMap::add_internal(const Dwarf::Die& die,
 
     if (type.is_null())
     {
-        return false;
+        return RefPtr<DataType>(); // NULL
     }
 
     if (indexByName && die.name() && *die.name())

@@ -68,25 +68,25 @@ namespace Stab
 
         const BlockList& blocks() const { return blocks_; }
 
-#if defined(STLPORT) || (__GNUC__ >=3 )
- #define STANDARD std::
-#else
- /* STL that ships with older GCC broken? compiler
-    complains about for_each not being found in std */
- #define STANDARD
-#endif
-        template<typename T> T for_each_block(T pred)
+        template<typename T> T&
+        for_each_block(T& pred) const
         {
-            return STANDARD for_each<BlockList::iterator, T>(
-                blocks_.begin(), blocks_.end(), pred);
+            for (BlockList::const_iterator i = blocks_.begin(); i != blocks_.end(); ++i)
+            {
+                pred(*i);
+            }
+            return pred;
         }
 
-        template<typename T> T for_each_var(T pred)
+        template<typename T> T&
+        for_each_var(T& pred) const
         {
-            return STANDARD for_each<VarList::iterator, T>(
-                vars_.begin(), vars_.end(), pred);
+            for (VarList::const_iterator i = vars_.begin(); i != vars_.end(); ++i)
+            {
+                pred(*i);
+            }
+            return pred;
         }
-#undef STANDARD
 
     private:
         const addr_t    beginAddr_;

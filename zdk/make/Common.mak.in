@@ -172,6 +172,7 @@ else
  ifeq ($(CXX_MAJOR),4)
   CXXFLAGS+=-Wno-attributes
   CXXFLAGS+=-std=c++0x
+  CXXFLAGS+=-DHAVE_LAMBDA_SUPPORT
  endif
 endif
 

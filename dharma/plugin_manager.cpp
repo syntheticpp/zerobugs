@@ -109,8 +109,14 @@ namespace
 
                 QueryLibrary query(mgr_, notify_);
                 // inspect all .so files in the directory
+           #ifndef HAVE_LAMBDA_SUPPORT
                 for_each<Directory::const_iterator, QueryLibrary&>(
                     dir.begin(), dir.end(), query);
+           #else
+                for_each(dir.begin(), dir.end(), [&query](const string& d) {
+                    query(d);
+                });
+           #endif
             }
             catch (const SystemError& e)
             {

@@ -19,6 +19,11 @@
 class Thread;
 
 
+DECLARE_ZDK_INTERFACE_(InterpreterOutput, RefCounted)
+{
+    virtual void print(const char*, size_t) = 0;
+};
+
 /**
  * A free form interpreter.
  */
@@ -26,10 +31,7 @@ DECLARE_ZDK_INTERFACE_(Interpreter, ZObject)
 {
     DECLARE_UUID("7a623363-8c57-4824-bd78-02dad0af9831")
 
-    DECLARE_ZDK_INTERFACE_(Output, RefCounted)
-    {
-        virtual void print(const char*, size_t) = 0;
-    };
+    typedef InterpreterOutput Output;
 
     virtual const char* name() const = 0;
 

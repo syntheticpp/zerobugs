@@ -17,7 +17,7 @@ export CPPFLAGS=-O3
 
 # libdwarf version
 # For more info, see: http://reality.sgiweb.org/davea/dwarf.html
-DWARF=dwarf-20100930/libdwarf
+DWARF=dwarf-20110113/libdwarf
 
 TOP=`pwd`
 PREFIX=`pwd`/local

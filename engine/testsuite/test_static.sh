@@ -57,7 +57,7 @@ function run()
     then    
         test_static -g
     else
-        test_static -gdwarf-2 -g3 $@
+        #test_static -gdwarf-2 -g3 $@
         test_static -gstabs+ $@
     fi
 }

@@ -14,6 +14,7 @@
 #include <fstream>
 #include <boost/functional.hpp>
 #include <boost/python.hpp>
+#include <boost/tokenizer.hpp>
 #include "dharma/canonical_path.h"
 #include "dharma/config.h"
 #include "dharma/environ.h"
@@ -232,12 +233,18 @@ void PythonGate::release()
 }
 
 
+/**
+ * Check that the interpreter version matches what we
+ * compiled against.
+ */
 static bool check_interp_version(Debugger* debugger)
 {
     const char* version = Py_GetVersion();
+
     if (const char* delim = strchr(version, ' '))
     {
         const string dynVer(version, distance(version, delim));
+        
         if (dynVer != PY_VERSION)
         {
             ostringstream err;

@@ -13,6 +13,7 @@
 //
 #include "aggregation.h"
 #include "child.h"
+#include "datum.h"
 #include "variable.h"
 #include "interface.h"
 
@@ -38,13 +39,17 @@ namespace Dwarf
         Dwarf_Unsigned bit_size() const;
 
         Dwarf_Off bit_offset() const;
-
+        
+        // for static member data
+        boost::shared_ptr<ConstValue> const_value() const;
+        RefPtr<SharedString> linkage_name() const;
         // TODO
         // declaration
         // visibility
 
     protected:
         DataMember(Dwarf_Debug, Dwarf_Die);
+        mutable RefPtr<SharedString> linkageName_; // mangled symbol name
     };
 
 

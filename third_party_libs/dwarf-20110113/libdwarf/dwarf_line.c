@@ -130,6 +130,7 @@ dwarf_srcfiles(Dwarf_Die die,
     Dwarf_Chain curr_chain = NULL;
     Dwarf_Chain prev_chain = NULL;
     Dwarf_Chain head_chain = NULL;
+    Dwarf_Half attrform = 0;
     int resattr = DW_DLV_ERROR;
     int lres = DW_DLV_ERROR;
     struct Line_Table_Prefix_s line_prefix;
@@ -159,7 +160,16 @@ dwarf_srcfiles(Dwarf_Die die,
         return res;
     }
 
-    lres = dwarf_formudata(stmt_list_attr, &line_offset, error);
+    lres = dwarf_whatform(stmt_list_attr,&attrform,error);
+    if (lres != DW_DLV_OK) {
+        return lres;
+    }
+    if (attrform != DW_FORM_data4 && attrform != DW_FORM_data8 &&
+        attrform != DW_FORM_sec_offset ) {
+        _dwarf_error(dbg, error, DW_DLE_LINE_OFFSET_BAD);
+        return (DW_DLV_ERROR);
+    }
+    lres = dwarf_global_formref(stmt_list_attr, &line_offset, error);
     if (lres != DW_DLV_OK) {
         return lres;
     }

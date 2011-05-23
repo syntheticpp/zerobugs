@@ -739,6 +739,12 @@ extern "C" {
 #define DW_LANG_UPC                     0x0012 /* DWARF3f */
 #define DW_LANG_D                       0x0013 /* DWARF3f */
 #define DW_LANG_Python                  0x0014 /* DWARF4 */
+/* The following 2 are not yet formally approved October 2010, but
+   it seems extremely likely they will be approved as the committee
+   chair agrees these should be ok and no one on the committee
+   has objected. */
+#define DW_LANG_OpenCL                  0x0015 /* Provisionally DWARF5 */
+#define DW_LANG_Go                      0x0016 /* Provisionally DWARF5 */
 #define DW_LANG_lo_user                 0x8000
 #define DW_LANG_Mips_Assembler          0x8001 /* MIPS   */
 #define DW_LANG_Upc                     0x8765 /* UPC, use

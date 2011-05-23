@@ -150,7 +150,7 @@ _dwarf_internal_printlines(Dwarf_Die die, Dwarf_Error * error,
     Dwarf_Word leb128_num=0;
     Dwarf_Word leb128_length=0;
     Dwarf_Sword advance_line=0;
-
+    Dwarf_Half attrform = 0;
     /* 
        This is the operand of the latest fixed_advance_pc extended
        opcode. */
@@ -190,8 +190,19 @@ _dwarf_internal_printlines(Dwarf_Die die, Dwarf_Error * error,
     }
 
 
-
-    lres = dwarf_formudata(stmt_list_attr, &line_offset, error);
+    /* The list of relevant FORMs is small. 
+       DW_FORM_data4, DW_FORM_data8, DW_FORM_sec_offset 
+    */
+    lres = dwarf_whatform(stmt_list_attr,&attrform,error);
+    if (lres != DW_DLV_OK) {
+        return lres;
+    }
+    if (attrform != DW_FORM_data4 && attrform != DW_FORM_data8 &&
+        attrform != DW_FORM_sec_offset ) {
+        _dwarf_error(dbg, error, DW_DLE_LINE_OFFSET_BAD);
+        return (DW_DLV_ERROR);
+    }
+    lres = dwarf_global_formref(stmt_list_attr, &line_offset, error);
     if (lres != DW_DLV_OK) {
         return lres;
     }
@@ -258,7 +269,12 @@ _dwarf_internal_printlines(Dwarf_Die die, Dwarf_Error * error,
     printf("total line info length %ld bytes, "
            "line offset 0x%" DW_PR_DUx " %" DW_PR_DSd "\n",
            (long) prefix.pf_total_length,
-           (Dwarf_Unsigned) line_offset, (Dwarf_Signed) line_offset);
+           (Dwarf_Unsigned) line_offset, 
+           (Dwarf_Signed) line_offset);
+    printf("line table version %d\n",(int) prefix.pf_version);
+    printf("line table length field length %d prologue length %d\n",
+           (int)prefix.pf_length_field_length,
+           (int)prefix.pf_prologue_length);
     printf("compilation_directory %s\n",
            comp_dir ? ((char *) comp_dir) : "");
 
@@ -272,9 +288,11 @@ _dwarf_internal_printlines(Dwarf_Die die, Dwarf_Error * error,
            prefix.pf_line_range);
     printf("  opcode base            %d\n", (int)
            prefix.pf_opcode_base);
+    printf("  standard opcode count  %d\n", (int)
+           prefix.pf_std_op_count);
 
     for (i = 1; i < prefix.pf_opcode_base; i++) {
-        printf("  opcode[%d] length  %d\n", (int) i,
+        printf("  opcode[%2d] length  %d\n", (int) i,
                (int) prefix.pf_opcode_length_table[i - 1]);
     }
     printf("  include directories count %d\n", (int)

@@ -1,3 +1,6 @@
+2010-10-13  DavidAnderson <davea42@earthlink.net>
+     * dwarf.h: Added DW_LANG_Go as 0x0015 per discussion on
+       mailing list.
 2010-09-29  DavidAnderson <davea42@earthlink.net>
      * README: Document that there is no install target and
        update some of the old references to postscript to refer
