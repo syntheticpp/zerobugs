@@ -174,7 +174,7 @@ function run()
         test_expr_eval -g
     else
         test_expr_eval -gstabs+ $@
-        #test_expr_eval -gdwarf-2 $@
+        test_expr_eval -gdwarf-2 $@
     fi
 }
 

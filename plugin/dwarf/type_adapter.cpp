@@ -252,6 +252,7 @@ void Aggregator::operator()(const Dwarf::DataMember& part) const
 {
     RefPtr<SharedString> name;
     bool isVTablePtr = false;
+    bool added = false;
 
     if (part.name() == 0 || *part.name() == 0)
     {
@@ -309,8 +310,11 @@ void Aggregator::operator()(const Dwarf::DataMember& part) const
         }
         else if (!klass_->is_union())
         {
+        #if DEBUG
             cerr << part.name() << ": Location not found." << endl;
+        #endif
             add_static_member(part);
+            added = true;
         }
 
         adaptedType = adapter.apply(type);
@@ -340,20 +344,11 @@ void Aggregator::operator()(const Dwarf::DataMember& part) const
         {
             bitSize = adaptedType->bit_size();
         }
-       /*
-        else
-        {
-            clog << "bitSize=" << bitSize << " adapted bitsize=";
-            clog << adaptedType->bit_size() << endl;
-            clog << "adapted type="  << adaptedType->name() << endl;
-
-            assert(interface_cast<IntType*>(adaptedType.get())
-                || interface_cast< ::EnumType* >(adaptedType.get()));
-        }
-        */
     }
-
-    klass_->add_member(name, NULL, bitOffs, bitSize, *adaptedType);
+    if (!added)
+    {
+        klass_->add_member(name, NULL, bitOffs, bitSize, *adaptedType);
+    }
 }
 
 
@@ -783,8 +778,8 @@ aggregate_member_data(Aggregator& agg, const KlassType& klass)
         const KlassType::StaticMemData& staticMembers =
             klass.static_members();
 
-        clog << staticMembers.size() << " static member(s) in "
-             << klass.name() << endl;
+        //clog << staticMembers.size() << " static member(s) in "
+        //     << klass.name() << endl;
 
 #if HAVE_LAMBDA_SUPPORT
         for_each(staticMembers.begin(), staticMembers.end(), 

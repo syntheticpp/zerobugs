@@ -52,6 +52,7 @@ def on_new_breakpoint_action(num, bpnt, action):
 
 #write test script (processed by the AutoTest plugin)
 cat > script << '---end---'
+call continue
 call ( x )
 expect ( 10
 )
@@ -78,7 +79,7 @@ function run()
         test_cond_break -g
     else
         test_cond_break -gdwarf-2 -g3 $@
-        test_cond_break -gstabs+ $@
+        #test_cond_break -gstabs+ $@
     fi
 }
 

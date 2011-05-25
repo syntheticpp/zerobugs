@@ -1387,6 +1387,7 @@ BreakPoint* DebuggerEngine::set_temp_breakpoint (
     addr_t      addr)
 {
     Thread* thread = CHKPTR(runnable)->thread();
+    CHKPTR(thread);
 
     RefPtr<BreakPointAction> action = interactive_action("TEMP", false);
     RefPtr<BreakPoint> bpnt = get_breakpoint(*thread, addr);
@@ -1401,7 +1402,9 @@ BreakPoint* DebuggerEngine::set_temp_breakpoint (
     else
     {
         BreakPoint::Type type = BreakPoint::HARDWARE;
-        if ((options() & OPT_HARDWARE_BREAKPOINTS) == 0)
+        if ((options() & OPT_HARDWARE_BREAKPOINTS) == 0
+            || program_count(*thread) == addr  // hardware bkp at current PC may not be honored
+         ) 
         {
             type = BreakPoint::EMULATED;
         }

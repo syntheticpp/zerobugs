@@ -48,6 +48,9 @@
 #include "thread.h"
 #include "unhandled_map.h"
 
+/*#undef dbgout
+ #define dbgout(n) \
+    eventlog::Stream<DebugChannel>(this->debug_channel(__func__), (n))*/
 #define dbgstep() dbgout(0)
 
 #if defined(__PPC__)
@@ -299,8 +302,8 @@ size_t RunnableImpl::enum_open_files(EnumCallback2<int, const char*>* cb) const
                 continue;
             }
             char buf[PATH_MAX + 1];
-            realpath((*i).c_str(), buf);
-
+            const char* unused = realpath((*i).c_str(), buf);
+            unused = unused;
             const char* path = strstr(buf, ":[");
             if (path)
             {
@@ -1578,7 +1581,6 @@ bool ThreadImpl::resume_stepping()
             }
             if (pc != stepRange_->begin())
             {
-                // dbgstep() << "return_addr=" << hex << addr << dec << endl;
                 try
                 {
                     assert (!is_plt_jump(*this, pc));
@@ -1619,7 +1621,6 @@ bool ThreadImpl::stepped_recursive(reg_t pc)
                 if (orig && s->value() == orig->value())
                 {
                     const size_t depth = stack_trace()->size();
-                    // dbgstep() << "stack depth=" << depth << ", " << nextStackDepth_ << endl;
 
                     // handle recursive function calls
                     if (depth > nextStackDepth_)

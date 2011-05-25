@@ -71,7 +71,7 @@ export ZERO_QUICK_SHUTDOWN=false
 export ZERO_SAVE_STATE=false
 #export ZERO_USE_FRAME_HANDLERS=false
 #export ZERO_USE_FRAME_HANDLERS=true
-export ZERO_HARDWARE_BREAKPOINTS=false
+#export ZERO_HARDWARE_BREAKPOINTS=false
 #export ZERO_CACHE_SYMBOLS=true
 
 #export ZERO_LAZY_SYMBOLS=false
