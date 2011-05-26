@@ -106,6 +106,9 @@ namespace Dwarf
                             Dwarf_Addr addr,
                             const char* linkage = NULL);
 
+        static bool
+        get_linkage_name(Dwarf_Debug dbg, Dwarf_Die die, std::string& name);
+
     private:
 
         static Dwarf_Die first_child(Dwarf_Debug, Dwarf_Die, Dwarf_Half);

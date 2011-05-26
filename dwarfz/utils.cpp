@@ -429,4 +429,17 @@ Utils::lookup_function(const FunList& funcs,
     }
     return result;
 }
+
+bool
+Utils::get_linkage_name(Dwarf_Debug dbg, Dwarf_Die die, string& name)
+{
+    bool result = false;
+    if (Utils::has_attr(dbg, die, DW_AT_MIPS_linkage_name))
+    {
+        GenericAttr<DW_AT_MIPS_linkage_name, char*> attr(dbg, die);
+        name = attr.str();
+        result = true;
+    }
+    return result;
+}
 // vim: tabstop=4:softtabstop=4:expandtab:shiftwidth=4

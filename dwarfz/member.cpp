@@ -50,31 +50,17 @@ Dwarf_Off DataMember::bit_offset() const
 }
 
 
-static bool
-get_linkage_name(Dwarf_Debug dbg, Dwarf_Die die, string& name)
-{
-    bool result = false;
-    if (Utils::has_attr(dbg, die, DW_AT_MIPS_linkage_name))
-    {
-        GenericAttr<DW_AT_MIPS_linkage_name, char*> attr(dbg, die);
-        name = attr.str();
-        result = true;
-    }
-    return result;
-}
-
-
 RefPtr<SharedString> DataMember::linkage_name() const
 {
     if (linkageName_.is_null())
     {
         string name;
 
-        if (!get_linkage_name(dbg(), die(), name))
+        if (!Utils::get_linkage_name(dbg(), die(), name))
         {
             if (boost::shared_ptr<Die> tmp = check_indirect())
             {
-                get_linkage_name(dbg(), tmp->die(), name);
+                Utils::get_linkage_name(dbg(), tmp->die(), name);
             }
         }
         linkageName_ = shared_string(name);
