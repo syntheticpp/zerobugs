@@ -1,12 +1,29 @@
 # vim: tabstop=4:softtabstop=4:expandtab:shiftwidth=4 
 # $Id: test_symbol_map.sh 414 2008-03-23 22:52:57Z root $
 
+ubuntu_msg="
+*******************************************************************\n
+In Maverick Meerkat (10.10) Ubuntu introduced a patch to disallow\n
+ptracing of non-child processes by non-root users - only a\n
+process which is a parent of another process can ptrace it for\n
+normal users - whilst root can still ptrace every process.\n
+\n
+Disable this restriction by excuting (as root):\n
+\n
+echo 0 | sudo tee /proc/sys/kernel/yama/ptrace_scope\n
+*******************************************************************\n
+"
+
 ################################################################
 #
 ################################################################
 function test_symbol_map()
 {
 echo ----- ${FUNCNAME}${1:-$debug} ----- >> $logfile
+if test `cat /proc/sys/kernel/yama/ptrace_scope` = 1
+	then echo -e $ubuntu_msg; return 1
+fi
+
 cat > foo.cpp << '---end---'
 // foo.cpp
 #include <iostream>
@@ -49,7 +66,10 @@ PID=`aout_pid`
 echo $PID
 rm -f $config
 
-${path}/bin/zero $PID $opts
+if (${path}/bin/zero $PID $opts); then :
+	else return 1
+fi
+
 kill -9 $PID 2>/dev/null  || true
 }
 

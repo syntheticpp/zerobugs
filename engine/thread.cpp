@@ -48,9 +48,6 @@
 #include "thread.h"
 #include "unhandled_map.h"
 
-/*#undef dbgout
- #define dbgout(n) \
-    eventlog::Stream<DebugChannel>(this->debug_channel(__func__), (n))*/
 #define dbgstep() dbgout(0)
 
 #if defined(__PPC__)

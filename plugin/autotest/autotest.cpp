@@ -644,7 +644,7 @@ void AutoTest::print_stats()
 
     if (passedCount_ != cmdCount_)
     {
-        _exit(-1);
+        _exit(1);
     }
 }
 // vim: tabstop=4:softtabstop=4:expandtab:shiftwidth=4

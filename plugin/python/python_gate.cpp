@@ -244,7 +244,7 @@ static bool check_interp_version(Debugger* debugger)
     if (const char* delim = strchr(version, ' '))
     {
         const string dynVer(version, distance(version, delim));
-        
+
         if (dynVer != PY_VERSION)
         {
             ostringstream err;

@@ -143,8 +143,8 @@ function run_tests()
         echo "Completed: ${n}/${sz} [${perc}%]      Running: $TEST"
         echo "Completed: ${n}/${sz} [${perc}%]      Running: $TEST" >> $outfile
 
-        if $TEST >> $outfile 2>&1
-            then :      #success
+        if ($TEST >> $outfile 2>&1)
+            then :
             else echo -e "\\nTest failed\n"; exit 1
         fi
         let n=$n+1
