@@ -33,7 +33,6 @@ cat > script << '---end---'
 call ( break foo.cpp:4 )
 
 call ( continue )
-call ( continue )
 call ( x )
 expect ( 3.14
 )

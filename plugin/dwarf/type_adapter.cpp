@@ -800,8 +800,14 @@ void TypeAdapter::visit(const Dwarf::KlassType& type)
 {
     assert(!typeMap_.find(type));
 
-    const char* const name = typeName_ ? typeName_->c_str() : type.name();
-
+    const char* name = typeName_ ? typeName_->c_str() : type.name();
+    ostringstream ss;
+    if (!name || !name[0])
+    {
+        // disambiguate unnamed classes
+        ss << "<unnamed:"<< type.decl_file() << ":" << type.decl_line() << ">";
+        name = ss.str().c_str();
+    }
     RefPtr<ClassType> klass =
         get_class_type(type_system(), name, type.bit_size(), false);
 
