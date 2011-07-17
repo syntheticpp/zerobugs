@@ -1,4 +1,7 @@
 //
+// -*- tab-width: 4; indent-tabs-mode: nil;  -*-
+// vim: tabstop=4:softtabstop=4:expandtab:shiftwidth=4
+//
 // $Id: string_pool.cpp 719 2010-10-22 03:59:11Z root $
 //
 // -------------------------------------------------------------------------
@@ -49,6 +52,8 @@ StringPool::get_string(const char* s, size_t len)
     {
         len = strlen(s);
     }
+#if 0 
+    // TODO: re-visit this code, I suspect a bug in here
     if (len > THRESHOLD)
     {
         Lock<Mutex> lock(mutex_);
@@ -56,6 +61,7 @@ StringPool::get_string(const char* s, size_t len)
         const size_t hash = SharedStringImpl::hash(s);
         return buckets_[hash].get_string(s, len, hash, savings_);
     }
+#endif
     return SharedStringImpl::create(s, len);
 }
 

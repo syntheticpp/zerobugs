@@ -493,7 +493,7 @@ VariablesView::validate(const RefPtr<DebugSymbol>& symbol)
 {
     RefPtr<SharedString> value = symbol->value();
 
-  #ifdef GTKMM_2
+  #if GTKMM_2
     if (value)
     {
         Glib::ustring line = value->c_str();
@@ -603,9 +603,9 @@ void VariablesView::add_symbol(Gtk::CTree::RowList rows,
     }
 
     bool isRef = false;
+#if 0
     // Do not create an extra node for the reference object,
     // just show the referred variable (child object).
-
     if (is_ref(symbol.get()))
     {
         assert(!ref);
@@ -613,6 +613,7 @@ void VariablesView::add_symbol(Gtk::CTree::RowList rows,
         expand_.insert(SymKey(*symbol));
     }
     else
+#endif
     {
         string name = CHKPTR(symbol->name())->c_str();
         if (ref && symbol->parent())

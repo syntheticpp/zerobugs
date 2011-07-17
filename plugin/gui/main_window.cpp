@@ -722,7 +722,8 @@ Gtk::Widget& MainWindow::create_menu_bar()
     bar.push_front(Gtk_MENU_ELEM("_Help", "<alt>h", *menuHelp));
 
     bar.push_front(Gtk_MENU_ELEM("_Tools", "<alt>t", *menuTools));
-    bar.push_front(Gtk_MENU_ELEM("_Program", "<alt>p", *menuProg));
+    //bar.push_front(Gtk_MENU_ELEM("_Program", "<alt>p", *menuProg));
+    bar.push_front(Gtk_MENU_ELEM("_Debug", "<alt>d", *menuProg));
 
     bar.push_front(Gtk_MENU_ELEM("_Breakpoints", "<alt>b", *menuBreak));
     Gtk_MENU_ITEM(bar.front()).set_data(STATE_MASK,

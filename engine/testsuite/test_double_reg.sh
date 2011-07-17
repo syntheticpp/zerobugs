@@ -13,7 +13,7 @@ double sum(double x, double y, int n = 0)
 {
     double result = x + y;
     for (int i = 0; i != n; ++i)
-	{
+    {
 		result += sum(x, y);
     }
     return result;
@@ -33,7 +33,7 @@ cat > script << '---end---'
 call ( break foo.cpp:4 )
 
 call ( continue )
-
+call ( continue )
 call ( x )
 expect ( 3.14
 )

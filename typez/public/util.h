@@ -29,6 +29,8 @@ template<typename T, size_t MAXLEN>
 ZDK_LOCAL inline void
 read_string(Thread* thread, addr_t addr, T(& buf)[MAXLEN], size_t maxlen = MAXLEN)
 {
+    memset(buf, 0, sizeof buf);
+
     for (size_t count = 0; ;++count)
     {
         if ((maxlen >= MAXLEN) && (count + 4 >= MAXLEN))
@@ -41,10 +43,6 @@ read_string(Thread* thread, addr_t addr, T(& buf)[MAXLEN], size_t maxlen = MAXLE
         }
         else if (count >= maxlen)
         {
-            if (count)
-            {
-                buf[count - 1] = T();
-            }
             break;
         }
 
