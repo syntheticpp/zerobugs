@@ -9,7 +9,7 @@ function test_dl_core()
 echo ----- ${FUNCNAME}${1:-$debug} ----- >> $logfile
 cat > foo.cpp << '---end---'
 // foo.cpp
-void do_something()
+extern "C" void do_something()
 {
 }
 void crash()
@@ -36,7 +36,7 @@ cat > bar.cpp << '---end---'
 // bar.cpp
 #include <dlfcn.h>
 
-void do_something();
+extern "C" void do_something();
 int main()
 {
 #if 0
@@ -74,7 +74,7 @@ def on_event(event):
 build ${1:-$debug} -nostdlib -fPIC -shared foo.cpp -o libfoo.so
 
 #build ${1:-$debug} -ldl bar.cpp 
-build ${1:-$debug} -L. -lfoo bar.cpp 
+build ${1:-$debug} -L. bar.cpp -lfoo
 
 rm -f $config
 

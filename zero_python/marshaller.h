@@ -292,6 +292,7 @@ public:
 class ThreadMarshaller : public Singleton<Marshaller>
 {
 public:
+    ~ThreadMarshaller() throw() { }
     static void shutdown() { instance().shutdown(); }
 };
 

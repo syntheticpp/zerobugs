@@ -35,15 +35,20 @@ PKG_CHECK_EXISTS(gtkmm-2.4,
      AC_SUBST(GTKMM_2, [1])])
 
 PKG_CHECK_MODULES(GTKMM, gtkmm-2.4 gtksourceview-1.0,
-    [],
     [
-    PKG_CHECK_MODULES(GTKMM, gtkmm-2.4 gtksourceview-2.0,
-        [],[echo "either gtkmm-2.4 or gtksourceview is missing" && exit 1])
+        AC_SUBST(GTKSVLIB,gtksourceview-1.0)
+    ],
+    [
+        PKG_CHECK_MODULES(GTKMM, gtkmm-2.4 gtksourceview-2.0,
+        [
+            AC_SUBST(GTKSVLIB,gtksourceview-2.0)
+        ],
+        [echo "either gtkmm-2.4 or gtksourceview is missing" && exit 1])
     ])
 
 dnl AC_CHECK_LIB([gtksourceview-1.0],[gtk_source_view_new],[],[exit -1])
 dnl AC_CHECK_FUNC([gtk_source_view_set_highlight_current_line],[],[exit -1])
-AC_CHECK_LIB([gtksourceview-1.0],[gtk_source_view_set_highlight_current_line],
+AC_CHECK_LIB([$GTKSVLIB],[gtk_source_view_set_highlight_current_line],
 [
     AC_DEFINE([HAVE_GTK_SOURCE_VIEW_SET_HIGHLIGHT_CURRENT_LINE], [1], 
               [Define to 1 if have gtk_source_view_set_highlight_current_line])
@@ -63,14 +68,13 @@ PKG_CHECK_MODULES(GTKSOURCEVIEWMM, gtksourceviewmm-1.0,
     ],
     [PKG_CHECK_MODULES(GTKSOURCEVIEWMM, libgtksourceviewmm-1.0, 
        [],
-       [echo "Will attempt to guess libgtksourceviewmm location"
-        PKG_CHECK_MODULES(GTKSOURCEVIEWMM, gtksourceviewmm-2.0, 
+       [PKG_CHECK_MODULES(GTKSOURCEVIEWMM, gtksourceviewmm-2.0, 
             [
                 AC_DEFINE(GTKSVMM_API_VERSION, [2],
                           [gtksourceviewmm version]
                          )
                 ac_cv_source_languages_manager=true
-            ], [true])
+            ])
        ])
     ])
 AC_SUBST(GTKSOURCEVIEWMM_CFLAGS)

@@ -94,7 +94,7 @@ bool OutputDialog::on_data(Glib::IOCondition cond)
         data.push_back(0); // make sure it is zero-terminated
         insert_text(&data[0]);
     }
-    return true;
+    return result;
 }
 
 #else

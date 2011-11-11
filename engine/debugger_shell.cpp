@@ -829,6 +829,7 @@ static void bug_report()
     snprintf(buf, sizeof buf, "backtrace-%d.zero", getpid());
     auto_file f1(fopen(buf, "w"));
     auto_file f2(fopen("version.zero", "w"));
+    int r;
     if (f1 && f2)
     {
         for (int i = 0; i < nframes; ++i)
@@ -845,7 +846,7 @@ static void bug_report()
             "(cat /proc/%d/maps && echo \"%s-release\") > maps.zero";
     #endif
         snprintf(buf, sizeof buf - 1, cmd, getpid(), SYSID);
-        system(buf);
+        r = system(buf);
     }
     else
     {
@@ -857,8 +858,9 @@ static void bug_report()
             fprintf(stderr, "%p\n", trace[i]);
         }
         snprintf(buf, sizeof buf, "cat /proc/%d/maps", getpid());
-        system(buf);
+        r = system(buf);
     }
+    (void)r;
 #endif
 }
 

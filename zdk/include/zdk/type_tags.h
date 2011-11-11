@@ -24,7 +24,7 @@ inline bool is_nan(T) { return false; }
 
 static inline bool is_nan(double val)
 {
-    return isnan(val);
+    return std::isnan(val);
 }
 
 template<typename T> struct type_tag { };

@@ -74,6 +74,7 @@ expect { -2
 call { eval a }
 expect { {s=32767, us=65535, c=127, uc=255, next=NULL, fuk=42}
 } or { {s=32767, us=65535, c=127, uc='H', next=NULL, fuk=42}
+} or { {s=32767, us=65535, c=127, uc=255, next=NULL}
 }
 #'H': PowerPC weirdness, will have to investigate
 

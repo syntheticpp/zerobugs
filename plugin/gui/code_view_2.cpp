@@ -43,6 +43,10 @@
 #include "slot_macros.h"
 #include "text_mark.h"
 
+#define ENABLED     "enabled"
+#define DISABLED    "disabled"
+#define CURRENT     "current"
+
 using namespace Gtk;
 using namespace std;
 
@@ -79,18 +83,11 @@ void CodeView::init()
     g_break_enabled = Gdk::Pixbuf::create_from_xpm_data(stop_red);
     g_break_disabled = Gdk::Pixbuf::create_from_xpm_data(stop_pink);
 
-#if (GTKSVMM_API_VERSION < 2)
-    set_marker_pixbuf("pc", g_pcounter);
-    set_marker_pixbuf("enabled", g_break_enabled);
-    set_marker_pixbuf("disabled", g_break_disabled);
+    set_marker_pixbuf(CURRENT, g_pcounter);
+    set_marker_pixbuf(ENABLED, g_break_enabled);
+    set_marker_pixbuf(DISABLED, g_break_disabled);
     set_show_line_markers(true);
     set_cursor_visible(false);
-#else
-    //
-    // todo: the 2.0 GtkSourceView is broken as of now review by 2.2
-    //
-    set_cursor_visible(false);
-#endif
 
 #if HAVE_GTK_SOURCE_VIEW_SET_HIGHLIGHT_CURRENT_LINE
     gtk_source_view_set_highlight_current_line(GTK_SOURCE_VIEW(gobj()), true);
@@ -432,40 +429,24 @@ void CodeView::hilite_line
         return;
     }
 
-    ostringstream enabled, disabled;
-    enabled << "E/" << line;
-    disabled << "D/" << line;
-
-    GtkSourceMarker* mk = NULL;
     if (hilite || state == B_NONE)
     {
-        mk = get_marker(buf, disabled.str());
-        if (mk)
-        {
-            delete_marker(buf, mk);
-        }
-        mk = get_marker(buf, enabled.str());
-        if (mk)
-        {
-            delete_marker(buf, mk);
-        }
+        remove_marker(buf, iter, line, DISABLED);
+        remove_marker(buf, iter, line, ENABLED);
     }
     if (hilite)
     {
-        buf->move_mark(buf->get_insert(), iter);
-        buf->move_mark(buf->get_selection_bound(), iter);
+        //buf->move_mark(buf->get_insert(), iter);
+        //buf->move_mark(buf->get_selection_bound(), iter);
 
-        // this is where the program counter is currently at
-        mk = get_marker(buf, "current");
-        if (!mk)
-        {
-            mk = create_marker(buf, "current", "pc", iter);
-        }
-        else
-        {
-            move_marker(buf, mk, iter);
-        }
+        //remove_marker(buf, CURRENT);
+        create_marker(buf, iter, line, CURRENT);
     }
+    else
+    {
+        remove_marker(buf, iter, line, CURRENT);
+    }
+
     switch (state)
     {
     case B_AUTO:
@@ -473,29 +454,13 @@ void CodeView::hilite_line
         break;
 
     case B_ENABLED:
-        mk = get_marker(buf, disabled.str());
-        if (mk)
-        {
-            delete_marker(buf, mk);
-        }
-        mk = get_marker(buf, enabled.str());
-        if (!mk)
-        {
-            mk = create_marker(buf, enabled.str(), "enabled", iter);
-        }
+        remove_marker(buf, iter, line, DISABLED);
+        create_marker(buf, iter, line, ENABLED);
         break;
 
     case B_DISABLED:
-        mk = get_marker(buf, enabled.str());
-        if (mk)
-        {
-            delete_marker(buf, mk);
-        }
-        mk = get_marker(buf, disabled.str());
-        if (!mk)
-        {
-            create_marker(buf, disabled.str(), "disabled", iter);
-        }
+        remove_marker(buf, iter, line, ENABLED);
+        create_marker(buf, iter, line, DISABLED);
         break;
     }
 }

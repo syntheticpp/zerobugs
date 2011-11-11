@@ -24,8 +24,8 @@ GTKMM_2=@GTKMM_2@
 
 ifneq ($(GTKMM_2),)
   ifeq ($(GTKSOURCEVIEWMM_CFLAGS),)
-	CXXFLAGS+=-I/usr/include/gtksourceviewmm-1.0
-	LDLIBS+=-lgtksourceviewmm-1.0
+	#CXXFLAGS+=-I/usr/include/gtksourceviewmm-1.0
+	#LDLIBS+=-l@GTKSVLIB@
   endif
 endif
 
@@ -34,6 +34,9 @@ LDLIBS+=@LIBGTKHTML_LIBS@ @CAIROMM_LIBS@ @GTKMM_LIBS@ @X11_LIBS@
 
 #GCC 4.2, deprecated conversion from const string to char*
 CXXFLAGS+=-Wno-deprecated
+
+#GCC 4.6
+CXXFLAGS+=-fpermissive
 
 ifneq ($(GTKMM_2),)
  CXXFLAGS+=-DGTKMM_2

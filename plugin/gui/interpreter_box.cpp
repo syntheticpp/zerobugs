@@ -78,15 +78,8 @@ private:
         buf_->move_mark(mark_, i);
         scroll_to(mark_);
 
-        GtkSourceMarker* mk = get_marker(buf_, "current");
-        if (!mk)
-        {
-            mk = create_marker(buf_, "current", "arrow", i);
-        }
-        else
-        {
-            move_marker(buf_, mk, i);
-        }
+        remove_markers(buf_, "arrow");
+        create_marker(buf_, i, 0, "arrow");
         return i;
     }
 

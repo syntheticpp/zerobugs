@@ -5,7 +5,7 @@
 #define GTKMM_2 1
 
 /* gtksourceviewmm version */
-/* #undef GTKSVMM_API_VERSION */
+#define GTKSVMM_API_VERSION 2
 
 /* Define if CAIRO_FONT_TYPE_ATSUI available */
 #define HAVE_CAIRO_FONT_TYPE_ATSUI 1

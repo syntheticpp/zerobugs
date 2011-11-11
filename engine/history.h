@@ -40,6 +40,8 @@ public:
 
     typedef std::set<std::string>::const_iterator const_iterator;
 
+    ~WatchListImpl() throw() { }
+
     const_iterator begin() const { return watches_.begin(); }
     const_iterator end() const { return watches_.end(); }
 

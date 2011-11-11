@@ -15,8 +15,9 @@
 #endif
 #include "text.h"
 #include <gtksourceview/gtksourceview.h>
-#if GTKSVMM_VERSION >= 2
+#if GTKSVMM_API_VERSION >= 2
  #include <gtksourceviewmm/sourcelanguagemanager.h>
+ #include <gtksourceview/gtksourcelanguagemanager.h>
 #else
 #include <gtksourceview/gtksourcelanguagesmanager.h>
  #include <gtksourceviewmm/sourcelanguagesmanager.h>
@@ -46,9 +47,9 @@ static Glib::ustring to_string(const Gdk_Color& color)
 Text::Text()
 
 #ifdef HAVE_SOURCE_LANGUAGES_MANAGER_CREATE
-    : mgr_(Gtk::SourceLanguagesManager::create())
+    : mgr_(Gtk::SourceLanguageManager::create())
 #else
-    : mgr_(new Gtk::SourceLanguagesManager)
+    : mgr_(new Gtk::SourceLanguageManager)
 #endif
 {
     set_cursor_visible(false);
@@ -75,10 +76,12 @@ void Text::set_language(const char* name)
         if (mgr_)
         {
             GtkSourceLanguage* lang = NULL;
-        #if GTKSVMM_VERSION >= 2
-            lang = gtk_source_languages_manager_get_language_from_mime_type(
-                    mgr_->gobj(),
-                    mimeType.c_str());
+        #if GTKSVMM_API_VERSION >= 2
+            if (strcmp(name, "c++") == 0)
+            {
+                name = "cpp";
+            }
+            lang = gtk_source_language_manager_get_language(mgr_->gobj(), name);
         #else
             lang = gtk_source_languages_manager_get_language_from_mime_type(
                     mgr_->gobj(),

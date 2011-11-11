@@ -18,6 +18,7 @@
 #include "textfwd.h"
 #include "zdk/export.h"
 #include <boost/utility.hpp>
+#include <iostream>
 
 #if !defined(GTKMM_2)
 // gtk-- 1.2
@@ -25,14 +26,16 @@
 
 #else
  #include <gtkmm/textview.h>
- #include <gtksourceviewmm/sourceview.h>
+ #include <gtksourceviewmm.h>
+ #include <gtksourceview/gtksourceview.h>
 
  namespace gtksourceview
  {
- #if (GTKSVMM_VERSION >= 2)
-   typedef SourceLanguageManager SourceLanguagesManager;
+ #if (GTKSVMM_API_VERSION < 2)
+   typedef SourceLanguagesManager SourceLanguageManager;
  #endif
  }
+
 
  namespace Gtk
  {
@@ -175,8 +178,24 @@
 
         bool on_key_press_event(GdkEventKey*);
 
+     #if (GTKSVMM_API_VERSION >= 2)
+        //
+        // Gtkmm 2 has dropped marker support. 
+        //
+        void set_show_line_markers(bool show)
+        {
+            gtk_source_view_set_show_line_marks(GTK_SOURCE_VIEW(gobj()), show);
+        }
+
+        void set_marker_pixbuf(const gchar* category, Glib::RefPtr<Gdk::Pixbuf> p)
+        {
+            gtk_source_view_set_mark_category_icon_from_pixbuf(
+                GTK_SOURCE_VIEW(gobj()), category, p->gobj());
+        }
+    #endif
+
     private:
-        Glib::RefPtr<SourceLanguagesManager> mgr_;
+        Glib::RefPtr<SourceLanguageManager> mgr_;
     };
  }
 #endif

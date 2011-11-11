@@ -54,7 +54,7 @@ public:
     static const Singleton& const_instance()
     { return instance(); }
 
-private:
+protected:
     Singleton() {}
     ~Singleton() throw() {}
 

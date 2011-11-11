@@ -247,6 +247,11 @@ DELIMITER:
             break;
 
         default:
+            if (strncmp(ptr, "decltype", 8) == 0)
+            {
+                ptr += 8;
+                break;
+            }
             // if (ptr > begin)
             {
                 // transition from digit to non-digit?

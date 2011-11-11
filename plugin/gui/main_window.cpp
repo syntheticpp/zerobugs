@@ -972,12 +972,12 @@ BEGIN_SLOT(MainWindow::on_change_state,(Gtk::Widget& w, size_t state))
     {
         if (Gtk::Menu* sub = mi->get_submenu())
         {
-            sub->foreach(bind(Gtk_PTR_FUN(&MainWindow::on_change_state), state));
+            sub->foreach(Gtk_BIND(Gtk_PTR_FUN(&MainWindow::on_change_state), state));
         }
     }
     else if (Gtk::Container* c = dynamic_cast<Gtk::Container*>(&w))
     {
-        c->foreach(bind(Gtk_PTR_FUN(&MainWindow::on_change_state), state));
+        c->foreach(Gtk_BIND(Gtk_PTR_FUN(&MainWindow::on_change_state), state));
     }
 }
 END_SLOT()
@@ -2337,7 +2337,7 @@ void MainWindow::on_describe_type(RefPtr<DebugSymbol> sym, int fd)
 
 
 ////////////////////////////////////////////////////////////////
-void MainWindow::on_what_is(RefPtr<DataType> type)
+/* void MainWindow::on_what_is(RefPtr<DataType> type)
 {
     assert_ui_thread();
     Pipe pipe;
@@ -2351,7 +2351,7 @@ void MainWindow::on_what_is(RefPtr<DataType> type)
 
     output.run(this);
 }
-
+*/
 
 ////////////////////////////////////////////////////////////////
 bool MainWindow::on_variable_edit
@@ -3463,7 +3463,7 @@ BEGIN_SLOT(MainWindow::update_state,(size_t state))
         }
     }
     on_change_state(*this, state);
-    foreach(bind(Gtk_PTR_FUN(&MainWindow::on_change_state), state));
+    foreach(Gtk_BIND(Gtk_PTR_FUN(&MainWindow::on_change_state), state));
 }
 END_SLOT()
 

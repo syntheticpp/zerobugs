@@ -17,75 +17,90 @@
 
 using namespace std;
 
-
 #if (GTKSVMM_API_VERSION >= 2)
-typedef GtkTextMark GtkSourceMarker;
-
-GtkSourceMarker*
-get_marker(const SrcBufPtr& buf, const string& name)
-{
-    return gtk_text_buffer_get_mark(GTK_TEXT_BUFFER(buf->gobj()), name.c_str());
-}
-
-GtkSourceMarker*
-create_marker(const SrcBufPtr& buf,
-              const string& name,
-              const char* type,
-              Gtk::SourceBuffer::iterator iter)
-{
-    return gtk_text_buffer_create_mark(GTK_TEXT_BUFFER(buf->gobj()),
-                                       name.c_str(), iter.gobj(), true);
-}
-
 void
-delete_marker(const SrcBufPtr& buf, GtkSourceMarker* mark)
+create_marker (
+    SrcBufPtr buf,
+    Gtk::SourceBuffer::iterator  iter,
+    size_t line,
+    const char* category )
 {
-    gtk_text_buffer_delete_mark(GTK_TEXT_BUFFER(buf->gobj()), mark);
+    if (buf->get_source_marks_at_iter(iter, category).empty())
+    {
+        ostringstream name;
+        name << "L." << line;
+
+        buf->create_source_mark(name.str(), category, iter);
+    }
 }
 
 
 void
-move_marker( const SrcBufPtr& buf,
-             GtkSourceMarker* mark,
-             Gtk::SourceBuffer::iterator iter)
+remove_marker (
+    SrcBufPtr buf,
+    Gtk::SourceBuffer::iterator  where,
+    size_t line,
+    const char* category )
 {
-    gtk_text_buffer_move_mark(GTK_TEXT_BUFFER(buf->gobj()), mark, iter.gobj());
+    auto next = where;
+    ++next;
+
+    buf->remove_source_marks(where, next, category);
+}
+
+
+void
+remove_markers (
+    SrcBufPtr buf,
+    const char* category )
+{
+    buf->remove_source_marks(buf->begin(), buf->end(), category);
 }
 
 
 #else
 
-GtkSourceMarker*
-get_marker(const SrcBufPtr& buf, const string& name)
-{
-    return gtk_source_buffer_get_marker(buf->gobj(), name.c_str());
-}
 
-GtkSourceMarker*
-create_marker(const SrcBufPtr& buf,
-              const string& name,
-              const char* type,
-              Gtk::SourceBuffer::iterator iter)
+void
+create_marker (
+    SrcBufPtr buf,
+    Gtk::SourceBuffer::iterator  iter,
+    size_t /* line */,
+    const char* type )
 {
-    return gtk_source_buffer_create_marker(buf->gobj(),
-                                           name.c_str(),
-                                           type,
-                                           iter.gobj());
+    ostringstream name;
+    name << "L." << line;
+
+    gtk_source_buffer_create_marker(buf->gobj(),
+                                    name.str().c_str(),
+                                    type,
+                                    iter.gobj());
 }
 
 void
-delete_marker(const SrcBufPtr& buf, GtkSourceMarker* mark)
+remove_marker (
+    SrcBufPtr buf,
+    Gtk::SourceBuffer::iterator  /* where */,
+    size_t line,
+    const char* category )
 {
-    gtk_source_buffer_delete_marker(buf->gobj(), mark);
+    ostringstream name;
+    name << "L." << line;
+
+    if (GtkSourceMarker* m = gtk_source_buffer_get_marker(buf->gobj(), name.str(), c_str()))
+    {
+        gtk_source_buffer_delete_marker(buf->gobj(), mark);
+    }
 }
 
-void move_marker(const SrcBufPtr& buf,
-                 GtkSourceMarker* mark,
-                 Gtk::SourceBuffer::iterator iter)
-{
-    gtk_source_buffer_move_marker(buf->gobj(), mark, iter.gobj());
-}
 
+void
+remove_markers (
+    SrcBufPtr buffer,
+    const char* category )
+{
+    assert(false); // TODO
+}
 
 #endif
 

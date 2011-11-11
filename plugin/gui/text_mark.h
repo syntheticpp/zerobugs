@@ -15,36 +15,31 @@
 // -------------------------------------------------------------------------
 //
 #ifdef GTKMM_2
-
-#include <string>
-#include "gtksourceview/gtksourcebuffer.h"
-#include "gtksourceview/gtksourceview.h"
 #include "gtkmm/text.h"
 
-
-//
-// Marker stuff may be missing fron Gtk::SourceBuffer,
-// depending on the version of gtksourceviewmm
-//
 typedef Glib::RefPtr<Gtk::SourceBuffer> SrcBufPtr;
 
-GtkSourceMarker*
-get_marker(const SrcBufPtr& buf, const std::string& name);
-
-
-GtkSourceMarker*
-create_marker(const SrcBufPtr& buf,
-              const std::string& name,
-              const char* type,
-              Gtk::SourceBuffer::iterator iter);
 
 void
-delete_marker(const SrcBufPtr& buf, GtkSourceMarker* mark);
+create_marker (
+    SrcBufPtr buffer,
+    Gtk::SourceBuffer::iterator  where,
+    size_t line,
+    const char* category );
+
 
 void
-move_marker (const SrcBufPtr& buf,
-             GtkSourceMarker* mark,
-             Gtk::SourceBuffer::iterator iter);
+remove_marker (
+    SrcBufPtr buffer,
+    Gtk::SourceBuffer::iterator  where,
+    size_t line,
+    const char* category );
+
+
+void
+remove_markers (
+    SrcBufPtr buffer,
+    const char* category );
 
 #endif // GTKMM_2
 #endif // TEXT_MARK_H__AA24010B_DAA7_4D02_A4D7_1002443773D8
