@@ -34,20 +34,18 @@ PKG_CHECK_EXISTS(gtkmm-2.4,
     [AC_DEFINE(GTKMM_2, [1], [Define to 1 if using GTKMM_2])
      AC_SUBST(GTKMM_2, [1])])
 
-PKG_CHECK_MODULES(GTKMM, gtkmm-2.4 gtksourceview-1.0,
+PKG_CHECK_MODULES(GTKMM, gtkmm-2.4 gtksourceview-2.0,
     [
-        AC_SUBST(GTKSVLIB,gtksourceview-1.0)
+        AC_SUBST(GTKSVLIB,gtksourceview-2.0)
     ],
     [
-        PKG_CHECK_MODULES(GTKMM, gtkmm-2.4 gtksourceview-2.0,
+        PKG_CHECK_MODULES(GTKMM, gtkmm-2.4 gtksourceview-1.0,
         [
-            AC_SUBST(GTKSVLIB,gtksourceview-2.0)
+            AC_SUBST(GTKSVLIB,gtksourceview-1.0)
         ],
         [echo "either gtkmm-2.4 or gtksourceview is missing" && exit 1])
     ])
 
-dnl AC_CHECK_LIB([gtksourceview-1.0],[gtk_source_view_new],[],[exit -1])
-dnl AC_CHECK_FUNC([gtk_source_view_set_highlight_current_line],[],[exit -1])
 AC_CHECK_LIB([$GTKSVLIB],[gtk_source_view_set_highlight_current_line],
 [
     AC_DEFINE([HAVE_GTK_SOURCE_VIEW_SET_HIGHLIGHT_CURRENT_LINE], [1], 
@@ -62,17 +60,19 @@ AC_SUBST(CAIROMM_LIBS)
 
 dnl on some systems such as Debian, 
 dnl the package is called libgtksourceviewmm
-PKG_CHECK_MODULES(GTKSOURCEVIEWMM, gtksourceviewmm-1.0, 
+PKG_CHECK_MODULES(GTKSOURCEVIEWMM, gtksourceviewmm-2.0, 
     [
-     AC_DEFINE(GTKSVMM_API_VERSION, [1],[gtksourceviewmm version])
+     AC_DEFINE(GTKSVMM_API_VERSION, [2],[gtksourceviewmm version])
+     AC_SUBST(GTKSOURCEVIEWMM, gtksourceviewmm-2.0)
     ],
     [PKG_CHECK_MODULES(GTKSOURCEVIEWMM, libgtksourceviewmm-1.0, 
        [],
-       [PKG_CHECK_MODULES(GTKSOURCEVIEWMM, gtksourceviewmm-2.0, 
+       [PKG_CHECK_MODULES(GTKSOURCEVIEWMM, gtksourceviewmm-1.0, 
             [
-                AC_DEFINE(GTKSVMM_API_VERSION, [2],
+                AC_DEFINE(GTKSVMM_API_VERSION, [1],
                           [gtksourceviewmm version]
                          )
+                AC_SUBST(GTKSOURCEVIEWMM, gtksourceviewmm-1.0)
                 ac_cv_source_languages_manager=true
             ])
        ])
@@ -211,14 +211,14 @@ AC_CACHE_CHECK([for Gtk::Notebook::set_group],ac_cv_notebook_set_group,[
  if test "$ac_cv_notebook_set_group" = "yes"; then
     AC_DEFINE([HAVE_NOTEBOOK_SET_GROUP], [1], [Define if Gtk::Notebook has set_group])
  fi 
-#check for SourceLanguagesManager::create() in gtksourceviewmm-1.0
+#check for SourceLanguagesManager::create() in gtksourceviewmm
 AC_DEFUN([AC_SOURCE_LANGUAGES_MANAGER_CREATE],
-    [AC_CACHE_CHECK([for SourceLanguagesManager::create],
+    [AC_CACHE_CHECK([for SourceLanguagesManager::create in $GTKSOURCEVIEWMM],
                [ac_cv_source_languages_manager],
                [ac_cv_source_languages_manager=false
-    grep create /usr/include/gtksourceviewmm-1.0/gtksourceviewmm/sourcelanguagesmanager.h \
+    grep create /usr/include/$GTKSOURCEVIEWMM/gtksourceviewmm/sourcelanguage*manager.h \
         2>/dev/null 1>&2 || \
-    grep create /usr/local/include/gtksourceviewmm-1.0/gtksourceviewmm/sourcelanguagesmanager.h \
+    grep create /usr/local/include/$GTKSOURCEVIEWMM/gtksourceviewmm/sourcelanguage*manager.h \
         2>/dev/null 1>&2 && ac_cv_source_languages_manager=true \
     && ac_cv_source_languages_manager=true])
     if test "$ac_cv_source_languages_manager" = true; then

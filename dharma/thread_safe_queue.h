@@ -4,9 +4,6 @@
 // -*- tab-width: 4; indent-tabs-mode: nil;  -*-
 // vim: tabstop=4:softtabstop=4:expandtab:shiftwidth=4
 //
-// $Id: $
-//
-//
 // $Id: thread_safe_queue.h 716 2010-10-17 22:16:32Z root $
 //
 // -------------------------------------------------------------------------

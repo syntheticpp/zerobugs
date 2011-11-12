@@ -43,9 +43,9 @@
 #include "slot_macros.h"
 #include "text_mark.h"
 
-#define ENABLED     "enabled"
-#define DISABLED    "disabled"
-#define CURRENT     "current"
+#define ENABLED     "ENABLED"
+#define DISABLED    "DISABLED"
+#define CURRENT     "CURRENT"
 
 using namespace Gtk;
 using namespace std;
@@ -88,6 +88,10 @@ void CodeView::init()
     set_marker_pixbuf(DISABLED, g_break_disabled);
     set_show_line_markers(true);
     set_cursor_visible(false);
+    
+    set_marker_priority(CURRENT, 3);
+    set_marker_priority(ENABLED, 2);
+    set_marker_priority(DISABLED, 1);
 
 #if HAVE_GTK_SOURCE_VIEW_SET_HIGHLIGHT_CURRENT_LINE
     gtk_source_view_set_highlight_current_line(GTK_SOURCE_VIEW(gobj()), true);

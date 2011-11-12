@@ -179,18 +179,24 @@
         bool on_key_press_event(GdkEventKey*);
 
      #if (GTKSVMM_API_VERSION >= 2)
-        //
-        // Gtkmm 2 has dropped marker support. 
-        //
+
         void set_show_line_markers(bool show)
         {
-            gtk_source_view_set_show_line_marks(GTK_SOURCE_VIEW(gobj()), show);
+            set_show_line_marks(show);
         }
 
         void set_marker_pixbuf(const gchar* category, Glib::RefPtr<Gdk::Pixbuf> p)
         {
-            gtk_source_view_set_mark_category_icon_from_pixbuf(
-                GTK_SOURCE_VIEW(gobj()), category, p->gobj());
+            set_mark_category_pixbuf(category, p);
+        }
+
+        void set_marker_priority(const gchar* category, gint priority)
+        {
+            set_mark_category_priority(category, priority);
+        }
+    #else
+        void set_marker_priority(const gchar* /* category */, gint /* priority */)
+        {
         }
     #endif
 

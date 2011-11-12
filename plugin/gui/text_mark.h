@@ -35,11 +35,5 @@ remove_marker (
     size_t line,
     const char* category );
 
-
-void
-remove_markers (
-    SrcBufPtr buffer,
-    const char* category );
-
 #endif // GTKMM_2
 #endif // TEXT_MARK_H__AA24010B_DAA7_4D02_A4D7_1002443773D8

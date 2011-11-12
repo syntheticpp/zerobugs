@@ -26,7 +26,6 @@
 #include "gtkmm/text.h"
 #include "gtkmm/resize.h"
 #include "gtkmm/scrolledwindow.h"
-#include "icons/arrow.xpm"
 #include "text_mark.h"
 #include "text_entry.h"
 #include "toolbar.h"
@@ -46,7 +45,6 @@ class ZDK_LOCAL Console
     Glib::RefPtr<Gtk::SourceBuffer> buf_;
     Glib::RefPtr<Gtk::TextTagTable> tags_;
     Glib::RefPtr<Gtk::TextBuffer::Mark> mark_;
-    Glib::RefPtr<Gdk::Pixbuf> arrow_;
 
     vector<string> history_;
     size_t hpos_;
@@ -78,8 +76,6 @@ private:
         buf_->move_mark(mark_, i);
         scroll_to(mark_);
 
-        remove_markers(buf_, "arrow");
-        create_marker(buf_, i, 0, "arrow");
         return i;
     }
 
@@ -94,7 +90,6 @@ public:
         : app_(app)
         , interp_(interp)
         , buf_(get_buffer())
-        , arrow_(Gdk::Pixbuf::create_from_xpm_data(arrow_xpm))
         , hpos_(0)
         , entry_(0)
     {
@@ -112,8 +107,6 @@ public:
         mark_ = buf_->create_mark(i);
         set_show_line_markers(true);
         buf_->begin_not_undoable_action(); // no undo
-
-        set_marker_pixbuf("arrow", arrow_);
 
         move_mark_to_cursor();
         set_auto_indent(false);

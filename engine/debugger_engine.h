@@ -29,9 +29,10 @@
 #include "zdk/update.h"
 
 
-class BreakPointManagerImpl;
 struct Disassembler;
 struct ExprObserver;
+
+class BreakPointManagerImpl;
 class RunnableImpl;
 class StepOverManager;
 class SymbolTableEvents;

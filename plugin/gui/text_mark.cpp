@@ -28,7 +28,7 @@ create_marker (
     if (buf->get_source_marks_at_iter(iter, category).empty())
     {
         ostringstream name;
-        name << "L." << line;
+        name << "L." << line << '-' << *category;
 
         buf->create_source_mark(name.str(), category, iter);
     }
@@ -46,15 +46,6 @@ remove_marker (
     ++next;
 
     buf->remove_source_marks(where, next, category);
-}
-
-
-void
-remove_markers (
-    SrcBufPtr buf,
-    const char* category )
-{
-    buf->remove_source_marks(buf->begin(), buf->end(), category);
 }
 
 
@@ -91,15 +82,6 @@ remove_marker (
     {
         gtk_source_buffer_delete_marker(buf->gobj(), mark);
     }
-}
-
-
-void
-remove_markers (
-    SrcBufPtr buffer,
-    const char* category )
-{
-    assert(false); // TODO
 }
 
 #endif

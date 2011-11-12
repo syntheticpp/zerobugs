@@ -609,6 +609,7 @@ EGREP
 GREP
 LIBGTKHTML_LIBS
 LIBGTKHTML_CFLAGS
+GTKSOURCEVIEWMM
 GTKSOURCEVIEWMM_LIBS
 GTKSOURCEVIEWMM_CFLAGS
 CAIROMM_LIBS
@@ -4373,6 +4374,68 @@ if test -n "$PKG_CONFIG"; then
         pkg_cv_GTKMM_CFLAGS="$GTKMM_CFLAGS"
     else
         if test -n "$PKG_CONFIG" && \
+    { { $as_echo "$as_me:${as_lineno-$LINENO}: \$PKG_CONFIG --exists --print-errors \"gtkmm-2.4 gtksourceview-2.0\""; } >&5
+  ($PKG_CONFIG --exists --print-errors "gtkmm-2.4 gtksourceview-2.0") 2>&5
+  ac_status=$?
+  $as_echo "$as_me:${as_lineno-$LINENO}: \$? = $ac_status" >&5
+  test $ac_status = 0; }; then
+  pkg_cv_GTKMM_CFLAGS=`$PKG_CONFIG --cflags "gtkmm-2.4 gtksourceview-2.0" 2>/dev/null`
+else
+  pkg_failed=yes
+fi
+    fi
+else
+	pkg_failed=untried
+fi
+if test -n "$PKG_CONFIG"; then
+    if test -n "$GTKMM_LIBS"; then
+        pkg_cv_GTKMM_LIBS="$GTKMM_LIBS"
+    else
+        if test -n "$PKG_CONFIG" && \
+    { { $as_echo "$as_me:${as_lineno-$LINENO}: \$PKG_CONFIG --exists --print-errors \"gtkmm-2.4 gtksourceview-2.0\""; } >&5
+  ($PKG_CONFIG --exists --print-errors "gtkmm-2.4 gtksourceview-2.0") 2>&5
+  ac_status=$?
+  $as_echo "$as_me:${as_lineno-$LINENO}: \$? = $ac_status" >&5
+  test $ac_status = 0; }; then
+  pkg_cv_GTKMM_LIBS=`$PKG_CONFIG --libs "gtkmm-2.4 gtksourceview-2.0" 2>/dev/null`
+else
+  pkg_failed=yes
+fi
+    fi
+else
+	pkg_failed=untried
+fi
+
+
+
+if test $pkg_failed = yes; then
+
+if $PKG_CONFIG --atleast-pkgconfig-version 0.20; then
+        _pkg_short_errors_supported=yes
+else
+        _pkg_short_errors_supported=no
+fi
+        if test $_pkg_short_errors_supported = yes; then
+	        GTKMM_PKG_ERRORS=`$PKG_CONFIG --short-errors --errors-to-stdout --print-errors "gtkmm-2.4 gtksourceview-2.0"`
+        else
+	        GTKMM_PKG_ERRORS=`$PKG_CONFIG --errors-to-stdout --print-errors "gtkmm-2.4 gtksourceview-2.0"`
+        fi
+	# Put the nasty error message in config.log where it belongs
+	echo "$GTKMM_PKG_ERRORS" >&5
+
+	{ $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+$as_echo "no" >&6; }
+
+
+pkg_failed=no
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for GTKMM" >&5
+$as_echo_n "checking for GTKMM... " >&6; }
+
+if test -n "$PKG_CONFIG"; then
+    if test -n "$GTKMM_CFLAGS"; then
+        pkg_cv_GTKMM_CFLAGS="$GTKMM_CFLAGS"
+    else
+        if test -n "$PKG_CONFIG" && \
     { { $as_echo "$as_me:${as_lineno-$LINENO}: \$PKG_CONFIG --exists --print-errors \"gtkmm-2.4 gtksourceview-1.0\""; } >&5
   ($PKG_CONFIG --exists --print-errors "gtkmm-2.4 gtksourceview-1.0") 2>&5
   ac_status=$?
@@ -4424,6 +4487,21 @@ fi
 
 	{ $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
 $as_echo "no" >&6; }
+                echo "either gtkmm-2.4 or gtksourceview is missing" && exit 1
+elif test $pkg_failed = untried; then
+	echo "either gtkmm-2.4 or gtksourceview is missing" && exit 1
+else
+	GTKMM_CFLAGS=$pkg_cv_GTKMM_CFLAGS
+	GTKMM_LIBS=$pkg_cv_GTKMM_LIBS
+        { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
+$as_echo "yes" >&6; }
+
+            GTKSVLIB=gtksourceview-1.0
+
+
+fi
+
+elif test $pkg_failed = untried; then
 
 
 pkg_failed=no
@@ -4435,12 +4513,12 @@ if test -n "$PKG_CONFIG"; then
         pkg_cv_GTKMM_CFLAGS="$GTKMM_CFLAGS"
     else
         if test -n "$PKG_CONFIG" && \
-    { { $as_echo "$as_me:${as_lineno-$LINENO}: \$PKG_CONFIG --exists --print-errors \"gtkmm-2.4 gtksourceview-2.0\""; } >&5
-  ($PKG_CONFIG --exists --print-errors "gtkmm-2.4 gtksourceview-2.0") 2>&5
+    { { $as_echo "$as_me:${as_lineno-$LINENO}: \$PKG_CONFIG --exists --print-errors \"gtkmm-2.4 gtksourceview-1.0\""; } >&5
+  ($PKG_CONFIG --exists --print-errors "gtkmm-2.4 gtksourceview-1.0") 2>&5
   ac_status=$?
   $as_echo "$as_me:${as_lineno-$LINENO}: \$? = $ac_status" >&5
   test $ac_status = 0; }; then
-  pkg_cv_GTKMM_CFLAGS=`$PKG_CONFIG --cflags "gtkmm-2.4 gtksourceview-2.0" 2>/dev/null`
+  pkg_cv_GTKMM_CFLAGS=`$PKG_CONFIG --cflags "gtkmm-2.4 gtksourceview-1.0" 2>/dev/null`
 else
   pkg_failed=yes
 fi
@@ -4453,12 +4531,12 @@ if test -n "$PKG_CONFIG"; then
         pkg_cv_GTKMM_LIBS="$GTKMM_LIBS"
     else
         if test -n "$PKG_CONFIG" && \
-    { { $as_echo "$as_me:${as_lineno-$LINENO}: \$PKG_CONFIG --exists --print-errors \"gtkmm-2.4 gtksourceview-2.0\""; } >&5
-  ($PKG_CONFIG --exists --print-errors "gtkmm-2.4 gtksourceview-2.0") 2>&5
+    { { $as_echo "$as_me:${as_lineno-$LINENO}: \$PKG_CONFIG --exists --print-errors \"gtkmm-2.4 gtksourceview-1.0\""; } >&5
+  ($PKG_CONFIG --exists --print-errors "gtkmm-2.4 gtksourceview-1.0") 2>&5
   ac_status=$?
   $as_echo "$as_me:${as_lineno-$LINENO}: \$? = $ac_status" >&5
   test $ac_status = 0; }; then
-  pkg_cv_GTKMM_LIBS=`$PKG_CONFIG --libs "gtkmm-2.4 gtksourceview-2.0" 2>/dev/null`
+  pkg_cv_GTKMM_LIBS=`$PKG_CONFIG --libs "gtkmm-2.4 gtksourceview-1.0" 2>/dev/null`
 else
   pkg_failed=yes
 fi
@@ -4477,9 +4555,9 @@ else
         _pkg_short_errors_supported=no
 fi
         if test $_pkg_short_errors_supported = yes; then
-	        GTKMM_PKG_ERRORS=`$PKG_CONFIG --short-errors --errors-to-stdout --print-errors "gtkmm-2.4 gtksourceview-2.0"`
+	        GTKMM_PKG_ERRORS=`$PKG_CONFIG --short-errors --errors-to-stdout --print-errors "gtkmm-2.4 gtksourceview-1.0"`
         else
-	        GTKMM_PKG_ERRORS=`$PKG_CONFIG --errors-to-stdout --print-errors "gtkmm-2.4 gtksourceview-2.0"`
+	        GTKMM_PKG_ERRORS=`$PKG_CONFIG --errors-to-stdout --print-errors "gtkmm-2.4 gtksourceview-1.0"`
         fi
 	# Put the nasty error message in config.log where it belongs
 	echo "$GTKMM_PKG_ERRORS" >&5
@@ -4495,84 +4573,7 @@ else
         { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
 $as_echo "yes" >&6; }
 
-            GTKSVLIB=gtksourceview-2.0
-
-
-fi
-
-elif test $pkg_failed = untried; then
-
-
-pkg_failed=no
-{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for GTKMM" >&5
-$as_echo_n "checking for GTKMM... " >&6; }
-
-if test -n "$PKG_CONFIG"; then
-    if test -n "$GTKMM_CFLAGS"; then
-        pkg_cv_GTKMM_CFLAGS="$GTKMM_CFLAGS"
-    else
-        if test -n "$PKG_CONFIG" && \
-    { { $as_echo "$as_me:${as_lineno-$LINENO}: \$PKG_CONFIG --exists --print-errors \"gtkmm-2.4 gtksourceview-2.0\""; } >&5
-  ($PKG_CONFIG --exists --print-errors "gtkmm-2.4 gtksourceview-2.0") 2>&5
-  ac_status=$?
-  $as_echo "$as_me:${as_lineno-$LINENO}: \$? = $ac_status" >&5
-  test $ac_status = 0; }; then
-  pkg_cv_GTKMM_CFLAGS=`$PKG_CONFIG --cflags "gtkmm-2.4 gtksourceview-2.0" 2>/dev/null`
-else
-  pkg_failed=yes
-fi
-    fi
-else
-	pkg_failed=untried
-fi
-if test -n "$PKG_CONFIG"; then
-    if test -n "$GTKMM_LIBS"; then
-        pkg_cv_GTKMM_LIBS="$GTKMM_LIBS"
-    else
-        if test -n "$PKG_CONFIG" && \
-    { { $as_echo "$as_me:${as_lineno-$LINENO}: \$PKG_CONFIG --exists --print-errors \"gtkmm-2.4 gtksourceview-2.0\""; } >&5
-  ($PKG_CONFIG --exists --print-errors "gtkmm-2.4 gtksourceview-2.0") 2>&5
-  ac_status=$?
-  $as_echo "$as_me:${as_lineno-$LINENO}: \$? = $ac_status" >&5
-  test $ac_status = 0; }; then
-  pkg_cv_GTKMM_LIBS=`$PKG_CONFIG --libs "gtkmm-2.4 gtksourceview-2.0" 2>/dev/null`
-else
-  pkg_failed=yes
-fi
-    fi
-else
-	pkg_failed=untried
-fi
-
-
-
-if test $pkg_failed = yes; then
-
-if $PKG_CONFIG --atleast-pkgconfig-version 0.20; then
-        _pkg_short_errors_supported=yes
-else
-        _pkg_short_errors_supported=no
-fi
-        if test $_pkg_short_errors_supported = yes; then
-	        GTKMM_PKG_ERRORS=`$PKG_CONFIG --short-errors --errors-to-stdout --print-errors "gtkmm-2.4 gtksourceview-2.0"`
-        else
-	        GTKMM_PKG_ERRORS=`$PKG_CONFIG --errors-to-stdout --print-errors "gtkmm-2.4 gtksourceview-2.0"`
-        fi
-	# Put the nasty error message in config.log where it belongs
-	echo "$GTKMM_PKG_ERRORS" >&5
-
-	{ $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
-$as_echo "no" >&6; }
-                echo "either gtkmm-2.4 or gtksourceview is missing" && exit 1
-elif test $pkg_failed = untried; then
-	echo "either gtkmm-2.4 or gtksourceview is missing" && exit 1
-else
-	GTKMM_CFLAGS=$pkg_cv_GTKMM_CFLAGS
-	GTKMM_LIBS=$pkg_cv_GTKMM_LIBS
-        { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
-$as_echo "yes" >&6; }
-
-            GTKSVLIB=gtksourceview-2.0
+            GTKSVLIB=gtksourceview-1.0
 
 
 fi
@@ -4583,7 +4584,7 @@ else
         { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
 $as_echo "yes" >&6; }
 
-        GTKSVLIB=gtksourceview-1.0
+        GTKSVLIB=gtksourceview-2.0
 
 
 fi
@@ -4721,6 +4722,128 @@ if test -n "$PKG_CONFIG"; then
         pkg_cv_GTKSOURCEVIEWMM_CFLAGS="$GTKSOURCEVIEWMM_CFLAGS"
     else
         if test -n "$PKG_CONFIG" && \
+    { { $as_echo "$as_me:${as_lineno-$LINENO}: \$PKG_CONFIG --exists --print-errors \"gtksourceviewmm-2.0\""; } >&5
+  ($PKG_CONFIG --exists --print-errors "gtksourceviewmm-2.0") 2>&5
+  ac_status=$?
+  $as_echo "$as_me:${as_lineno-$LINENO}: \$? = $ac_status" >&5
+  test $ac_status = 0; }; then
+  pkg_cv_GTKSOURCEVIEWMM_CFLAGS=`$PKG_CONFIG --cflags "gtksourceviewmm-2.0" 2>/dev/null`
+else
+  pkg_failed=yes
+fi
+    fi
+else
+	pkg_failed=untried
+fi
+if test -n "$PKG_CONFIG"; then
+    if test -n "$GTKSOURCEVIEWMM_LIBS"; then
+        pkg_cv_GTKSOURCEVIEWMM_LIBS="$GTKSOURCEVIEWMM_LIBS"
+    else
+        if test -n "$PKG_CONFIG" && \
+    { { $as_echo "$as_me:${as_lineno-$LINENO}: \$PKG_CONFIG --exists --print-errors \"gtksourceviewmm-2.0\""; } >&5
+  ($PKG_CONFIG --exists --print-errors "gtksourceviewmm-2.0") 2>&5
+  ac_status=$?
+  $as_echo "$as_me:${as_lineno-$LINENO}: \$? = $ac_status" >&5
+  test $ac_status = 0; }; then
+  pkg_cv_GTKSOURCEVIEWMM_LIBS=`$PKG_CONFIG --libs "gtksourceviewmm-2.0" 2>/dev/null`
+else
+  pkg_failed=yes
+fi
+    fi
+else
+	pkg_failed=untried
+fi
+
+
+
+if test $pkg_failed = yes; then
+
+if $PKG_CONFIG --atleast-pkgconfig-version 0.20; then
+        _pkg_short_errors_supported=yes
+else
+        _pkg_short_errors_supported=no
+fi
+        if test $_pkg_short_errors_supported = yes; then
+	        GTKSOURCEVIEWMM_PKG_ERRORS=`$PKG_CONFIG --short-errors --errors-to-stdout --print-errors "gtksourceviewmm-2.0"`
+        else
+	        GTKSOURCEVIEWMM_PKG_ERRORS=`$PKG_CONFIG --errors-to-stdout --print-errors "gtksourceviewmm-2.0"`
+        fi
+	# Put the nasty error message in config.log where it belongs
+	echo "$GTKSOURCEVIEWMM_PKG_ERRORS" >&5
+
+	{ $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+$as_echo "no" >&6; }
+
+pkg_failed=no
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for GTKSOURCEVIEWMM" >&5
+$as_echo_n "checking for GTKSOURCEVIEWMM... " >&6; }
+
+if test -n "$PKG_CONFIG"; then
+    if test -n "$GTKSOURCEVIEWMM_CFLAGS"; then
+        pkg_cv_GTKSOURCEVIEWMM_CFLAGS="$GTKSOURCEVIEWMM_CFLAGS"
+    else
+        if test -n "$PKG_CONFIG" && \
+    { { $as_echo "$as_me:${as_lineno-$LINENO}: \$PKG_CONFIG --exists --print-errors \"libgtksourceviewmm-1.0\""; } >&5
+  ($PKG_CONFIG --exists --print-errors "libgtksourceviewmm-1.0") 2>&5
+  ac_status=$?
+  $as_echo "$as_me:${as_lineno-$LINENO}: \$? = $ac_status" >&5
+  test $ac_status = 0; }; then
+  pkg_cv_GTKSOURCEVIEWMM_CFLAGS=`$PKG_CONFIG --cflags "libgtksourceviewmm-1.0" 2>/dev/null`
+else
+  pkg_failed=yes
+fi
+    fi
+else
+	pkg_failed=untried
+fi
+if test -n "$PKG_CONFIG"; then
+    if test -n "$GTKSOURCEVIEWMM_LIBS"; then
+        pkg_cv_GTKSOURCEVIEWMM_LIBS="$GTKSOURCEVIEWMM_LIBS"
+    else
+        if test -n "$PKG_CONFIG" && \
+    { { $as_echo "$as_me:${as_lineno-$LINENO}: \$PKG_CONFIG --exists --print-errors \"libgtksourceviewmm-1.0\""; } >&5
+  ($PKG_CONFIG --exists --print-errors "libgtksourceviewmm-1.0") 2>&5
+  ac_status=$?
+  $as_echo "$as_me:${as_lineno-$LINENO}: \$? = $ac_status" >&5
+  test $ac_status = 0; }; then
+  pkg_cv_GTKSOURCEVIEWMM_LIBS=`$PKG_CONFIG --libs "libgtksourceviewmm-1.0" 2>/dev/null`
+else
+  pkg_failed=yes
+fi
+    fi
+else
+	pkg_failed=untried
+fi
+
+
+
+if test $pkg_failed = yes; then
+
+if $PKG_CONFIG --atleast-pkgconfig-version 0.20; then
+        _pkg_short_errors_supported=yes
+else
+        _pkg_short_errors_supported=no
+fi
+        if test $_pkg_short_errors_supported = yes; then
+	        GTKSOURCEVIEWMM_PKG_ERRORS=`$PKG_CONFIG --short-errors --errors-to-stdout --print-errors "libgtksourceviewmm-1.0"`
+        else
+	        GTKSOURCEVIEWMM_PKG_ERRORS=`$PKG_CONFIG --errors-to-stdout --print-errors "libgtksourceviewmm-1.0"`
+        fi
+	# Put the nasty error message in config.log where it belongs
+	echo "$GTKSOURCEVIEWMM_PKG_ERRORS" >&5
+
+	{ $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+$as_echo "no" >&6; }
+
+pkg_failed=no
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for GTKSOURCEVIEWMM" >&5
+$as_echo_n "checking for GTKSOURCEVIEWMM... " >&6; }
+
+if test -n "$PKG_CONFIG"; then
+    if test -n "$GTKSOURCEVIEWMM_CFLAGS"; then
+        pkg_cv_GTKSOURCEVIEWMM_CFLAGS="$GTKSOURCEVIEWMM_CFLAGS"
+    else
+        if test -n "$PKG_CONFIG" && \
     { { $as_echo "$as_me:${as_lineno-$LINENO}: \$PKG_CONFIG --exists --print-errors \"gtksourceviewmm-1.0\""; } >&5
   ($PKG_CONFIG --exists --print-errors "gtksourceviewmm-1.0") 2>&5
   ac_status=$?
@@ -4770,129 +4893,7 @@ fi
 	# Put the nasty error message in config.log where it belongs
 	echo "$GTKSOURCEVIEWMM_PKG_ERRORS" >&5
 
-	{ $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
-$as_echo "no" >&6; }
-
-pkg_failed=no
-{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for GTKSOURCEVIEWMM" >&5
-$as_echo_n "checking for GTKSOURCEVIEWMM... " >&6; }
-
-if test -n "$PKG_CONFIG"; then
-    if test -n "$GTKSOURCEVIEWMM_CFLAGS"; then
-        pkg_cv_GTKSOURCEVIEWMM_CFLAGS="$GTKSOURCEVIEWMM_CFLAGS"
-    else
-        if test -n "$PKG_CONFIG" && \
-    { { $as_echo "$as_me:${as_lineno-$LINENO}: \$PKG_CONFIG --exists --print-errors \"libgtksourceviewmm-1.0\""; } >&5
-  ($PKG_CONFIG --exists --print-errors "libgtksourceviewmm-1.0") 2>&5
-  ac_status=$?
-  $as_echo "$as_me:${as_lineno-$LINENO}: \$? = $ac_status" >&5
-  test $ac_status = 0; }; then
-  pkg_cv_GTKSOURCEVIEWMM_CFLAGS=`$PKG_CONFIG --cflags "libgtksourceviewmm-1.0" 2>/dev/null`
-else
-  pkg_failed=yes
-fi
-    fi
-else
-	pkg_failed=untried
-fi
-if test -n "$PKG_CONFIG"; then
-    if test -n "$GTKSOURCEVIEWMM_LIBS"; then
-        pkg_cv_GTKSOURCEVIEWMM_LIBS="$GTKSOURCEVIEWMM_LIBS"
-    else
-        if test -n "$PKG_CONFIG" && \
-    { { $as_echo "$as_me:${as_lineno-$LINENO}: \$PKG_CONFIG --exists --print-errors \"libgtksourceviewmm-1.0\""; } >&5
-  ($PKG_CONFIG --exists --print-errors "libgtksourceviewmm-1.0") 2>&5
-  ac_status=$?
-  $as_echo "$as_me:${as_lineno-$LINENO}: \$? = $ac_status" >&5
-  test $ac_status = 0; }; then
-  pkg_cv_GTKSOURCEVIEWMM_LIBS=`$PKG_CONFIG --libs "libgtksourceviewmm-1.0" 2>/dev/null`
-else
-  pkg_failed=yes
-fi
-    fi
-else
-	pkg_failed=untried
-fi
-
-
-
-if test $pkg_failed = yes; then
-
-if $PKG_CONFIG --atleast-pkgconfig-version 0.20; then
-        _pkg_short_errors_supported=yes
-else
-        _pkg_short_errors_supported=no
-fi
-        if test $_pkg_short_errors_supported = yes; then
-	        GTKSOURCEVIEWMM_PKG_ERRORS=`$PKG_CONFIG --short-errors --errors-to-stdout --print-errors "libgtksourceviewmm-1.0"`
-        else
-	        GTKSOURCEVIEWMM_PKG_ERRORS=`$PKG_CONFIG --errors-to-stdout --print-errors "libgtksourceviewmm-1.0"`
-        fi
-	# Put the nasty error message in config.log where it belongs
-	echo "$GTKSOURCEVIEWMM_PKG_ERRORS" >&5
-
-	{ $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
-$as_echo "no" >&6; }
-
-pkg_failed=no
-{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for GTKSOURCEVIEWMM" >&5
-$as_echo_n "checking for GTKSOURCEVIEWMM... " >&6; }
-
-if test -n "$PKG_CONFIG"; then
-    if test -n "$GTKSOURCEVIEWMM_CFLAGS"; then
-        pkg_cv_GTKSOURCEVIEWMM_CFLAGS="$GTKSOURCEVIEWMM_CFLAGS"
-    else
-        if test -n "$PKG_CONFIG" && \
-    { { $as_echo "$as_me:${as_lineno-$LINENO}: \$PKG_CONFIG --exists --print-errors \"gtksourceviewmm-2.0\""; } >&5
-  ($PKG_CONFIG --exists --print-errors "gtksourceviewmm-2.0") 2>&5
-  ac_status=$?
-  $as_echo "$as_me:${as_lineno-$LINENO}: \$? = $ac_status" >&5
-  test $ac_status = 0; }; then
-  pkg_cv_GTKSOURCEVIEWMM_CFLAGS=`$PKG_CONFIG --cflags "gtksourceviewmm-2.0" 2>/dev/null`
-else
-  pkg_failed=yes
-fi
-    fi
-else
-	pkg_failed=untried
-fi
-if test -n "$PKG_CONFIG"; then
-    if test -n "$GTKSOURCEVIEWMM_LIBS"; then
-        pkg_cv_GTKSOURCEVIEWMM_LIBS="$GTKSOURCEVIEWMM_LIBS"
-    else
-        if test -n "$PKG_CONFIG" && \
-    { { $as_echo "$as_me:${as_lineno-$LINENO}: \$PKG_CONFIG --exists --print-errors \"gtksourceviewmm-2.0\""; } >&5
-  ($PKG_CONFIG --exists --print-errors "gtksourceviewmm-2.0") 2>&5
-  ac_status=$?
-  $as_echo "$as_me:${as_lineno-$LINENO}: \$? = $ac_status" >&5
-  test $ac_status = 0; }; then
-  pkg_cv_GTKSOURCEVIEWMM_LIBS=`$PKG_CONFIG --libs "gtksourceviewmm-2.0" 2>/dev/null`
-else
-  pkg_failed=yes
-fi
-    fi
-else
-	pkg_failed=untried
-fi
-
-
-
-if test $pkg_failed = yes; then
-
-if $PKG_CONFIG --atleast-pkgconfig-version 0.20; then
-        _pkg_short_errors_supported=yes
-else
-        _pkg_short_errors_supported=no
-fi
-        if test $_pkg_short_errors_supported = yes; then
-	        GTKSOURCEVIEWMM_PKG_ERRORS=`$PKG_CONFIG --short-errors --errors-to-stdout --print-errors "gtksourceviewmm-2.0"`
-        else
-	        GTKSOURCEVIEWMM_PKG_ERRORS=`$PKG_CONFIG --errors-to-stdout --print-errors "gtksourceviewmm-2.0"`
-        fi
-	# Put the nasty error message in config.log where it belongs
-	echo "$GTKSOURCEVIEWMM_PKG_ERRORS" >&5
-
-	as_fn_error $? "Package requirements (gtksourceviewmm-2.0) were not met:
+	as_fn_error $? "Package requirements (gtksourceviewmm-1.0) were not met:
 
 $GTKSOURCEVIEWMM_PKG_ERRORS
 
@@ -4916,387 +4917,6 @@ See the pkg-config man page for more details.
 
 To get pkg-config, see <http://pkg-config.freedesktop.org/>.
 See \`config.log' for more details" "$LINENO" 5; }
-else
-	GTKSOURCEVIEWMM_CFLAGS=$pkg_cv_GTKSOURCEVIEWMM_CFLAGS
-	GTKSOURCEVIEWMM_LIBS=$pkg_cv_GTKSOURCEVIEWMM_LIBS
-        { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
-$as_echo "yes" >&6; }
-
-
-$as_echo "#define GTKSVMM_API_VERSION 2" >>confdefs.h
-
-                ac_cv_source_languages_manager=true
-
-fi
-
-elif test $pkg_failed = untried; then
-
-pkg_failed=no
-{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for GTKSOURCEVIEWMM" >&5
-$as_echo_n "checking for GTKSOURCEVIEWMM... " >&6; }
-
-if test -n "$PKG_CONFIG"; then
-    if test -n "$GTKSOURCEVIEWMM_CFLAGS"; then
-        pkg_cv_GTKSOURCEVIEWMM_CFLAGS="$GTKSOURCEVIEWMM_CFLAGS"
-    else
-        if test -n "$PKG_CONFIG" && \
-    { { $as_echo "$as_me:${as_lineno-$LINENO}: \$PKG_CONFIG --exists --print-errors \"gtksourceviewmm-2.0\""; } >&5
-  ($PKG_CONFIG --exists --print-errors "gtksourceviewmm-2.0") 2>&5
-  ac_status=$?
-  $as_echo "$as_me:${as_lineno-$LINENO}: \$? = $ac_status" >&5
-  test $ac_status = 0; }; then
-  pkg_cv_GTKSOURCEVIEWMM_CFLAGS=`$PKG_CONFIG --cflags "gtksourceviewmm-2.0" 2>/dev/null`
-else
-  pkg_failed=yes
-fi
-    fi
-else
-	pkg_failed=untried
-fi
-if test -n "$PKG_CONFIG"; then
-    if test -n "$GTKSOURCEVIEWMM_LIBS"; then
-        pkg_cv_GTKSOURCEVIEWMM_LIBS="$GTKSOURCEVIEWMM_LIBS"
-    else
-        if test -n "$PKG_CONFIG" && \
-    { { $as_echo "$as_me:${as_lineno-$LINENO}: \$PKG_CONFIG --exists --print-errors \"gtksourceviewmm-2.0\""; } >&5
-  ($PKG_CONFIG --exists --print-errors "gtksourceviewmm-2.0") 2>&5
-  ac_status=$?
-  $as_echo "$as_me:${as_lineno-$LINENO}: \$? = $ac_status" >&5
-  test $ac_status = 0; }; then
-  pkg_cv_GTKSOURCEVIEWMM_LIBS=`$PKG_CONFIG --libs "gtksourceviewmm-2.0" 2>/dev/null`
-else
-  pkg_failed=yes
-fi
-    fi
-else
-	pkg_failed=untried
-fi
-
-
-
-if test $pkg_failed = yes; then
-
-if $PKG_CONFIG --atleast-pkgconfig-version 0.20; then
-        _pkg_short_errors_supported=yes
-else
-        _pkg_short_errors_supported=no
-fi
-        if test $_pkg_short_errors_supported = yes; then
-	        GTKSOURCEVIEWMM_PKG_ERRORS=`$PKG_CONFIG --short-errors --errors-to-stdout --print-errors "gtksourceviewmm-2.0"`
-        else
-	        GTKSOURCEVIEWMM_PKG_ERRORS=`$PKG_CONFIG --errors-to-stdout --print-errors "gtksourceviewmm-2.0"`
-        fi
-	# Put the nasty error message in config.log where it belongs
-	echo "$GTKSOURCEVIEWMM_PKG_ERRORS" >&5
-
-	as_fn_error $? "Package requirements (gtksourceviewmm-2.0) were not met:
-
-$GTKSOURCEVIEWMM_PKG_ERRORS
-
-Consider adjusting the PKG_CONFIG_PATH environment variable if you
-installed software in a non-standard prefix.
-
-Alternatively, you may set the environment variables GTKSOURCEVIEWMM_CFLAGS
-and GTKSOURCEVIEWMM_LIBS to avoid the need to call pkg-config.
-See the pkg-config man page for more details.
-" "$LINENO" 5
-elif test $pkg_failed = untried; then
-	{ { $as_echo "$as_me:${as_lineno-$LINENO}: error: in \`$ac_pwd':" >&5
-$as_echo "$as_me: error: in \`$ac_pwd':" >&2;}
-as_fn_error $? "The pkg-config script could not be found or is too old.  Make sure it
-is in your PATH or set the PKG_CONFIG environment variable to the full
-path to pkg-config.
-
-Alternatively, you may set the environment variables GTKSOURCEVIEWMM_CFLAGS
-and GTKSOURCEVIEWMM_LIBS to avoid the need to call pkg-config.
-See the pkg-config man page for more details.
-
-To get pkg-config, see <http://pkg-config.freedesktop.org/>.
-See \`config.log' for more details" "$LINENO" 5; }
-else
-	GTKSOURCEVIEWMM_CFLAGS=$pkg_cv_GTKSOURCEVIEWMM_CFLAGS
-	GTKSOURCEVIEWMM_LIBS=$pkg_cv_GTKSOURCEVIEWMM_LIBS
-        { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
-$as_echo "yes" >&6; }
-
-
-$as_echo "#define GTKSVMM_API_VERSION 2" >>confdefs.h
-
-                ac_cv_source_languages_manager=true
-
-fi
-
-else
-	GTKSOURCEVIEWMM_CFLAGS=$pkg_cv_GTKSOURCEVIEWMM_CFLAGS
-	GTKSOURCEVIEWMM_LIBS=$pkg_cv_GTKSOURCEVIEWMM_LIBS
-        { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
-$as_echo "yes" >&6; }
-	:
-fi
-
-elif test $pkg_failed = untried; then
-
-pkg_failed=no
-{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for GTKSOURCEVIEWMM" >&5
-$as_echo_n "checking for GTKSOURCEVIEWMM... " >&6; }
-
-if test -n "$PKG_CONFIG"; then
-    if test -n "$GTKSOURCEVIEWMM_CFLAGS"; then
-        pkg_cv_GTKSOURCEVIEWMM_CFLAGS="$GTKSOURCEVIEWMM_CFLAGS"
-    else
-        if test -n "$PKG_CONFIG" && \
-    { { $as_echo "$as_me:${as_lineno-$LINENO}: \$PKG_CONFIG --exists --print-errors \"libgtksourceviewmm-1.0\""; } >&5
-  ($PKG_CONFIG --exists --print-errors "libgtksourceviewmm-1.0") 2>&5
-  ac_status=$?
-  $as_echo "$as_me:${as_lineno-$LINENO}: \$? = $ac_status" >&5
-  test $ac_status = 0; }; then
-  pkg_cv_GTKSOURCEVIEWMM_CFLAGS=`$PKG_CONFIG --cflags "libgtksourceviewmm-1.0" 2>/dev/null`
-else
-  pkg_failed=yes
-fi
-    fi
-else
-	pkg_failed=untried
-fi
-if test -n "$PKG_CONFIG"; then
-    if test -n "$GTKSOURCEVIEWMM_LIBS"; then
-        pkg_cv_GTKSOURCEVIEWMM_LIBS="$GTKSOURCEVIEWMM_LIBS"
-    else
-        if test -n "$PKG_CONFIG" && \
-    { { $as_echo "$as_me:${as_lineno-$LINENO}: \$PKG_CONFIG --exists --print-errors \"libgtksourceviewmm-1.0\""; } >&5
-  ($PKG_CONFIG --exists --print-errors "libgtksourceviewmm-1.0") 2>&5
-  ac_status=$?
-  $as_echo "$as_me:${as_lineno-$LINENO}: \$? = $ac_status" >&5
-  test $ac_status = 0; }; then
-  pkg_cv_GTKSOURCEVIEWMM_LIBS=`$PKG_CONFIG --libs "libgtksourceviewmm-1.0" 2>/dev/null`
-else
-  pkg_failed=yes
-fi
-    fi
-else
-	pkg_failed=untried
-fi
-
-
-
-if test $pkg_failed = yes; then
-
-if $PKG_CONFIG --atleast-pkgconfig-version 0.20; then
-        _pkg_short_errors_supported=yes
-else
-        _pkg_short_errors_supported=no
-fi
-        if test $_pkg_short_errors_supported = yes; then
-	        GTKSOURCEVIEWMM_PKG_ERRORS=`$PKG_CONFIG --short-errors --errors-to-stdout --print-errors "libgtksourceviewmm-1.0"`
-        else
-	        GTKSOURCEVIEWMM_PKG_ERRORS=`$PKG_CONFIG --errors-to-stdout --print-errors "libgtksourceviewmm-1.0"`
-        fi
-	# Put the nasty error message in config.log where it belongs
-	echo "$GTKSOURCEVIEWMM_PKG_ERRORS" >&5
-
-	{ $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
-$as_echo "no" >&6; }
-
-pkg_failed=no
-{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for GTKSOURCEVIEWMM" >&5
-$as_echo_n "checking for GTKSOURCEVIEWMM... " >&6; }
-
-if test -n "$PKG_CONFIG"; then
-    if test -n "$GTKSOURCEVIEWMM_CFLAGS"; then
-        pkg_cv_GTKSOURCEVIEWMM_CFLAGS="$GTKSOURCEVIEWMM_CFLAGS"
-    else
-        if test -n "$PKG_CONFIG" && \
-    { { $as_echo "$as_me:${as_lineno-$LINENO}: \$PKG_CONFIG --exists --print-errors \"gtksourceviewmm-2.0\""; } >&5
-  ($PKG_CONFIG --exists --print-errors "gtksourceviewmm-2.0") 2>&5
-  ac_status=$?
-  $as_echo "$as_me:${as_lineno-$LINENO}: \$? = $ac_status" >&5
-  test $ac_status = 0; }; then
-  pkg_cv_GTKSOURCEVIEWMM_CFLAGS=`$PKG_CONFIG --cflags "gtksourceviewmm-2.0" 2>/dev/null`
-else
-  pkg_failed=yes
-fi
-    fi
-else
-	pkg_failed=untried
-fi
-if test -n "$PKG_CONFIG"; then
-    if test -n "$GTKSOURCEVIEWMM_LIBS"; then
-        pkg_cv_GTKSOURCEVIEWMM_LIBS="$GTKSOURCEVIEWMM_LIBS"
-    else
-        if test -n "$PKG_CONFIG" && \
-    { { $as_echo "$as_me:${as_lineno-$LINENO}: \$PKG_CONFIG --exists --print-errors \"gtksourceviewmm-2.0\""; } >&5
-  ($PKG_CONFIG --exists --print-errors "gtksourceviewmm-2.0") 2>&5
-  ac_status=$?
-  $as_echo "$as_me:${as_lineno-$LINENO}: \$? = $ac_status" >&5
-  test $ac_status = 0; }; then
-  pkg_cv_GTKSOURCEVIEWMM_LIBS=`$PKG_CONFIG --libs "gtksourceviewmm-2.0" 2>/dev/null`
-else
-  pkg_failed=yes
-fi
-    fi
-else
-	pkg_failed=untried
-fi
-
-
-
-if test $pkg_failed = yes; then
-
-if $PKG_CONFIG --atleast-pkgconfig-version 0.20; then
-        _pkg_short_errors_supported=yes
-else
-        _pkg_short_errors_supported=no
-fi
-        if test $_pkg_short_errors_supported = yes; then
-	        GTKSOURCEVIEWMM_PKG_ERRORS=`$PKG_CONFIG --short-errors --errors-to-stdout --print-errors "gtksourceviewmm-2.0"`
-        else
-	        GTKSOURCEVIEWMM_PKG_ERRORS=`$PKG_CONFIG --errors-to-stdout --print-errors "gtksourceviewmm-2.0"`
-        fi
-	# Put the nasty error message in config.log where it belongs
-	echo "$GTKSOURCEVIEWMM_PKG_ERRORS" >&5
-
-	as_fn_error $? "Package requirements (gtksourceviewmm-2.0) were not met:
-
-$GTKSOURCEVIEWMM_PKG_ERRORS
-
-Consider adjusting the PKG_CONFIG_PATH environment variable if you
-installed software in a non-standard prefix.
-
-Alternatively, you may set the environment variables GTKSOURCEVIEWMM_CFLAGS
-and GTKSOURCEVIEWMM_LIBS to avoid the need to call pkg-config.
-See the pkg-config man page for more details.
-" "$LINENO" 5
-elif test $pkg_failed = untried; then
-	{ { $as_echo "$as_me:${as_lineno-$LINENO}: error: in \`$ac_pwd':" >&5
-$as_echo "$as_me: error: in \`$ac_pwd':" >&2;}
-as_fn_error $? "The pkg-config script could not be found or is too old.  Make sure it
-is in your PATH or set the PKG_CONFIG environment variable to the full
-path to pkg-config.
-
-Alternatively, you may set the environment variables GTKSOURCEVIEWMM_CFLAGS
-and GTKSOURCEVIEWMM_LIBS to avoid the need to call pkg-config.
-See the pkg-config man page for more details.
-
-To get pkg-config, see <http://pkg-config.freedesktop.org/>.
-See \`config.log' for more details" "$LINENO" 5; }
-else
-	GTKSOURCEVIEWMM_CFLAGS=$pkg_cv_GTKSOURCEVIEWMM_CFLAGS
-	GTKSOURCEVIEWMM_LIBS=$pkg_cv_GTKSOURCEVIEWMM_LIBS
-        { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
-$as_echo "yes" >&6; }
-
-
-$as_echo "#define GTKSVMM_API_VERSION 2" >>confdefs.h
-
-                ac_cv_source_languages_manager=true
-
-fi
-
-elif test $pkg_failed = untried; then
-
-pkg_failed=no
-{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for GTKSOURCEVIEWMM" >&5
-$as_echo_n "checking for GTKSOURCEVIEWMM... " >&6; }
-
-if test -n "$PKG_CONFIG"; then
-    if test -n "$GTKSOURCEVIEWMM_CFLAGS"; then
-        pkg_cv_GTKSOURCEVIEWMM_CFLAGS="$GTKSOURCEVIEWMM_CFLAGS"
-    else
-        if test -n "$PKG_CONFIG" && \
-    { { $as_echo "$as_me:${as_lineno-$LINENO}: \$PKG_CONFIG --exists --print-errors \"gtksourceviewmm-2.0\""; } >&5
-  ($PKG_CONFIG --exists --print-errors "gtksourceviewmm-2.0") 2>&5
-  ac_status=$?
-  $as_echo "$as_me:${as_lineno-$LINENO}: \$? = $ac_status" >&5
-  test $ac_status = 0; }; then
-  pkg_cv_GTKSOURCEVIEWMM_CFLAGS=`$PKG_CONFIG --cflags "gtksourceviewmm-2.0" 2>/dev/null`
-else
-  pkg_failed=yes
-fi
-    fi
-else
-	pkg_failed=untried
-fi
-if test -n "$PKG_CONFIG"; then
-    if test -n "$GTKSOURCEVIEWMM_LIBS"; then
-        pkg_cv_GTKSOURCEVIEWMM_LIBS="$GTKSOURCEVIEWMM_LIBS"
-    else
-        if test -n "$PKG_CONFIG" && \
-    { { $as_echo "$as_me:${as_lineno-$LINENO}: \$PKG_CONFIG --exists --print-errors \"gtksourceviewmm-2.0\""; } >&5
-  ($PKG_CONFIG --exists --print-errors "gtksourceviewmm-2.0") 2>&5
-  ac_status=$?
-  $as_echo "$as_me:${as_lineno-$LINENO}: \$? = $ac_status" >&5
-  test $ac_status = 0; }; then
-  pkg_cv_GTKSOURCEVIEWMM_LIBS=`$PKG_CONFIG --libs "gtksourceviewmm-2.0" 2>/dev/null`
-else
-  pkg_failed=yes
-fi
-    fi
-else
-	pkg_failed=untried
-fi
-
-
-
-if test $pkg_failed = yes; then
-
-if $PKG_CONFIG --atleast-pkgconfig-version 0.20; then
-        _pkg_short_errors_supported=yes
-else
-        _pkg_short_errors_supported=no
-fi
-        if test $_pkg_short_errors_supported = yes; then
-	        GTKSOURCEVIEWMM_PKG_ERRORS=`$PKG_CONFIG --short-errors --errors-to-stdout --print-errors "gtksourceviewmm-2.0"`
-        else
-	        GTKSOURCEVIEWMM_PKG_ERRORS=`$PKG_CONFIG --errors-to-stdout --print-errors "gtksourceviewmm-2.0"`
-        fi
-	# Put the nasty error message in config.log where it belongs
-	echo "$GTKSOURCEVIEWMM_PKG_ERRORS" >&5
-
-	as_fn_error $? "Package requirements (gtksourceviewmm-2.0) were not met:
-
-$GTKSOURCEVIEWMM_PKG_ERRORS
-
-Consider adjusting the PKG_CONFIG_PATH environment variable if you
-installed software in a non-standard prefix.
-
-Alternatively, you may set the environment variables GTKSOURCEVIEWMM_CFLAGS
-and GTKSOURCEVIEWMM_LIBS to avoid the need to call pkg-config.
-See the pkg-config man page for more details.
-" "$LINENO" 5
-elif test $pkg_failed = untried; then
-	{ { $as_echo "$as_me:${as_lineno-$LINENO}: error: in \`$ac_pwd':" >&5
-$as_echo "$as_me: error: in \`$ac_pwd':" >&2;}
-as_fn_error $? "The pkg-config script could not be found or is too old.  Make sure it
-is in your PATH or set the PKG_CONFIG environment variable to the full
-path to pkg-config.
-
-Alternatively, you may set the environment variables GTKSOURCEVIEWMM_CFLAGS
-and GTKSOURCEVIEWMM_LIBS to avoid the need to call pkg-config.
-See the pkg-config man page for more details.
-
-To get pkg-config, see <http://pkg-config.freedesktop.org/>.
-See \`config.log' for more details" "$LINENO" 5; }
-else
-	GTKSOURCEVIEWMM_CFLAGS=$pkg_cv_GTKSOURCEVIEWMM_CFLAGS
-	GTKSOURCEVIEWMM_LIBS=$pkg_cv_GTKSOURCEVIEWMM_LIBS
-        { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
-$as_echo "yes" >&6; }
-
-
-$as_echo "#define GTKSVMM_API_VERSION 2" >>confdefs.h
-
-                ac_cv_source_languages_manager=true
-
-fi
-
-else
-	GTKSOURCEVIEWMM_CFLAGS=$pkg_cv_GTKSOURCEVIEWMM_CFLAGS
-	GTKSOURCEVIEWMM_LIBS=$pkg_cv_GTKSOURCEVIEWMM_LIBS
-        { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
-$as_echo "yes" >&6; }
-	:
-fi
-
 else
 	GTKSOURCEVIEWMM_CFLAGS=$pkg_cv_GTKSOURCEVIEWMM_CFLAGS
 	GTKSOURCEVIEWMM_LIBS=$pkg_cv_GTKSOURCEVIEWMM_LIBS
@@ -5305,6 +4925,397 @@ $as_echo "yes" >&6; }
 
 
 $as_echo "#define GTKSVMM_API_VERSION 1" >>confdefs.h
+
+                GTKSOURCEVIEWMM=gtksourceviewmm-1.0
+
+                ac_cv_source_languages_manager=true
+
+fi
+
+elif test $pkg_failed = untried; then
+
+pkg_failed=no
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for GTKSOURCEVIEWMM" >&5
+$as_echo_n "checking for GTKSOURCEVIEWMM... " >&6; }
+
+if test -n "$PKG_CONFIG"; then
+    if test -n "$GTKSOURCEVIEWMM_CFLAGS"; then
+        pkg_cv_GTKSOURCEVIEWMM_CFLAGS="$GTKSOURCEVIEWMM_CFLAGS"
+    else
+        if test -n "$PKG_CONFIG" && \
+    { { $as_echo "$as_me:${as_lineno-$LINENO}: \$PKG_CONFIG --exists --print-errors \"gtksourceviewmm-1.0\""; } >&5
+  ($PKG_CONFIG --exists --print-errors "gtksourceviewmm-1.0") 2>&5
+  ac_status=$?
+  $as_echo "$as_me:${as_lineno-$LINENO}: \$? = $ac_status" >&5
+  test $ac_status = 0; }; then
+  pkg_cv_GTKSOURCEVIEWMM_CFLAGS=`$PKG_CONFIG --cflags "gtksourceviewmm-1.0" 2>/dev/null`
+else
+  pkg_failed=yes
+fi
+    fi
+else
+	pkg_failed=untried
+fi
+if test -n "$PKG_CONFIG"; then
+    if test -n "$GTKSOURCEVIEWMM_LIBS"; then
+        pkg_cv_GTKSOURCEVIEWMM_LIBS="$GTKSOURCEVIEWMM_LIBS"
+    else
+        if test -n "$PKG_CONFIG" && \
+    { { $as_echo "$as_me:${as_lineno-$LINENO}: \$PKG_CONFIG --exists --print-errors \"gtksourceviewmm-1.0\""; } >&5
+  ($PKG_CONFIG --exists --print-errors "gtksourceviewmm-1.0") 2>&5
+  ac_status=$?
+  $as_echo "$as_me:${as_lineno-$LINENO}: \$? = $ac_status" >&5
+  test $ac_status = 0; }; then
+  pkg_cv_GTKSOURCEVIEWMM_LIBS=`$PKG_CONFIG --libs "gtksourceviewmm-1.0" 2>/dev/null`
+else
+  pkg_failed=yes
+fi
+    fi
+else
+	pkg_failed=untried
+fi
+
+
+
+if test $pkg_failed = yes; then
+
+if $PKG_CONFIG --atleast-pkgconfig-version 0.20; then
+        _pkg_short_errors_supported=yes
+else
+        _pkg_short_errors_supported=no
+fi
+        if test $_pkg_short_errors_supported = yes; then
+	        GTKSOURCEVIEWMM_PKG_ERRORS=`$PKG_CONFIG --short-errors --errors-to-stdout --print-errors "gtksourceviewmm-1.0"`
+        else
+	        GTKSOURCEVIEWMM_PKG_ERRORS=`$PKG_CONFIG --errors-to-stdout --print-errors "gtksourceviewmm-1.0"`
+        fi
+	# Put the nasty error message in config.log where it belongs
+	echo "$GTKSOURCEVIEWMM_PKG_ERRORS" >&5
+
+	as_fn_error $? "Package requirements (gtksourceviewmm-1.0) were not met:
+
+$GTKSOURCEVIEWMM_PKG_ERRORS
+
+Consider adjusting the PKG_CONFIG_PATH environment variable if you
+installed software in a non-standard prefix.
+
+Alternatively, you may set the environment variables GTKSOURCEVIEWMM_CFLAGS
+and GTKSOURCEVIEWMM_LIBS to avoid the need to call pkg-config.
+See the pkg-config man page for more details.
+" "$LINENO" 5
+elif test $pkg_failed = untried; then
+	{ { $as_echo "$as_me:${as_lineno-$LINENO}: error: in \`$ac_pwd':" >&5
+$as_echo "$as_me: error: in \`$ac_pwd':" >&2;}
+as_fn_error $? "The pkg-config script could not be found or is too old.  Make sure it
+is in your PATH or set the PKG_CONFIG environment variable to the full
+path to pkg-config.
+
+Alternatively, you may set the environment variables GTKSOURCEVIEWMM_CFLAGS
+and GTKSOURCEVIEWMM_LIBS to avoid the need to call pkg-config.
+See the pkg-config man page for more details.
+
+To get pkg-config, see <http://pkg-config.freedesktop.org/>.
+See \`config.log' for more details" "$LINENO" 5; }
+else
+	GTKSOURCEVIEWMM_CFLAGS=$pkg_cv_GTKSOURCEVIEWMM_CFLAGS
+	GTKSOURCEVIEWMM_LIBS=$pkg_cv_GTKSOURCEVIEWMM_LIBS
+        { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
+$as_echo "yes" >&6; }
+
+
+$as_echo "#define GTKSVMM_API_VERSION 1" >>confdefs.h
+
+                GTKSOURCEVIEWMM=gtksourceviewmm-1.0
+
+                ac_cv_source_languages_manager=true
+
+fi
+
+else
+	GTKSOURCEVIEWMM_CFLAGS=$pkg_cv_GTKSOURCEVIEWMM_CFLAGS
+	GTKSOURCEVIEWMM_LIBS=$pkg_cv_GTKSOURCEVIEWMM_LIBS
+        { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
+$as_echo "yes" >&6; }
+	:
+fi
+
+elif test $pkg_failed = untried; then
+
+pkg_failed=no
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for GTKSOURCEVIEWMM" >&5
+$as_echo_n "checking for GTKSOURCEVIEWMM... " >&6; }
+
+if test -n "$PKG_CONFIG"; then
+    if test -n "$GTKSOURCEVIEWMM_CFLAGS"; then
+        pkg_cv_GTKSOURCEVIEWMM_CFLAGS="$GTKSOURCEVIEWMM_CFLAGS"
+    else
+        if test -n "$PKG_CONFIG" && \
+    { { $as_echo "$as_me:${as_lineno-$LINENO}: \$PKG_CONFIG --exists --print-errors \"libgtksourceviewmm-1.0\""; } >&5
+  ($PKG_CONFIG --exists --print-errors "libgtksourceviewmm-1.0") 2>&5
+  ac_status=$?
+  $as_echo "$as_me:${as_lineno-$LINENO}: \$? = $ac_status" >&5
+  test $ac_status = 0; }; then
+  pkg_cv_GTKSOURCEVIEWMM_CFLAGS=`$PKG_CONFIG --cflags "libgtksourceviewmm-1.0" 2>/dev/null`
+else
+  pkg_failed=yes
+fi
+    fi
+else
+	pkg_failed=untried
+fi
+if test -n "$PKG_CONFIG"; then
+    if test -n "$GTKSOURCEVIEWMM_LIBS"; then
+        pkg_cv_GTKSOURCEVIEWMM_LIBS="$GTKSOURCEVIEWMM_LIBS"
+    else
+        if test -n "$PKG_CONFIG" && \
+    { { $as_echo "$as_me:${as_lineno-$LINENO}: \$PKG_CONFIG --exists --print-errors \"libgtksourceviewmm-1.0\""; } >&5
+  ($PKG_CONFIG --exists --print-errors "libgtksourceviewmm-1.0") 2>&5
+  ac_status=$?
+  $as_echo "$as_me:${as_lineno-$LINENO}: \$? = $ac_status" >&5
+  test $ac_status = 0; }; then
+  pkg_cv_GTKSOURCEVIEWMM_LIBS=`$PKG_CONFIG --libs "libgtksourceviewmm-1.0" 2>/dev/null`
+else
+  pkg_failed=yes
+fi
+    fi
+else
+	pkg_failed=untried
+fi
+
+
+
+if test $pkg_failed = yes; then
+
+if $PKG_CONFIG --atleast-pkgconfig-version 0.20; then
+        _pkg_short_errors_supported=yes
+else
+        _pkg_short_errors_supported=no
+fi
+        if test $_pkg_short_errors_supported = yes; then
+	        GTKSOURCEVIEWMM_PKG_ERRORS=`$PKG_CONFIG --short-errors --errors-to-stdout --print-errors "libgtksourceviewmm-1.0"`
+        else
+	        GTKSOURCEVIEWMM_PKG_ERRORS=`$PKG_CONFIG --errors-to-stdout --print-errors "libgtksourceviewmm-1.0"`
+        fi
+	# Put the nasty error message in config.log where it belongs
+	echo "$GTKSOURCEVIEWMM_PKG_ERRORS" >&5
+
+	{ $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+$as_echo "no" >&6; }
+
+pkg_failed=no
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for GTKSOURCEVIEWMM" >&5
+$as_echo_n "checking for GTKSOURCEVIEWMM... " >&6; }
+
+if test -n "$PKG_CONFIG"; then
+    if test -n "$GTKSOURCEVIEWMM_CFLAGS"; then
+        pkg_cv_GTKSOURCEVIEWMM_CFLAGS="$GTKSOURCEVIEWMM_CFLAGS"
+    else
+        if test -n "$PKG_CONFIG" && \
+    { { $as_echo "$as_me:${as_lineno-$LINENO}: \$PKG_CONFIG --exists --print-errors \"gtksourceviewmm-1.0\""; } >&5
+  ($PKG_CONFIG --exists --print-errors "gtksourceviewmm-1.0") 2>&5
+  ac_status=$?
+  $as_echo "$as_me:${as_lineno-$LINENO}: \$? = $ac_status" >&5
+  test $ac_status = 0; }; then
+  pkg_cv_GTKSOURCEVIEWMM_CFLAGS=`$PKG_CONFIG --cflags "gtksourceviewmm-1.0" 2>/dev/null`
+else
+  pkg_failed=yes
+fi
+    fi
+else
+	pkg_failed=untried
+fi
+if test -n "$PKG_CONFIG"; then
+    if test -n "$GTKSOURCEVIEWMM_LIBS"; then
+        pkg_cv_GTKSOURCEVIEWMM_LIBS="$GTKSOURCEVIEWMM_LIBS"
+    else
+        if test -n "$PKG_CONFIG" && \
+    { { $as_echo "$as_me:${as_lineno-$LINENO}: \$PKG_CONFIG --exists --print-errors \"gtksourceviewmm-1.0\""; } >&5
+  ($PKG_CONFIG --exists --print-errors "gtksourceviewmm-1.0") 2>&5
+  ac_status=$?
+  $as_echo "$as_me:${as_lineno-$LINENO}: \$? = $ac_status" >&5
+  test $ac_status = 0; }; then
+  pkg_cv_GTKSOURCEVIEWMM_LIBS=`$PKG_CONFIG --libs "gtksourceviewmm-1.0" 2>/dev/null`
+else
+  pkg_failed=yes
+fi
+    fi
+else
+	pkg_failed=untried
+fi
+
+
+
+if test $pkg_failed = yes; then
+
+if $PKG_CONFIG --atleast-pkgconfig-version 0.20; then
+        _pkg_short_errors_supported=yes
+else
+        _pkg_short_errors_supported=no
+fi
+        if test $_pkg_short_errors_supported = yes; then
+	        GTKSOURCEVIEWMM_PKG_ERRORS=`$PKG_CONFIG --short-errors --errors-to-stdout --print-errors "gtksourceviewmm-1.0"`
+        else
+	        GTKSOURCEVIEWMM_PKG_ERRORS=`$PKG_CONFIG --errors-to-stdout --print-errors "gtksourceviewmm-1.0"`
+        fi
+	# Put the nasty error message in config.log where it belongs
+	echo "$GTKSOURCEVIEWMM_PKG_ERRORS" >&5
+
+	as_fn_error $? "Package requirements (gtksourceviewmm-1.0) were not met:
+
+$GTKSOURCEVIEWMM_PKG_ERRORS
+
+Consider adjusting the PKG_CONFIG_PATH environment variable if you
+installed software in a non-standard prefix.
+
+Alternatively, you may set the environment variables GTKSOURCEVIEWMM_CFLAGS
+and GTKSOURCEVIEWMM_LIBS to avoid the need to call pkg-config.
+See the pkg-config man page for more details.
+" "$LINENO" 5
+elif test $pkg_failed = untried; then
+	{ { $as_echo "$as_me:${as_lineno-$LINENO}: error: in \`$ac_pwd':" >&5
+$as_echo "$as_me: error: in \`$ac_pwd':" >&2;}
+as_fn_error $? "The pkg-config script could not be found or is too old.  Make sure it
+is in your PATH or set the PKG_CONFIG environment variable to the full
+path to pkg-config.
+
+Alternatively, you may set the environment variables GTKSOURCEVIEWMM_CFLAGS
+and GTKSOURCEVIEWMM_LIBS to avoid the need to call pkg-config.
+See the pkg-config man page for more details.
+
+To get pkg-config, see <http://pkg-config.freedesktop.org/>.
+See \`config.log' for more details" "$LINENO" 5; }
+else
+	GTKSOURCEVIEWMM_CFLAGS=$pkg_cv_GTKSOURCEVIEWMM_CFLAGS
+	GTKSOURCEVIEWMM_LIBS=$pkg_cv_GTKSOURCEVIEWMM_LIBS
+        { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
+$as_echo "yes" >&6; }
+
+
+$as_echo "#define GTKSVMM_API_VERSION 1" >>confdefs.h
+
+                GTKSOURCEVIEWMM=gtksourceviewmm-1.0
+
+                ac_cv_source_languages_manager=true
+
+fi
+
+elif test $pkg_failed = untried; then
+
+pkg_failed=no
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for GTKSOURCEVIEWMM" >&5
+$as_echo_n "checking for GTKSOURCEVIEWMM... " >&6; }
+
+if test -n "$PKG_CONFIG"; then
+    if test -n "$GTKSOURCEVIEWMM_CFLAGS"; then
+        pkg_cv_GTKSOURCEVIEWMM_CFLAGS="$GTKSOURCEVIEWMM_CFLAGS"
+    else
+        if test -n "$PKG_CONFIG" && \
+    { { $as_echo "$as_me:${as_lineno-$LINENO}: \$PKG_CONFIG --exists --print-errors \"gtksourceviewmm-1.0\""; } >&5
+  ($PKG_CONFIG --exists --print-errors "gtksourceviewmm-1.0") 2>&5
+  ac_status=$?
+  $as_echo "$as_me:${as_lineno-$LINENO}: \$? = $ac_status" >&5
+  test $ac_status = 0; }; then
+  pkg_cv_GTKSOURCEVIEWMM_CFLAGS=`$PKG_CONFIG --cflags "gtksourceviewmm-1.0" 2>/dev/null`
+else
+  pkg_failed=yes
+fi
+    fi
+else
+	pkg_failed=untried
+fi
+if test -n "$PKG_CONFIG"; then
+    if test -n "$GTKSOURCEVIEWMM_LIBS"; then
+        pkg_cv_GTKSOURCEVIEWMM_LIBS="$GTKSOURCEVIEWMM_LIBS"
+    else
+        if test -n "$PKG_CONFIG" && \
+    { { $as_echo "$as_me:${as_lineno-$LINENO}: \$PKG_CONFIG --exists --print-errors \"gtksourceviewmm-1.0\""; } >&5
+  ($PKG_CONFIG --exists --print-errors "gtksourceviewmm-1.0") 2>&5
+  ac_status=$?
+  $as_echo "$as_me:${as_lineno-$LINENO}: \$? = $ac_status" >&5
+  test $ac_status = 0; }; then
+  pkg_cv_GTKSOURCEVIEWMM_LIBS=`$PKG_CONFIG --libs "gtksourceviewmm-1.0" 2>/dev/null`
+else
+  pkg_failed=yes
+fi
+    fi
+else
+	pkg_failed=untried
+fi
+
+
+
+if test $pkg_failed = yes; then
+
+if $PKG_CONFIG --atleast-pkgconfig-version 0.20; then
+        _pkg_short_errors_supported=yes
+else
+        _pkg_short_errors_supported=no
+fi
+        if test $_pkg_short_errors_supported = yes; then
+	        GTKSOURCEVIEWMM_PKG_ERRORS=`$PKG_CONFIG --short-errors --errors-to-stdout --print-errors "gtksourceviewmm-1.0"`
+        else
+	        GTKSOURCEVIEWMM_PKG_ERRORS=`$PKG_CONFIG --errors-to-stdout --print-errors "gtksourceviewmm-1.0"`
+        fi
+	# Put the nasty error message in config.log where it belongs
+	echo "$GTKSOURCEVIEWMM_PKG_ERRORS" >&5
+
+	as_fn_error $? "Package requirements (gtksourceviewmm-1.0) were not met:
+
+$GTKSOURCEVIEWMM_PKG_ERRORS
+
+Consider adjusting the PKG_CONFIG_PATH environment variable if you
+installed software in a non-standard prefix.
+
+Alternatively, you may set the environment variables GTKSOURCEVIEWMM_CFLAGS
+and GTKSOURCEVIEWMM_LIBS to avoid the need to call pkg-config.
+See the pkg-config man page for more details.
+" "$LINENO" 5
+elif test $pkg_failed = untried; then
+	{ { $as_echo "$as_me:${as_lineno-$LINENO}: error: in \`$ac_pwd':" >&5
+$as_echo "$as_me: error: in \`$ac_pwd':" >&2;}
+as_fn_error $? "The pkg-config script could not be found or is too old.  Make sure it
+is in your PATH or set the PKG_CONFIG environment variable to the full
+path to pkg-config.
+
+Alternatively, you may set the environment variables GTKSOURCEVIEWMM_CFLAGS
+and GTKSOURCEVIEWMM_LIBS to avoid the need to call pkg-config.
+See the pkg-config man page for more details.
+
+To get pkg-config, see <http://pkg-config.freedesktop.org/>.
+See \`config.log' for more details" "$LINENO" 5; }
+else
+	GTKSOURCEVIEWMM_CFLAGS=$pkg_cv_GTKSOURCEVIEWMM_CFLAGS
+	GTKSOURCEVIEWMM_LIBS=$pkg_cv_GTKSOURCEVIEWMM_LIBS
+        { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
+$as_echo "yes" >&6; }
+
+
+$as_echo "#define GTKSVMM_API_VERSION 1" >>confdefs.h
+
+                GTKSOURCEVIEWMM=gtksourceviewmm-1.0
+
+                ac_cv_source_languages_manager=true
+
+fi
+
+else
+	GTKSOURCEVIEWMM_CFLAGS=$pkg_cv_GTKSOURCEVIEWMM_CFLAGS
+	GTKSOURCEVIEWMM_LIBS=$pkg_cv_GTKSOURCEVIEWMM_LIBS
+        { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
+$as_echo "yes" >&6; }
+	:
+fi
+
+else
+	GTKSOURCEVIEWMM_CFLAGS=$pkg_cv_GTKSOURCEVIEWMM_CFLAGS
+	GTKSOURCEVIEWMM_LIBS=$pkg_cv_GTKSOURCEVIEWMM_LIBS
+        { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
+$as_echo "yes" >&6; }
+
+
+$as_echo "#define GTKSVMM_API_VERSION 2" >>confdefs.h
+
+     GTKSOURCEVIEWMM=gtksourceviewmm-2.0
 
 
 fi
@@ -8409,18 +8420,18 @@ $as_echo "$ac_cv_notebook_set_group" >&6; }
 $as_echo "#define HAVE_NOTEBOOK_SET_GROUP 1" >>confdefs.h
 
  fi
-#check for SourceLanguagesManager::create() in gtksourceviewmm-1.0
+#check for SourceLanguagesManager::create() in gtksourceviewmm
 
 
-{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for SourceLanguagesManager::create" >&5
-$as_echo_n "checking for SourceLanguagesManager::create... " >&6; }
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for SourceLanguagesManager::create in $GTKSOURCEVIEWMM" >&5
+$as_echo_n "checking for SourceLanguagesManager::create in $GTKSOURCEVIEWMM... " >&6; }
 if ${ac_cv_source_languages_manager+:} false; then :
   $as_echo_n "(cached) " >&6
 else
   ac_cv_source_languages_manager=false
-    grep create /usr/include/gtksourceviewmm-1.0/gtksourceviewmm/sourcelanguagesmanager.h \
+    grep create /usr/include/$GTKSOURCEVIEWMM/gtksourceviewmm/sourcelanguage*manager.h \
         2>/dev/null 1>&2 || \
-    grep create /usr/local/include/gtksourceviewmm-1.0/gtksourceviewmm/sourcelanguagesmanager.h \
+    grep create /usr/local/include/$GTKSOURCEVIEWMM/gtksourceviewmm/sourcelanguage*manager.h \
         2>/dev/null 1>&2 && ac_cv_source_languages_manager=true \
     && ac_cv_source_languages_manager=true
 fi
