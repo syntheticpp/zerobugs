@@ -10,7 +10,7 @@
 // (See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt)
 // -------------------------------------------------------------------------
-
+#include "zdk/config.h"
 #include <map>
 #include <vector>
 #include <string>
@@ -36,10 +36,10 @@ namespace ELF
      */
     struct Segment
     {
-        off_t  offs;   // offset in the core file
-        size_t msize;  // size mapped in memory
-        size_t fsize;  // size in file
-        long   flags;
+        off_t       offs;   // offset in the core file
+        size_t      msize;  // size mapped in memory
+        size_t      fsize;  // size in file
+        long        flags;
 
         std::string filename;
     };

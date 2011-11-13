@@ -98,9 +98,20 @@ void ELF::CoreFile::read_segment(const ProgramHeader& phdr)
 
     if (phdr.memsz())
     {
+        if (phdr.memsz() > numeric_limits<size_t>::max())
+        {
+            throw std::range_error("memsz out of range in corefile program header");
+        }
+        if (phdr.filesz() > numeric_limits<size_t>::max())
+        {
+            throw std::range_error("filesz out of range in corefile program header");
+        }
         Segment seg =
         {
-            phdr.offset(), phdr.memsz(), phdr.filesz(), phdr.flags()
+            phdr.offset(),
+            size_t(phdr.memsz()),
+            size_t(phdr.filesz()),
+            phdr.flags()
         };
         ElfW(Addr) vaddr = phdr.vaddr();
 
@@ -644,7 +655,7 @@ void ELF::CoreFile::get_environment(SArray& env)
  */
 void ELF::CoreFile::get_environment()
 {
-    static const streampos step = 1024;
+    // static const streampos step = 1024;
 
     if (!env_.empty())
     {
@@ -655,7 +666,7 @@ void ELF::CoreFile::get_environment()
     List<ProgramHeader>::const_iterator i = phdr.begin(),
                                       end = phdr.end();
     off_t first = i->offset();
-    off_t last = first + i->filesz();
+    // off_t last = first + i->filesz();
     //
     // locate the last loadable, non-executable segment
     //
@@ -664,7 +675,7 @@ void ELF::CoreFile::get_environment()
         if ((i->type() == PT_LOAD) && (i->flags() & PF_X) == 0)
         {
             first = i->offset();
-            last = first + i->filesz();
+            // last = first + i->filesz();
         }
     }
 

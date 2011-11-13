@@ -25,12 +25,18 @@
 /* define if the Boost library is available */
 #define HAVE_BOOST /**/
 
+/* define if the Boost::Python library is available */
+#define HAVE_BOOST_PYTHON /**/
+
 /* Define to 1 if you have the <dirent.h> header file, and it defines `DIR'.
    */
 #define HAVE_DIRENT_H 1
 
 /* Define to 1 if you have the `dup2' function. */
 #define HAVE_DUP2 1
+
+/* Define to 1 if you have <elf.h>. */
+#define HAVE_ELF_H 1
 
 /* Define to 1 if you have the <fcntl.h> header file. */
 #define HAVE_FCNTL_H 1
@@ -57,7 +63,7 @@
 #define HAVE_LIBELF_H 1
 
 /* Define to 1 if you have <libelf/libelf.h>. */
-/* #undef HAVE_LIBELF_LIBELF_H */
+#define HAVE_LIBELF_LIBELF_H 1
 
 /* Define to 1 if you have the <libgen.h> header file. */
 #define HAVE_LIBGEN_H 1

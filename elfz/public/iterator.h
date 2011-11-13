@@ -115,6 +115,12 @@ namespace ELF
         {
             return (ptr_.get() != other.ptr_.get());
         }
+        
+        template<typename P, typename R>
+        bool operator<(const Iterator<T, P, R>& other) const
+        {
+            return (ptr_.get() < other.ptr_.get());
+        }
 
     private:
         File* elf_;

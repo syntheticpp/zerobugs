@@ -10,7 +10,8 @@ include $(TOP)/zdk/make/Common.mak
 CXXFLAGS+=-ftemplate-depth-32 
 CC=$(CXX)
 LIBS=-lzdk
-LDLIBS+=-ldharma $(LIBS) -lpthread
+
+LDLIBS+=-ldharma $(LIBS) -ldl -lpthread
 
 ################################################################
 SRCS=\

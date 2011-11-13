@@ -51,11 +51,6 @@ expect { {d=1.84467e+19}
 call { eval d/2.}
 expect { 9.22335e+18
 }
-# FIXME this one fails
-#call next
-#call { print d }
-#expect { d=9.22335e+18
-#}
 
 call quit
 ---end---

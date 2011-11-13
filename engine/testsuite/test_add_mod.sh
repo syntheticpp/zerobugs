@@ -77,7 +77,7 @@ function run()
         test_add_mod -gstabs+ $@
         test_add_mod -gstabs $@
         #test_add_mod -gdwarf-23 $@
-        test_add_mod -g $@
+        #test_add_mod -g $@
     fi
 }
 

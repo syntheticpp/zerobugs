@@ -12,6 +12,10 @@
 // -------------------------------------------------------------------------
 
 #include "zdk/config.h"
+#if HAVE_ELF_H
+ #include <elf.h>
+#endif
+
 #if HAVE_LIBELF_LIBELF_H
  #include <libelf/libelf.h>
 #elif HAVE_LIBELF_H

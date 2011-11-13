@@ -30,7 +30,7 @@ int main(int argc, char* argv[])
 
 #write test script (processed by the AutoTest plugin)
 cat > script << '---end---'
-call ( break foo.cpp:4 )
+call ( break foo.cpp:5 )
 
 call ( continue )
 call ( x )
@@ -40,13 +40,13 @@ call ( y )
 expect ( 1.1
 )
 call continue
+call continue
 call ( x )
 expect ( 4.24
 )
-# TODO: FIXME
-#call ( y )
-#expect ( 0
-#)
+call ( y )
+expect ( 0
+)
 call continue
 call quit
 ---end---

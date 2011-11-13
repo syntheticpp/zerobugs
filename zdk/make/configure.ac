@@ -128,6 +128,10 @@ AC_CHECK_HEADER([atomic_ops.h],
                     [Define to 1 if you have <atomic_ops.h>.])],
                     [echo "Please make sure libatomic-ops-dev is installed"; exit 1]
                 )
+AC_CHECK_HEADER([elf.h],
+                [AC_DEFINE([HAVE_ELF_H], [1],
+                    [Define to 1 if you have <elf.h>.])],
+                [])
 AC_CHECK_HEADER([libelf.h],
                 [AC_DEFINE([HAVE_LIBELF_H], [1],
                     [Define to 1 if you have <libelf.h>.])],
@@ -137,7 +141,7 @@ AC_CHECK_HEADER([libelf/libelf.h],
                     [Define to 1 if you have <libelf/libelf.h>.])],
                 [])
 AC_CHECK_HEADER([sys/param.h],
-                [AC_DEFINE([HAVE_SYS_PARAM_H], [1],
+                AC_DEFINE([HAVE_SYS_PARAM_H], [1],
                     [Define to 1 if you have <sys/param.h>.])],
                 [])
 AC_CHECK_HEADER([sys/procfs.h],
