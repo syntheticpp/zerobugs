@@ -36,7 +36,7 @@ Dwarf_Unsigned EncodingAttr::value() const
     case DW_FORM_data1:
         if (dwarf_formudata(attr(), &enc, &err) == DW_DLV_ERROR)
         {
-            throw Error(__func__, dbg(), err);
+            THROW_ERROR(dbg(), err);
         }
         break;
 

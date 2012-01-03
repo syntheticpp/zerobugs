@@ -65,7 +65,7 @@ Dwarf_Die Utils::first_child
 
     if (dwarf_child(die, &child, &err) == DW_DLV_ERROR)
     {
-        throw Error("dwarf_child", dbg, err);
+        THROW_ERROR(dbg, err);
     }
     if (child)
     {
@@ -105,7 +105,7 @@ Dwarf_Die Utils::next_sibling
 
         if (rc == DW_DLV_ERROR)
         {
-            throw Error("dwarf_siblingof", dbg, error);
+            THROW_ERROR(dbg, error);
         }
         if (error)
         {
@@ -175,7 +175,7 @@ Dwarf_Half Utils::tag(Dwarf_Debug dbg, Dwarf_Die die)
 
     if (dwarf_tag(die, &tag, &err) == DW_DLV_ERROR)
     {
-        throw Error("dwarf_tag", dbg, err);
+        THROW_ERROR(dbg, err);
     }
     return tag;
 }
@@ -265,7 +265,7 @@ bool Utils::has_attr(Dwarf_Debug dbg, Dwarf_Die die, Dwarf_Half attr)
 
     if (dwarf_hasattr(die, attr, &result, &err) == DW_DLV_ERROR)
     {
-        throw Error("dwarf_hasattr", dbg, err);
+        THROW_ERROR(dbg, err);
     }
     return result;
 }
@@ -279,7 +279,7 @@ Dwarf_Unsigned Utils::bit_size(Dwarf_Debug dbg, Dwarf_Die die)
         Dwarf_Error err = 0;
         if (dwarf_bitsize(die, &size, &err) == DW_DLV_ERROR)
         {
-            throw Error("dwarf_bitsize", dbg, err);
+            THROW_ERROR(dbg, err);
         }
     }
     else
@@ -299,7 +299,7 @@ Dwarf_Off Utils::bit_offset(Dwarf_Debug dbg, Dwarf_Die die)
         Dwarf_Error err = 0;
         if (dwarf_bitoffset(die, &off, &err) == DW_DLV_ERROR)
         {
-            throw Error("dwarf_bitoffset", dbg, err);
+            THROW_ERROR(dbg, err);
         }
     }
     return off;
@@ -315,7 +315,7 @@ Dwarf_Unsigned Utils::byte_size(Dwarf_Debug dbg, Dwarf_Die die)
         Dwarf_Error err = 0;
         if (dwarf_bytesize(die, &size, &err) == DW_DLV_ERROR)
         {
-            throw Error("dwarf_bytesize", dbg, err);
+            THROW_ERROR(dbg, err);
         }
     }
     return size;
@@ -332,7 +332,7 @@ void Utils::dump_attributes(const Dwarf::Die& die, ostream& outs)
     int atres = dwarf_attrlist(die.die(), &atlist, &atcnt, &err);
     if (atres == DW_DLV_ERROR)
     {
-        throw Error("dwarf_attrlist", die.dbg(), err);
+        THROW_ERROR(die.dbg(), err);
     }
     else if (atres == DW_DLV_NO_ENTRY)
     {
@@ -354,7 +354,7 @@ void Utils::dump_attributes(const Dwarf::Die& die, ostream& outs)
         }
         else
         {
-            throw Error("dwarf_whatattr entry missing", die.dbg(), err);
+            THROW_ERROR(die.dbg(), err);
         }
         if (attr == DW_AT_accessibility)
         {

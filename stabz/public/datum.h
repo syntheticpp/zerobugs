@@ -34,7 +34,6 @@ namespace Stab
         /**
          * @return the type of this datum.
          */
-        // const DataType& type() const;
         WeakDataTypePtr type() const { return type_; }
 
     protected:

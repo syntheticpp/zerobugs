@@ -25,6 +25,13 @@
   #define __func__ ?func?
 #endif
 
+#if 0
+#define THROW_ERROR(dbg, err, ...) do { \
+    Error::Throw(__func__, (dbg),(err),##__VA_ARGS__); } while (false)
+#else
+#define THROW_ERROR(dbg, err) while (true) \
+    Error::Throw(__func__, (dbg),(err),__FILE__,__LINE__)
+#endif
 
 namespace Dwarf
 {
@@ -33,19 +40,26 @@ namespace Dwarf
      */
     class ZDK_EXPORT Error : public std::exception
     {
-    public:
-        Error(Dwarf_Debug, Dwarf_Error);
-
-        /* ctor with perror()-like behavior:
-         * the user supplied string will be followed
-         * by a colon, a blank, and dwarf_errmsg()
-         * when what() is called.
-         */
-        Error(const char*, Dwarf_Debug, Dwarf_Error);
+    protected:
+        Error(const char* func, Dwarf_Debug, Dwarf_Error);
 
         ~Error() throw ();
 
         const char* what() const throw();
+
+    public:
+        static void Throw(
+            const char* func,
+            Dwarf_Debug,
+            Dwarf_Error,
+            const char* file = NULL,
+            size_t line = 0);
+
+        static std::string Message(
+            Dwarf_Debug,
+            Dwarf_Error,
+            const char* file = NULL,
+            size_t line = 0);
 
     private:
         class Impl;

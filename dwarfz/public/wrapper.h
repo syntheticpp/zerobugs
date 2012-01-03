@@ -78,7 +78,7 @@ public:
             Dwarf_Error err = 0;
             if (traits::name(obj_, &name_, &err) == DW_DLV_ERROR)
             {
-                throw Error(__func__, dbg_, err);
+                THROW_ERROR(dbg_, err);
             }
         }
         return name_;
@@ -110,7 +110,7 @@ public:
 
         if (traits::die_offset(obj_, &off, &err) == DW_DLV_ERROR)
         {
-            throw Error(__func__, dbg_, err);
+            THROW_ERROR(dbg_, err);
         }
         return off;
     }
@@ -123,7 +123,7 @@ public:
 
         if (traits::cu_offset(obj_, &off, &err) == DW_DLV_ERROR)
         {
-            throw Error(__func__, err);
+            THROW_ERROR(dbg_, err);
         }
         return off;
     }

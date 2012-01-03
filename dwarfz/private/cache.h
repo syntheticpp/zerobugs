@@ -45,7 +45,7 @@ public:
                 &cnt,
                 &err) == DW_DLV_ERROR)
         {
-            throw Error(__func__, dbg_, err);
+            THROW_ERROR(dbg_, err);
         }
 
         for (int i = 0; i != cnt; ++i)

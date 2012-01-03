@@ -106,7 +106,7 @@ char* Dwarf::Die::name_impl() const
 
     if (dwarf_diename(die_, &name, &err) == DW_DLV_ERROR)
     {
-        throw Error("Die::name_impl", dbg(), err);
+        THROW_ERROR(dbg(), err);
     }
     char* result = (name && *name) ? strdup(name) : 0;
     dwarf_dealloc(dbg(), name, DW_DLA_STRING);
@@ -127,7 +127,7 @@ Dwarf_Off Dwarf::Die::offset(Dwarf_Debug dbg, Dwarf_Die die)
 
     if (dwarf_dieoffset(die, &off, &err) == DW_DLV_ERROR)
     {
-        throw Error("Die::offset", dbg, err);
+        THROW_ERROR(dbg, err);
     }
     return off;
 }
@@ -140,7 +140,7 @@ Dwarf_Off Dwarf::Die::cu_offset() const
 
     if (dwarf_die_CU_offset(die_, &off, &err) == DW_DLV_ERROR)
     {
-        throw Error("Die::cu_offset", dbg(), err);
+        THROW_ERROR(dbg(), err);
     }
     return off;
 }

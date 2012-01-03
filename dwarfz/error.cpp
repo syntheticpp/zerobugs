@@ -10,6 +10,8 @@
 // -------------------------------------------------------------------------
 
 #include <assert.h>
+#include <iostream>
+#include <sstream>
 #include <string>
 
 #include "impl.h"
@@ -20,20 +22,16 @@ using namespace Dwarf;
 class Error::Impl
 {
 public:
-    explicit Impl(Dwarf_Debug dbg, Dwarf_Error err)
-        : dbg_(dbg)
-        , err_(err)
-        , msg_(dwarf_errmsg(err_))
-    {}
-
     Impl(const char* str, Dwarf_Debug dbg, Dwarf_Error err)
         : dbg_(dbg)
         , err_(err)
         , msg_(str)
     {
         assert(dwarf_errmsg(err_));
-
-        msg_ += ": ";
+        if (!msg_.empty())
+        {
+            msg_ += ": ";
+        }
         msg_ += dwarf_errmsg(err_);
     }
 
@@ -44,18 +42,13 @@ public:
 
     const char* what() const throw()
     {
-        const char* str = 0;
-
-        try
-        {
-            str = msg_.c_str();
-        }
-        catch (...)
-        {
-            str = dwarf_errmsg(err_);
-        }
-        return str;
+        return msg_.c_str();
     }
+
+    std::ostream& log(std::ostream& os, const char* file, size_t line)
+    {
+        return os << file << ':' << line << ' ' << what();
+    } 
 
 private:
     Dwarf_Debug dbg_;
@@ -63,11 +56,6 @@ private:
     std::string msg_;
 };
 
-
-Error::Error(Dwarf_Debug dbg, Dwarf_Error err)
-    : impl_(new Impl(dbg, err))
-{
-}
 
 
 Error::Error(const char* str, Dwarf_Debug dbg, Dwarf_Error err)
@@ -86,4 +74,48 @@ const char* Error::what() const throw()
     assert(impl_);
     return impl_->what();
 }
+
+
+void Error::Throw(
+    const char* func,
+    Dwarf_Debug dbg,
+    Dwarf_Error err,
+    const char* file,
+    size_t      line)
+
+{
+    Error e(func, dbg, err);
+
+    if (file)
+    {
+        e.impl_->log(std::clog, file, line) << std::endl;
+    }
+
+    throw e;
+}
+
+
+std::string Error::Message(
+    Dwarf_Debug dbg,
+    Dwarf_Error err,
+    const char* file,
+    size_t      line)
+
+{
+    Error e("", dbg, err);
+    std::string result(e.what());
+
+    
+    if (file)
+    {
+        std::ostringstream ss;
+
+        e.impl_->log(ss, file, line);
+        result = ss.str() + ": " + result;
+    }
+
+    return result;
+}
+
+
 // vim: tabstop=4:softtabstop=4:expandtab:shiftwidth=4

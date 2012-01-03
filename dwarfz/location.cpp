@@ -94,7 +94,7 @@ Location::Location(Dwarf_Debug dbg, Dwarf_Attribute attr)
 
     if (dwarf_loclist_n(attr, &list_, &size_, &err) == DW_DLV_ERROR)
     {
-        throw Error("dwarf_loclist_n", dbg, err);
+        THROW_ERROR(dbg, err);
     }
 }
 

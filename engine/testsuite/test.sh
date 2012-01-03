@@ -124,6 +124,8 @@ function add_common_test()
 ################################################################
 function run_tests()
 {
+    ldd ${path}plugin/zdwarf.so
+
     rm -f $outfile
     rm -f $logfile
     touch $outfile

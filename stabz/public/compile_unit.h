@@ -67,9 +67,7 @@ namespace Stab
         typedef std::set<RefPtr<SharedString> > SourceSet;
 
         // global variables
-        typedef ext::hash_multimap<
-            RefPtr<SharedString>,
-            RefPtr<Variable> > GlobalVarMap;
+        typedef ext::hash_multimap<RefPtr<SharedString>, RefPtr<Variable> > GlobalVarMap;
 
         typedef std::vector<RefPtr<Function> > FunList;
 

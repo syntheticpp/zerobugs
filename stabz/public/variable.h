@@ -18,6 +18,8 @@ using Platform::addr_t;
 
 namespace Stab
 {
+    /* Models a program variable.
+     */
     class Variable : public Datum
     {
     public:
@@ -44,6 +46,8 @@ namespace Stab
     };
 
 
+    /* Models a function parameter.
+     */
     class Parameter : public Variable
     {
     public:
@@ -57,7 +61,8 @@ namespace Stab
         Parameter(SharedString&, DataType&, addr_t);
     };
 
-
+    /* Models a global variable.
+     */
     class GlobalVariable : public Variable
     {
     public:

@@ -87,8 +87,7 @@ Unwind::Unwind(Dwarf_Debug dbg)
                             &fdeElemCount_,
                             &err) == DW_DLV_ERROR)
     {
-        Error e("dwarf_get_fde_list", dbg_, err);
-        cerr << e.what() << " (.debug_frame)" << endl;
+        cerr << Error::Message(dbg_, err) << " (.debug_frame)" << endl;
     }
 
     // then try the .eh_frame section
@@ -105,8 +104,7 @@ Unwind::Unwind(Dwarf_Debug dbg)
                                   &fdeElemCount_,
                                   &err) == DW_DLV_ERROR)
         {
-            Error e("dwarf_get_fde_list_eh", dbg_, err);
-            cerr << e.what() << " (.eh_frame)" << endl;
+            cerr << Error::Message(dbg_, err) << " (.eh_frame)" << endl;
         }
 
         IF_DEBUG_FH(
@@ -177,7 +175,7 @@ eval_frame_expr(Dwarf_Debug dbg,
 
     if (r != DW_DLV_OK)
     {
-        throw Error("dwarf_loclist_from_expr", dbg, err);
+        THROW_ERROR(dbg, err);
     }
 
     Dwarf_Addr result = 0;
@@ -341,22 +339,21 @@ get_dwarf_regtable(Dwarf_Debug      dbg,
     int r = dwarf_get_fde_at_pc(fdes, pc, &fde, &lopc, &hipc, &err);
     if (r == DW_DLV_NO_ENTRY)
     {
-        Error e("dwarf_get_fde_at_pc", dbg, err);
         IF_DEBUG_FH(clog << __func__ << " pc=" << hex << pc << dec
-                         << ": " << e.what() << endl);
+                         << ": " << Error::Message(dbg, err) << endl);
         return false;
     }
     if (r != DW_DLV_OK)
     {
         assert(r == DW_DLV_ERROR);
-        throw Error("dwarf_get_fde_at_pc", dbg, err);
+        THROW_ERROR(dbg, err);
     }
     r = dwarf_get_fde_info_for_all_regs3(fde, pc, &regs, NULL, &err);
 
     if (r != DW_DLV_OK)
     {
         assert(r == DW_DLV_ERROR);
-        throw Error("dwarf_get_fde_info_for_all_regs3", dbg, err);
+        THROW_ERROR(dbg, err);
     }
     return true;
 }
@@ -369,9 +366,8 @@ compute_cfa(const RegTable& frame,
 {
     // calculate the Canonical Frame Address
     const Dwarf_Half regnum = regs.rt3_cfa_rule.dw_regnum;
-    IF_DEBUG_FH(
-        clog << __func__ << ": " << "cfa_rule.dw_regnum=" << regnum << endl;
-    )
+
+    IF_DEBUG_FH( clog << __func__ << ": " << "cfa_rule.dw_regnum=" << regnum << endl; )
     if (regnum == DW_FRAME_SAME_VAL) // initialization issues?
     {
         return 0;

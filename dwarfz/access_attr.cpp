@@ -37,7 +37,7 @@ Dwarf_Unsigned AccessAttr::value() const
     case DW_FORM_data1:
         if (dwarf_formudata(attr(), &access, &err) == DW_DLV_ERROR)
         {
-            throw Error(dbg(), err);
+            THROW_ERROR(dbg(), err);
         }
         break;
 

@@ -616,7 +616,10 @@ size_t Reader::enum_globals(
     return result;
 }
 
-
+/**
+ * Enumerate global variable and (optionally) global functions.
+ * @return symbols count
+ */
 size_t Reader::enum_globals(
     Thread&             thread,
     const char*         name,
@@ -632,16 +635,19 @@ size_t Reader::enum_globals(
 
     if (name)
     {
+        // filter by name?
         RefPtr<SharedString> key(shared_string(name));
         range = unit.globals().equal_range(key);
     }
     else
     {
+        // no filtering, don't restrict range
         range.first = unit.globals().begin();
         range.second = unit.globals().end();
     }
 
     size_t result = 0;
+
     if (events)
     {
         EmitVar emit(this, &unit, events, &thread, &funcSym);

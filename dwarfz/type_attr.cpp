@@ -17,6 +17,7 @@
 #include "impl.h"
 #include "private/type_attr.h"
 
+using std::cerr;
 using std::clog;
 using std::endl;
 using std::dec;
@@ -50,18 +51,13 @@ shared_ptr<Type> TypeAttr::value() const
 
         if (dwarf_global_formref(attr(), &off, &err) == DW_DLV_ERROR)
         {
-            throw Error("TypeAttr::type, dwarf_global_formref", dbg(), err);
+            THROW_ERROR(dbg(), err);
         }
         if (dwarf_offdie(dbg(), off, &die, &err) == DW_DLV_ERROR)
         {
-            Error e("TypeAttr::type, dwarf_offdie", dbg(), err);
-        #if 0
-            throw e;
-        #else
-            // hack: appease buggy DMD compiler
-            clog << e.what() << endl;
+            // report error but don't throw, to appease buggy DMD compiler
+            cerr << Error::Message(dbg(), err, __FILE__, __LINE__) << endl;
             return type;
-        #endif
         }
         if (die)
         {
@@ -72,11 +68,11 @@ shared_ptr<Type> TypeAttr::value() const
     case DW_FORM_addr:
         if (dwarf_formaddr(attr(), &off, &err) == DW_DLV_ERROR)
         {
-            throw Error("TypeAttr::type, dwarf_formaddr", dbg(), err);
+            THROW_ERROR(dbg(), err);
         }
         if (dwarf_offdie(dbg(), off, &die, &err) == DW_DLV_ERROR)
         {
-            throw Error("TypeAttr::type, dwarf_offdie", dbg(), err);
+            THROW_ERROR(dbg(), err);
         }
         if (die)
         {

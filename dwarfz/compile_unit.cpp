@@ -141,7 +141,7 @@ CompileUnit::next_unit(Dwarf_Debug dbg, Dwarf_Unsigned offs)
 
         if (rc == DW_DLV_ERROR)
         {
-            throw Error("dwarf_next_cu_header", dbg, err);
+            THROW_ERROR(dbg, err);
         }
         if (rc == DW_DLV_OK)
         {
@@ -149,14 +149,14 @@ CompileUnit::next_unit(Dwarf_Debug dbg, Dwarf_Unsigned offs)
 
             if (dwarf_siblingof(dbg, 0, &die, &err) != DW_DLV_OK)
             {
-                throw Error("dwarf_siblingof", dbg, err);
+                THROW_ERROR(dbg, err);
             }
 
             Dwarf_Half tag = 0;
             if (dwarf_tag(die, &tag, &err) != DW_DLV_OK)
             {
                 dwarf_dealloc(dbg, die, DW_DLA_DIE);
-                throw Error("dwarf_tag", dbg, err);
+                THROW_ERROR(dbg, err);
             }
             if (tag != DW_TAG_compile_unit)
             {
@@ -271,7 +271,11 @@ size_t CompileUnit::source_files_count() const
 
         if (dwarf_srcfiles(die(), &srcFiles, &numSrcFiles, &err) == DW_DLV_ERROR)
         {
-            throw Error(dbg(), err);
+        #if 0
+            THROW_ERROR(dbg(), err);
+        #else
+            cerr << Error::Message(dbg(), err) << endl;
+        #endif
         }
         if (srcFiles)
         {
@@ -375,7 +379,7 @@ const FunList& CompileUnit::functions() const
 
             if (dwarf_offdie(dbg(), *i, &die, &err) == DW_DLV_ERROR)
             {
-                throw Error("dwarf_offdie", dbg(), err);
+                THROW_ERROR(dbg(), err);
             }
             boost::shared_ptr<Function> f(new Function(dbg(), die));
             f->unit_ = this;
@@ -478,7 +482,7 @@ Dwarf_Addr CompileUnit::base_pc() const
             if (dwarf_lowpc(die(), &base_, &err) == DW_DLV_ERROR)
             {
                 assert(base_ == Dwarf_Addr(-1));
-                throw Error(dbg(), err);
+                THROW_ERROR(dbg(), err);
             }
         }
         else
@@ -517,7 +521,7 @@ Dwarf_Addr CompileUnit::high_pc() const
         {
             if (dwarf_highpc(die(), &highPC_, &err) == DW_DLV_ERROR)
             {
-                throw Error(dbg(), err);
+                THROW_ERROR(dbg(), err);
             }
         }
         else
@@ -846,7 +850,7 @@ CompileUnit::enum_macros(MacroEvents* events, size_t maxCount) const
                                       &count, &details, &err);
     if (res != DW_DLV_OK)
     {
-        throw Error("dwarf_get_macro_details", dbg(), err);
+        THROW_ERROR(dbg(), err);
     }
     Utils::AutoDealloc<Dwarf_Macro_Details, DW_DLA_STRING>
         autoDealloc(dbg(), details);

@@ -118,9 +118,16 @@ CompileUnit::LineInfoCache::LineInfoCache
     // retrieve info about all source lines in this unit
     if (dwarf_srclines(die, &line_, &size_, &err) == DW_DLV_ERROR)
     {
-        throw Error(dbg, err);
+    #if 0
+        THROW_ERROR(dbg, err);
+    #else
+        cerr << Error::Message(dbg, err) << endl;
+    #endif
     }
-    add_line_info();
+    else
+    {
+        add_line_info();
+    }
 }
 
 
@@ -275,7 +282,7 @@ namespace
 
                 if (dwarf_linesrc(line, &fileName, &err) == DW_DLV_ERROR)
                 {
-                    throw Error("dwarf_linesrc", dbg_, err);
+                    THROW_ERROR(dbg_, err);
                 }
                 if (fileName)
                 {
@@ -317,7 +324,7 @@ advertise_line(
 
             if (dwarf_lineno(line, &lineNum, &err) == DW_DLV_ERROR)
             {
-                throw Error("dwarf_lineno", dbg, err);
+                THROW_ERROR(dbg, err);
             }
         }
         SharedString* fname = fnameExtractor.get(line);
@@ -344,7 +351,7 @@ is_block_start(
 
     if (dwarf_lineblock(line, &isBlock, &err) != DW_DLV_OK)
     {
-        throw Error("is_block_start: dwarf_lineblock", dbg, err);
+        THROW_ERROR(dbg, err);
     }
     else if (isBlock)
     {
@@ -457,7 +464,7 @@ CompileUnit::LineInfoCache::next_line(
 
         if (dwarf_lineaddr(i->second, &result, &err) == DW_DLV_ERROR)
         {
-            throw Error("next_line: dwarf_lineaddr", dbg_, err);
+            THROW_ERROR(dbg_, err);
         }
         assert(i->first == result);
 
@@ -476,7 +483,7 @@ CompileUnit::LineInfoCache::next_line(
         {
             if (dwarf_lineno(i->second, &lineNum, &err) == DW_DLV_ERROR)
             {
-                throw Error("next_line: dwarf_lineno", dbg_, err);
+                THROW_ERROR(dbg_, err);
             }
 
             if (lineNum != line)
@@ -502,7 +509,7 @@ CompileUnit::LineInfoCache::add_line_info(Dwarf_Line line)
 
     if (dwarf_lineendsequence(line, &endSeq, &err) == DW_DLV_ERROR)
     {
-        throw Error("add_line_info: dwarf_lineendsequence", dbg_, err);
+        THROW_ERROR(dbg_, err);
     }
     // do not add to cahce if it is end-of-sequence marker
     if (endSeq)
@@ -512,7 +519,7 @@ CompileUnit::LineInfoCache::add_line_info(Dwarf_Line line)
     Dwarf_Addr addr = 0;
     if (dwarf_lineaddr(line, &addr, &err) == DW_DLV_ERROR)
     {
-        throw Error("add_line_info: dwarf_lineaddr", dbg_, err);
+        THROW_ERROR(dbg_, err);
     }
 
     if (addr)

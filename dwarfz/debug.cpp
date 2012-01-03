@@ -401,12 +401,7 @@ Debug::Debug
     int r = dwarf_init(fd_.get(), DW_DLC_READ, 0, 0, &dbg_, &err);
     if (r == DW_DLV_ERROR)
     {
-        string errmsg("dwarf_init: ");
-        if (filename)
-        {
-            errmsg += filename;
-        }
-        throw Error(errmsg.c_str(), dbg_, err);
+        THROW_ERROR(dbg_, err);
     }
     if (dbg_)
     {
@@ -668,7 +663,7 @@ public:
         Dwarf_Error err = 0;
         if (dwarf_get_aranges(dbg_, &ranges_, &size_, &err) == DW_DLV_ERROR)
         {
-            cerr << Error("dwarf_get_aranges", dbg_, err).what() << endl;
+            cerr << Error::Message(dbg_, err, __FILE__, __LINE__) << endl;
         }
     }
 
@@ -731,7 +726,7 @@ Debug::lookup_unit_by_arange(Dwarf_Addr addr) const
         }
         else
         {
-            log<error>() << Error(__func__, dbg_, err).what() << "\n";
+            log<error>() << Error::Message(dbg_, err, __FILE__, __LINE__) << "\n";
         }
     }
     return unit;

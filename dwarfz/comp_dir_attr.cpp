@@ -39,7 +39,7 @@ const char* CompDirAttr::value() const
         case DW_FORM_string:
             if (dwarf_formstring(attr(), &s, &err) == DW_DLV_ERROR)
             {
-                throw Error(dbg(), err);
+                THROW_ERROR(dbg(), err);
             }
  
             return s;

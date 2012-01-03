@@ -59,7 +59,7 @@ namespace Dwarf
             case DW_FORM_addr:
                 if (dwarf_formaddr(attr(), &tmp.a, &err) == DW_DLV_ERROR)
                 {
-                    throw Error("dwarf_formaddr", dbg(), err);
+                    THROW_ERROR(dbg(), err);
                 }
                 v = tmp.a;
                 break;
@@ -67,7 +67,7 @@ namespace Dwarf
             case DW_FORM_flag:
                 if (dwarf_formflag(attr(), &tmp.b, &err) == DW_DLV_ERROR)
                 {
-                    throw Error("dwarf_formflag", dbg(), err);
+                    THROW_ERROR(dbg(), err);
                 }
                 v = tmp.b;
                 break;
@@ -79,7 +79,7 @@ namespace Dwarf
             case DW_FORM_udata:
                 if (dwarf_formudata(attr(), &tmp.u, &err) == DW_DLV_ERROR)
                 {
-                    throw Error("dwarf_formudata", dbg(), err);
+                    THROW_ERROR(dbg(), err);
                 }
                 v = tmp.u;
                 break;
@@ -91,7 +91,7 @@ namespace Dwarf
             case DW_FORM_ref_addr:
                 if (dwarf_global_formref(attr(), &tmp.u, &err) == DW_DLV_ERROR)
                 {
-                    throw Error("dwarf_global_formref", dbg(), err);
+                    THROW_ERROR(dbg(), err);
                 }
                 v = tmp.u;
                 break;
@@ -99,7 +99,7 @@ namespace Dwarf
             case DW_FORM_sdata:
                 if (dwarf_formsdata(attr(), &tmp.s, &err) == DW_DLV_ERROR)
                 {
-                    throw Error("dwarf_formsdata", dbg(), err);
+                    THROW_ERROR(dbg(), err);
                 }
                 v = tmp.s;
                 break;
@@ -129,7 +129,7 @@ namespace Dwarf
             case DW_FORM_string:
                 if (dwarf_formstring(this->attr(), &s, &err) == DW_DLV_ERROR)
                 {
-                    throw Error("dwarf_formstring", dbg(), err);
+                    THROW_ERROR(dbg(), err);
                 }
                 break;
 
@@ -161,7 +161,7 @@ namespace Dwarf
             case DW_FORM_block4:
                 if (dwarf_formblock(this->attr(), &blkp, &err) == DW_DLV_ERROR)
                 {
-                    throw Error("dwarf_formblock", dbg(), err);
+                    THROW_ERROR(dbg(), err);
                 }
                 if (blkp)
                 {

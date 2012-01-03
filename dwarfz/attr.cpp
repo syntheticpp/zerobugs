@@ -29,7 +29,7 @@ Attribute::Attribute(Dwarf_Debug dbg, Dwarf_Die die, Dwarf_Half type)
     int res = dwarf_attr(die, type, &attr_, &err);
     if (res == DW_DLV_ERROR)
     {
-        throw Error("Attribute::Attribute", dbg, err);
+        THROW_ERROR(dbg, err);
     }
     else if (res == DW_DLV_NO_ENTRY)
     {
@@ -60,7 +60,7 @@ Dwarf_Half Attribute::form() const
 
         if (dwarf_whatform_direct(attr_, &form_, &err) == DW_DLV_ERROR)
         {
-            throw Error("Attribute::form", dbg(), err);
+            THROW_ERROR(dbg(), err);
         }
     }
     return form_;

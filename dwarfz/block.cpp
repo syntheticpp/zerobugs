@@ -36,7 +36,7 @@ Dwarf_Addr Block::low_pc() const
     {
         if (dwarf_lowpc(die(), &pc, &err) == DW_DLV_ERROR)
         {
-            throw Error(dbg(), err);
+            THROW_ERROR(dbg(), err);
         }
     }
     return pc;
@@ -52,7 +52,7 @@ Dwarf_Addr Block::high_pc() const
     {
         if (dwarf_highpc(die(), &pc, &err) == DW_DLV_ERROR)
         {
-            throw Error(dbg(), err);
+            THROW_ERROR(dbg(), err);
         }
     }
 
