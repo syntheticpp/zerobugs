@@ -84,6 +84,17 @@ inline const X& no_effect_statement(const X& x) { return x; }
  #define TRACE_(x)
 #endif
 
+static void
+add_global(
+    CompileUnit*    unit,
+    DataType&       type,
+    addr_t          value,
+    SharedString*   name )
+{
+    RefPtr<Variable> var(new GlobalVariable(*name, type, value));
+    unit->globals().insert(make_pair(name, var));
+}
+
 
 ParseEvents::ParseEvents(TypeSystem& types, Descriptor& desc)
     : types_(types), desc_(desc)
@@ -516,13 +527,14 @@ ParseEvents::parse_constant(const char*& ptr, SharedString* id)
     START_STATE("parse_constant", ptr);
     const char* begin = ptr;
     EXPECT('=', *begin);
-    // int ival = 0;
+
+    RefPtr<DataType> type;
 
     switch(*++begin)
     {
     case STABS_CONST_BOOL:
-        // ival = strtol(++begin, 0, 0);
-        return END_STATE(true);
+        type = types_.get_bool_type( Platform::byte_size );
+        break;
 
     case STABS_CONST_CHAR:
         break;
@@ -531,10 +543,11 @@ ParseEvents::parse_constant(const char*& ptr, SharedString* id)
         break;
 
     case STABS_CONST_INT:
-        // ival = strtol(++begin, 0, 0);
-        return END_STATE(true);
+        type = types_.get_int_type( shared_string("int").get(), 32, true );
+        break;
 
     case STABS_CONST_REAL:
+        type = types_.get_float_type( shared_string("float").get(), 4 );
         break;
 
     case STABS_CONST_STRING:
@@ -545,6 +558,14 @@ ParseEvents::parse_constant(const char*& ptr, SharedString* id)
 
     default:
         break;
+    }
+
+    if (type)
+    {
+        ++begin;
+        
+        add_global( current_unit(), *type, 0, id );
+        return END_STATE( true );
     }
     return false;
 }
@@ -953,11 +974,8 @@ ParseEvents::parse_global(const stab_t&   stab,
     if (name)
     {
         // add global variable to current compilation unit
-
         RefPtr<DataType> type = current_unit()->get_type(types_, typeID, true);
-        RefPtr<Variable> var(new GlobalVariable(*name, *type, stab.value()));
-
-        current_unit()->globals().insert(make_pair(name, var));
+        add_global( current_unit(), *type, stab.value(), name );
     }
     return END_STATE(true);
 }
