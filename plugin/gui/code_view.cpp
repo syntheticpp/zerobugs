@@ -20,6 +20,8 @@
 #include "gtkmm/menu.h"
 #include "gtkmm/menuitem.h"
 #include "gtkmm/tooltips.h"
+#include "dharma/environ.h"
+#include "dharma/path.h"
 #include "dharma/symbol_util.h"
 #include "zdk/breakpoint_util.h"
 #include "zdk/check_ptr.h"
@@ -32,6 +34,7 @@
 #include "ensure_font.h"
 #include "fixed_font.h"
 #include "gui.h"
+#include "html_view.h"
 #include "lower_fun.h"
 #include "memory_req.h"
 #include "popup_menu.h"
@@ -1316,6 +1319,16 @@ void CodeView::breakpoint_state_changed(addr_t addr)
 void CodeView::show_next_stat(addr_t addr)
 {
     show_next_line(addr, false);
+}
+
+
+////////////////////////////////////////////////////////////////
+void CodeView::open_folder()
+{
+    string fileMan = env::get("ZERO_FILE_MANAGER", "nautilus");
+    string folder = sys::dirname(file()->c_str());
+
+    open_url_in_browser(fileMan, folder);
 }
 
 

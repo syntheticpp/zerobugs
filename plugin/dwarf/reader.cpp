@@ -68,7 +68,7 @@ typedef boost::shared_ptr<InlinedInstance> InlinePtr;
 
 
 static const char copyright_text[] =
-  "Copyright 2004 - 2010 (c) Cristian Vlasceanu.\n"
+  "Copyright 2004 - 2012 (c) Cristian Vlasceanu.\n"
   "libdwarf is:\n"
   "Copyright (C) 2000,2001,2003,2004,2005,2006 Silicon Graphics, Inc.\n"
   "All Rights Reserved. Portions Copyright 2002,2007 Sun Microsystems, Inc.\n"

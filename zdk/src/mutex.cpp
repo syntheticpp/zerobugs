@@ -12,6 +12,7 @@
 #ifndef _GNU_SOURCE
  #define _GNU_SOURCE
 #endif
+#include <iostream>
 #include "zdk/config.h"
 #include <cassert>
 #include <cstdio>
@@ -94,10 +95,17 @@ Mutex::Mutex(bool recursive)
 
 Mutex::~Mutex()
 {
+#if 0
     // if macro throws from dtor it means things are FUBAR
     // since pthread_mutex_destroy should never fail here,
     // so let it terminate()
     PTHREAD_ENFORCE(pthread_mutex_destroy, &mutex_);
+#else
+    if (int err = pthread_mutex_destroy(&mutex_))
+    {
+        clog << "pthread_mutex_destroy: " << strerror(err) << endl;
+    }
+#endif
 }
 
 

@@ -84,6 +84,7 @@ void ProgramView::init(Properties* prop)
         register_menu(new MenuSetProgramCounter);
         register_menu(new MenuShowNextStatement);
         register_menu(new MenuShowFunctionStart);
+        register_menu(new MenuOpenFolder);
     }
 }
 

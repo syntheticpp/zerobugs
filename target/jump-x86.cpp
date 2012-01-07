@@ -10,16 +10,16 @@
  #error wrong platform
 #endif
 
-#ifdef DEBUG
- #include <iostream>
- using namespace std;
-#endif
+#include <iostream>
+#include "zdk/align.h"
 #include "zdk/thread_util.h"
 #include "zdk/zero.h"
 #include "zdk/zobject_scope.h"
 #include "elfz/public/binary.h"
 #include "elfz/public/headers.h"
 #include "jump.h"
+
+using namespace std;
 
 /**
  * Check for PLT jmp opcodes, return destination address in DEST
@@ -118,15 +118,18 @@ bool is_plt_jump(Thread& thread, const Symbol* sym, addr_t pc)
             thread_read(thread, plt, plt);
             plt += table->adjustment();
 
-        #if DEBUG
-            //clog << __func__ << ": plt reloc=" << (void*)plt << " end=";
-            //clog << (void*)(plt + size) << " addr=" << (void*)addr << endl;
-        #endif
+            addr = round_to_word(addr) * sizeof(word_t);
+
 
             // is the address inside the PLT relocs?
             if ((addr >= plt) && (addr < plt + size))
             {
                 result = true;
+            }
+            else
+            {
+                clog << __func__ << ": plt reloc=" << (void*)plt << " end=";
+                clog << (void*)(plt + size) << " addr=" << (void*)addr << endl;
             }
             return result;
         }

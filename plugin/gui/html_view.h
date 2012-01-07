@@ -92,6 +92,8 @@ private:
 };
 
 bool open_url_in_browser(const std::string& url);
+bool open_url_in_browser(const std::string& browser, const std::string& url);
+
 
 #endif // HTML_VIEW_H__6A9919A5_D7F7_41B3_A1DD_935B91C1A26E
 // vim: tabstop=4:softtabstop=4:expandtab:shiftwidth=4

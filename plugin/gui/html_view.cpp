@@ -123,7 +123,7 @@ typedef Singleton<Reaper> TheReaper;
 /**
  * Launch URL in external browser
  */
-static bool open_url_in_browser(const string& browser, const string& url)
+bool open_url_in_browser(const string& browser, const string& url)
 {
     deque<string> args;
 

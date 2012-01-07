@@ -24,6 +24,8 @@
 #include "module.h"
 
 
+#define DEBUG 1
+
 using namespace std;
 
 
@@ -215,7 +217,8 @@ namespace
  * Restores the saved breakpoints for the MODULE, using the map
  * of breakpoint images stored in THIS module
  */
-void ModuleImpl::restore(Debugger& debugger, Process& proc, Module& module)
+void
+ModuleImpl::restore(Debugger& debugger, Process& proc, Module& module)
 {
     assert(name_.get());
     assert(module.name()->is_equal(name_->c_str()));
@@ -256,6 +259,8 @@ void ModuleImpl::restore(Debugger& debugger, Process& proc, Module& module)
                            i->first,    // address
                            thread, module, table, offs);
     }
+
+    breakpoints_.clear();
 }
 
 
@@ -313,6 +318,9 @@ void ModuleImpl::restore_breakpoint(
 
         if (defer)
         {
+        #if DEBUG
+            clog << "deferred ";
+        #endif
             RefPtr<Symbol> sym;
             // todo: implement Module::lookup_symbol to do exactly this?
             for (table = module.symbol_table_list();

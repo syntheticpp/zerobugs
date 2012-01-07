@@ -218,6 +218,8 @@ public:
     void show_function_start();
     void show_next_statement();
 
+    void open_folder();
+
     void step_over(SigC::Signal1<void, RefPtr<Symbol> >*);
 
     /**

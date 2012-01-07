@@ -72,6 +72,14 @@ public:
 };
 
 
+class MenuOpenFolder : public BaseMenuActionImpl<CodeView>
+{
+    typedef BaseMenuActionImpl<CodeView> Base;
+
+public:
+    MenuOpenFolder();
+    bool add_to(CodeView*, Gtk::Menu&, MenuClickContext&);
+};
 
 #endif // RIGHT_MENU_H__A3A70DFB_FC78_47A8_BA9A_1C26766271A4
 // vim: tabstop=4:softtabstop=4:expandtab:shiftwidth=4

@@ -21,13 +21,15 @@ MenuRunToCursor::MenuRunToCursor()
 
 
 bool
-MenuRunToCursor::add_to(CodeView* view,
-                        Gtk::Menu& menu,
-                        MenuClickContext& ctxt)
+MenuRunToCursor::add_to(
+    CodeView*           view,
+    Gtk::Menu&          menu,
+    MenuClickContext&   ctxt)
 {
-    if (ctxt.position()
-            && view && view->right_click().nearest_addr()
-            && Base::add_to(view, menu, ctxt))
+    if (ctxt.position() && 
+        view            &&
+        view->right_click().nearest_addr() &&
+        Base::add_to(view, menu, ctxt))
     {
         menu.items().push_back(Gtk::Menu_Helpers::SeparatorElem());
         return true;
@@ -38,17 +40,13 @@ MenuRunToCursor::add_to(CodeView* view,
 
 
 MenuInsertBreakpoint::MenuInsertBreakpoint()
-    : Base(&CodeView::insert_breakpoint,
-            "Insert Breakpoint",
-            &Gtk::Stock::DIALOG_ERROR)
+    : Base(&CodeView::insert_breakpoint, "Insert Breakpoint", &Gtk::Stock::DIALOG_ERROR)
 {
 }
 
 
 bool
-MenuInsertBreakpoint::add_to(CodeView* view,
-                             Gtk::Menu& menu,
-                             MenuClickContext& ctxt)
+MenuInsertBreakpoint::add_to(CodeView* view, Gtk::Menu& menu, MenuClickContext& ctxt)
 {
     assert(view);
 
@@ -64,21 +62,21 @@ MenuInsertBreakpoint::add_to(CodeView* view,
 
 
 MenuSetProgramCounter::MenuSetProgramCounter()
-    : Base(&CodeView::set_program_counter,
-            "Set Program Counter Here",
-            NULL)
+    : Base(&CodeView::set_program_counter, "Set Program Counter Here", NULL)
 {
 }
 
 
 bool
-MenuSetProgramCounter::add_to(CodeView* view,
-                              Gtk::Menu& menu,
-                              MenuClickContext& ctxt)
+MenuSetProgramCounter::add_to(
+    CodeView*           view,
+    Gtk::Menu&          menu,
+    MenuClickContext&   ctxt)
 {
-    if (ctxt.position()
-            && view && view->right_click().nearest_addr()
-            && Base::add_to(view, menu, ctxt))
+    if (ctxt.position() && 
+        view            &&
+        view->right_click().nearest_addr() &&
+        Base::add_to(view, menu, ctxt))
     {
         menu.items().push_back(Gtk::Menu_Helpers::SeparatorElem());
         return true;
@@ -88,19 +86,33 @@ MenuSetProgramCounter::add_to(CodeView* view,
 
 
 MenuShowFunctionStart::MenuShowFunctionStart()
-    : Base(&CodeView::show_function_start,
-            "Show Function Start",
-            &Gtk::Stock::GOTO_TOP)
+    : Base(&CodeView::show_function_start, "Show Function Start", &Gtk::Stock::GOTO_TOP)
 {
 }
 
 
 MenuShowNextStatement::MenuShowNextStatement()
-    : Base(&CodeView::show_next_statement,
-            "Show Next Statement",
-            &Gtk::Stock::GOTO_LAST)
+    : Base(&CodeView::show_next_statement, "Show Next Statement", &Gtk::Stock::GOTO_LAST)
 {
 }
 
 
+MenuOpenFolder::MenuOpenFolder()
+    : Base(&CodeView::open_folder, "Open Parent Folder", NULL)
+{
+}
+
+bool
+MenuOpenFolder::add_to(
+    CodeView*           view,
+    Gtk::Menu&          menu,
+    MenuClickContext&   ctxt)
+{
+    if (view && view->file() && Base::add_to(view, menu, ctxt))
+    {
+        menu.items().push_back(Gtk::Menu_Helpers::SeparatorElem());
+        return true;
+    }
+    return false;
+}
 // vim: tabstop=4:softtabstop=4:expandtab:shiftwidth=4

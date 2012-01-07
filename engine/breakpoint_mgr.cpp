@@ -86,10 +86,6 @@ bool BreakPointManagerBase::enable_software_breakpoint(
             {
                 thread.write_code(addr, &code, 1);
                 brkpnt.enabled = enable;
-
-                //clog << __func__ << ": thread.write_code("
-                //     << hex << addr << ", " << code << dec << ") OK."
-                //     << "thread=" << thread.lwpid() << endl;
             }
             catch (const exception& e)
             {
@@ -104,8 +100,6 @@ bool BreakPointManagerBase::enable_software_breakpoint(
             {
                 process_->write_code(addr, &code, 1);
                 brkpnt.enabled = enable;
-                //clog << __func__ << ": process.write_code("
-                //     << hex << addr << ", " << code << dec << ") OK." << endl;
             }
             catch (...)
             {

@@ -23,7 +23,6 @@ typedef Server<ForkedServer<SocketBaseServer> > DebugServer;
 int main(int argc, char* argv[])
 {
     cout << "*** ZeroBUGS Remote Debug Server V. 1.0 ***" << endl;
-    cout << "*** Copyright (c) 2008 Zero Systems LLC ***" << endl;
 
     try
     {

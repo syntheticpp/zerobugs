@@ -9,6 +9,7 @@
 // http://www.boost.org/LICENSE_1_0.txt)
 // -------------------------------------------------------------------------
 
+#include "zdk/config.h"
 #include <assert.h>
 #include <errno.h>          // errno, ECHILD
 #ifdef HAVE_UNISTD_H
@@ -82,6 +83,7 @@ DebuggerBase::DebuggerBase()
     , quit_(false)
     , signaled_(false)
     , initialThreadFork_(false)
+    , historySnapshotsEnabled_(true)
     , options_(defaultOpts)
     , lwpidStep_(0)
     , unhandled_(new UnhandledMap)
@@ -925,8 +927,6 @@ void DebuggerBase::print_event_info(ostream& out, const Thread& thread)
     {
         out << desc->c_str() << endl;
     }
-#else
-	// todo
 #endif
 }
 
@@ -1026,10 +1026,10 @@ RefPtr<Thread> DebuggerBase::get_event()
     }
     return tptr;
 #else
-	//
-	// todo
-	//
-	return NULL;
+    //
+    // todo
+    //
+    return NULL;
 #endif
 }
 
@@ -1367,7 +1367,7 @@ void DebuggerBase::refresh_properties()
 ////////////////////////////////////////////////////////////////
 void DebuggerBase::take_snapshot()
 {
-    if (settings_)
+    if (historySnapshotsEnabled_ && settings_)
     {
         RefPtr<HistoryImpl> history =
             interface_cast<HistoryImpl*>(settings_->get_object("hist"));
@@ -1506,6 +1506,10 @@ bool DebuggerBase::restore_module(
     Module& currentMod,
     RefPtr<HistoryEntryImpl> entry)
 {
+    // disable history snapshot while restoring breakpoints,
+    // because setting a breakpoint invalidates the current
+    // history snapshot
+    Temporary<bool> setFlag(historySnapshotsEnabled_, false);
     bool result = false;
 
     if (!entry)

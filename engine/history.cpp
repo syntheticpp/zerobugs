@@ -27,6 +27,7 @@
 #include "history.h"
 #include "target/target.h"
 
+#define DEBUG   1
 
 using namespace std;
 
@@ -237,7 +238,7 @@ size_t HistoryEntryImpl::write(OutputStream* output) const
             nbytes += output->write_string("watch", i->c_str());
         }
     #if DEBUG
-        clog << count << " watches saved\n";
+        // clog << count << " watches saved\n";
     #endif
     }
     //
@@ -555,6 +556,9 @@ void HistoryImpl::add_entry(Process* process)
             {
                 (*i)->destroy();
             }
+        #if DEBUG
+            clog << __func__ << ": erasing entry " << entry->name() << endl;
+        #endif
             queue_.erase(i);
             break;
         }

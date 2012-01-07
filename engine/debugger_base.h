@@ -387,6 +387,7 @@ private:
     bool                    quit_;
     bool                    signaled_;
     bool                    initialThreadFork_;
+    bool                    historySnapshotsEnabled_;
     uint64_t                options_;
     pid_t                   lwpidStep_; // last thread to single-step
     RefPtr<UnhandledMap>    unhandled_; // for out-of-order events

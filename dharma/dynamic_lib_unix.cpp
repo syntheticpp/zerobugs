@@ -63,8 +63,6 @@ void DynamicLib::load()
 {
     // dynamic linker binding flags
     static const int flags = RTLD_LAZY | RTLD_GLOBAL;
-    // static const int flags = RTLD_NOW | RTLD_GLOBAL;
-    // static const int flags = RTLD_LAZY;
 
     if (handle_)
     {
@@ -86,10 +84,6 @@ void DynamicLib::load()
                 throw runtime_error("Unknown dlopen error");
             }
         }
-    //#if DEBUG
-      //  clog << "Loaded: " << filename();
-      //  clog << " (handle=" << hex << handle_.get() << dec << ")\n";
-    // #endif
     }
 }
 
