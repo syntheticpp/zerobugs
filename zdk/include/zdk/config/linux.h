@@ -18,6 +18,8 @@
    #define fabsl   fabs
 #endif
 
+#define HAVE_ELF                1
+
 #define HAVE_CLONE              1
 
 #define HAVE_PTRACE_PEEKUSER    1

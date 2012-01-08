@@ -1843,9 +1843,9 @@ END_SLOT()
 
 
 ////////////////////////////////////////////////////////////////
-BEGIN_SLOT(MainWindow::set_option,(uint64_t mask, bool option))
+BEGIN_SLOT(MainWindow::set_option,(uint64_t mask, bool option, bool force))
 {
-    if (is_at_debug_event())
+    if (force || is_at_debug_event())
     {
         if (is_ui_thread())
         {
@@ -1853,7 +1853,8 @@ BEGIN_SLOT(MainWindow::set_option,(uint64_t mask, bool option))
                 command(&MainWindow::set_option,
                         this,
                         mask,
-                        option));
+                        option,
+                        true));
         }
         else
         {
@@ -4247,8 +4248,7 @@ bool MainWindow::is_at_debug_event() const
 #if DEBUG
         else
         {
-            clog << __func__ << ": failed to acquire lock, owner=" 
-                 << mutex().get_owner() << " maintid=" << maintid << endl;
+            clog << __func__ << ": failed to acquire lock." << endl;
         }
 #endif
     }

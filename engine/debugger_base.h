@@ -318,6 +318,8 @@ protected:
 
     void clear_properties();
 
+    void reset_properties();
+
     void set_trace_fork(bool flag)
     {
         if (flag)

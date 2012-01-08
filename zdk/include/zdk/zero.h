@@ -12,7 +12,7 @@
 // -------------------------------------------------------------------------
 
 #define ZERO_API_MAJOR  1
-#define ZERO_API_MINOR 20
+#define ZERO_API_MINOR 21
 
 #define ZDK_MAJOR ZERO_API_MAJOR
 #define ZDK_MINOR ZERO_API_MINOR
@@ -823,6 +823,8 @@ DECLARE_ZDK_INTERFACE_(Debugger, Unknown2)
      * mechanism for storing name-value pairs.
      */
     virtual Properties* properties() = 0;
+
+    virtual void reset_properties() = 0;
 
     /**
      * @return a bitmask of current options.

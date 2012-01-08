@@ -58,6 +58,8 @@ private:
 
     void on_exec();
 
+    void on_reset_all();
+
     void gray_out_all_buttons();
 
     event_result_t on_button_press_event(GdkEventButton*);
@@ -79,6 +81,7 @@ private:
     Gtk::Button*            btnAttach_;
     Gtk::Button*            btnDelete_;
     Gtk::Button*            btnLoad_;
+    Gtk::Button*            btnClearAll_;
 };
 #endif // HISTORY_DLG_H__3FAF2C42_C832_4283_A586_4F5A13AEDD8A
 // vim: tabstop=4:softtabstop=4:expandtab:shiftwidth=4

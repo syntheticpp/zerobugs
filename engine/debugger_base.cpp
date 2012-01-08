@@ -2,7 +2,7 @@
 // $Id: debugger_base.cpp 720 2010-10-28 06:37:54Z root $
 //
 // -------------------------------------------------------------------------
-// This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu
+// This file is part of ZeroBugs, Copyright (c) 2012 Cristian L. Vlasceanu
 //
 // Distributed under the Boost Software License, Version 1.0.
 // (See accompanying file LICENSE_1_0.txt or copy at
@@ -43,7 +43,7 @@
 #include "dharma/settings.h"
 #include "dharma/system_error.h"
 #include "dharma/syscall_wrap.h"
-#ifdef __unix__ // todo: should be ifdef HAVE_ELF
+#if HAVE_ELF
  #include "elfz/public/core_file.h"
  #include "elfz/public/error.h"
 #endif
@@ -389,7 +389,8 @@ bool DebuggerBase::try_attach(string& arg, size_t argc, const char* filename)
 static bool is_corefile(const char* filename)
 {
     assert(filename);
-#ifdef __unix__ // todo: should be ifdef HAVE_ELF
+
+#if HAVE_ELF
     int elf_type = 0;
     try
     {
@@ -409,7 +410,7 @@ static bool is_corefile(const char* filename)
     }
     return elf_type == ET_CORE;
 #else
-	return false; // todo
+	return false;
 #endif
 }
 
@@ -1304,8 +1305,7 @@ Properties* DebuggerBase::properties()
     Lock<Mutex> lock(settingsMutex_);
     if (!settings_)
     {
-        CHKPTR(factory_)->register_interface(History::_uuid(),
-                                             HistoryImpl::create);
+        CHKPTR(factory_)->register_interface(History::_uuid(), HistoryImpl::create);
         settings_ = new Settings(factory_);
 
         string path = get_config_path();
@@ -1584,6 +1584,20 @@ void DebuggerBase::clear_properties()
 
 
 ////////////////////////////////////////////////////////////////
+void DebuggerBase::reset_properties()
+{
+    Lock<Mutex> lock(settingsMutex_);
+
+    if (unlink(settingsPath_.c_str()) < 0)
+    {
+        cerr << SystemError(settingsPath_).what() << endl;
+    }
+    settings_.reset();
+    properties();
+}
+
+
+////////////////////////////////////////////////////////////////
 void DebuggerBase::save_properties()
 {
     Lock<Mutex> lock(settingsMutex_);
@@ -1731,8 +1745,10 @@ static bool resolve_link(string& path)
 
 
 ////////////////////////////////////////////////////////////////
-bool DebuggerBase::map_path_no_follow(const Process* proc,
-                                      string& path) const
+bool
+DebuggerBase::map_path_no_follow(
+    const Process*  proc,
+    string&         path) const
 {
     bool result = false;
     if (proc)
@@ -1808,5 +1824,5 @@ bool DebuggerBase::check_state_before_attaching(pid_t pid)
     return signalToContinue;
 }
 
-// Copyright (c) 2004, 2006, 2007, 2008 Cristian L. Vlasceanu
+// Copyright (c) 2004 - 2012 Cristian L. Vlasceanu
 // vim: tabstop=4:softtabstop=4:expandtab:shiftwidth=4

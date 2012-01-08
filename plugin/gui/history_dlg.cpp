@@ -80,7 +80,9 @@ HistoryDialog::HistoryDialog
   , btnAttach_(0)
   , btnDelete_(0)
   , btnLoad_(0)
+  , btnClearAll_(0)
 {
+    set_has_separator();
     if (current)
     {
         current_ = current;
@@ -99,7 +101,10 @@ HistoryDialog::HistoryDialog
     bbox->set_spacing(3);
     bbox->set_layout(Gtk_FLAG(BUTTONBOX_START));
 
-    Gtk::Button* btn = add_button("_Close", bbox);
+    btnClearAll_ = add_button("Reset History And _Settings", get_action_area());
+
+    // Gtk::Button* btn = add_button("_Close", get_action_area());
+    Gtk::Button* btn = add_button(Gtk::Stock::CLOSE, get_action_area());
     Gtk_CONNECT_1(btn, clicked, this, &HistoryDialog::on_button, btn_close);
 
     btnExec_ = add_button(Gtk::Stock::EXECUTE, bbox);
@@ -113,6 +118,7 @@ HistoryDialog::HistoryDialog
     Gtk_CONNECT_0(btnAttach_, clicked, this, &HistoryDialog::on_attach);
     Gtk_CONNECT_0(btnDelete_, clicked, this, &HistoryDialog::on_delete);
     Gtk_CONNECT_0(btnLoad_, clicked, this, &HistoryDialog::on_exec);
+    Gtk_CONNECT_0(btnClearAll_, clicked, this, &HistoryDialog::on_reset_all);
 
     sw->set_policy(Gtk_FLAG(POLICY_AUTOMATIC), Gtk_FLAG(POLICY_AUTOMATIC));
     Gtk_set_size(hbox, 600, 240);
@@ -190,7 +196,6 @@ void HistoryDialog::populate_list()
             if (current_ == entry->name())
             {
                 row.set_selectable(false);
-                //row.set_foreground(Gdk_Color("white"));
                 row.set_background(Gdk_Color("green"));
             }
         }
@@ -304,6 +309,14 @@ BEGIN_SLOT(HistoryDialog::on_exec,())
     on_button(btn_ok);
 
     execute(entry_.get());
+}
+END_SLOT()
+
+
+BEGIN_SLOT(HistoryDialog::on_reset_all,())
+{
+    debugger_.reset_properties();
+    on_button(btn_ok);
 }
 END_SLOT()
 

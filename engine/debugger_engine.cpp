@@ -53,11 +53,11 @@
 #include "dharma/syscall_wrap.h"
 #include "dharma/system_error.h"
 #include "dharma/switchable_action.h"
-//<todo: these imply ELF format>
-#include "elfz/public/binary.h"
-#include "elfz/public/link.h"
-#include "elfz/public/program_header.h"
-//</todo>
+#if HAVE_ELF
+ #include "elfz/public/binary.h"
+ #include "elfz/public/link.h"
+ #include "elfz/public/program_header.h"
+#endif
 #include "interp/context_impl.h"
 #include "interp/interp.h"
 #include "symbolz/private/link_data.h"

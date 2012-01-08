@@ -98,7 +98,7 @@ MenuShowNextStatement::MenuShowNextStatement()
 
 
 MenuOpenFolder::MenuOpenFolder()
-    : Base(&CodeView::open_folder, "Open Parent Folder", NULL)
+    : Base(&CodeView::open_folder, "Open Containing Folder", NULL)
 {
 }
 

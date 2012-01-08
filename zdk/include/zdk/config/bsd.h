@@ -13,6 +13,8 @@
 
 #include <boost/static_assert.hpp>
 
+#define HAVE_ELF                1
+
 #define HAVE_PROC_SERVICE_H     1
 
 #define HAVE_THREAD_DB_H        1
