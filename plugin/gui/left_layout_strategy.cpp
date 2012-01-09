@@ -79,8 +79,8 @@ LeftLayoutStrategy::~LeftLayoutStrategy()
     {
         c1_.disconnect();
         c2_.disconnect();
-        dbg_.properties()->set_word("left.width", hpaned_->get_position());
-        dbg_.properties()->set_word("code.height", vpaned_->get_position());
+
+        save_geometry();
     }
     catch (...)
     {
@@ -88,6 +88,11 @@ LeftLayoutStrategy::~LeftLayoutStrategy()
 }
 
 
+void LeftLayoutStrategy::save_geometry() const
+{
+    dbg_.properties()->set_word("left.width", hpaned_->get_position());
+    dbg_.properties()->set_word("code.height", vpaned_->get_position());
+}
 
 void LeftLayoutStrategy::add_program_view(Widget& w)
 {

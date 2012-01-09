@@ -49,7 +49,7 @@ struct ZDK_LOCAL NodeData
       , ptid_(thread.thread_id())
       , dbg_(thread.debugger())
     {
-        if (const char* name = thread.comm_name())
+        if (const char* name = thread.name())
         {
             name_ = name;
         }
@@ -218,7 +218,7 @@ ThreadView::Item ThreadView::make_tree_item(const Thread& thread)
     Item item;
 
     item.col.push_back(os.str());
-    item.col.push_back(thread.comm_name());
+    item.col.push_back(thread.name());
 
     boost::shared_ptr<NodeData> nodeData(new NodeData(thread));
     data_.push_back(nodeData);
@@ -382,7 +382,7 @@ bool ThreadView::add_thread(const Thread& thread)
 // NOTE: runs on main thread
 void ThreadView::update(const Thread& thread)
 {
-    updateQueue_.push(make_pair(thread.lwpid(), thread.comm_name()));
+    updateQueue_.push(make_pair(thread.lwpid(), thread.name()));
 }
 
 

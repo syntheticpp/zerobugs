@@ -87,6 +87,9 @@ public:
 
     ~MainWindow() throw();
 
+    bool on_window_state_event(GdkEventWindowState* event);
+    void on_size_allocate(Gdk::Rectangle& allocation);
+
     bool on_debug_event(RefPtr<Thread>, EventType) volatile;
 
     void on_attached(RefPtr<Thread>);
@@ -564,6 +567,7 @@ private:
      * @see the Properties interface.
      */
     void save_config();
+    void save_geometry();
 
     void save_toolbars_visibility(Properties&) const;
     static bool is_toolbar_visible(ToolBar*);
@@ -624,6 +628,7 @@ private:
     bool                waiting_;   // waiting responses from UI
     bool                ownsUserInteraction_;
     bool                atDebugEvent_;
+    bool                maximized_;
 
     MemoryViews         memoryViews_;
     std::string         sourcesPath_;

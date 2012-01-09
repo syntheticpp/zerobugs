@@ -48,6 +48,8 @@ protected:
 
     virtual bool is_variables_view_visible() const { return true; }
 
+    virtual void save_geometry() const;
+
 private:
     Debugger& dbg_;
     Gtk::Container& container_;

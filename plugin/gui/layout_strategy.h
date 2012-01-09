@@ -50,6 +50,8 @@ struct ZDK_LOCAL LayoutStrategy : public Gtk::Base
     virtual Gtk::Container& container() = 0;
 
     virtual bool is_variables_view_visible() const = 0;
+
+    virtual void save_geometry() const = 0;
 };
 
 

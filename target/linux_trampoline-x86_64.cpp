@@ -50,21 +50,28 @@ bool check_trampoline64(const Thread& thread, const Frame& f)
 
     */
 
+    bool result = false;
+
     if ((count == 2 &&
         (w[0] == 0x0f0000000fc0c748) && (w[1] & 0xff) == 0x05)
      || (count > 0 &&
             ((w[0] & 0xffffffffffffff) == 0x50f000000adb8
           || (w[0] & 0xffffffffffffff00) == 0x50f00000077b800)))
     {
-        return true;
+        result = true;
     }
-    return false;
+#if DEBUG
+    std::clog << __func__ << ": " << result << std::endl;
+#endif
+    return result;
 }
 
 
 
 bool check_trampoline_frame64(const Thread& thread, FrameImpl& f)
 {
+    bool result = false;
+
     if (check_trampoline64(thread, f))
     {
         if (thread.is_32_bit())
@@ -83,9 +90,9 @@ bool check_trampoline_frame64(const Thread& thread, FrameImpl& f)
         assert(f.real_program_count() == f.program_count());
         f.set_signal_handler();
 
-        return true;
+        result = true;
     }
-    return false;
+    return result;
 }
 
 // vim: tabstop=4:softtabstop=4:expandtab:shiftwidth=4

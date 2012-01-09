@@ -1126,8 +1126,9 @@ void DebuggerEngine::exec_pending_actions(
     {
         return; // nothing pending
     }
-    // addr_t addr = 0;
-
+#if DEBUG
+    addr_t addr = 0;
+#endif
     // execute pending breakpoint actions
     BreakPointList pending = CHKPTR(sched_)->pending_;
 
@@ -1138,8 +1139,9 @@ void DebuggerEngine::exec_pending_actions(
 
         // pending breakpoints should shared the same address
         assert(addr == 0 || bpnt->addr() == addr);
-        // addr = bpnt->addr();
-
+#if DEBUG
+        addr = bpnt->addr();
+#endif
         // are we still attached to this thread?
         if (thread_is_attached(thread))
         {

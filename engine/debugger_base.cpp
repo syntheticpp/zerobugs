@@ -829,8 +829,8 @@ void DebuggerBase::cleanup(Thread& thread)
 {
     const pid_t pid = CHKPTR(thread.process())->pid();
 
-    dbgout(0) << __func__ << ": " << thread.lwpid() << " status="
-              << hex << thread.status() << dec << endl;
+    dbgout(0) << __func__ << ": " << thread.lwpid()
+              << " status=" << thread.status() << endl;
 
     RefPtr<Target> target = find_target(pid);
     if (!target)
@@ -999,8 +999,6 @@ RefPtr<Thread> DebuggerBase::get_event()
 
         if (Thread* thread = target->event_pid_to_thread(pid))
         {
-            dbgout(1) << "event_pid_to_thread: " << thread->lwpid() << endl;
-
             tptr = &interface_cast<ThreadImpl&>(*thread);
             tptr->set_status(status);
 
@@ -1232,17 +1230,21 @@ string DebuggerBase::get_config_path()
 {
     string cfgPath;
 
-    if (const char* path = getenv("ZERO_CONFIG_PATH"))
+    const char* path = getenv("ZERO_CONFIG_PATH");
+    if (!path)
     {
-        cfgPath = path;
-
-        if (!cfgPath.empty() && cfgPath[cfgPath.size() - 1] != '/')
-        {
-            cfgPath += '/';
-        }
+        path = getenv("HOME");
     }
+    cfgPath = path;
+
+    if (!cfgPath.empty() && cfgPath[cfgPath.size() - 1] != '/')
+    {
+        cfgPath += '/';
+    }
+
     if (cfgPath.empty())
     {
+        // store configuration in the parent dir of bin/zero
         cfgPath = realpath_process_name();
         size_t n = cfgPath.rfind("/bin/");
         if (n == string::npos)
@@ -1255,6 +1257,9 @@ string DebuggerBase::get_config_path()
     cfgPath += ".zero/";
     sys::mkdir(cfgPath, 0750);
 
+#if DEBUG
+    clog << __func__ << ": " << cfgPath << endl;
+#endif
     return cfgPath;
 }
 
@@ -1406,7 +1411,8 @@ const HistoryEntry* DebuggerBase::get_most_recent_history_entry()
 
 
 ////////////////////////////////////////////////////////////////
-RefPtr<HistoryEntryImpl> DebuggerBase::get_history_entry(Process& proc) const
+RefPtr<HistoryEntryImpl>
+DebuggerBase::get_history_entry(Process& proc) const
 {
     RefPtr<HistoryEntryImpl> entry;
 
@@ -1745,6 +1751,9 @@ static bool resolve_link(string& path)
 
 
 ////////////////////////////////////////////////////////////////
+//
+// map source code path without following symbolic links
+//
 bool
 DebuggerBase::map_path_no_follow(
     const Process*  proc,
@@ -1786,7 +1795,8 @@ DebuggerBase::map_path_no_follow(
 
 
 ////////////////////////////////////////////////////////////////
-bool DebuggerBase::map_path(const Process* proc, string& path) const
+bool
+DebuggerBase::map_path(const Process* proc, string& path) const
 {
     bool result = map_path_no_follow(proc, path);
     if (result)

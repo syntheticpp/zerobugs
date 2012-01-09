@@ -60,8 +60,7 @@ AllVisibleStrategy::~AllVisibleStrategy()
 {
     try
     {
-        dbg_.properties()->set_word("locals.height", vpaned_->get_position());
-        dbg_.properties()->set_word("code.width", hpaned_->get_position());
+        save_geometry();
     }
     catch (...)
     {
@@ -69,6 +68,11 @@ AllVisibleStrategy::~AllVisibleStrategy()
 }
 
 
+void AllVisibleStrategy::save_geometry() const
+{
+    dbg_.properties()->set_word("locals.height", vpaned_->get_position());
+    dbg_.properties()->set_word("code.width", hpaned_->get_position());
+}
 
 void AllVisibleStrategy::add_variables_view(Widget& w)
 {

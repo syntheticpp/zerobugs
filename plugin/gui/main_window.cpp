@@ -110,7 +110,6 @@
 #include "view_types.h"
 #include "watch_view.h"
 
-
 /* "Requests" are commands sent from the main thread to the UI;
  * "responses" are commands from the UI thread to the main thread.
  */
@@ -128,6 +127,15 @@
  #define SHIFT
 #endif
 
+
+#define WINDOW_X            "window.x"
+#define WINDOW_Y            "window.y"
+#define WINDOW_HEIGHT       "window.height"
+#define WINDOW_WIDTH        "window.width"
+#define WINDOW_MAXIMIZED    "window.maximized"
+
+#define WINDOW_DEFAULT_WIDTH    750
+#define WINDOW_DEFAULT_HEIGHT   660
 
 using namespace std;
 using namespace SigC;
@@ -308,6 +316,7 @@ MainWindow::MainWindow(Debugger& debugger, const string& strategy)
     , waiting_(false)
     , ownsUserInteraction_(true)
     , atDebugEvent_(false)
+    , maximized_(false)
     , viewMode_(0)
 {
     maintid = pthread_self();
@@ -349,10 +358,12 @@ MainWindow::MainWindow(Debugger& debugger, const string& strategy)
     vbox->show();
     this->add(*vbox);
 
-    word_t w = props.get_word("window.width", 750);
-    word_t h = props.get_word("window.height", 660);
-    word_t x = props.get_word("window.x", 0);
-    word_t y = props.get_word("window.y", 0);
+    maximized_ = props.get_word("WINDOW_MAXIMIZED", false);
+    
+    word_t w = props.get_word("WINDOW_WIDTH", WINDOW_DEFAULT_WIDTH);
+    word_t h = props.get_word("WINDOW_HEIGHT", WINDOW_DEFAULT_HEIGHT);
+    word_t x = props.get_word("WINDOW_X", 0);
+    word_t y = props.get_word("WINDOW_Y", 0);
 
     set_default_size(w, h);
 
@@ -361,6 +372,11 @@ MainWindow::MainWindow(Debugger& debugger, const string& strategy)
         Gtk_move(this, x, y);
     }
     show();
+
+    if (maximized_)
+    {
+        get_window()->maximize();
+    }
     update_state(uisThreadStop);
 
     connect_event_pipes();
@@ -897,6 +913,35 @@ void MainWindow::status_message(string text)
     #ifdef GTKMM_2
         funcBar_->get_window()->process_updates(true);
     #endif
+    }
+}
+
+
+////////////////////////////////////////////////////////////////
+bool MainWindow::on_window_state_event(GdkEventWindowState* event)
+{
+    if (event)
+    {
+        if (event->changed_mask & GDK_WINDOW_STATE_MAXIMIZED)
+        {
+            maximized_ = event->new_window_state & GDK_WINDOW_STATE_MAXIMIZED;
+        }
+    }
+
+    dbgout(0) << "maximized=" << maximized_ << endl;
+
+    return OnMapEventImpl<Gtk::Window>::on_window_state_event(event);
+}
+
+
+////////////////////////////////////////////////////////////////
+void MainWindow::on_size_allocate(Gdk::Rectangle& allocation)
+{
+    OnMapEventImpl<Gtk::Window>::on_size_allocate( allocation );
+    
+    if (is_ui_thread())
+    {
+        save_geometry();
     }
 }
 
@@ -2190,18 +2235,11 @@ END_SLOT()
 void MainWindow::save_config()
 {
     assert_ui_thread();
-    int x = 0, y = 0;
-
-    Gtk_WINDOW(this)->get_root_origin(x, y);
+    save_geometry();
 
     Properties& props = *CHKPTR(debugger().properties());
-
-    props.set_word("window.x", x);
-    props.set_word("window.y", y);
-    props.set_word("window.width", Gtk_WIDTH(this));
-    props.set_word("window.height", Gtk_HEIGHT(this));
-
     save_toolbars_visibility(props);
+
     if (localVarView_)
     {
         localVarView_->save_config(props, "locals");
@@ -2210,7 +2248,34 @@ void MainWindow::save_config()
     {
         watches_->save_config();
     }
-    layoutStrategy_.reset();
+    
+}
+
+
+////////////////////////////////////////////////////////////////
+void MainWindow::save_geometry()
+{
+    assert_ui_thread();
+    int x = 0, y = 0;
+
+    Gtk_WINDOW(this)->get_root_origin(x, y);
+
+    Properties& props = *CHKPTR(debugger().properties());
+
+    props.set_word("WINDOW_MAXIMIZED", maximized_);
+
+    if (!maximized_)
+    {
+        props.set_word("WINDOW_X", x);
+        props.set_word("WINDOW_Y", y);
+        props.set_word("WINDOW_WIDTH",  Gtk_WIDTH(this));
+        props.set_word("WINDOW_HEIGHT", Gtk_HEIGHT(this));
+
+        if (layoutStrategy_)
+        {
+            layoutStrategy_->save_geometry();
+        }
+    }
 }
 
 
@@ -2315,8 +2380,7 @@ BEGIN_SLOT(MainWindow::on_set_reg,
     if (is_ui_thread())
     {
         // marshal this call to the main thread
-        CALL_MAIN_THREAD_(command(
-            &MainWindow::on_set_reg, this, reg, v, field));
+        CALL_MAIN_THREAD_(command(&MainWindow::on_set_reg, this, reg, v, field));
     }
     else
     {

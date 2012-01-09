@@ -89,7 +89,11 @@ DECLARE_ZDK_INTERFACE_(Thread, MemoryIO)
      */
     virtual const char* filename() const = 0;
 
-    virtual const char* comm_name() const = 0;
+    /**
+     * @return the thread's name -- which may be the
+     * same as the filename(), but not necessarily.
+     */
+    virtual const char* name() const = 0;
 
     /**
      * @return the light-weight process id of this thread

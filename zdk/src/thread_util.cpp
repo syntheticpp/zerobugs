@@ -55,7 +55,7 @@ bool thread_finished(const Thread& thread)
 #ifdef DEBUG
     if (result)
     {
-        clog << __func__ << ": status=" << hex << status << dec << endl;
+        clog << __func__ << ": status=" << status << endl;
     }
 #endif
     assert(result != WIFSTOPPED(status));

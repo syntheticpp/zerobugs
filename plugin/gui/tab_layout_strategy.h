@@ -54,6 +54,8 @@ protected:
     virtual Gtk::Container& container() { return container_; }
 
     virtual bool is_variables_view_visible() const;
+    
+    virtual void save_geometry() const;
 
     void on_switch_page_bottom(GtkNotebookPage*, guint pageNum);
     void on_switch_page_right(GtkNotebookPage*, guint pageNum);

@@ -123,7 +123,7 @@ public:
 
     virtual void write_code(addr_t, const word_t*, size_t);
 
-    virtual const char* comm_name() const;
+    virtual const char* name() const;
 
 private:
     mutable RefPtr<ZObject> regs_;

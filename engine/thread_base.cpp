@@ -363,7 +363,7 @@ DebugRegs* ThreadBase::debug_regs()
 
 
 ////////////////////////////////////////////////////////////////
-const char* ThreadBase::comm_name() const
+const char* ThreadBase::name() const
 {
     if (RefPtr<Target> t = target())
     {

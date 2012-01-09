@@ -78,14 +78,19 @@ TabLayoutStrategy::~TabLayoutStrategy()
 
     try
     {
-        dbg_.properties()->set_word("code.width", hpaned_->get_position());
-        dbg_.properties()->set_word("code.height", vpaned_->get_position());
+        save_geometry();
     }
     catch (...)
     {
     }
 }
 
+
+void TabLayoutStrategy::save_geometry() const
+{
+    dbg_.properties()->set_word("code.width", hpaned_->get_position());
+    dbg_.properties()->set_word("code.height", vpaned_->get_position());
+}
 
 
 void TabLayoutStrategy::add_program_view(Widget& w)
