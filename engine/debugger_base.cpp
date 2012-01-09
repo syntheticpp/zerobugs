@@ -1235,7 +1235,11 @@ string DebuggerBase::get_config_path()
     {
         path = getenv("HOME");
     }
-    cfgPath = path;
+
+    if (path)
+    {
+        cfgPath = path;
+    }
 
     if (!cfgPath.empty() && cfgPath[cfgPath.size() - 1] != '/')
     {

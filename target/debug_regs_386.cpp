@@ -235,17 +235,6 @@ addr_t DebugRegs386::hit(reg_t* condition)
     addr_t result = 0;
     const reg_t statReg = this->status();
 
-#if 0 // experiment
-    siginfo_t siginfo = { 0 };
-
-    if (XTrace::ptrace(PT_GETSIGINFO, thread_.lwpid(), 0, addr_t(&siginfo)) == 0)
-    {
-        if (siginfo.si_signo == SIGTRAP)
-        {
-            clog << "***** " << siginfo.si_addr << " *****\n";
-        }
-    }
-#endif
     bitset<DEBUG_REG_NUM> flags(statReg & ((1 << DEBUG_REG_NUM) - 1));
     if (flags.any())
     {
