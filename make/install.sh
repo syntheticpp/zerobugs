@@ -149,7 +149,6 @@ plugin/zstabs.so        zero/plugin/zstabs.so\n
 plugin/zgui.so          zero/plugin/zgui.so\n
 plugin/zpython.so       zero/plugin/zpython.so\n
 plugin/zremote-proxy.so zero/plugin/zremote-proxy.so\n
-plugin/.zero.py         zero/plugin/.zero.py\n
 plugin/update.py        zero/plugin/update.py\n
 misc/zero-gtkrc-2.0     zero/plugin/zero-gtkrc-2.0\n
 lib/libdwarf.so         zero/lib/libdwarf.so\n
@@ -157,6 +156,9 @@ lib/libdemangle_d.so    zero/lib/libdemangle_d.so\n
 help                    zero/help\n
 zeroicon.png            zero/zeroicon.png\n
 LIBDWARFCOPYRIGHT       zero/LIBDWARFCOPYRIGHT"
+
+#do not install this -- there's still some issues with it
+#plugin/.zero.py         zero/plugin/.zero.py\n
 
 echo -e $FILE_LIST > $FILES
 

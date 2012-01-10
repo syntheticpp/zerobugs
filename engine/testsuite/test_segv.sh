@@ -46,7 +46,7 @@ int main()
 #else
 	struct sigaction sa;
 	memset(&sa, 0, sizeof sa);
-	sa.sa_handler = my_handler;
+	// sa.sa_handler = my_handler;
 	sa.sa_sigaction = my_handler2;
 	sa.sa_flags = SA_SIGINFO;
 
@@ -71,9 +71,6 @@ build ${1:-$debug} foo.cpp -lm
 
 cat > ./script << '---end---'
 echo ##### test_segv #####
-#call { handle 11 ignore }
-#call { loadcore core }
-#call { next }
 call { exec a.out }
 call { continue }
 
@@ -81,10 +78,16 @@ call { continue }
 #call { where }
 #call { frame signal }
 #call { up }
+
+call { list }
 call { eval val }
 expect { 3.1419
 }
-
+call { break :16 }
+call { continue }
+call { eval sig }
+expect { 11
+}
 call { quit }
 
 ---end---

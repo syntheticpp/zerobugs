@@ -9,8 +9,9 @@
 # (See accompanying file LICENSE_1_0.txt or copy at
 # http://www.boost.org/LICENSE_1_0.txt)
 # -------------------------------------------------------------------------
+export ZERO_DEVENV=1
 
-# comment out to build debug
+# comment these out to build DEBUG:
 export RELEASE=1
 export CFLAGS=-O3
 export CPPFLAGS=-O3

@@ -51,11 +51,11 @@ bool thread_finished(const Thread& thread)
     const int status = thread.status();
 
     const bool result =
-        WIFEXITED(status) || WIFSIGNALED(status) || WCOREDUMP(status);
+        WIFEXITED(status) || WIFSIGNALED(status) /* || WCOREDUMP(status) */;
 #ifdef DEBUG
     if (result)
     {
-        clog << __func__ << ": status=" << status << endl;
+        clog << __func__ << ": status=" << hex << status << dec << endl;
     }
 #endif
     assert(result != WIFSTOPPED(status));

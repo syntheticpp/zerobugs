@@ -18,7 +18,7 @@
 #ifdef HAVE_ASM_PTRACE_H
  #include <asm/ptrace.h>
 #endif
-
+#if 0
 #ifndef PTRACE_O_TRACESYSGOOD
  #define PTRACE_O_TRACESYSGOOD  0x00000001
 #endif
@@ -38,13 +38,6 @@
  #define PTRACE_EVENT_EXIT      6
 #endif
 
-#if !defined(PT_OLDSETOPTIONS)
- #ifndef PTRACE_OLDSETOPTIONS
-   #define PTRACE_OLDSETOPTIONS 21
- #endif
- #define PT_OLDSETOPTIONS static_cast<__ptrace_request>(PTRACE_OLDSETOPTIONS)
-#endif
-
 #if defined(PTRACE_SETOPTIONS) && (PTRACE_SETOPTIONS == PTRACE_OLDSETOPTIONS)
  #undef PTRACE_SETOPTIONS
 #endif
@@ -60,6 +53,13 @@
 //#if !defined(PTRACE_SETSIGINFO) && !defined(PT_SETSIGINFO)
 // #define PTRACE_SETSIGINFO      0x4203
 //#endif
+#endif
+#if !defined(PT_OLDSETOPTIONS)
+ #ifndef PTRACE_OLDSETOPTIONS
+   #define PTRACE_OLDSETOPTIONS 21
+ #endif
+ #define PT_OLDSETOPTIONS static_cast<__ptrace_request>(PTRACE_OLDSETOPTIONS)
+#endif
 
 #if HAVE___PTRACE_REQUEST
 #ifdef PT_SETOPTIONS

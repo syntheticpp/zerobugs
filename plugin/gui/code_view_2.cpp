@@ -443,7 +443,7 @@ void CodeView::hilite_line
         //buf->move_mark(buf->get_insert(), iter);
         //buf->move_mark(buf->get_selection_bound(), iter);
 
-        //remove_marker(buf, CURRENT);
+        buf->remove_source_marks(buf->begin(), buf->end(), CURRENT);
         create_marker(buf, iter, line, CURRENT);
     }
     else

@@ -12,6 +12,7 @@
 // ------------------------------------------------------------------------
 
 #include <cassert>
+#include <signal.h>
 #include "unix.h"
 #include "zdk/check_ptr.h"
 #include "dharma/exec_arg.h"
@@ -74,6 +75,12 @@ namespace Unix
         else // child process
         {
             target.close_all_files();
+
+            // unmask all signals
+            sigset_t mask;
+            sigemptyset(&mask);
+            sigprocmask(SIG_SETMASK, &mask, NULL);
+
             XTrace::exec(arg.cstrings(), env);
         }
         return thread;

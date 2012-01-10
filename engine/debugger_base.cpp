@@ -830,7 +830,7 @@ void DebuggerBase::cleanup(Thread& thread)
     const pid_t pid = CHKPTR(thread.process())->pid();
 
     dbgout(0) << __func__ << ": " << thread.lwpid()
-              << " status=" << thread.status() << endl;
+              << " status=" << hex << thread.status() << dec << endl;
 
     RefPtr<Target> target = find_target(pid);
     if (!target)

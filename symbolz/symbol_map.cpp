@@ -226,8 +226,14 @@ void SymbolMapImpl::read()
         if (prevPath != path)
         {
             prevPath = path;
-            events_.map_path(this->process(), path);
-            this->read_tables(base, 0, path, tmp);
+
+            assert(!path.empty());
+            // skip [stack], [vdso], [vsyscal]
+            if (path[0] != '[' && path[0] != ']')
+            {
+                events_.map_path(this->process(), path);
+                this->read_tables(base, 0, path, tmp);
+            }
         }
     }
     {
