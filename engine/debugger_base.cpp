@@ -1832,7 +1832,7 @@ bool DebuggerBase::check_state_before_attaching(pid_t pid)
     // thread was possibly in a stopped state before attaching
     if (task.runstate() == Runnable::TRACED_OR_STOPPED)
     {
-		task.resume();
+	    task.resume();
         signalToContinue = true;
     }
     return signalToContinue;

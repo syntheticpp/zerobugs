@@ -9,6 +9,7 @@
 // http://www.boost.org/LICENSE_1_0.txt)
 // -------------------------------------------------------------------------
 //
+// NOTE: this may be deprecated now that there's stub_rt_sigreturn
 #ifndef __linux__
  #error bummer
 #endif

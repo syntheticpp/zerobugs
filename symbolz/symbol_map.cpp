@@ -39,8 +39,6 @@
 
 #define THREAD_SAFE Lock<Mutex> lock(mutex_);
 
-// cool, but what about the 2X problem?
-//#define TRANSACTIONAL
 
 using namespace std;
 
@@ -78,7 +76,6 @@ static size_t enum_symbols( RefPtr<SymbolTable>     tptr,
 }
 
 
-
 /*
 static void
 dump_symbol_map(ostream& out, SymbolMapImpl::SymbolTableMap& m)
@@ -108,6 +105,7 @@ SymbolMapImpl::~SymbolMapImpl() throw()
 SymbolMapImpl::SymbolMapImpl(Process& process, SymbolTableEvents& events)
     : events_(events)
     , process_(&process)
+    , arch_(EM_NONE)
     , loadAddr_(0)
     , scannedNeededTables_(false)
 {
@@ -141,6 +139,7 @@ void SymbolMapImpl::read()
      * would eliminate the need for reading the /proc/.../maps file,
      * which has an OS-dependent format
      */
+
     // read symbol info for the main executable,
     // will update shared object tables later
     // FIXME: does not work for attaching to an already running program
@@ -156,15 +155,14 @@ void SymbolMapImpl::read()
 #else
     //
     // read /proc/<pid>/map file and load symbol tables
-    // this is Linux-specific: FreeBSD systems for example
+    //
+    // NOTE: this is Linux-specific: FreeBSD systems for example
     // use a different layout for /proc/<pid>/map
     //
-#ifdef TRANSACTIONAL
-    SymbolTableMap tmp = lock_and_copy(mutex_, map_);
-#else
+
     THREAD_SAFE;
     SymbolTableMap& tmp = map_;
-#endif
+
     // open the maps file under the proc file-system
     ostringstream fname;
     fname << "/proc/" << process_->pid() << "/maps";
@@ -228,22 +226,15 @@ void SymbolMapImpl::read()
             prevPath = path;
 
             assert(!path.empty());
-            // skip [stack], [vdso], [vsyscal]
-            if (path[0] != '[' && path[0] != ']')
+            // skip [heap], [stack], [vdso], [vsyscal] etc
+            if (path[0] != '[' && path[0] != ']' && path[0] != ' ')
             {
                 events_.map_path(this->process(), path);
                 this->read_tables(base, 0, path, tmp);
             }
         }
     }
-    {
-#ifdef TRANSACTIONAL
-        // commit to the new symbol tables map
-        THREAD_SAFE;
-        map_.swap(tmp);
-#endif
-        mappedFiles_.reset(); // invalidate file_list
-    }
+    mappedFiles_.reset(); // invalidate file_list
 #endif
 }
 
@@ -256,6 +247,7 @@ SymbolMapImpl::SymbolMapImpl
 )
     : events_(events)
     , process_(&process)
+    , arch_(EM_NONE)
     , loadAddr_(0)
     , scannedNeededTables_(false)
 {
@@ -274,7 +266,6 @@ SymbolMapImpl::SymbolMapImpl
 }
 
 
-
 addr_t SymbolMapImpl::get_load_addr() const
 {
     if (loadAddr_ == 0)
@@ -289,7 +280,6 @@ addr_t SymbolMapImpl::get_load_addr() const
     }
     return loadAddr_;
 }
-
 
 
 SymbolTable* SymbolMapImpl::symbol_table_list(const char* path) const
@@ -311,9 +301,11 @@ SymbolTable* SymbolMapImpl::symbol_table_list(const char* path) const
     return table;
 }
 
+// todo: move this typedef to the ZDK
+typedef EnumCallback<SymbolTable*> SymbolTableCallback;
 
 
-size_t SymbolMapImpl::enum_symbol_tables( EnumCallback<SymbolTable*>* callback) const
+size_t SymbolMapImpl::enum_symbol_tables(SymbolTableCallback* callback) const
 {
     size_t result = 0;
     SymbolTableMap tmp;
@@ -321,8 +313,7 @@ size_t SymbolMapImpl::enum_symbol_tables( EnumCallback<SymbolTable*>* callback) 
         THREAD_SAFE;
         tmp = map_;
     }
-    SymbolTableMap::const_iterator i = tmp.begin();
-    for (; i != tmp.end(); ++i)
+    for (SymbolTableMap::const_iterator i = tmp.begin(); i != tmp.end(); ++i)
     {
         assert(i->second);
         if (callback)
@@ -335,15 +326,13 @@ size_t SymbolMapImpl::enum_symbol_tables( EnumCallback<SymbolTable*>* callback) 
 }
 
 
-
 /**
  * Iterate through tables that correspond to dynamic libs
  * that are not loaded in memory yet, but are specified in
  * the DT_NEEDED section (or have been added explicitly by
  * the user).
  */
-size_t SymbolMapImpl::enum_needed_tables(
-    EnumCallback<SymbolTable*>* callback) const
+size_t SymbolMapImpl::enum_needed_tables(SymbolTableCallback* callback) const
 {
     THREAD_SAFE;
 
@@ -351,7 +340,7 @@ size_t SymbolMapImpl::enum_needed_tables(
     {
         if (proc->origin() == ORIGIN_CORE)
         {
-            //IF_DEBUG(clog << __func__ << ": core file.\n");
+            IF_DEBUG(clog << __func__ << ": core file.\n");
             return 0;
         }
     }
@@ -363,18 +352,24 @@ size_t SymbolMapImpl::enum_needed_tables(
     SymbolTableGroup::const_iterator i = neededTables_.begin();
     for (; i != neededTables_.end(); ++i)
     {
-        string path((*i)->filename()->c_str());
-        if (is_mapped(path.c_str()))
+        if (is_mapped(i->first.c_str()))
         {
             continue;
         }
 
         if (callback)
         {
-            callback->notify((*i).get());
+            callback->notify(i->second.get());
         }
     }
     return neededTables_.size();
+}
+
+
+bool SymbolMapImpl::is_needed(const string& filename) const
+{
+    bool result = neededTables_.find( filename ) != neededTables_.end();
+    return result;
 }
 
 
@@ -383,18 +378,21 @@ size_t SymbolMapImpl::enum_needed_tables(
  */
 bool SymbolMapImpl::is_mapped(const char* filename) const
 {
+    bool result = false;
     assert(filename);
     const string path = canonical_path(filename);
 
     SymbolTableMap::const_iterator i = map_.begin();
     for (; i != map_.end(); ++i)
     {
-        if ((*i).second->filename()->is_equal(path.c_str()))
+        if (i->second->filename()->is_equal(path.c_str()))
         {
-            return true;
+            result = true;
+            break;
         }
     }
-    return false;
+
+    return result;
 }
 
 
@@ -405,16 +403,11 @@ bool SymbolMapImpl::add_module_internal(const char* filename) const
 
     const string path(canonical_path(filename));
 
-    // iterate over neededTables_ to make sure that
-    // it is not added twice
-    SymbolTableGroup::const_iterator i = neededTables_.begin();
-    for (; i != neededTables_.end(); ++i)
+    if (is_needed(path))
     {
-        if ((*i)->filename()->is_equal(path.c_str()))
-        {
-            return false;
-        }
+        return false;   // already scanned
     }
+
     scan_needed_tables(path.c_str());
     return true;
 }
@@ -433,7 +426,6 @@ RefPtr<SymbolTable> SymbolMapImpl::read_tables(
     }
     return symtbl;
 }
-
 
 
 /**
@@ -501,11 +493,15 @@ RefPtr<SymbolTable> SymbolMapImpl::read_tables(
             upper,
             false /* do not call SymbolTableEvents::on_done */);
     }
+
     if (symtbl)
     {
         assert(symtbl->addr() == addr);
+
         if (tableMap.insert(make_pair(addr, symtbl)).second)
         {
+            IF_DEBUG(clog << "LOADED " << hex << addr << dec << ": " << path << endl);
+
             // Notify the events observer that the table was loaded;
             // NOTE: this is done only AFTER the table is inserted into
             // the map, so that lookup_table will find this table if
@@ -535,7 +531,6 @@ RefPtr<SymbolTable> SymbolMapImpl::read_tables(
 
     return symtbl;
 }
-
 
 
 Symbol* SymbolMapImpl::lookup_symbol(addr_t addr) const
@@ -579,7 +574,6 @@ Symbol* SymbolMapImpl::lookup_symbol(addr_t addr) const
 }
 
 
-
 RefPtr<Symbol> SymbolMapImpl::vdso_lookup(addr_t addr) const
 {
     RefPtr<Symbol> sym;
@@ -601,7 +595,6 @@ RefPtr<Symbol> SymbolMapImpl::vdso_lookup(addr_t addr) const
     }
     return sym;
 }
-
 
 
 SymbolTable* SymbolMapImpl::lookup_table(addr_t addr) const
@@ -714,16 +707,13 @@ static void discard_unused (
 }
 
 
-
 void SymbolMapImpl::update(const LinkData* linkData)
 {
     set<addr_t> tmp;
-#ifdef TRANSACTIONAL
-    SymbolTableMap map = lock_and_copy(mutex_, map_);
-#else
+
     THREAD_SAFE;
     SymbolTableMap& map = map_;
-#endif
+
     for (; linkData; linkData = linkData->next())
     {
         const char* filename = CHKPTR(linkData->filename())->c_str();
@@ -795,33 +785,31 @@ void SymbolMapImpl::update(const LinkData* linkData)
         }
     }
     discard_unused(get_load_addr(), tmp, map);
-#ifdef TRANSACTIONAL // commit changes
-    THREAD_SAFE;
-    map_.swap(map);
-#endif
+
     mappedFiles_.reset();  // invalidate file_list
 }
 
 
-
 bool SymbolMapImpl::map_library (
     SymbolTableMap& map,
-    const string& path,
-    addr_t loadAddr,
-    addr_t elfLoadAddr,
-    size_t size)
+    const string&   path,
+    addr_t          loadAddr,
+    addr_t          elfLoadAddr,
+    size_t          size)
 {
     SymbolTableGroup::iterator u = neededTables_.begin();
     for (; u != neededTables_.end(); ++u)
     {
-        if ((*u)->filename()->is_equal(path.c_str()))
+        if (u->first == path)
         {
             debug_log(__func__, ": mapping " + path + " at ", (void*)loadAddr);
 
-            RefPtr<SymbolTableBase> tbl = *u;
+            RefPtr<SymbolTableBase> tbl = u->second;
             tbl->set_addr(loadAddr, elfLoadAddr);
             tbl->set_upper(loadAddr + size);
             map.insert(make_pair(loadAddr, tbl));
+            IF_DEBUG( clog << "MAPPED " << hex << loadAddr << dec << ": " << path << endl );
+
             neededTables_.erase(u);
             tbl->enum_deferred_breakpoints(&events_);
             events_.on_done(*tbl);
@@ -831,7 +819,6 @@ bool SymbolMapImpl::map_library (
     debug_log(__func__, "not found: " + path);
     return false;
 }
-
 
 
 SymbolMap::LinkData* SymbolMapImpl::file_list(RefTracker*) const
@@ -865,7 +852,6 @@ SymbolMap::LinkData* SymbolMapImpl::file_list(RefTracker*) const
 }
 
 
-
 /**
  * Iterate through dynamic libraries that are specified in the
  * DT_NEEDED section, but are not loaded into memory yet.
@@ -890,7 +876,7 @@ size_t SymbolMapImpl::enum_needed_symbols (
     {
         // each entry is the head of a linked list of tables;
         // each entry corresponds to a binary file
-        RefPtr<SymbolTableBase> table = *i;
+        RefPtr<SymbolTableBase> table = i->second;
         if (is_mapped(table->filename()->c_str()))
         {
             continue;
@@ -901,18 +887,50 @@ size_t SymbolMapImpl::enum_needed_symbols (
 }
 
 
+// NOTE: looks weird for this method to be const. 
+// It is OK, it updates mutable stuff, and it HAS to be const
+// as it is being called from enum_needed_tables, which the 
+// ZDK interface defines as const (for better or worse)
 
 void SymbolMapImpl::add_needed_tables(const char* moduleFileName) const
 {
     assert(moduleFileName);
+    const string path(moduleFileName);
 
-    if (!is_mapped(moduleFileName))
+    if (!is_needed(path) && !is_mapped(moduleFileName))
     {
-        if (RefPtr<SymbolTableBase> table =
-            new SymbolTableImpl(process(), moduleFileName, events_, 0, 0))
+        if (arch_ == EM_NONE && process())
         {
-            neededTables_.push_back(table);
+            ELF::Binary bin( process()->name() );
+            arch_ = bin.header().machine();
         }
+
+        // reject shared object of different architecture
+        try
+        {
+            ELF::Binary lib(path.c_str());
+
+            const long arch = lib.header().machine();
+
+            if (arch_ == EM_NONE)
+            {
+                // perhaps not a fantastic idea?
+                // arch_ = arch;
+            }
+            else if (arch_ != arch)
+            {
+                IF_DEBUG(clog << path << ": skipping architecture " << arch << endl);
+                return;
+            }
+        }
+        catch (const exception& e)
+        {
+            clog << path << ": " << e.what() << endl;
+        }
+
+        RefPtr<SymbolTableBase> table(
+            new SymbolTableImpl(process(), moduleFileName, events_, 0, 0) );
+        neededTables_.insert( make_pair(path, table) );
     }
 }
 
@@ -935,11 +953,11 @@ public:
 };
 
 
-
 void SymbolMapImpl::scan_needed_tables(const string& path) const
 {
     string fileName(path);
     const char* const* env = NULL;
+
     if (Process* proc = process())
     {
         env = proc->environment();
@@ -961,7 +979,6 @@ void SymbolMapImpl::scan_needed_tables(const string& path) const
     }
     add_needed_tables(fileName.c_str());
 }
-
 
 
 void SymbolMapImpl::scan_needed_tables() const

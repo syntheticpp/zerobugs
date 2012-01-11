@@ -21,7 +21,7 @@ void my_handler(int sig)
 void my_handler2(int sig, siginfo_t*, void*)
 {
 	signum = sig;
-	abort();
+	//abort();
 }
 void crash(double val)
 {

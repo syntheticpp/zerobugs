@@ -11,7 +11,8 @@ static jmp_buf ret_from_segv;
 static void ignore_segv(int)
 {
     std::clog << __func__ << std::endl;
-    longjmp (ret_from_segv, 1);
+    //longjmp (ret_from_segv, 1);
+    siglongjmp (ret_from_segv, 1);
 }
 
 void set_handler()

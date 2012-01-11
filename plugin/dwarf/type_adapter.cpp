@@ -207,14 +207,16 @@ namespace
     void throw_null_type(const char* msg, const T& die)
     {
         assert(msg);
-        assert(die.type());
         assert(die.name());
 
         string err = "null type for ";
         err += msg;
         err += ": ";
-        err += die.type()->name();
-        err += " ";
+        if (die.type())
+        {
+            err += die.type()->name();
+            err += " ";
+        }
         err += die.name();
 
         throw logic_error(err);
@@ -357,6 +359,9 @@ void Aggregator::operator()(const Inheritance& part) const
 {
     if (!part.type())
     {
+#if DEBUG
+        clog << "unknown type: " << part.name() << endl;
+#endif
         throw runtime_error(string("null type: ") + part.name());
     }
 
@@ -377,7 +382,7 @@ void Aggregator::operator()(const Inheritance& part) const
     else
     {
 #ifdef DEBUG
-        cerr << part.name() << ": location not found." << endl;
+        clog << part.name() << ": location not found." << endl;
 #endif
         return;
     }
@@ -427,7 +432,7 @@ Aggregator::operator()(const boost::shared_ptr<StaticMember>& part)
 void
 Aggregator::operator()(const TemplateType<Type>& templ) const
 {
-    if (typeSys_)
+    if (typeSys_ && templ.type())
     {
         RefPtr<SharedString> name = typeSys_->get_string(templ.name());
 
@@ -1344,7 +1349,6 @@ static bool resolve_decl(boost::shared_ptr<Type>& type)
 ////////////////////////////////////////////////////////////////
 RefPtr<DataType> TypeAdapter::apply(boost::shared_ptr<Type> type)
 {
-    assert(type); // pre-condition
     type_.reset();
 
     if (type)

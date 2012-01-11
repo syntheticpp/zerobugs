@@ -203,10 +203,10 @@ bool SymbolImpl::is_function() const
 
 
 void SymbolImpl::set_deferred_breakpoint(
-    BreakPoint::Type type,
-    Runnable* runnable,
+    BreakPoint::Type    type,
+    Runnable*           runnable,
     BreakPoint::Action* action,
-   Symbol* sym)
+    Symbol*             sym)
 {
     if (sym == NULL)
     {

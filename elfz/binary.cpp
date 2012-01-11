@@ -403,9 +403,6 @@ file_exists(const string& dir, const char* file, string& path)
     {
         if (errno != EINTR)
         {
-            //SystemError e(__func__);
-            //clog << __func__ << ": " << e.what() << endl;
-            //throw e;
             return false;
         }
     }

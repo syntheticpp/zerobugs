@@ -271,9 +271,10 @@ bool RunnableImpl::resume()
 }
 
 
-
 ////////////////////////////////////////////////////////////////
-size_t RunnableImpl::enum_open_files(EnumCallback2<int, const char*>* cb) const
+typedef EnumCallback2<int, const char*> FileCallback;
+
+size_t RunnableImpl::enum_open_files(FileCallback* cb) const
 {
     ostringstream os;
 
@@ -299,7 +300,7 @@ size_t RunnableImpl::enum_open_files(EnumCallback2<int, const char*>* cb) const
             {
                 continue;
             }
-            char buf[PATH_MAX + 1];
+            char buf[PATH_MAX + 1] = { 0 };
             const char* unused = realpath((*i).c_str(), buf);
             unused = unused;
             const char* path = strstr(buf, ":[");
@@ -324,7 +325,7 @@ size_t RunnableImpl::enum_open_files(EnumCallback2<int, const char*>* cb) const
 }
 
 
-
+////////////////////////////////////////////////////////////////
 void RunnableImpl::set_program_count(addr_t addr)
 {
     if (CHKPTR(thread_)->program_count() != addr)
@@ -340,7 +341,7 @@ void RunnableImpl::set_program_count(addr_t addr)
 }
 
 
-
+////////////////////////////////////////////////////////////////
 void RunnableImpl::set_result(word_t result)
 {
     if (thread_)
@@ -354,6 +355,7 @@ void RunnableImpl::set_result(word_t result)
 }
 
 
+////////////////////////////////////////////////////////////////
 void RunnableImpl::set_result64(int64_t result)
 {
     if (thread_)
@@ -367,6 +369,7 @@ void RunnableImpl::set_result64(int64_t result)
 }
 
 
+////////////////////////////////////////////////////////////////
 void RunnableImpl::set_result_double(long double r, size_t size)
 {
     if (RefPtr<Target> t = target())
@@ -377,6 +380,7 @@ void RunnableImpl::set_result_double(long double r, size_t size)
 }
 
 
+////////////////////////////////////////////////////////////////
 void RunnableImpl::set_stack_pointer(addr_t addr)
 {
     if (thread_)
@@ -392,6 +396,7 @@ void RunnableImpl::set_stack_pointer(addr_t addr)
 }
 
 
+////////////////////////////////////////////////////////////////
 bool RunnableImpl::write_register(Register* reg, const Variant* var)
 {
     bool result = false;
@@ -411,7 +416,7 @@ bool RunnableImpl::write_register(Register* reg, const Variant* var)
 }
 
 
-
+////////////////////////////////////////////////////////////////
 void RunnableImpl::write_register(size_t n, reg_t v)
 {
     if (RefPtr<Target> target = this->target())
@@ -422,7 +427,7 @@ void RunnableImpl::write_register(size_t n, reg_t v)
 }
 
 
-
+////////////////////////////////////////////////////////////////
 void RunnableImpl::set_registers(ZObject* usr, ZObject* fpu)
 {
     if (RefPtr<Target> target = this->target())
@@ -433,7 +438,6 @@ void RunnableImpl::set_registers(ZObject* usr, ZObject* fpu)
         thread_->reset_stack_trace();
     }
 }
-
 
 
 /**
@@ -489,6 +493,7 @@ bool RunnableImpl::is_frozen() const
 }
 
 
+////////////////////////////////////////////////////////////////
 void RunnableImpl::clear_cached_regs()
 {
     if (thread_)
@@ -528,6 +533,7 @@ public:
     StepRange(addr_t begin, addr_t end, ThreadImpl& thread)
         : stepInto_(false)
         , inStub_(false)
+        , longjump_(false)
         , range_(begin, end)
         , over_(0)
         , retAddr_(thread.ret_addr())
@@ -617,15 +623,25 @@ public:
         return result;
     }
 
+    bool longjump_called() const
+    {
+        return longjump_;
+    }
+    void set_longjump_called()
+    {
+        longjump_ = true;
+    }
+
 private:
     typedef std::pair<addr_t, addr_t> Range;
 
-    bool    stepInto_; // false when stepping over
-    bool    inStub_;
-    Range   range_;
-    addr_t  over_;
-    const addr_t retAddr_;
-    mutable RefPtr<Symbol> origin_;
+    bool                    stepInto_; // false when stepping over
+    bool                    inStub_;
+    bool                    longjump_;
+    Range                   range_;
+    addr_t                  over_;
+    const addr_t            retAddr_;
+    mutable RefPtr<Symbol>  origin_;
 };
 
 
@@ -1240,8 +1256,7 @@ void ThreadImpl::step_instruction()
 }
 
 
-
-
+////////////////////////////////////////////////////////////////
 void ThreadImpl::check_thread_creation_events()
 {
     // check for ptrace extension events
@@ -1439,7 +1454,7 @@ namespace
 
 
 ////////////////////////////////////////////////////////////////
-void ThreadImpl::set_step_over_breakpoint(addr_t addr)
+bool ThreadImpl::set_step_over_breakpoint(addr_t addr)
 {
     assert(debugger());
 
@@ -1450,12 +1465,13 @@ void ThreadImpl::set_step_over_breakpoint(addr_t addr)
     if (!mgr->set_breakpoint(&runnable_, BreakPoint::HARDWARE, addr, action.get()))
     {
         dbgstep() << "Failed to set breakpoint at " << (void*)addr << endl;
-        return;
+        return false;
     }
     //... and memorize the addr of the stepped-over func
     stepRange_->set_stepped_over(addr);
 
     dbgstep() << "Temp breakpoint set " << (void*)addr << endl;
+    return true;
 }
 
 
@@ -1503,6 +1519,7 @@ bool ThreadImpl::resume_stepping()
     {
         stepRange_->set_in_stub(false);
         single_step_now();
+
         return true;
     }
     else if (is_plt_jump(*this, pc))
@@ -1513,15 +1530,18 @@ bool ThreadImpl::resume_stepping()
 
         stepRange_->set_in_stub(true);
         single_step_now();
+
         return true;
     }
     else
     {
         // The program counter is out of stepping range: we need to decide
         // if we're done stepping. If we are out of range because a function
-        // call occurred, then it is faster to set an internal breakpoint at
-        // the return address of that function, and continue at full speed until
-        // the internal breakpoint is hit (after that we may go back to single-stepping).
+        // call occurred, then single-stepping may be too slow; set an internal
+        // breakpoint at the return address of that function, and continue at 
+        // full speed until the internal breakpoint is hit (after that we may 
+        // go back to single-stepping).
+
         dbgstep() << "range=[0x"
                   << hex << stepRange_->begin()
                   << ", 0x" << stepRange_->end()
@@ -1552,6 +1572,24 @@ bool ThreadImpl::resume_stepping()
             (!stepRange_->step_into() || stepRange_->skip_step(*this, pc))
            )
         {
+            if (RefPtr<Symbol> s = symbols()->lookup_symbol(pc))
+            {
+                dbgstep() << s->name() << endl;
+
+                // longjmp calls never return, and they break this algorithm;
+                // don't know how to handle yet, just message it to the user for now
+                if (strcmp(s->name()->c_str(), "_longjmp") == 0)
+                {
+                    stepRange_->set_longjump_called();
+                    set_single_step_mode(true, NULL);
+                
+                    if (auto dbg = debugger())
+                    {
+                        dbg->message("WARNING: Stepping through longjmp call!", Debugger::MSG_INFO);
+                    }
+                    return false;
+                }
+            }
             set_step_over_breakpoint(addr); // set internal breakpoint
         }
         else
@@ -1570,9 +1608,11 @@ bool ThreadImpl::resume_stepping()
                     return false;
                 }
             }
+
             // if we landed in the same function where we started, check that
             // the stack trace depth is the same as when the stepping range was
             // established (to avoid stopping at the wrong nesting of a recursive call)
+
             if (stepped_recursive(pc))
             {
                 return false;
@@ -1730,6 +1770,7 @@ bool ThreadImpl::resume(bool* stepped)
         dbgstep() << "stepped" << endl;
         return true;
     }
+
     if (RefPtr<Target> target = runnable_.target())
     {
         const uint64_t opts = target->debugger().options();
@@ -1838,13 +1879,16 @@ ThreadImpl::is_addr_in_step_range(addr_t addr, bool closedEnd) const
 {
     bool result = false;
 
-    if (stepRange_.get() && !is_syscall_pending(program_count()))
+    if (stepRange_.get())
     {
-        const addr_t end = stepRange_->end();
+        if (!is_syscall_pending(program_count()))
+        {
+            const addr_t end = stepRange_->end();
 
-        result =
-            (stepRange_->begin() <= addr) &&
-            ((end > addr) || (closedEnd && end == addr));
+            result =
+                (stepRange_->begin() <= addr) &&
+                ((end > addr) || (closedEnd && end == addr));
+        }
     }
     return result;
 }

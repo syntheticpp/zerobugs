@@ -35,7 +35,7 @@ public:
     // files containing them are mapped into the virtual memory
     typedef std::map<addr_t, RefPtr<SymbolTable> > SymbolTableMap;
 
-    typedef std::vector<RefPtr<SymbolTableBase> > SymbolTableGroup;
+    typedef std::map<std::string, RefPtr<SymbolTableBase> > SymbolTableGroup;
 
     /**
      * Constructs the symbol map for a core file.
@@ -91,13 +91,14 @@ protected:
     SymbolTable* lookup_table(addr_t) const;
 
     size_t enum_symbols(
-            const char*,
-            EnumCallback<Symbol*>*,
-            SymbolTable::LookupMode);
+        const char* filename,
+        EnumCallback<Symbol*>* callback,
+        SymbolTable::LookupMode);
 
-    size_t enum_needed_symbols(const char* name,
-                                EnumCallback<Symbol*>*,
-                                SymbolTable::LookupMode);
+    size_t enum_needed_symbols(
+        const char* filename,
+        EnumCallback<Symbol*>* callback,
+        SymbolTable::LookupMode);
 
     addr_t get_load_addr() const;
 
@@ -118,6 +119,8 @@ protected:
      * Canonicalize filename and search the tables
      */
     bool is_mapped(const char* filename) const;
+    
+    bool is_needed(const std::string& filename) const;
 
 private:
     /**
@@ -135,18 +138,24 @@ private:
     RefPtr<Symbol> vdso_lookup(addr_t) const;
 
 private:
-    SymbolTableEvents&  events_;        // observer
-    RefPtr<Process>     process_;       // TODO make it a WeakPtr
-    mutable SymbolTableMap map_;
-    mutable addr_t      loadAddr_;      // addr where program is loaded
-    mutable Mutex       mutex_;
+    typedef std::auto_ptr<DynLibList> DynLibListPtr;
+
+    SymbolTableEvents&          events_;        // observer
+    RefPtr<Process>             process_;       // TODO make it a WeakPtr
+
+    // mutable data is updated in enum_symbol_tables, enum_needed_tables
+    mutable long                arch_;
+    mutable SymbolTableMap      map_;
+    mutable addr_t              loadAddr_;      // addr where program is loaded
+    mutable Mutex               mutex_;
+
     // caches result of file_list: do not use for anything else
-    mutable RefPtr<LinkData> mappedFiles_;
-    mutable SymbolTableGroup neededTables_;
-    mutable bool scannedNeededTables_;
+    mutable RefPtr<LinkData>    mappedFiles_;
+    mutable SymbolTableGroup    neededTables_;
+    mutable bool                scannedNeededTables_;
 
     mutable RefPtr<SymbolTable> vdsoTables_;
-    mutable std::auto_ptr<DynLibList> dynLibs_;
+    mutable DynLibListPtr       dynLibs_;
 };
 
 #endif // SYMBOL_MAP_IMPL_H__138BC994_43A2_4A8A_99B6_36108BB1C36B

@@ -35,9 +35,9 @@ namespace ELF
     class Binary;
     class SymbolTable;
 }
+
 class TypeSystem;
 typedef Singleton<TaskPool> SymbolTaskPool;
-
 
 
 
@@ -126,7 +126,7 @@ public:
 
     virtual SharedString* filename(bool = false) const;
 
-    virtual bool is_loaded() const { return name_; }
+    virtual bool is_loaded() const;
 
     virtual bool is_dynamic() const;
 

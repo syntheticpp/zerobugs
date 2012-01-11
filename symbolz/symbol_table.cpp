@@ -93,9 +93,9 @@ Module* SymbolTableBase::module()
 
 
 bool SymbolTableBase::set_deferred_breakpoint(
-    Symbol& sym,
-    BreakPoint::Type type,
-    Runnable* runnable,
+    Symbol&             sym,
+    BreakPoint::Type    type,
+    Runnable*           runnable,
     BreakPoint::Action* action)
 {
     // method should only be used on tables that are not loaded
@@ -145,6 +145,7 @@ size_t SymbolTableBase::enum_deferred_breakpoints (
     {
         ensure_loaded();
     }
+
     DeferredMap::const_iterator i = deferredBreakpoints_.begin();
     for (; i != deferredBreakpoints_.end(); ++i)
     {
@@ -197,7 +198,6 @@ SymbolTableImpl::SymbolTableImpl (
     , sortByName_(new Delegate(this, &SymbolTableImpl::sort_by_name))
     , sortByDemangledName_(new Delegate(this, &SymbolTableImpl::sort_by_demangled_name))
 {
-    assert(events.use_lazy_loading());
     realname_ = filename_;
 }
 
@@ -428,17 +428,6 @@ size_t SymbolTableImpl::size() const
 
 
 
-static inline bool abort_lazy_load()
-{
-#ifdef DEBUG
-    static bool flag = env::get_bool("ZERO_ABORT_LAZY_LOAD");
-    return flag;
-#else
-    return false;
-#endif
-}
-
-
 void SymbolTableImpl::ensure_loaded() const
 {
     lazy_load(__func__, false);
@@ -458,7 +447,6 @@ bool SymbolTableImpl::lazy_load(const char* func, bool warn) const
         {
             IF_DEBUG(clog << "Loading " << filename()->c_str() << endl);
         }
-        assert(!abort_lazy_load());
 
         // Set the name here to prevent recursion
         name_ = SharedStringImpl::create(".lazy");
@@ -602,11 +590,12 @@ typedef SymbolTableImpl::SymbolList::const_iterator Iterator;
 typedef std::pair<Iterator, Iterator> SymbolsRange;
 
 
-template<typename T> static void lookup_range(
-    SharedString* filename,
-    const char* name,
-    const T& table,
-    SymbolsRange& range /* out */)
+template<typename T> 
+static void lookup_range(
+    SharedString*   filename,
+    const char*     name,
+    const T&        table,
+    SymbolsRange&   range /* out */)
 {
     typedef typename T::predicate Pred;
 
@@ -766,7 +755,7 @@ size_t SymbolTableImpl::enum_symbols (
 
 SymbolTable* SymbolTableImpl::next() const
 {
-    if (!next_)
+    if (!next_ && !is_loaded())
     {
         lazy_load(__func__, true);
     }
@@ -894,4 +883,11 @@ auto_ptr<ELF::Binary> get_symbol_tables_binary(const char* path)
     assert(binary.get()); // post-condition
     return binary;
 }
+
+
+bool SymbolTableImpl::is_loaded() const
+{
+    return name_;
+}
+
 // vim: tabstop=4:softtabstop=4:expandtab:shiftwidth=4

@@ -63,8 +63,8 @@ def to_long(param):
 
 def find_child_by_name(sym, tokens, recursive, depth = 1):
 	"Find a child of a DebugSymbol object"
-	# print "find_child_by_name:",depth
-	if depth > 1024:
+	# print "find_child_by_name:",depth,tokens
+	if depth > 8:
 		return None
 
 	for child in sym.children():

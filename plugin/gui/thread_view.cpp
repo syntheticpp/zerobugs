@@ -341,9 +341,6 @@ bool ThreadView::add_thread(const Thread& thread)
     {
         if (find(rows, thread.lwpid(), row))
         {
-        #ifdef DEBUG
-            clog << __func__ << ": already added: " << thread.lwpid() << endl;
-        #endif
             return false;
         }
     }
@@ -363,9 +360,6 @@ bool ThreadView::add_thread(const Thread& thread)
     }
     else
     {
-    #if DEBUG
-        clog << __func__ << ": at top-level: " << thread.lwpid() << endl;
-    #endif
         Item elem = make_tree_item(thread);
         rows.push_back(CTree::Element(elem.col));
 

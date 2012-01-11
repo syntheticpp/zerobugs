@@ -395,7 +395,13 @@ private:
     friend void RunnableImpl::set_single_step_mode(bool, ZObject*);
 
     void set_single_step_mode(bool, ZObject* context);
-    void set_step_over_breakpoint(addr_t);
+
+    /**
+     * set internal breakpoint which handles part of the 
+     * step-over (stepping over one line of source code) logic.
+     * @return true if successful
+     */
+    bool set_step_over_breakpoint(addr_t);
 
     void before_resume();
 
