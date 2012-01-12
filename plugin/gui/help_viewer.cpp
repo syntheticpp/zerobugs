@@ -719,9 +719,7 @@ BEGIN_SLOT(MainWindow::on_menu_about,())
         HTMLView::make_hrefs(html);
         htmlView->source(html);
         htmlView->show_all();
-    #ifdef GTKMM_2
-        htmlView->set_policy(Gtk::POLICY_NEVER, Gtk::POLICY_NEVER);
-    #endif
+
         htmlView->grab_focus();
 
         about.set_transient_for(*this);

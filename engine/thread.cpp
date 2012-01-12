@@ -627,9 +627,9 @@ public:
     {
         return longjump_;
     }
-    void set_longjump_called()
+    void set_longjump_called(bool flag = true)
     {
-        longjump_ = true;
+        longjump_ = flag;
     }
 
 private:
@@ -1275,6 +1275,7 @@ void ThreadImpl::check_thread_creation_events()
 // at a special breakpoint event with some initial value (when stepping
 // over, returning from function calls) and helps determine if we are
 // within a recursive function.
+
 static size_t adjusted_stack_depth(Thread& thread)
 {
     size_t depth = thread.stack_trace()->size();
@@ -1550,7 +1551,7 @@ bool ThreadImpl::resume_stepping()
                   << endl;
 
         // already stepped over a function call? then there should be an
-        // internal breakpoint already set, resume at full speed
+        // internal breakpoint already set, resume execution at full speed
         if (stepRange_->stepped_over())
         {
             dbgstep() << "running until function returns [" << lwpid() << "]: "
@@ -1576,21 +1577,34 @@ bool ThreadImpl::resume_stepping()
             {
                 dbgstep() << s->name() << endl;
 
-                // longjmp calls never return, and they break this algorithm;
-                // don't know how to handle yet, just message it to the user for now
+                // longjmp calls never return; keep stepping
+                // while we're in the scope of "longjmp" (see below)
+                // NOTE this hack is glibc/gcc specific and may not
+                // work for other compilers. As of today (01/11/2012)
+                // it works fine for clang++ compiled programs.
                 if (strcmp(s->name()->c_str(), "_longjmp") == 0)
                 {
                     stepRange_->set_longjump_called();
-                    set_single_step_mode(true, NULL);
-                
-                    if (auto dbg = debugger())
-                    {
-                        dbg->message("WARNING: Stepping through longjmp call!", Debugger::MSG_INFO);
-                    }
-                    return false;
+                    single_step_now();
+                    return true;
                 }
             }
             set_step_over_breakpoint(addr); // set internal breakpoint
+        }
+        else if (stepRange_->longjump_called())
+        {
+            // keep stepping until longjmp() returns
+            if (RefPtr<Symbol> s = symbols()->lookup_symbol(pc))
+            {
+                if (strcmp(s->name()->c_str(), "longjmp") != 0)
+                {
+                    stepRange_->set_longjump_called(false);
+                    set_single_step_mode(true, NULL);
+                    return false;
+                }
+            }
+            single_step_now();
+            return true;
         }
         else
         {   // looks like we're really done stepping
@@ -1611,7 +1625,7 @@ bool ThreadImpl::resume_stepping()
 
             // if we landed in the same function where we started, check that
             // the stack trace depth is the same as when the stepping range was
-            // established (to avoid stopping at the wrong nesting of a recursive call)
+            // established (to avoid stopping at the wrong depth of a recursive call)
 
             if (stepped_recursive(pc))
             {

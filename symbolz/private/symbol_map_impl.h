@@ -119,7 +119,7 @@ protected:
      * Canonicalize filename and search the tables
      */
     bool is_mapped(const char* filename) const;
-    
+ 
     bool is_needed(const std::string& filename) const;
 
 private:

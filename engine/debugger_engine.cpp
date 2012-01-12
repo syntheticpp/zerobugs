@@ -1710,6 +1710,8 @@ static addr_t next_addr(Disassembler* disasm, Thread* thread, addr_t current)
 ////////////////////////////////////////////////////////////////
 bool DebuggerEngine::next(Thread* thread, addr_t from, addr_t to)
 {
+    assert(thread);
+
     Runnable* runnable = get_runnable(thread);
     assert(runnable); // by get_runnable's contract
 

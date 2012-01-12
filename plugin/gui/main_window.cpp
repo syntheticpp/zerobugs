@@ -2602,7 +2602,11 @@ void MainWindow::step_to(Debugger::StepMode mode,
                          addr_t to)
 {
     assert(pthread_self() == maintid);
-    debugger().step(current_thread().get(), mode, from, to);
+    
+    if (current_thread())
+    {
+        debugger().step(current_thread().get(), mode, from, to);
+    }
 }
 
 
