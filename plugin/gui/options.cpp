@@ -168,8 +168,27 @@ void Options::add_signals_page()
 }
 
 
+static void set_option(
+    Debugger::Option    opt,
+    bool                enable,
+    uint64_t&           options )
+{
+    if (enable)
+    {
+        options |= opt;
+        assert((options & opt) == opt);
+    }
+    else
+    {
+        options &= ~opt;
+        assert((options & opt) == 0);
+    }
+}
+
+
 void Options::apply_options(MainWindow* mainWindow)
 {
+#if 0
     mainWindow->set_option(Debugger::OPT_BREAK_ON_THROW, exceptBtn_->get_active());
     mainWindow->set_option(Debugger::OPT_START_AT_MAIN, mainBtn_->get_active());
     if (traceForkBtn_)
@@ -180,6 +199,23 @@ void Options::apply_options(MainWindow* mainWindow)
     {
         mainWindow->set_option(Debugger::OPT_SPAWN_ON_FORK, spawnForkBtn_->get_active());
     }
+#else
+    uint64_t opts = debugger_.options();
+    set_option(Debugger::OPT_BREAK_ON_THROW, exceptBtn_->get_active(), opts);
+    set_option(Debugger::OPT_START_AT_MAIN, mainBtn_->get_active(), opts);
+
+    if (traceForkBtn_)
+    {
+        set_option(Debugger::OPT_TRACE_FORK, traceForkBtn_->get_active(), opts);
+    }
+
+    if (spawnForkBtn_)
+    {
+        set_option(Debugger::OPT_SPAWN_ON_FORK, spawnForkBtn_->get_active(), opts);
+    }
+
+    mainWindow->set_option_mask(opts);
+#endif
 }
 
 

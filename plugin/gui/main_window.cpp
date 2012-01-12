@@ -1890,7 +1890,8 @@ END_SLOT()
 ////////////////////////////////////////////////////////////////
 BEGIN_SLOT(MainWindow::set_option,(uint64_t mask, bool option, bool force))
 {
-    dbgout(0) << __func__ << "(" << hex << mask << dec << ", " << option << ")" << endl;
+    dbgout(0) << __func__ << "(" << hex << mask << dec 
+              << ", " << option << ") " << force << endl;
 
     if (force || is_at_debug_event())
     {
@@ -1915,6 +1916,29 @@ BEGIN_SLOT(MainWindow::set_option,(uint64_t mask, bool option, bool force))
             {
                 opts &= ~mask;
             }
+            debugger().set_options(opts);
+        }
+   }
+}
+END_SLOT()
+
+
+////////////////////////////////////////////////////////////////
+BEGIN_SLOT(MainWindow::set_option_mask,(uint64_t opts, bool force))
+{
+    dbgout(0) << __func__ << "(" << hex << opts << dec << ") " << force << endl;
+    if (force || is_at_debug_event())
+    {
+        if (is_ui_thread())
+        {
+            CALL_MAIN_THREAD_(
+                command(&MainWindow::set_option_mask,
+                        this,
+                        opts,
+                        true));
+        }
+        else
+        {
             debugger().set_options(opts);
         }
    }

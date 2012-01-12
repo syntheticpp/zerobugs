@@ -138,6 +138,7 @@ public:
     void layout_work_area(const std::string& strategy);
 
     void set_option(uint64_t mask, bool, bool force = false);
+    void set_option_mask(uint64_t mask, bool force = false);
 
     void load_key_bindings(Properties&);
     void save_key_bindings();
