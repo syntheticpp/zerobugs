@@ -1775,11 +1775,11 @@ void CodeView::on_populate_popup(Menu* menu)
     add_step_over_item(*submenu, "Functions In This File", &step_over_file);
     add_step_over_item(*submenu, "Files In This Directory", &step_over_dir);
     submenu->items().push_back(Menu_Helpers::SeparatorElem());
-#if 1 // HAVE_EXTRA_UI_FEATURES
+
     add_step_over_item(*submenu, "Manage...", &step_over_manage, &Stock::PREFERENCES);
-#else
-    add_step_over_item(*submenu, "Clear All", &step_over_reset);
-#endif
+
+    // add_step_over_item(*submenu, "Clear All", &step_over_reset);
+
     item->set_submenu(*submenu);
     item->show();
 }

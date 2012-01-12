@@ -1115,6 +1115,7 @@ void DebuggerBase::resume_threads()
 {
     size_t resumedCount = 0;
     bool empty = true;
+    bool attached = false;
 
     Lock<Mutex> lock(TargetManager::mutex());
 
@@ -1123,6 +1124,8 @@ void DebuggerBase::resume_threads()
 
     for (; i != targetsEnd; ++i)
     {
+        attached |= (*i)->is_attached();
+
         if ((*i)->enum_threads())
         {
             empty = false;
@@ -1130,11 +1133,13 @@ void DebuggerBase::resume_threads()
             resumedCount += (*i)->resume_all_threads();
         }
     }
+
     if (resumedCount)
     {
         on_resumed();
     }
-    else if (empty)
+
+    else if (attached && empty)
     {
         dbgout(0) << __func__ << ": detaching" <<endl;
         detach();
@@ -1655,6 +1660,8 @@ void DebuggerBase::set_options(uint64_t opts)
     if (settings_)
     {
         settings_->set_word("opts", opts);
+        const word_t w = settings_->get_word("opts", 0);
+        dbgout(0) << __func__ << ": " << hex << w << dec << endl;
     }
 }
 

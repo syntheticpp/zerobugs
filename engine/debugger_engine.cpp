@@ -630,6 +630,8 @@ void DebuggerEngine::cleanup(Thread& thread)
 {
     DebuggerBase::cleanup(thread);
 
+    dbgout(0) << __func__ << ": sending on_detach to plugins" << endl;
+
     for_each_plugin(
         compose1(
             bind2nd(mem_fun(&DebuggerPlugin::on_detach), &thread),

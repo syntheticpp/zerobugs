@@ -21,6 +21,13 @@
 
 namespace Unix
 {
+    inline void unmask_all_signals()
+    {
+        sigset_t mask;
+        sigemptyset(&mask);
+        sigprocmask(SIG_SETMASK, &mask, NULL);
+    }
+
     template<typename T>
     static RefPtr<Thread> attach(T& target)
     {
@@ -76,11 +83,7 @@ namespace Unix
         {
             target.close_all_files();
 
-            // unmask all signals
-            sigset_t mask;
-            sigemptyset(&mask);
-            sigprocmask(SIG_SETMASK, &mask, NULL);
-
+            unmask_all_signals();
             XTrace::exec(arg.cstrings(), env);
         }
         return thread;

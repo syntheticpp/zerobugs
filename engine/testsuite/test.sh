@@ -42,6 +42,7 @@ source test_ret_val.sh
 source test_core.sh
 source test_core_env.sh
 source test_lookup.sh
+source test_longjmp.sh
 source test_nested_struct.sh
 source test_rtti.sh
 source test_dwarf_reg.sh
@@ -195,6 +196,7 @@ COMMON_TESTS=(
 #broken on 4.3.0
 #   test_interface,stabs+
     test_lookup
+	test_longjmp
 #Fails with DWARF / GCC 3.2.2, GCC 3.3.5
     test_nested_struct
     test_member_cast

@@ -391,29 +391,30 @@ void LinuxLiveTarget::attach(pid_t pid)
     {
         set_word_size(32);
     }
-    if (signalToContinue)
+
+    if (debugger().initial_thread_fork())
+    {
+    #if DEBUG
+        clog << "************ initial thread fork *************\n";
+    #endif
+        debugger().set_initial_thread_fork(false);
+        thread->set_forked();
+        thread->set_stopped_by_debugger(true);
+    }
+    else if (signalToContinue)
     {
         // if we had to force the thread out of a stopped
         // state, "hide" the SIGCONT that we sent
         thread->set_signal(SIGSTOP);
         thread->set_stopped_by_debugger(true);
     }
-    else if (debugger().initial_thread_fork())
-    {
-    #if DEBUG
-        clog << "************ initial thread fork *************\n";
-    #endif
-        debugger().set_initial_thread_fork(false);
-        thread->set_stopped_by_debugger(true);
-        thread->set_forked();
-    }
+
     init_linker_events(*thread);
     init_thread_agent();
 
     // put the event back, so that the main event loop picks it
     debugger().queue_event(thread);
 }
-
 
 ////////////////////////////////////////////////////////////////
 void

@@ -1890,6 +1890,8 @@ END_SLOT()
 ////////////////////////////////////////////////////////////////
 BEGIN_SLOT(MainWindow::set_option,(uint64_t mask, bool option, bool force))
 {
+    dbgout(0) << __func__ << "(" << hex << mask << dec << ", " << option << ")" << endl;
+
     if (force || is_at_debug_event())
     {
         if (is_ui_thread())
@@ -2782,10 +2784,13 @@ MainWindow::on_debug_event(RefPtr<Thread> thread,
 {
     assert(pthread_self() == maintid);
 
+    dbgout(1) << __func__ << ": eventType=" << eventType << endl;
+
     if ((eventType != E_PROMPT) || is_service_call_pending())
     {
         ownsUserInteraction_ = true;
     }
+
     if (is_shutting_down())
     {
         debugger().quit();
@@ -2812,6 +2817,7 @@ MainWindow::on_debug_event(RefPtr<Thread> thread,
             breakpointCount_ = observ.count();
         }
         // </hack>
+
         Temporary<bool, Mutex> setInScope(atDebugEvent_, true, &mutex());
 
         while (!process_debug_event(thread, eventType))
@@ -2829,6 +2835,7 @@ MainWindow::on_debug_event(RefPtr<Thread> thread,
             wait_and_process_responses();
         }
     }
+    dbgout(0) << __func__ << "=" << ownsUserInteraction_ << endl;
     return ownsUserInteraction_;
 }
 
@@ -4311,6 +4318,8 @@ bool MainWindow::is_at_debug_event() const
         Lock<Mutex> lock(mutex(), TryLock());
         if (lock)
         {
+
+            dbgout(1) << __func__ << ": " << atDebugEvent_ << endl;
             return atDebugEvent_;
         }
 #if DEBUG

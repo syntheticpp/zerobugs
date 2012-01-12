@@ -11,6 +11,8 @@
 // http://www.boost.org/LICENSE_1_0.txt)
 // -------------------------------------------------------------------------
 //
+// Handle ptrace extension events.
+//
 #include <errno.h>
 #include <sys/wait.h>
 #include "generic/temporary.h"
@@ -111,12 +113,23 @@ LinuxLiveTarget::handle_extended_event(Thread& thread, int event)
             if (debugger().options() & Debugger::OPT_SPAWN_ON_FORK)
             {
                 debugger().cleanup(*thread);
+            #if 0
                 sys::ptrace(PTRACE_DETACH, thread->lwpid(), 0, SIGSTOP);
-
+            #else
+                XTrace::kill(thread->lwpid(), SIGSTOP);
+                sys::ptrace(PTRACE_DETACH, thread->lwpid(), 0, 0);
+            #endif
                 ostringstream cmd;
-                cmd << env::get("ZERO_EXE", "zero") << " --fork --spawn-on-fork " << pid << "&";
+                cmd << env::get("ZERO_EXE", "zero") << " --fork --spawn-on-fork " << pid;
+                cmd << " >> zero_spawn.log 2>&1 ";
+                cmd << "&"; // start in background
+                dbgout(0) << cmd.str() << endl;
+
+                Unix::unmask_all_signals();
+
                 if (system(cmd.str().c_str()) < 0)
                 {
+                    dbgout(0) << "system call failed, errno=" << errno << endl;
                     throw SystemError(cmd.str());
                 }
             }

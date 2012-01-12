@@ -332,10 +332,6 @@ void Options::add_lang_page()
     box.pack_start(*exceptBtn_, false, false);
     box.pack_start(*mainBtn_, false, false);
 
-#if HAVE_EXTRA_UI_FEATURES
-    //
-    // in Release / commercial builds, add controls for behavior on fork()
-    //
     traceForkBtn_ = manage(new_check_button(debugger_,
                                         Debugger::OPT_TRACE_FORK,
                                         "Trace _forked processes"));
@@ -354,7 +350,7 @@ void Options::add_lang_page()
     {
         spawnForkBtn_->set_sensitive(traceForkBtn_->get_active());
     }
-#endif // HAVE_EXTRA_UI_FEATURES
+
     filterBox_ = manage(new VBox);
     box.pack_start(*filterBox_, false, false, 20);
     add_data_filter_params();
@@ -429,7 +425,7 @@ void Options::add_layout_page()
 
 void Options::add_tab_size_control(Box& box)
 {
-#if GTKMM_2 && HAVE_EXTRA_UI_FEATURES
+#if GTKMM_2
     Gtk::Frame* f = manage(new Gtk::Frame("Tab Size"));
     box.pack_start(*f, false, false, 7);
     Gtk::Box* b = manage(new Gtk::HBox);
