@@ -385,6 +385,22 @@ BreakPointManager* BreakPointManagerGroup::get_manager(pid_t pid) const
 
 
 ////////////////////////////////////////////////////////////////
+size_t BreakPointManagerGroup::reset(pid_t pid)
+{
+    for (Group::iterator i = group_.begin(); i != group_.end(); ++i)
+    {
+        if ((*i)->pid() == pid)
+        {
+            group_.erase(i);
+            clog << "reset breakpoints manager for pid: " << pid << endl;
+            return 1;
+        }
+    }
+    return 0;
+}
+
+
+////////////////////////////////////////////////////////////////
 size_t BreakPointManagerGroup::remove_breakpoint_actions(
     pid_t pid,
     pid_t lwpid,

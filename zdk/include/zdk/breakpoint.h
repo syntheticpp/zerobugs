@@ -253,6 +253,11 @@ DECLARE_ZDK_INTERFACE_(BreakPointManager, ZObject)
         addr_t addr,        // 0 matches all addresses
         const char* name    // NULL matches all actions
     ) = 0;
+
+    /**
+     * clear breakpoints state for specified process
+     */
+    virtual size_t reset( pid_t ) = 0;
 };
 
 #endif // BREAKPOINT_H__52AA2A18_0D3B_43C4_847D_C9B9430AC537

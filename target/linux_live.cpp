@@ -240,6 +240,14 @@ RefPtr<ThreadImpl> LinuxLiveTarget::handle_fork(pid_t lwpid)
 ////////////////////////////////////////////////////////////////
 RefPtr<ThreadImpl> LinuxLiveTarget::handle_exec(pid_t pid)
 {
+    if (BreakPointManager* mgr = debugger().breakpoint_manager())
+    {
+        if (Process* p = process())
+        {
+            mgr->reset(p->pid());
+        }
+    }
+
     init_process(pid, NULL, ORIGIN_DEBUGGER);
     init_symbols();
 

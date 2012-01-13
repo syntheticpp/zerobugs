@@ -154,7 +154,6 @@ LinuxLiveTarget::handle_extended_event(Thread& thread, int event)
 
             assert(get_thread(pid) == 0);
 
-            uninitialize_linker_events();
             handle_exec(pid);
 
             assert(get_thread(pid));

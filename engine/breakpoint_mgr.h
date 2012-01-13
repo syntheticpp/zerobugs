@@ -279,6 +279,8 @@ private:
         return result;
     }
 
+    size_t reset( pid_t ) { return 0; }
+
 private:
     mutable Mutex mutex_;
     PerThreadBreakPoints perThreadBreakPoints_;
@@ -433,6 +435,8 @@ public:
     size_t remove_breakpoint_actions(pid_t, pid_t, addr_t, const char*);
 
     BreakPointManager* get_manager(pid_t) const;
+    
+    size_t reset( pid_t );
 
 private:
     typedef std::vector<RefPtr<BreakPointManagerImpl> > Group;
