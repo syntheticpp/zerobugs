@@ -31,6 +31,29 @@ using namespace std;
 using namespace eventlog;
 
 
+static void
+attach_new_debugger_instance(pid_t pid)
+{
+    // construct command line
+    ostringstream cmd;
+    cmd << env::get("ZERO_EXE", "zero") << " --fork --spawn-on-fork --no-banner ";
+    cmd << pid;
+    cmd << " >> zero_fork.out 2>&1 ";
+    cmd << "&"; // start in background
+
+    dbgout(0) << cmd.str() << endl;
+
+    sys::unmask_all_signals();
+
+    // execute
+    if (system(cmd.str().c_str()) < 0)
+    {
+        dbgout(0) << "system call failed, errno=" << errno << endl;
+        throw SystemError(cmd.str());
+    }
+}
+
+
 /**
  * @return true if the debugger may continue without stopping
  * on this event
@@ -113,25 +136,9 @@ LinuxLiveTarget::handle_extended_event(Thread& thread, int event)
             if (debugger().options() & Debugger::OPT_SPAWN_ON_FORK)
             {
                 debugger().cleanup(*thread);
-            #if 0
                 sys::ptrace(PTRACE_DETACH, thread->lwpid(), 0, SIGSTOP);
-            #else
-                XTrace::kill(thread->lwpid(), SIGSTOP);
-                sys::ptrace(PTRACE_DETACH, thread->lwpid(), 0, 0);
-            #endif
-                ostringstream cmd;
-                cmd << env::get("ZERO_EXE", "zero") << " --fork --spawn-on-fork " << pid;
-                cmd << " >> zero_spawn.log 2>&1 ";
-                cmd << "&"; // start in background
-                dbgout(0) << cmd.str() << endl;
 
-                Unix::unmask_all_signals();
-
-                if (system(cmd.str().c_str()) < 0)
-                {
-                    dbgout(0) << "system call failed, errno=" << errno << endl;
-                    throw SystemError(cmd.str());
-                }
+                attach_new_debugger_instance(pid);
             }
         }
         break;
@@ -146,6 +153,8 @@ LinuxLiveTarget::handle_extended_event(Thread& thread, int event)
             cleanup(thread);
 
             assert(get_thread(pid) == 0);
+
+            uninitialize_linker_events();
             handle_exec(pid);
 
             assert(get_thread(pid));

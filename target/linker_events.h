@@ -155,7 +155,11 @@ protected:
     }
 
 public:
-    bool has_linker_events() const { return inited_; }
+    bool has_linker_events() const 
+    {
+        dbgout(1) << __func__ << ": " << inited_ << endl;
+        return inited_;
+    }
 
     /**
      * The breakpoint action fires this method every time

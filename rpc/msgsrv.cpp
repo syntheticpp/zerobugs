@@ -46,6 +46,7 @@ bool RPC::Exec::dispatch(InputStream&, OutputStream& output)
     }
     else
     {
+        sys::unmask_all_signals();
         //
         // Note: XTrace::exec() calls PTRACE_TRACEME
         //

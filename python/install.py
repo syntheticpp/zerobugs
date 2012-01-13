@@ -154,7 +154,7 @@ _files = {
     "plugin/zgui.so"    : "zero/plugin/zgui.so",
     "plugin/zpython.so" : "zero/plugin/zpython.so",
     "plugin/zremote-proxy.so" : "zero/plugin/zremote-proxy.so",
-#    "plugin/.zero.py"   : "zero/plugin/.zero.py",
+    "plugin/.zero.py"   : "zero/plugin/.zero.py",
     "plugin/update.py"  : "zero/plugin/update.py",
     "help/"             : "zero/help",
     "lib/libdwarf.so"   : "zero/lib/libdwarf.so",

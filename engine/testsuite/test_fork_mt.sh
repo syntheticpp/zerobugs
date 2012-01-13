@@ -63,9 +63,9 @@ run_debugger --main --trace-fork a.out
 function run()
 {
     source common.sh
-    #test_fork_mt -gdwarf-23 -feliminate-dwarf2-dups 
-    test_fork_mt -gdwarf-23
+    #test_fork_mt -gdwarf-2 -feliminate-dwarf2-dups 
     test_fork_mt -gstabs+
+    test_fork_mt -gdwarf-2
 }
 
 # run this test standalone

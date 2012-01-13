@@ -44,7 +44,8 @@ build ${1:-$debug} foo.cpp
 shift
 
 rm -f $config
-run_debugger --main a.out --py-run=${path}/plugin/.zero.py
+#run_debugger --main a.out --py-run=${path}/plugin/.zero.py
+run_debugger --main a.out --py-run=${path}/plugin/init.py
 }
 
 ################################################################

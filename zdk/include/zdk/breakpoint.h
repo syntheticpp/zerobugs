@@ -86,6 +86,7 @@ DECLARE_ZDK_INTERFACE_(BreakPoint, ZObject)
         SOFTWARE    = 0x0001,
         EMULATED    = 0x0002,
         HARDWARE    = 0x0004,
+        DEFERRED    = 0x0008,
         GLOBAL      = SOFTWARE,
         PER_THREAD  = EMULATED,
         ANY         = UINT_MAX, // force enumerated type's size

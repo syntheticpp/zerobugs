@@ -158,8 +158,8 @@ ostream& operator<<(ostream& outs, const Thread& thread)
 ////////////////////////////////////////////////////////////////
 RunnableImpl::RunnableImpl
 (
-    pid_t lwpid,
-    Target* target,
+    pid_t       lwpid,
+    Target*     target,
     ThreadImpl* thread
 )
     : RunnableState(lwpid)

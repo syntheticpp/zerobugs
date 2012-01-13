@@ -79,6 +79,8 @@ namespace sys
     std::string confstr(int name);
 
     bool uses_nptl();
+
+    void unmask_all_signals();
 }
 
 #if (__GNUC__ >= 4)

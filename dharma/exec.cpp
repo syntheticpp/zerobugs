@@ -40,6 +40,9 @@ exec(const string& file, const deque<string>& args, int fdOut)
                 _exit(errno);
             }
         }
+
+        sys::unmask_all_signals();
+
         ExecArg arg(args.begin(), args.end());
 
         if (execvp(file.c_str(), arg.cstrings()) < 0)

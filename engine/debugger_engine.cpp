@@ -89,7 +89,7 @@ using namespace boost;
 using namespace eventlog;
 
 
-static const char copyrightText[] = "Copyright (C) 2006 - 2012 Cristian L. Vlasceanu.\n";
+static const char copyrightText[] = "Copyright (C) 2004 - 2012 Cristian L. Vlasceanu.\n";
 
 
 /**

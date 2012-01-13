@@ -13,7 +13,7 @@ cat > ./foo.cpp << '---end---'
 #include <sys/wait.h>
 void child()
 {
-    execlp("./bar", "bar", "fubar", 0);
+    execlp("./bar", "bar", "fubar", NULL);
 }
 int main()
 {

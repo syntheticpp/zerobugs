@@ -125,7 +125,7 @@ function add_common_test()
 ################################################################
 function run_tests()
 {
-    ldd ${path}plugin/zdwarf.so
+    ldd ${path}plugin/zdwarf.so | grep libdwarf
 
     rm -f $outfile
     rm -f $logfile
@@ -264,7 +264,7 @@ then
         add_common_test $T
     done
     case $KVER in
-    2.6*) for T in "${LINUX26_TESTS[@]}"
+    2.6*|3.*) for T in "${LINUX26_TESTS[@]}"
             do 
                 add_common_test $T
             done;;

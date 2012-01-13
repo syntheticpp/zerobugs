@@ -24,8 +24,6 @@
 #include "module.h"
 
 
-#define DEBUG 1
-
 using namespace std;
 
 

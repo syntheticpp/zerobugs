@@ -93,6 +93,8 @@ public:
                 else
                 {
                     T::close();
+                    sys::unmask_all_signals();
+
                     stream_type s(*channel);
 
                     while (handle_client_msg(s))

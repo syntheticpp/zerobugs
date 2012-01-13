@@ -27,7 +27,6 @@
 #include "history.h"
 #include "target/target.h"
 
-#define DEBUG   1
 
 using namespace std;
 

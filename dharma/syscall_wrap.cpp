@@ -360,7 +360,7 @@ void sys::write(FILE* f, const void *buf, size_t count)
 
 void sys::write(int fd, const void *buf, size_t count)
 {
-    for (ssize_t bytesWritten = 0;;)
+    for (ssize_t bytesWritten = 0; /* errno = 0 */;)
     {
         bytesWritten = ::write(fd, buf, count);
 
@@ -380,7 +380,7 @@ void sys::write(int fd, const void *buf, size_t count)
 
 void sys::read(int fd, void *buf, size_t count)
 {
-    for (ssize_t bytesRead = 0;;)
+    for (ssize_t bytesRead = 0; /* errno = 0 */;)
     {
         bytesRead = ::read(fd, buf, count);
 
@@ -417,5 +417,15 @@ loff_t sys::lseek(int fd, loff_t offset, int whence)
     }
     return pos;
 }
+
+
+void sys::unmask_all_signals()
+{
+    sigset_t mask;
+
+    sigemptyset(&mask);
+    sigprocmask(SIG_SETMASK, &mask, NULL);
+}
+
 
 // vim: tabstop=4:softtabstop=4:expandtab:shiftwidth=4

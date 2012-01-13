@@ -191,8 +191,8 @@ static void shell_expand_args(ExecArg& args)
 
     int pid = ::exec(shell, argv, pipe.input());
 
-    char buf[512]; // for reading the output
-    string result; // the expanded command
+    char buf[512] = { 0 };  // for reading the output
+    string result;          // the expanded command
     for (;;)
     {
         ssize_t rc = read(pipe.output(), buf, sizeof buf - 1);
@@ -737,7 +737,15 @@ void DebuggerBase::run()
 
             if (RefPtr<Target> target = tptr->target())
             {
-                if (tptr->is_stopped_by_debugger())
+                if (initial_thread_fork())
+                {
+                    // ignore initial signal
+                    if (tptr->signal() == SIGCONT)
+                    {
+                        set_initial_thread_fork(false);
+                    }
+                }
+                else if (tptr->is_stopped_by_debugger())
                 {
                     dbgout(1) << tptr->lwpid() << ": stopped by debugger" << endl;
                 }
@@ -1819,30 +1827,6 @@ DebuggerBase::map_path(const Process* proc, string& path) const
     }
     dbgout(1) << __func__ << ": " << path << "=" << result << endl;
     return result;
-}
-
-////////////////////////////////////////////////////////////////
-bool DebuggerBase::check_state_before_attaching(pid_t pid)
-{
-    TargetPtr target = Target::new_live_target(*this);
-    RunnableImpl task(pid, target.get());
-
-    if (task.runstate() == Runnable::ZOMBIE)
-    {
-        throw runtime_error("cannot attach to defunct process");
-    }
-    dbgout(1) << __func__ << ": state=" << task.runstate() << endl;
-
-    sys::ptrace(PTRACE_ATTACH, pid, 0, 0);
-
-    bool signalToContinue = false;
-    // thread was possibly in a stopped state before attaching
-    if (task.runstate() == Runnable::TRACED_OR_STOPPED)
-    {
-	    task.resume();
-        signalToContinue = true;
-    }
-    return signalToContinue;
 }
 
 // Copyright (c) 2004 - 2012 Cristian L. Vlasceanu

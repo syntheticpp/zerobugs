@@ -158,7 +158,15 @@ bool open_url_in_browser(const string& browser, const string& url)
 
 bool open_url_in_browser(const string& url)
 {
-    if (url.find("http://") == 0 || url.find("mailto:") == 0)
+    if (url.find("mailto:") == 0)
+    {
+        const string mail = env::get("ZERO_MAIL", "thunderbird");
+        if (open_url_in_browser(mail, url))
+        {
+            return true;
+        }
+    }
+    else if (url.find("http://") == 0)
     {
         const string browser = env::get("ZERO_BROWSER", "x-www-browser");
 

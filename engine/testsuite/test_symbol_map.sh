@@ -8,7 +8,7 @@ ptracing of non-child processes by non-root users - only a\n
 process which is a parent of another process can ptrace it for\n
 normal users - whilst root can still ptrace every process.\n
 \n
-Disable this restriction by excuting (as root):\n
+Disable this restriction by executing:\n
 \n
 echo 0 | sudo tee /proc/sys/kernel/yama/ptrace_scope\n
 *******************************************************************\n

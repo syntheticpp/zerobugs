@@ -272,13 +272,6 @@ public:
 
     static TargetFactory& target_factory();
 
-    /**
-     * Check whether the process is stopped before attaching;
-     * resume if necessary (by sending a SIGCONT signal)
-     * @return true if SIGCONT was sent
-     */
-    virtual bool check_state_before_attaching(pid_t);
-
 protected:
     void stop_all_threads(Thread* = NULL);
 
@@ -357,7 +350,7 @@ protected:
 
 private:
     void resume_threads();
-
+ 
     /**
      * map path without following symbolic links.
      */

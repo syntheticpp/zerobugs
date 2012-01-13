@@ -22,10 +22,10 @@ using namespace std;
 ////////////////////////////////////////////////////////////////
 DeferredBreakPoint::DeferredBreakPoint
 (
-    BreakPointManagerBase* mgr,
-    RefPtr<Thread>  thread,
-    Type            type,
-    addr_t          addr
+    BreakPointManagerBase*  mgr,
+    RefPtr<Thread>          thread,
+    Type                    type,
+    addr_t                  addr
 )
   : BreakPointBase(thread, addr)
   , mgr_(mgr)
@@ -37,12 +37,13 @@ DeferredBreakPoint::DeferredBreakPoint
 ////////////////////////////////////////////////////////////////
 DeferredBreakPoint::DeferredBreakPoint
 (
-    const DeferredBreakPoint& other,
-    BreakPointManagerBase* mgr,
-    Thread& thread
+    const DeferredBreakPoint&   other,
+    BreakPointManagerBase*      mgr,
+    Thread&                     thread
 )
   : BreakPointBase(other, thread)
   , mgr_(mgr)
+  , type_(DEFERRED)
 {
 }
 

@@ -16,6 +16,7 @@
 #include <sys/utsname.h>
 #include <fstream>
 #include <sstream>
+#include "generic/auto_file.h"
 #include "generic/temporary.h"
 #include "zdk/check_ptr.h"
 #include "zdk/signal_policy.h"
@@ -369,12 +370,92 @@ void LinuxLiveTarget::set_ptrace_options(pid_t pid)
 
 
 ////////////////////////////////////////////////////////////////
+static const char yama_msg[] = 
+    "Ubuntu Maverick Meerkat (10.10) introduced a patch to disallow\n"
+    "ptracing of non-child processes by non-root users. Only a\n"
+    "process which is a parent of another process can ptrace it for\n"
+    "normal users; root can still ptrace every process.\n\n"
+    "You can disable this restriction by executing:\n\n"
+    "echo 0 | sudo tee /proc/sys/kernel/yama/ptrace_scope\n";
+
+static void yama_check(const SystemError& e)
+{
+    if (e.error() == EPERM)
+    {
+        auto_fd f(open("/proc/sys/kernel/yama/ptrace_scope", O_RDONLY));
+        if (f.is_valid())
+        {
+            char buf[8] = { 0 };
+
+            try
+            {
+                sys::read(f.get(), &buf, 1);
+            }
+            catch (const exception& x)
+            {
+                clog << __func__ << ": " << x.what() << endl;
+            }
+
+            if (buf[0] == '1')
+            {
+                string s(e.what());
+
+                s += "\n\n";
+                s += yama_msg;
+
+                throw runtime_error(s.c_str());
+            }
+        }
+    #if DEBUG
+        else
+        {
+            clog << "failed to open yama file" << endl;
+        }
+    #endif
+    }
+
+    throw e;
+}
+
+/**
+ * Check whether the process is stopped before attaching;
+ * resume if necessary (by sending a SIGCONT signal)
+ * @return true if SIGCONT was sent
+ */
+static bool attach(pid_t pid, Target& target)
+{
+    RunnableImpl task(pid, &target);
+
+    if (task.runstate() == Runnable::ZOMBIE)
+    {
+        throw runtime_error("cannot attach to defunct process");
+    }
+
+    try
+    {
+        sys::ptrace(PTRACE_ATTACH, pid, 0, 0);
+    }
+    catch (const SystemError& e)
+    {
+        yama_check(e);
+    }
+
+    bool sigcont = false;
+    // thread was possibly in a stopped state before attaching
+    if (task.runstate() == Runnable::TRACED_OR_STOPPED)
+    {
+        task.resume();
+        sigcont = true;
+    }
+    return sigcont;
+}
+
+////////////////////////////////////////////////////////////////
 void LinuxLiveTarget::attach(pid_t pid)
 {
     assert(enum_threads() == 0); // pre-condition
 
-    const bool signalToContinue =
-        debugger().check_state_before_attaching(pid);
+    const bool sigcont = ::attach(pid, *this);
 
     int status = 0;
     sys::waitpid(pid, &status, __WALL);
@@ -397,11 +478,14 @@ void LinuxLiveTarget::attach(pid_t pid)
     #if DEBUG
         clog << "************ initial thread fork *************\n";
     #endif
-        debugger().set_initial_thread_fork(false);
+        // do not clear the flag yet -- do it later in the 
+        // debugger_base.cpp event loop
+        // debugger().set_initial_thread_fork(false);
+
         thread->set_forked();
-        thread->set_stopped_by_debugger(true);
+        thread->set_signal(0);
     }
-    else if (signalToContinue)
+    else if (sigcont)
     {
         // if we had to force the thread out of a stopped
         // state, "hide" the SIGCONT that we sent
@@ -515,13 +599,7 @@ LinuxLiveTarget::set_status_after_stop
             debugger().queue_event(tptr);
         }
     }
-  /*** experiment ***
-    if (tptr->is_syscall_pending())
-    {
-        dbgout(0) << "----- in system call -----" << endl;
-        tptr->cancel_syscall();
-    }
-   ******************/
+
     return eventType == PTRACE_EVENT_EXIT;
 }
 

@@ -455,6 +455,7 @@ ostream& operator<<(ostream& outs, BreakPoint::Type type)
     case BreakPoint::HARDWARE: outs << "hard"; break;
     case BreakPoint::SOFTWARE: outs << "soft"; break;
     case BreakPoint::EMULATED: outs << "emul"; break;
+    case BreakPoint::DEFERRED: outs << "defer"; break;
 
     default: assert(false); break;
     }
@@ -491,7 +492,7 @@ void BreakPointBase::print(ostream& outs) const volatile
             outs << thread()->lwpid() << "] ";
         }
         outs << (enable_ > 0 ? "ON  " : "off ");
-        outs << type << " 0x";
+        outs << type << "\t0x";
         outs << hex << setfill('0');
         outs << setw(2 * sizeof(addr_t)) << addr << dec << ' ';
 
