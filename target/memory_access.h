@@ -31,8 +31,7 @@ struct ZDK_LOCAL MemoryBase
     /**
      * read debuggee's memory using the /proc filesystem
      */
-    static bool read_using_proc
-    (
+    static bool read_using_proc (
         pid_t       pid,
         SegmentType seg,
         addr_t      addr,
@@ -55,6 +54,7 @@ struct ZDK_LOCAL MemoryBase
             if (n != -1)
             {
                 n = ::read(fd.get(), buf, buflen * sizeof(Long));
+
                 if (n != -1)
                 {
                     if (readlen)
@@ -65,12 +65,15 @@ struct ZDK_LOCAL MemoryBase
                 }
             }
         }
+        else
+        {
+            std::cerr << mem.str() << ", " << strerror(errno) << std::endl;
+        }
         return false;
     }
 
 
-    static void read_using_ptrace
-    (
+    static void read_using_ptrace (
         pid_t       pid,
         SegmentType seg,
         addr_t      addr,
@@ -90,9 +93,14 @@ struct ZDK_LOCAL MemoryBase
                 buf[i] = sys::ptrace(req, pid, addr, 0);
             }
         }
-        catch (...)
+        catch (const std::exception& e)
         {
-            if (!readlen) throw;
+            std::cerr << __func__ << ": " << e.what() << std::endl;
+
+            if (!readlen) 
+            {
+                throw;
+            }
         }
         if (readlen)
         {
@@ -101,8 +109,7 @@ struct ZDK_LOCAL MemoryBase
     }
 
 
-    static void read
-    (
+    static void read (
         pid_t       pid,
         SegmentType seg,
         addr_t      addr,
@@ -136,8 +143,7 @@ struct ZDK_LOCAL MemoryBase
     }
 
 
-    static void write
-    (
+    static void write (
         pid_t       pid,
         SegmentType seg,
         addr_t      addr,

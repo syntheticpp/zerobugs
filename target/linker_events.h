@@ -126,12 +126,17 @@ protected:
         if (!addr_)
         {
             ELF::Binary bin(CHKPTR(this->process_name())->c_str());
+
             if ((addr_ = ELF::get_linker_debug_struct_addr(bin)) == addr_t(-1))
             {
                 dbgout(0) << __func__ << ": static target" << endl;
                 inited_ = true; // static binary
                 addr_ = 0;
                 detect_multithread_target();
+            }
+            else
+            {
+                std::clog << __func__ << ": " << this->process_name()->c_str() << std::endl;
             }
         }
         if (addr_t addr = get_breakpoint_addr(thread))
@@ -149,6 +154,10 @@ protected:
                 #ifdef DEBUG
                     std::clog << __func__ << " successful\n";
                 #endif
+                }
+                else
+                {
+                    std::clog << __func__ << ": failed to set breakpoint" << std::endl;
                 }
             }
         }

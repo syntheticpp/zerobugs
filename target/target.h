@@ -318,6 +318,12 @@ struct Target : public MemoryIO, public Visitable<bool>
         const word_t* buf,
         size_t wordsToWrite) = 0;
 
+protected:
+    void reset_process_name() 
+    {
+        processName_.reset();
+    }
+
 private:
     mutable std::string procfs_;
     mutable RefPtr<SharedString> processName_;

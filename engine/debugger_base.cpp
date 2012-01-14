@@ -1125,6 +1125,17 @@ void DebuggerBase::resume_threads()
     bool empty = true;
     bool attached = false;
 
+#if DEBUG
+    // dump unhandled threads
+    if (unhandled_)
+    {
+        for (auto i = unhandled_->begin(); i != unhandled_->end(); ++i)
+        {
+            clog << "Unhandled " << i->first << ": " << hex << i->second << dec << endl;
+        }
+    }
+#endif
+
     Lock<Mutex> lock(TargetManager::mutex());
 
     TargetManager::iterator i = TargetManager::begin(lock);

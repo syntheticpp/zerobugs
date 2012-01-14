@@ -44,11 +44,11 @@ void UnixTarget::handle_event(Thread* thread)
 }
 
 
-void
-UnixTarget::init_process(pid_t pid,
-                         const ExecArg* arg,
-                         ProcessOrigin orig, // how started/attached?
-                         const char* name)
+void UnixTarget::init_process(
+    pid_t           pid,
+    const ExecArg*  arg,
+    ProcessOrigin   orig, // how started/attached?
+    const char*     name)
 {
     proc_ = new_process(pid, arg, orig);
     if (name)

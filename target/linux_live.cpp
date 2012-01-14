@@ -59,7 +59,7 @@ static pid_t get_signal_sender_pid(pid_t lwpid)
 
 
 static bool
-set_stopped_flag(const RefPtr<ThreadImpl>& thread, bool expectStop = false)
+set_stopped(const RefPtr<ThreadImpl>& thread, bool expectStop = false)
 {
     if (thread->signal() == SIGSTOP)
     {
@@ -128,37 +128,34 @@ LinuxLiveTarget::~LinuxLiveTarget() throw()
 
 
 ////////////////////////////////////////////////////////////////
-void LinuxLiveTarget::read_memory
-(
+void LinuxLiveTarget::read_memory (
     pid_t       pid,
     SegmentType seg,
     addr_t      addr,
     long*       buf,
     size_t      len,
-    size_t*     nRead
-) const
+    size_t*     nRead ) const
 {
     Memory<>::read(pid, seg, addr, buf, len, nRead, procfs_root());
 }
 
 
 ////////////////////////////////////////////////////////////////
-void LinuxLiveTarget::write_memory
-(
+void LinuxLiveTarget::write_memory (
     pid_t       pid,
     SegmentType seg,
     addr_t      addr,
     const long* buf,
-    size_t      len
-)
+    size_t      len )
 {
     Memory<>::write(pid, seg, addr, buf, len);
 }
 
 
 ////////////////////////////////////////////////////////////////
-Thread*
-LinuxLiveTarget::exec(const ExecArg& arg, const char* const* env)
+Thread* LinuxLiveTarget::exec(
+    const ExecArg&      arg,
+    const char* const*  env)
 {
     RefPtr<Thread> thread = Unix::exec(*this, arg, env);
 
@@ -174,10 +171,10 @@ LinuxLiveTarget::exec(const ExecArg& arg, const char* const* env)
 
 
 ////////////////////////////////////////////////////////////////
-RefPtr<ProcessImpl>
-LinuxLiveTarget::new_process(pid_t pid,
-                             const ExecArg* arg,
-                             ProcessOrigin orig)
+RefPtr<ProcessImpl> LinuxLiveTarget::new_process(
+    pid_t           pid,
+    const ExecArg*  arg,
+    ProcessOrigin   orig)
 {
     const string* cmdline = NULL;
     string pname; // debugged process name
@@ -194,13 +191,17 @@ LinuxLiveTarget::new_process(pid_t pid,
     {
         pname = get_process_name(pid);
     }
+    clog << __func__ << ": " << pname << endl;
+
     return new ProcessImpl(*this, pid, orig, cmdline, pname.c_str());
 }
 
 
 ////////////////////////////////////////////////////////////////
-RefPtr<Thread>
-LinuxLiveTarget::new_thread(long id, pid_t lwpid, int status)
+RefPtr<Thread> LinuxLiveTarget::new_thread(
+    long    id,
+    pid_t   lwpid,
+    int     status)
 {
     return create_thread(id, lwpid, status);
 }
@@ -213,7 +214,7 @@ RefPtr<ThreadImpl> LinuxLiveTarget::handle_fork(pid_t lwpid)
     thread->wait_update_status(true);
     thread->set_forked();
 
-    set_stopped_flag(thread);
+    set_stopped(thread);
     set_ptrace_options(lwpid);
 
     add_thread(thread);
@@ -248,6 +249,8 @@ RefPtr<ThreadImpl> LinuxLiveTarget::handle_exec(pid_t pid)
         }
     }
 
+    reset_process_name();
+
     init_process(pid, NULL, ORIGIN_DEBUGGER);
     init_symbols();
 
@@ -259,6 +262,7 @@ RefPtr<ThreadImpl> LinuxLiveTarget::handle_exec(pid_t pid)
 
     thread->set_forked();
     thread->set_execed();
+    thread->set_stop_expected(false);
 
     set_ptrace_options(pid);
     uninitialize_linker_events();
@@ -271,6 +275,9 @@ RefPtr<ThreadImpl> LinuxLiveTarget::handle_exec(pid_t pid)
     string msg = "exec(";
            msg += thread->filename();
            msg += ")";
+
+    clog << __func__ << ": " << process()->name() << endl;
+
     // stop in debugger, to give the user a chance to
     // set breakpoints
     thread_set_event_description(*thread, msg.c_str());
@@ -293,7 +300,7 @@ LinuxLiveTarget::create_thread(long id, pid_t lwpid, int status)
     {
         thread->set_status(status);
     }
-    set_stopped_flag(thread);
+    set_stopped(thread);
     set_ptrace_options(lwpid);
     add_thread(thread);
     debugger().add_target(this);
@@ -311,8 +318,7 @@ LinuxLiveTarget::create_thread(long id, pid_t lwpid, int status)
 
 ////////////////////////////////////////////////////////////////
 /// extract major and minor
-static void
-get_release(const char* release, long& major, long& minor)
+static void get_release(const char* release, long& major, long& minor)
 {
     char* p = 0;
 
@@ -354,6 +360,7 @@ void LinuxLiveTarget::set_ptrace_options(pid_t pid)
     if (debugger().trace_fork())
     {
         options |= PTRACE_O_TRACEFORK;
+        options |= PTRACE_O_TRACEVFORK;
         options |= PTRACE_O_TRACEEXEC;
     }
 
@@ -497,6 +504,7 @@ void LinuxLiveTarget::attach(pid_t pid)
     {
         // if we had to force the thread out of a stopped
         // state, "hide" the SIGCONT that we sent
+
         thread->set_signal(SIGSTOP);
         thread->set_stopped_by_debugger(true);
     }
@@ -509,8 +517,9 @@ void LinuxLiveTarget::attach(pid_t pid)
 }
 
 ////////////////////////////////////////////////////////////////
-void
-LinuxLiveTarget::kill_threads(pid_t pid, const ThreadList& threads)
+void LinuxLiveTarget::kill_threads(
+    pid_t               pid,
+    const ThreadList&   threads)
 {
     if (sys::uses_nptl())
     {
@@ -519,9 +528,8 @@ LinuxLiveTarget::kill_threads(pid_t pid, const ThreadList& threads)
     }
     else
     {
-        for (ThreadList::const_iterator i = threads.begin();
-            i != threads.end();
-            ++i)
+        ThreadList::const_iterator i = threads.begin();
+        for (; i != threads.end(); ++i)
         {
             sys::kill_thread((*i)->lwpid(), SIGKILL, nothrow);
         }
@@ -585,12 +593,10 @@ void LinuxLiveTarget::detach(bool no_throw)
 
 ////////////////////////////////////////////////////////////////
 bool
-LinuxLiveTarget::set_status_after_stop
-(
-    const RefPtr<ThreadImpl>& tptr,
-    int   status,
-    bool  queueEvents
-)
+LinuxLiveTarget::set_status_after_stop (
+    const RefPtr<ThreadImpl>&   tptr,
+    int                         status,
+    bool                        queueEvents)
 {
     const int eventType = (status >> 16);
     if (eventType)
@@ -600,7 +606,7 @@ LinuxLiveTarget::set_status_after_stop
     }
     tptr->set_status(status);
 
-    if (!set_stopped_flag(tptr, true))
+    if (!set_stopped(tptr, true))
     {
         if (queueEvents && !tptr->is_event_pending())
         {
@@ -628,8 +634,8 @@ bool LinuxLiveTarget::event_requires_stop(Thread* thread)
 ////////////////////////////////////////////////////////////////
 void
 LinuxLiveTarget::collect_threads_to_stop(
-    ThreadImplMap& threadsToStop,
-    Thread* threadToSkip
+    ThreadImplMap&  threadsToStop,
+    Thread*         threadToSkip
     )
 {
     const iterator threadsEnd = threads_end();
@@ -645,7 +651,15 @@ LinuxLiveTarget::collect_threads_to_stop(
             dbgout(0) << (*i)->lwpid() << ": Deletion pending" << endl;
             continue;
         }
+
         RefPtr<ThreadImpl> thread = interface_cast<ThreadImpl>(*i);
+        
+        if (thread->is_stop_expected())
+        {
+            // we have already sent it a SIGSTOP which has not 
+            // arrived yet
+            continue;
+        }
 
         const Runnable::State state = get_thread_state(*CHKPTR(thread));
         switch(state)
@@ -718,10 +732,18 @@ bool LinuxLiveTarget::stop_all_threads(Thread* skipThread)
              ++i)
         {
             dbgout(0) << __func__ << ": " << i->first << endl;
+
+            if (i->second->is_stop_expected()) // already signaled?
+            {
+                continue;
+            }
+
             sys::kill_thread(i->first, SIGSTOP);
         }
     }
+
     wait_for_threads_to_stop(threads, queueEvents);
+
     return true;
 }
 
@@ -730,8 +752,8 @@ bool LinuxLiveTarget::stop_all_threads(Thread* skipThread)
 ////////////////////////////////////////////////////////////////
 void
 LinuxLiveTarget::wait_for_threads_to_stop (
-    const ThreadImplMap& threads,
-    bool queueEvents)
+    const ThreadImplMap&    threads,
+    bool                    queueEvents)
 {
     dbgout(2) << __func__ << ": " << threads.size() << endl;
 
@@ -981,8 +1003,10 @@ LinuxLiveTarget::cache_main_thread_unique(const td_thrhandle_t& thr, pid_t lwpid
 /**
  * This method is called when the ThreadAgent iterates over threads
  */
-void
-LinuxLiveTarget::on_thread(const td_thrhandle_t* thr, const td_thrinfo& info)
+void LinuxLiveTarget::on_thread(
+
+    const td_thrhandle_t*   thr,
+    const td_thrinfo&       info)
 {
     assert(!is_deletion_pending(info.ti_lid));
     assert(thr);
@@ -1270,11 +1294,11 @@ LinuxLiveTarget::write_register(Thread& thread, size_t n, reg_t v)
 
 
 ////////////////////////////////////////////////////////////////
-bool LinuxLiveTarget::read_register( const Thread& thread,
-                                     int nreg,
-                                     bool useFrame,
-                                     reg_t& rg
-                                   ) const
+bool LinuxLiveTarget::read_register(
+    const Thread&   thread,
+    int             nreg,
+    bool            useFrame,
+    reg_t&          rg) const
 {
     if (nreg >= 0)
     {
@@ -1470,8 +1494,10 @@ LinuxLiveTarget::read_state(
 
 
 ////////////////////////////////////////////////////////////////
-bool
-LinuxLiveTarget::read_state(const Thread& thread, RunnableState& state) const
+bool LinuxLiveTarget::read_state(
+    const Thread&   thread,
+    RunnableState&  state
+    ) const
 {
     string comm;
     return read_state(thread.lwpid(), state, comm);
