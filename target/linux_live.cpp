@@ -252,6 +252,10 @@ RefPtr<ThreadImpl> LinuxLiveTarget::handle_exec(pid_t pid)
     reset_process_name();
 
     init_process(pid, NULL, ORIGIN_DEBUGGER);
+
+    assert(process()->pid() == pid);
+    clog << __func__ << ": " << pid << endl;
+
     init_symbols();
 
     RefPtr<ThreadImpl> thread(new ThreadImpl(*this, 0, pid));
@@ -270,7 +274,7 @@ RefPtr<ThreadImpl> LinuxLiveTarget::handle_exec(pid_t pid)
     add_thread(thread);
     debugger().on_attach(*thread);
 
-    init_thread_agent();
+    init_thread_agent(true);
 
     string msg = "exec(";
            msg += thread->filename();
@@ -360,14 +364,14 @@ void LinuxLiveTarget::set_ptrace_options(pid_t pid)
     if (debugger().trace_fork())
     {
         options |= PTRACE_O_TRACEFORK;
-        options |= PTRACE_O_TRACEVFORK;
+        //options |= PTRACE_O_TRACEVFORK;
+        //options |= PTRACE_O_TRACEVFORKDONE;
         options |= PTRACE_O_TRACEEXEC;
     }
 
     if (options)
     {
-        const __ptrace_request req =
-            oldKernel_ ? PT_OLDSETOPTIONS : PT_SETOPTIONS;
+        const __ptrace_request req = oldKernel_ ? PT_OLDSETOPTIONS : PT_SETOPTIONS;
 
         while (XTrace::ptrace(req, pid, 0, options) < 0)
         {
@@ -474,6 +478,8 @@ void LinuxLiveTarget::attach(pid_t pid)
 
     int status = 0;
     sys::waitpid(pid, &status, __WALL);
+    
+    assert((status >> 16) == 0);
 
     init_process(pid, NULL, ORIGIN_SYSTEM);
     assert(process());
@@ -561,7 +567,8 @@ void LinuxLiveTarget::detach_internal()
         thread->detach();
         remove_thread(thread);
     }
-    if (processID)
+
+    if (processID && size())
     {
         kill_threads(processID, threadList);
     }
@@ -594,6 +601,7 @@ void LinuxLiveTarget::detach(bool no_throw)
 ////////////////////////////////////////////////////////////////
 bool
 LinuxLiveTarget::set_status_after_stop (
+
     const RefPtr<ThreadImpl>&   tptr,
     int                         status,
     bool                        queueEvents)
@@ -653,7 +661,7 @@ LinuxLiveTarget::collect_threads_to_stop(
         }
 
         RefPtr<ThreadImpl> thread = interface_cast<ThreadImpl>(*i);
-        
+
         if (thread->is_stop_expected())
         {
             // we have already sent it a SIGSTOP which has not 
@@ -750,10 +758,11 @@ bool LinuxLiveTarget::stop_all_threads(Thread* skipThread)
 
 
 ////////////////////////////////////////////////////////////////
-void
-LinuxLiveTarget::wait_for_threads_to_stop (
+void LinuxLiveTarget::wait_for_threads_to_stop (
+
     const ThreadImplMap&    threads,
     bool                    queueEvents)
+
 {
     dbgout(2) << __func__ << ": " << threads.size() << endl;
 
@@ -801,8 +810,30 @@ LinuxLiveTarget::wait_for_threads_to_stop (
         else
         {
             // save the event, to be handled at a later time
+            if (RefPtr<Target> target = debugger().find_target(lwpid))
+            {
+                ThreadImpl* t = interface_cast<ThreadImpl*>(target->get_thread(lwpid));
+                assert(t);
 
-            debugger().save_lwpid_and_status(lwpid, status);
+                if (t)
+                {
+                #if 0
+                    t->set_status(status);
+                    debugger().queue_event(t);
+                #else
+                    set_status_after_stop(t, status, queueEvents);
+                #endif
+                    ++count;
+                }
+            }
+            else
+            {
+            #if DEBUG
+                clog << __func__ << ": THREAD NOT FOUND " << lwpid << endl;
+            #endif
+                assert(!WIFEXITED(status));
+                debugger().save_lwpid_and_status(lwpid, status);
+            }
         }
     }
     dbgout(2) << __func__<< ": DONE" << endl;
@@ -810,8 +841,7 @@ LinuxLiveTarget::wait_for_threads_to_stop (
 
 
 ////////////////////////////////////////////////////////////////
-Runnable::State
-LinuxLiveTarget::get_thread_state(ThreadImpl& thread)
+Runnable::State LinuxLiveTarget::get_thread_state(ThreadImpl& thread)
 {
     Runnable::State state = Runnable::UNKNOWN;
     try
@@ -902,7 +932,7 @@ size_t LinuxLiveTarget::resume_all_threads()
         }
         catch (const exception& e)
         {
-            dbgout(0) << __func__ << ": " << e.what() << endl;
+            dbgout(1) << __func__ << ": " << e.what() << endl;
         }
     }
     // If at least one thread has resumed as a result of stepping
@@ -911,7 +941,7 @@ size_t LinuxLiveTarget::resume_all_threads()
     //
     // This in turn (see debugger_base.cpp) avoids flooding the
     // plug-ins with unnecessary "on_program_resumed" notifications.
-    //
+
     return stepped ? 0 : resumedCount;
 }
 
@@ -1053,6 +1083,8 @@ void LinuxLiveTarget::on_thread(
         {
             sys::ptrace(PTRACE_ATTACH, info.ti_lid, 0, 0);
             sys::waitpid(info.ti_lid, &status, __WCLONE | WUNTRACED);
+
+            assert((status >> 16) == 0);
         }
         catch (const exception& e)
         {

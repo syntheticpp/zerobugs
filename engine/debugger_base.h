@@ -350,7 +350,9 @@ protected:
 
 private:
     void resume_threads();
- 
+
+    void check_unhandled_events();
+
     /**
      * map path without following symbolic links.
      */

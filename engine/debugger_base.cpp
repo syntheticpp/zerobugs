@@ -1000,7 +1000,10 @@ RefPtr<Thread> DebuggerBase::get_event()
         RefPtr<Target> target = find_target(pid);
         if (!target)
         {
-            save_lwpid_and_status(pid, status);
+            if (!WIFEXITED(status))
+            {
+                save_lwpid_and_status(pid, status);
+            }
             dbgout(0) << "Target not found for: " << pid << endl;
             continue;
         }
@@ -1119,24 +1122,29 @@ SignalPolicy* DebuggerBase::signal_policy(int signum)
 
 
 ////////////////////////////////////////////////////////////////
+void DebuggerBase::check_unhandled_events()
+{
+    if (unhandled_)
+    {
+        for (auto i = unhandled_->begin(); i != unhandled_->end(); ++i)
+        {
+            clog << __func__ << " " << i->first << ": ";
+            clog << hex << i->second << dec << endl;
+            
+            assert(false);
+        }
+    }
+}
+
+////////////////////////////////////////////////////////////////
 void DebuggerBase::resume_threads()
 {
     size_t resumedCount = 0;
     bool empty = true;
     bool attached = false;
 
-#if DEBUG
-    // dump unhandled threads
-    if (unhandled_)
-    {
-        for (auto i = unhandled_->begin(); i != unhandled_->end(); ++i)
-        {
-            clog << "Unhandled " << i->first << ": " << hex << i->second << dec << endl;
-        }
-    }
-#endif
-
     Lock<Mutex> lock(TargetManager::mutex());
+    check_unhandled_events(); 
 
     TargetManager::iterator i = TargetManager::begin(lock);
     const TargetManager::iterator targetsEnd = TargetManager::end(lock);
@@ -1157,7 +1165,6 @@ void DebuggerBase::resume_threads()
     {
         on_resumed();
     }
-
     else if (attached && empty)
     {
         dbgout(0) << __func__ << ": detaching" <<endl;

@@ -147,6 +147,8 @@ ThreadView::ThreadView(const string& label, Gtk::Window& top)
     tree_->get_column(2)->add_attribute(renderer->property_active(),
                                         tree_->selectable());
     renderer->signal_toggled().connect(mem_fun(*this, &ThreadView::on_toggle));
+    tree_->column(2).set_sizing(Gtk::TREE_VIEW_COLUMN_FIXED);
+
 #endif
 
     tree_->set_selection_mode(Gtk_FLAG(SELECTION_SINGLE));
@@ -213,7 +215,7 @@ ThreadView::Item ThreadView::make_tree_item(const Thread& thread)
     }
     else
     {
-        os << " (clone)";
+        os << " (thread)";
     }
     Item item;
 

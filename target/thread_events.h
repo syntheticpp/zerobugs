@@ -181,9 +181,9 @@ protected:
         : ThreadAgentWrapper<T>(arg), self_(this)
     { }
 
-    virtual bool init_thread_agent()
+    virtual bool init_thread_agent(bool force = false)
     {
-        bool result = ThreadAgentWrapper<T>::init_thread_agent();
+        bool result = ThreadAgentWrapper<T>::init_thread_agent(force);
         if (result)
         {
             try

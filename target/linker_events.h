@@ -166,7 +166,7 @@ protected:
 public:
     bool has_linker_events() const 
     {
-        dbgout(1) << __func__ << ": " << inited_ << endl;
+        dbgout(1) << __func__ << ": " << T::process_name()->c_str() << "=" << inited_ << endl;
         return inited_;
     }
 

@@ -1138,6 +1138,9 @@ void ThreadImpl::wait_update_status(bool checkUnhandledThreads)
     {
         wait_internal(&status, __WALL);
     }
+
+    assert((status >> 16) == 0);
+
     set_status(status);
 }
 

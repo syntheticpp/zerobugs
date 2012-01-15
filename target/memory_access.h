@@ -95,11 +95,12 @@ struct ZDK_LOCAL MemoryBase
         }
         catch (const std::exception& e)
         {
-            std::cerr << __func__ << ": " << e.what() << std::endl;
-
+        #if DEBUG
+            // std::cerr << __func__ << ": " << e.what() << std::endl;
+        #endif
             if (!readlen) 
             {
-                throw;
+                throw e;
             }
         }
         if (readlen)

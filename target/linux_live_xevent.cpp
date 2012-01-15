@@ -40,15 +40,14 @@ attach_new_debugger_instance(pid_t pid)
     cmd << pid;
     cmd << " >> zero_fork.out 2>&1 ";
     cmd << "&"; // start in background
-
-    dbgout(0) << cmd.str() << endl;
-
+#if DEBUG
+    clog <<__func__ << ": " << cmd.str() << endl;
+#endif
     sys::unmask_all_signals();
 
     // execute
     if (system(cmd.str().c_str()) < 0)
     {
-        dbgout(0) << "system call failed, errno=" << errno << endl;
         throw SystemError(cmd.str());
     }
 }
@@ -102,11 +101,9 @@ LinuxLiveTarget::handle_extended_event(Thread& thread, int event)
             if (createThread)
             {
                 const int status = 0;
-                /////
-                //sys::waitpid(pid, &status, __WCLONE);
-                ///// No need to waitpid, passing a zero status
-                ///// to create_thread triggers wait_update_status
 
+                // passing a status=0 to create_thread causes
+                // a wait_update_status call to update status
                 create_thread(0, pid, status);
             }
         }
@@ -168,6 +165,10 @@ LinuxLiveTarget::handle_extended_event(Thread& thread, int event)
         //come in through waitpid()
         interface_cast<ThreadImpl&>(thread).set_exiting();
         break;
+
+    default:
+        clog << __func__ << ": " << event << endl;
+        assert(false);
     }
     return true;
 }

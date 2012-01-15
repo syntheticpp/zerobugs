@@ -2525,18 +2525,20 @@ void MainWindow::on_menu_step()
 
 
 ////////////////////////////////////////////////////////////////
-static bool
-check_current_frame(const Frame& frame,
-                    const StackView& stackView,
-                    MainWindow& w)
+static bool check_current_frame(
+    const Frame&        frame,
+    const StackView&    stackView,
+    MainWindow&         w)
 {
     bool proceed = true;
 
     RefPtr<Symbol> currentSymbolInView;
+
     if (w.program_view())
     {
         currentSymbolInView = w.program_view()->symbol();
     }
+
     if (&frame != stackView.top() /*|| currentSymbolInView.get() != frame.function()*/
         || (currentSymbolInView && currentSymbolInView->addr() != frame.program_count())
         )

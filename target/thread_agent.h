@@ -110,8 +110,13 @@ protected:
     {
     }
 
-    virtual bool init_thread_agent()
+    virtual bool init_thread_agent(bool force = false)
     {
+        if (force)
+        {
+            ta_.reset();
+        }
+
         if (!ta_ && init_thread_db())
         {
             td_thragent_t* ta = NULL;

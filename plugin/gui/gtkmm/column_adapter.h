@@ -29,7 +29,7 @@ namespace Gtk
             if (Gtk::TreeViewColumn* col = view.get_column(n_))
             {
                 col->set_clickable(true);
-                //col->set_reorderable(true);
+
                 col->set_sizing(Gtk::TREE_VIEW_COLUMN_FIXED);
                 col->set_expand(false);
             }
@@ -68,6 +68,15 @@ namespace Gtk
                 col->set_clickable(false);
             }
         }
+
+        void set_sizing(Gtk::TreeViewColumnSizing type)
+        {
+            if (Gtk::TreeViewColumn* col = view_->get_column(n_))
+            {
+                col->set_sizing(type);
+            }
+        }
+
         ColumnAdapter& swap(ColumnAdapter& other) throw()
         {
             std::swap(view_, other.view_);

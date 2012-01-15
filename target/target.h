@@ -31,6 +31,7 @@ class DebugChannel;
 class ExecArg;
 class ProcessImpl;
 class SArray;
+
 struct Target;
 typedef RefPtr<Target> TargetPtr;
 
@@ -188,7 +189,7 @@ struct Target : public MemoryIO, public Visitable<bool>
      */
     virtual Thread* exec(const ExecArg&, const char* const* env) = 0;
 
-    virtual Thread* get_thread(pid_t, unsigned long) const = 0;
+    virtual Thread* get_thread(pid_t, unsigned long thread_id = 0) const = 0;
 
     /**
      * thread ID to light-weight process ID
@@ -304,19 +305,19 @@ struct Target : public MemoryIO, public Visitable<bool>
     enum SegmentType { DATA_SEGMENT, CODE_SEGMENT };
 
     virtual void read_memory(
-        pid_t pid,
-        SegmentType,
-        addr_t address,
-        word_t* buffer,
-        size_t howManyWords,
-        size_t* wordsRead = 0) const = 0;
+        pid_t           pid,
+        SegmentType     segType,
+        addr_t          address,
+        word_t*         buffer,
+        size_t          howManyWords,
+        size_t*         wordsRead = 0) const = 0;
 
     virtual void write_memory(
-        pid_t pid,
-        SegmentType seg,
-        addr_t addr,
-        const word_t* buf,
-        size_t wordsToWrite) = 0;
+        pid_t           pid,
+        SegmentType     seg,
+        addr_t          addr,
+        const word_t*   buf,
+        size_t          wordsToWrite) = 0;
 
 protected:
     void reset_process_name() 

@@ -133,7 +133,7 @@ expect ( 42
 
 call quit
 ---end---
-ZERO_SAVE_STATE=1 run_debugger ./a.out --main $@
+ZERO_SAVE_STATE=1 run_debugger ./a.out -v -v --main $@
 touch libbar.so
 ZERO_SAVE_STATE=1 run_debugger ./a.out --main $@
 }
@@ -151,7 +151,7 @@ function run()
     else
         #test_dso -gstabs+ $@
         #test_dso -gstabs $@
-        test_dso -gdwarf-23 $@
+        test_dso -gdwarf-2 $@
     fi
 }
 
