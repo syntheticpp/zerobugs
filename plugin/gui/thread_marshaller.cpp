@@ -339,4 +339,19 @@ void ThreadMarshaller::set_debuggee_running(AO_t running) volatile
     }
 }
 
+
+class StackUpdater : public EnumCallback<Thread*>
+{
+    void notify(Thread* t)
+    {
+        t->stack_trace();
+    }
+};
+
+void ThreadMarshaller::update_stack_traces()
+{
+    StackUpdater stackUpdater;
+    debugger().enum_threads(&stackUpdater);
+}
+
 // vim: tabstop=4:softtabstop=4:expandtab:shiftwidth=4

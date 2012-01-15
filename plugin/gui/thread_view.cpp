@@ -135,7 +135,7 @@ ThreadView::ThreadView(const string& label, Gtk::Window& top)
     tree_->column(0).set_passive();
 
 #ifdef GTKMM_2
-    tree_->column(0).set_width(80);
+    tree_->column(0).set_width(120);
     tree_->column(1).set_width(64);
 
     // the CTree adapter class has some "hidden" data columns in
@@ -148,7 +148,6 @@ ThreadView::ThreadView(const string& label, Gtk::Window& top)
                                         tree_->selectable());
     renderer->signal_toggled().connect(mem_fun(*this, &ThreadView::on_toggle));
     tree_->column(2).set_sizing(Gtk::TREE_VIEW_COLUMN_FIXED);
-
 #endif
 
     tree_->set_selection_mode(Gtk_FLAG(SELECTION_SINGLE));

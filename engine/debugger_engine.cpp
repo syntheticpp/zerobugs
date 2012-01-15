@@ -805,9 +805,9 @@ void DebuggerEngine::on_event(Thread& thread)
 
 ////////////////////////////////////////////////////////////////
 void DebuggerEngine::begin_interactive_mode (
-    Thread* thread,
-    EventType event,
-    Symbol* symbol)
+    Thread*     thread,
+    EventType   event,
+    Symbol*     symbol)
 {
     if (thread && !is_silent())
     {
@@ -870,8 +870,9 @@ void DebuggerEngine::on_watchpoint(
 
 ////////////////////////////////////////////////////////////////
 void DebuggerEngine::on_single_step_or_syscall(
-    Runnable& runnable,
-    Thread& thread)
+
+    Runnable&   runnable,
+    Thread&     thread)
 {
     const addr_t pc = thread.program_count();
 
@@ -912,9 +913,10 @@ void DebuggerEngine::on_single_step_or_syscall(
 
 ////////////////////////////////////////////////////////////////
 void DebuggerEngine::on_syscall(
-    Runnable& runnable,
-    Thread& thread,
-    addr_t programCount)
+
+    Runnable&   runnable,
+    Thread&     thread,
+    addr_t      programCount)
 {
     static bool ignoreUnknownTrap =
         env::get_bool("ZERO_IGNORE_UNKNOWN_TRAP", true);
@@ -970,14 +972,14 @@ void DebuggerEngine::on_syscall(
 }
 
 
-
 /**
  * Schedule software breakpoint
  */
-bool DebuggerEngine::schedule_soft(Runnable& runnable,
-                                   Thread& thread,
-                                   BreakPoint* bptr,
-                                   addr_t addr)
+bool DebuggerEngine::schedule_soft(
+    Runnable&   runnable,
+    Thread&     thread,
+    BreakPoint* bptr,
+    addr_t      addr)
 {
     if (bptr && (bptr->type() != BreakPoint::HARDWARE))
     {
@@ -1254,9 +1256,9 @@ void DebuggerEngine::schedule_actions(
 
 ////////////////////////////////////////////////////////////////
 void DebuggerEngine::execute_actions(
-     Runnable& runnable,
-     Thread& thread,
-     BreakPoint& bpnt)
+     Runnable&      runnable,
+     Thread&        thread,
+     BreakPoint&    bpnt)
 {
     dbgout(0) << __func__ << ": " << (void*)bpnt.addr() << endl;
 
@@ -1953,8 +1955,8 @@ void DebuggerEngine::print_breakpoints(ostream& outs, pid_t pid) const
 
 ////////////////////////////////////////////////////////////////
 void DebuggerEngine::schedule_interactive_mode(
-    Thread* thread,
-    EventType event)
+    Thread*     thread,
+    EventType   event)
 {
     if (event == E_EVAL_COMPLETE)
     {
@@ -1981,7 +1983,7 @@ void DebuggerEngine::schedule_interactive_mode(
             schedule_actions(*get_runnable(thread), *thread, *bpnt);
         }
     }
-    if (!thread->is_traceable())
+    if (thread && !thread->is_traceable())
     {
         dbgout(0) << __func__ << ": " << thread->lwpid()
                   << " has debug events disabled." << endl;
@@ -3085,10 +3087,10 @@ void DebuggerEngine::critical_error(Thread* thread, const char* what)
 
 ////////////////////////////////////////////////////////////////
 bool DebuggerEngine::message (
-    const char* msg,
-    MessageType type,
-    Thread* thread,
-    bool async)
+    const char*     msg,
+    MessageType     type,
+    Thread*         thread,
+    bool            async)
 {
     bool result = false;
 

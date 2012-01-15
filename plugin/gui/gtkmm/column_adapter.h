@@ -29,8 +29,6 @@ namespace Gtk
             if (Gtk::TreeViewColumn* col = view.get_column(n_))
             {
                 col->set_clickable(true);
-
-                col->set_sizing(Gtk::TREE_VIEW_COLUMN_FIXED);
                 col->set_expand(false);
             }
         }
@@ -49,6 +47,16 @@ namespace Gtk
             assert(view_);
             if (Gtk::TreeViewColumn* col = view_->get_column(n_))
             {
+                col->set_min_width(w);
+            }
+        }
+        void set_fixed_width(unsigned int w)
+        {
+            assert(view_);
+            if (Gtk::TreeViewColumn* col = view_->get_column(n_))
+            {
+                col->set_sizing(Gtk::TREE_VIEW_COLUMN_FIXED);
+                col->set_expand(false);
                 col->set_fixed_width(w);
             }
         }

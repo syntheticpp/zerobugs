@@ -57,6 +57,8 @@ ptrace_throw_error(__ptrace_request rq, pid_t pid, addr_t addr, word_t data)
 
 static bool ptrace_handle_error(__ptrace_request rq)
 {
+    // environment variables for debugging ptrace failures:
+    // can force a core dump
     static const int ERR = env::get("ZERO_PTRACE_ERR", 0);
     static const int REQ = env::get("ZERO_PTRACE_REQ", -1);
 

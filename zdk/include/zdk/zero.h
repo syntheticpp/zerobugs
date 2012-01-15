@@ -12,7 +12,7 @@
 // -------------------------------------------------------------------------
 
 #define ZERO_API_MAJOR  1
-#define ZERO_API_MINOR 21
+#define ZERO_API_MINOR 22
 
 #define ZDK_MAJOR ZERO_API_MAJOR
 #define ZDK_MINOR ZERO_API_MINOR
@@ -391,6 +391,9 @@ enum EventType
 
     // thread is about to exit
     E_THREAD_EXITING,
+
+    // there are no more threads left in the target
+    E_TARGET_FINISHED,
 
     // force to sizeof(uint)
     E_NONE = UINT_MAX,

@@ -298,6 +298,8 @@ struct Target : public MemoryIO, public Visitable<bool>
 
     virtual std::string thread_name(pid_t) const;
 
+    virtual void update_threads_info() { }
+
     ////////////////////////////////////////////////////////////
     //
     // Memory read / write methods

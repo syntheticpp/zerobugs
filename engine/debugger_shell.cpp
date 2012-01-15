@@ -1053,9 +1053,9 @@ void DebuggerShell::on_idle()
 
 
 void DebuggerShell::begin_interactive_mode (
-    Thread* thread,
-    EventType eventType,
-    Symbol* sym)
+    Thread*     thread,
+    EventType   eventType,
+    Symbol*     sym)
 {
     DebuggerEngine::begin_interactive_mode(thread, eventType, sym);
     prompt_user(thread, eventType);

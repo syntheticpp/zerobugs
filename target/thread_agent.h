@@ -123,6 +123,8 @@ protected:
             ps_prochandle* ps = this;
 
             int res = td_ta_new(ps, &ta);
+
+            // td_ta_new may fail for stripped executable
             if (res != TD_OK)
             {
                 dbgout(1) << "td_ta_new=" << res << " ("
@@ -193,7 +195,11 @@ protected:
                            TD_THR_LOWEST_PRIORITY,
                            TD_SIGNO_MASK,
                            TD_THR_ANY_USER_FLAGS);
-            }
+        }
+        else
+        {
+            dbgout(1) << __func__ << ": no thread agent" << endl;
+        }
     }
 
     addr_t get_event_addr(td_event_e event) const

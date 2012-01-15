@@ -34,7 +34,7 @@ public:
         SINGLE_STEP = E_SINGLE_STEP,
         EVAL_COMPLETE = E_EVAL_COMPLETE,
         RETURNED = E_THREAD_RETURN,
-
+        TARGET_FINISHED = E_TARGET_FINISHED,
         // these do not map to any ZDK-defined event types:
         DONE_STEPPING,
         SYSCALL_LEAVE

@@ -57,7 +57,7 @@ DebugEvent::DebugEvent(Type type, Thread* thread, int syscallNum)
         Lock<Mutex> lock(mutex_);
         if (pendingCalls_.empty())
         {
-            throw std::logic_error("empty pending calls stack");
+            throw std::logic_error("empty pending call stack");
         }
         else
         {

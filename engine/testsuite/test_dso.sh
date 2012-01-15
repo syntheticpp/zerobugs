@@ -133,7 +133,7 @@ expect ( 42
 
 call quit
 ---end---
-ZERO_SAVE_STATE=1 run_debugger ./a.out -v -v --main $@
+ZERO_SAVE_STATE=1 run_debugger ./a.out --main $@
 touch libbar.so
 ZERO_SAVE_STATE=1 run_debugger ./a.out --main $@
 }

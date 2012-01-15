@@ -65,9 +65,11 @@ using namespace std;
 using namespace eventlog;
 
 
-static const word_t defaultOpts = Debugger::OPT_HARDWARE_BREAKPOINTS |
-                                  Debugger::OPT_START_AT_MAIN        |
-                                  Debugger::OPT_TRACE_FORK;
+static const word_t defaultOpts = 
+
+    Debugger::OPT_HARDWARE_BREAKPOINTS |
+    Debugger::OPT_START_AT_MAIN        |
+    Debugger::OPT_TRACE_FORK;
 
 ////////////////////////////////////////////////////////////////
 TargetFactory& DebuggerBase::target_factory()
@@ -841,19 +843,28 @@ void DebuggerBase::cleanup(Thread& thread)
               << " status=" << hex << thread.status() << dec << endl;
 
     RefPtr<Target> target = find_target(pid);
+
     if (!target)
     {
         throw logic_error(__func__ + string(": target not found"));
     }
+
     if (target->cleanup(thread) == 0)
     {
         dbgout(0) << __func__ << ": last thread in target" << endl;
         assert(target->enum_threads() == 0);
 
         take_snapshot();
+
         // if the number of remaining threads after cleanup
         // is zero, then remove this target
         remove_target(target);
+       
+        dbgout(0) << __func__ << ": " << size() << " target(s)" << endl;
+    #if 0
+        stop_all_threads(&thread);
+        schedule_interactive_mode(NULL, E_TARGET_FINISHED);
+    #endif
     }
 }
 
@@ -1122,7 +1133,7 @@ SignalPolicy* DebuggerBase::signal_policy(int signum)
 
 
 ////////////////////////////////////////////////////////////////
-void DebuggerBase::check_unhandled_events()
+void DebuggerBase::check_unhandled_events(const Lock<Mutex>& lock)
 {
     if (unhandled_)
     {
@@ -1130,8 +1141,13 @@ void DebuggerBase::check_unhandled_events()
         {
             clog << __func__ << " " << i->first << ": ";
             clog << hex << i->second << dec << endl;
-            
-            assert(false);
+        }
+
+        // hack: if PTRACE_EVENT_CLONE was missed for whatever reason,
+        // try to update the attached threads information
+        for (auto i = TargetManager::begin(lock); i != TargetManager::end(lock); ++i)
+        {
+            (*i)->update_threads_info();
         }
     }
 }
@@ -1144,7 +1160,7 @@ void DebuggerBase::resume_threads()
     bool attached = false;
 
     Lock<Mutex> lock(TargetManager::mutex());
-    check_unhandled_events(); 
+    check_unhandled_events(lock); 
 
     TargetManager::iterator i = TargetManager::begin(lock);
     const TargetManager::iterator targetsEnd = TargetManager::end(lock);

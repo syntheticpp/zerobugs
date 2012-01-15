@@ -143,7 +143,11 @@ public:
     void detach_internal();
 
 protected:
-    void wait_for_threads_to_stop(const ThreadImplMap&, bool queueEvents);
+    void wait_for_threads_to_stop(
+
+        ThreadImpl* currentThread,
+        const       ThreadImplMap& threadsToStop, 
+        bool        queueEvents);
 
     Runnable::State get_thread_state(ThreadImpl&);
 
@@ -188,6 +192,8 @@ private:
     virtual std::string get_system_release() const;
 
     bool read_state(pid_t, RunnableState&, std::string& comm) const;
+
+    void update_threads_info();
 
 private:
     bool resumeNewThreads_;

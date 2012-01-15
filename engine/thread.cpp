@@ -1110,6 +1110,7 @@ pid_t ThreadImpl::wait_internal(int* status, int opts, bool noThrow)
     {
         pid = sys::waitpid(pid, status, opts);
     }
+    assert(!status || (*status >> 16) == 0);
     assert(pid == lwpid() || (opts & WNOHANG));
 
     return pid;

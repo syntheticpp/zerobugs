@@ -55,8 +55,7 @@ BreakPointManagerGroup::~BreakPointManagerGroup() throw()
 
 ////////////////////////////////////////////////////////////////
 void
-BreakPointManagerGroup::replicate_breakpoints
-(
+BreakPointManagerGroup::replicate_breakpoints (
     Thread& forkedThread,
     BreakPointManagerImpl& mgr
 )
@@ -101,7 +100,7 @@ BreakPointManagerGroup::replicate_breakpoints
         }
     }
     ostringstream msg;
-    msg << "failed to replicate breakpoints in forked thread(";
+    msg << "Failed to replicate breakpoints in forked thread(";
     msg << forkedThread.lwpid() << ", " << parentID << ")";
 
     throw runtime_error(msg.str());

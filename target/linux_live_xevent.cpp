@@ -143,7 +143,7 @@ LinuxLiveTarget::handle_extended_event(Thread& thread, int event)
     case PTRACE_EVENT_EXEC:
         {
             assert(thread.target() == this);
-            assert(thread.is_forked());
+            // assert(thread.is_forked());
 
             RefPtr<Target> self(this);
 

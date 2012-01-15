@@ -59,7 +59,7 @@ static pid_t get_signal_sender_pid(pid_t lwpid)
 
 
 static bool
-set_stopped(const RefPtr<ThreadImpl>& thread, bool expectStop = false)
+set_stopped(RefPtr<ThreadImpl> thread, bool expectStop = false)
 {
     if (thread->signal() == SIGSTOP)
     {
@@ -79,7 +79,8 @@ set_stopped(const RefPtr<ThreadImpl>& thread, bool expectStop = false)
             return true;
         }
     }
-    else if (expectStop)
+    else if (expectStop && !thread->is_exiting()
+                        && !thread_finished(*thread))
     {
         thread->set_stop_expected();
     }
@@ -220,13 +221,28 @@ RefPtr<ThreadImpl> LinuxLiveTarget::handle_fork(pid_t lwpid)
     add_thread(thread);
     init_thread_agent();
 
+    bool failed = false;
+
     // NOTE: order of operations is important: on_attach()
     // creates the breakpoint manager for the forked thread;
     // init_linker_events() sets a breakpoint and it expects
     // that the correct manager object has been created.
-    //
-    debugger().on_attach(*thread);
-    init_linker_events(*thread);
+   
+    try
+    {
+        debugger().on_attach(*thread);
+        init_linker_events(*thread);
+    }
+    catch (const exception& e)
+    {
+        failed = true;
+        debugger().message(e.what(), Debugger::MSG_ERROR, thread.get());
+    }
+
+    if (failed)
+    {
+        thread->set_signal(SIGKILL);
+    }
 
     if (resumeNewThreads_
         && (debugger().options() & Debugger::OPT_SPAWN_ON_FORK) == 0)
@@ -364,8 +380,8 @@ void LinuxLiveTarget::set_ptrace_options(pid_t pid)
     if (debugger().trace_fork())
     {
         options |= PTRACE_O_TRACEFORK;
-        //options |= PTRACE_O_TRACEVFORK;
-        //options |= PTRACE_O_TRACEVFORKDONE;
+        options |= PTRACE_O_TRACEVFORK;
+        options |= PTRACE_O_TRACEVFORKDONE;
         options |= PTRACE_O_TRACEEXEC;
     }
 
@@ -460,6 +476,7 @@ static bool attach(pid_t pid, Target& target)
     }
 
     bool sigcont = false;
+
     // thread was possibly in a stopped state before attaching
     if (task.runstate() == Runnable::TRACED_OR_STOPPED)
     {
@@ -568,7 +585,7 @@ void LinuxLiveTarget::detach_internal()
         remove_thread(thread);
     }
 
-    if (processID && size())
+    if (processID /* && size() */)
     {
         kill_threads(processID, threadList);
     }
@@ -621,7 +638,7 @@ LinuxLiveTarget::set_status_after_stop (
             debugger().queue_event(tptr);
         }
     }
-
+// todo: the result seems to be ignored, remove this
     return eventType == PTRACE_EVENT_EXIT;
 }
 
@@ -632,8 +649,9 @@ bool LinuxLiveTarget::event_requires_stop(Thread* thread)
     assert(thread);
     const int sig = thread->signal();
 
-    const bool result = !check_extended_event(thread)
-                      && debugger().signal_policy(sig)->stop();
+    const bool result = 
+        !check_extended_event(thread) && debugger().signal_policy(sig)->stop();
+
     dbgout(1) << __func__ << ": " << thread->lwpid() << "=" << result << endl;
     return result;
 }
@@ -669,6 +687,9 @@ LinuxLiveTarget::collect_threads_to_stop(
             continue;
         }
 
+        assert(!(*i)->is_exiting());
+        assert(!thread_finished(**i));
+
         const Runnable::State state = get_thread_state(*CHKPTR(thread));
         switch(state)
         {
@@ -702,12 +723,12 @@ LinuxLiveTarget::collect_threads_to_stop(
 
 
 /**
- * Stop all threads but skipThread (if not NULL)
+ * Stop all threads but current (if not NULL)
  *
  */
-bool LinuxLiveTarget::stop_all_threads(Thread* skipThread)
+bool LinuxLiveTarget::stop_all_threads(Thread* current)
 {
-    const bool queueEvents = (skipThread != NULL);
+    const bool queueEvents = (current != NULL);
 
     // Sending a SIGSTOP is asynchronous: make sure that in
     // the offchance of a thread being created while we are
@@ -718,7 +739,7 @@ bool LinuxLiveTarget::stop_all_threads(Thread* skipThread)
     // a map of threads that we expect to reap with waitpid
     ThreadImplMap threads;
 
-    collect_threads_to_stop(threads, skipThread);
+    collect_threads_to_stop(threads, current);
 
  /* http://www-128.ibm.com/developerworks/linux/library/l-threading.html
    "Since NPTL is POSIX compliant, it handles signals on a
@@ -730,27 +751,27 @@ bool LinuxLiveTarget::stop_all_threads(Thread* skipThread)
     {
         if (Process* proc = process())
         {
+            if (threads.empty())
+            {
+                return true;
+            }
             sys::kill(proc->pid(), SIGSTOP);
         }
     }
     else */
     {
-        for (ThreadImplMap::const_iterator i = threads.begin();
-             i != threads.end();
-             ++i)
+        ThreadImplMap::const_iterator i = threads.begin();
+        
+        for (; i != threads.end(); ++i)
         {
             dbgout(0) << __func__ << ": " << i->first << endl;
-
-            if (i->second->is_stop_expected()) // already signaled?
-            {
-                continue;
-            }
 
             sys::kill_thread(i->first, SIGSTOP);
         }
     }
+    ThreadImpl* currentImpl = interface_cast<ThreadImpl*>(current);
 
-    wait_for_threads_to_stop(threads, queueEvents);
+    wait_for_threads_to_stop(currentImpl, threads, queueEvents);
 
     return true;
 }
@@ -760,6 +781,7 @@ bool LinuxLiveTarget::stop_all_threads(Thread* skipThread)
 ////////////////////////////////////////////////////////////////
 void LinuxLiveTarget::wait_for_threads_to_stop (
 
+    ThreadImpl*             current,
     const ThreadImplMap&    threads,
     bool                    queueEvents)
 
@@ -1639,5 +1661,11 @@ string LinuxLiveTarget::thread_name(pid_t lwpid) const
     read_state(lwpid, state, comm);
 
     return comm;
+}
+
+////////////////////////////////////////////////////////////////
+void LinuxLiveTarget::update_threads_info()
+{
+    iterate_threads(*this);
 }
 // vim: tabstop=4:softtabstop=4:expandtab:shiftwidth=4

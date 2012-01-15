@@ -2803,10 +2803,10 @@ void MainWindow::wait_and_process_responses() volatile
 
 
 ////////////////////////////////////////////////////////////////
-bool
-MainWindow::on_debug_event(RefPtr<Thread> thread,
-                           EventType eventType
-                          )volatile
+bool MainWindow::on_debug_event(
+
+    RefPtr<Thread> thread,
+    EventType      eventType)volatile
 {
     assert(pthread_self() == maintid);
 
@@ -3001,6 +3001,7 @@ void MainWindow::on_attached(RefPtr<Thread> thread)
     assert(thread);
 
     compute_and_update_state(thread);
+
     if (!CHKPTR(threadView_)->add_thread(*thread))
     {
         threadView_->clear();
@@ -3286,9 +3287,10 @@ END_SLOT()
 
 ////////////////////////////////////////////////////////////////
 void
-MainWindow::show_symbol(RefPtr<Thread> thread,
-                        RefPtr<Symbol> symbol,
-                        Frame* frame)
+MainWindow::show_symbol(
+    RefPtr<Thread>  thread,
+    RefPtr<Symbol>  symbol,
+    Frame*          frame)
 {
     if (!thread || !symbol || is_shutting_down())
     {
@@ -3394,6 +3396,7 @@ void MainWindow::update_running()
 {
     assert_ui_thread();
     Lock<Mutex> lock(mutex(), TryLock());
+
     if (lock)
     {
         compute_and_update_state(NULL, 0);
@@ -3406,6 +3409,10 @@ void MainWindow::update_running()
                 progView_->hilite_line(line, false);
             }
         }
+    }
+    else
+    {
+        assert(false);
     }
 }
 
@@ -3434,15 +3441,23 @@ static unsigned check_can_restart(const RefPtr<Properties>& prop)
 
 
 ////////////////////////////////////////////////////////////////
-static unsigned check_live_state(const RefPtr<Thread>& thread)
+static unsigned check_live_state(
+    Debugger&       debugger,
+    RefPtr<Thread>  thread)
 {
     unsigned result = uisNone;
 
+    if (!thread)
+    {
+        thread = debugger.current_thread();
+    }
+   
     if (thread)
     {
         if (thread->is_live())
         {
             result |= uisAttachedLive;
+
             if (RefPtr<Process> proc = thread->process())
             {
                 if (proc->origin() == ORIGIN_DEBUGGER)
@@ -3456,6 +3471,7 @@ static unsigned check_live_state(const RefPtr<Thread>& thread)
             result |= uisAttached; // loaded a core file
         }
     }
+
     return result;
 }
 
@@ -3521,7 +3537,7 @@ void MainWindow::compute_and_update_state
         }
     }
     state |= check_can_restart(properties);
-    state |= check_live_state(thread);
+    state |= check_live_state(debugger(), thread);
 
     state &= ~(uisCodeViews | uisSymbolicView);
 

@@ -79,6 +79,8 @@ public:
 
     bool is_shutting_down() const volatile { return shutdown_; }
 
+    void update_stack_traces();
+
     Debugger& debugger() volatile { return debugger_; }
 
 protected:

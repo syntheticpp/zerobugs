@@ -94,8 +94,8 @@ BEGIN_SLOT(MemoryRequestHandler::on_read_memory,
 END_SLOT()
 
 
-void
-MemoryRequestHandler::read_memory(RefPtr<MemoryRequest> req) volatile
+
+void MemoryRequestHandler::read_memory(RefPtr<MemoryRequest> req) volatile
 {
     assert(req);
     assert_main_thread();
@@ -131,6 +131,8 @@ MemoryRequestHandler::read_memory(RefPtr<MemoryRequest> req) volatile
         cerr << __func__ << ": " << hex << begin << ", ";
         cerr << dec << req->requestedSize << " bytes\n";
     }
+
+    marshaller_.update_stack_traces();
     //
     // queue on_read_done invocation for the code viewer object
     //
