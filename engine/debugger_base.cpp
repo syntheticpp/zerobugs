@@ -553,6 +553,7 @@ void DebuggerBase::load_core(const char* corefile, const char* progfile)
 
 ////////////////////////////////////////////////////////////////
 size_t DebuggerBase::enum_user_tasks (
+
     EnumCallback<const Runnable*>* callback,
     const char* targetParam)
 {
@@ -1009,6 +1010,7 @@ RefPtr<Thread> DebuggerBase::get_event()
         dbgout(1) << "*************** " << pid << ": " << hex << status << dec << endl;
 
         RefPtr<Target> target = find_target(pid);
+
         if (!target)
         {
             if (!WIFEXITED(status))
@@ -1099,8 +1101,6 @@ void DebuggerBase::queue_event(const RefPtr<ThreadImpl>& thread)
            // << " pc=" << (void*)thread->program_count();
               << ", signal sent by: " << thread->get_signal_sender()
               << endl;
-
-    assert((thread->signal() != SIGSTOP) || !thread->is_stop_expected());
 #endif // __unix__
 }
 
@@ -1133,24 +1133,84 @@ SignalPolicy* DebuggerBase::signal_policy(int signum)
 
 
 ////////////////////////////////////////////////////////////////
-void DebuggerBase::check_unhandled_events(const Lock<Mutex>& lock)
+bool DebuggerBase::check_unhandled_events(const Lock<Mutex>& lock)
 {
-    if (unhandled_)
+    if (!unhandled_ || TargetManager::empty())
     {
-        for (auto i = unhandled_->begin(); i != unhandled_->end(); ++i)
+        return true;
+    }
+
+    map<pid_t, int> stopped;
+
+    for (auto i = unhandled_->begin(); i != unhandled_->end();)
+    {
+        const pid_t pid = i->first;
+        const int status = i->second;
+
+        clog << __func__ << " " << pid << ": " << hex << status << dec << endl;
+
+        if (WIFSTOPPED(status))
         {
-            clog << __func__ << " " << i->first << ": ";
-            clog << hex << i->second << dec << endl;
+            stopped[pid] = status;
+            unhandled_->erase(i++);
+
+            continue;
+        }
+        ++i;
+    }
+
+    bool resume = true;
+
+    for (auto i = stopped.begin(); i != stopped.end(); ++i)
+    {
+        const pid_t pid = i->first;
+        const int status = i->second;
+
+        RunnableState state(pid);
+        string command;
+
+        // assume that all live target are of the same kind
+        // and use the first target to get the group id
+        RefPtr<Target> target = *begin(lock);
+        target->read_state(pid, state, command);
+
+        target = find_target(state.ppid_);
+        
+        if (!target)
+        {
+            target = find_target(state.gid_);
         }
 
-        // hack: if PTRACE_EVENT_CLONE was missed for whatever reason,
-        // try to update the attached threads information
-        for (auto i = TargetManager::begin(lock); i != TargetManager::end(lock); ++i)
+        if (!target)
         {
-            (*i)->update_threads_info();
+            XTrace::ptrace(PTRACE_CONT, pid, 0, WSTOPSIG(status));
+        }
+        else
+        {
+            if (target->is_thread(pid))
+            {
+                target->on_clone(pid);
+            }
+            else
+            {
+                size_t word = __WORDSIZE;
+                if (target->kind() == Target::K_NATIVE_32BIT)
+                {
+                    word = 32;
+                }
+                target->on_fork(pid, word, status);
+            }
+           /* 
+            if (Thread* t = target->get_thread(pid))
+            {
+                queue_event(interface_cast<ThreadImpl*>(t));
+                resume = false;
+            } */
         }
     }
+    return resume;
 }
+
 
 ////////////////////////////////////////////////////////////////
 void DebuggerBase::resume_threads()
@@ -1160,7 +1220,10 @@ void DebuggerBase::resume_threads()
     bool attached = false;
 
     Lock<Mutex> lock(TargetManager::mutex());
-    check_unhandled_events(lock); 
+    if (!check_unhandled_events(lock))
+    {
+        return;
+    }
 
     TargetManager::iterator i = TargetManager::begin(lock);
     const TargetManager::iterator targetsEnd = TargetManager::end(lock);

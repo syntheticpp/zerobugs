@@ -243,19 +243,20 @@ protected:
            wait_for_main_thread(lock);
         }
 
+protected:
+    mutable Mutex mainThreadMutex_;   // for synchronous slots
+
 private:
     inline void wait_for_main_thread(Lock<Mutex>& lock)
     {
         mainThreadReady_.wait(lock);
     }
 
-    Mutex mainThreadMutex_;   // for synchronous slots
-
-    Condition mainThreadReady_;
-    boost::shared_ptr<PopupList> popupList_;
-
     typedef ext::hash_map<std::string, WeakPtr<ZObject> > ObjMap;
-    ObjMap objMap_;
+    
+    Condition                       mainThreadReady_;
+    boost::shared_ptr<PopupList>    popupList_;
+    ObjMap                          objMap_;
 };
 
 #endif // APP_SLOTS_H__35B9FEEE_F780_4C6C_864F_973252ECD90C

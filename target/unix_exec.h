@@ -77,6 +77,7 @@ namespace Unix
             target.close_all_files();
 
             sys::unmask_all_signals();
+
             XTrace::exec(arg.cstrings(), env);
         }
         return thread;

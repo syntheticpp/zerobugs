@@ -16,6 +16,7 @@ LDLIBS+=-ldharma $(LIBS) -ldl -lpthread
 ################################################################
 SRCS=\
 	test_auto_handle.cpp \
+	test_dir.cpp	\
 	test_dynlib.cpp	\
 	test_fstream.cpp \
 	test_process_name.cpp \

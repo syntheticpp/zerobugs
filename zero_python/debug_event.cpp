@@ -9,6 +9,7 @@
 // http://www.boost.org/LICENSE_1_0.txt)
 // -------------------------------------------------------------------------
 //
+#include <iostream>
 #include <stdexcept>
 #include <boost/python.hpp>
 #include "generic/lock.h"
@@ -55,9 +56,14 @@ DebugEvent::DebugEvent(Type type, Thread* thread, int syscallNum)
     if (type_ == SYSCALL_LEAVE)
     {
         Lock<Mutex> lock(mutex_);
+
         if (pendingCalls_.empty())
         {
+        #if 0
             throw std::logic_error("empty pending call stack");
+        #else
+            std::cerr << "SYSCALL_LEAVE: empty pending calls" << std::endl;
+        #endif
         }
         else
         {

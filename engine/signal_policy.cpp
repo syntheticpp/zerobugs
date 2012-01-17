@@ -83,7 +83,7 @@ SignalPolicyImpl::SignalPolicyImpl(Debugger& dbg, int sigNum)
     {
         stop_ = false;
     }
-    else if (sigNum == SIGCHLD)
+    else if (sigNum == SIGCHLD || sigNum == SIGPROF)
     {
         stop_ = false;
     }

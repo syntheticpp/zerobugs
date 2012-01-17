@@ -821,6 +821,10 @@ int ThreadImpl::signal() const
     {
         signum = WTERMSIG(status_);
     }
+    if (signum == (SIGTRAP | 0x80))
+    {
+        signum = SIGTRAP;
+    }
     return signum;
 }
 
@@ -845,23 +849,28 @@ void ThreadImpl::set_status_internal(int status)
 {
     Lock<Mutex> lock(mutex_);
     clear_cached_regs();
-    status_ = status;
-    resumed_ = false;
+
+    status_     = status;
+    resumed_    = false;
+
     trace_.reset();
 
     if (RefPtr<Target> target = runnable_.target())
     {
         sender_ = target->get_signal_sender_pid(*this);
     }
-    if ((signal() == SIGSTOP) && is_stop_expected())
+
+    dbgout(1) << "signal=" << signal() << endl;
+
+    if (signal() == SIGSTOP)
     {
+        if (is_stop_expected())
+        {
+            set_stopped_by_debugger(true);
+        }
+
         set_stop_expected(false);
-
-        // set flag below regardless of the sender, because
-        // a) we know for sure that the debugger sent a SIGSTOP,
-        // b) and the kernel may coalesce signals.
-
-        set_stopped_by_debugger(true);
+        dbgout(1) << "reset stop expected" << endl;
     }
 }
 
@@ -1048,11 +1057,7 @@ void ThreadImpl::notify_resuming()
 ////////////////////////////////////////////////////////////////
 void ThreadImpl::notify_queue()
 {
-    if (is_stop_expected() && (this->signal() == SIGSTOP))
-    {
-        set_stop_expected(false);
-    }
-    else if (!is_stopped_by_debugger())
+    if (!is_stopped_by_debugger())
     {
         if (RefPtr<Target> t = runnable_.target())
         {
@@ -1110,7 +1115,7 @@ pid_t ThreadImpl::wait_internal(int* status, int opts, bool noThrow)
     {
         pid = sys::waitpid(pid, status, opts);
     }
-    assert(!status || (*status >> 16) == 0);
+    // assert(!status || (*status >> 16) == 0));
     assert(pid == lwpid() || (opts & WNOHANG));
 
     return pid;
@@ -1123,6 +1128,7 @@ void ThreadImpl::wait_update_status(bool checkUnhandledThreads)
     int status = 0;
 
     RefPtr<UnhandledMap> umap;
+
     if (checkUnhandledThreads)
     {
         umap = interface_cast<UnhandledMap*>(debugger_);
@@ -1139,8 +1145,6 @@ void ThreadImpl::wait_update_status(bool checkUnhandledThreads)
     {
         wait_internal(&status, __WALL);
     }
-
-    assert((status >> 16) == 0);
 
     set_status(status);
 }
@@ -1189,6 +1193,7 @@ void ThreadImpl::ptrace_wrapper(int req)
         detach = true;
         break;
     }
+
     //
     // Do not re-deliver SIGTRAP and SIGSTOP to debugged threads.
     //
@@ -1202,20 +1207,22 @@ void ThreadImpl::ptrace_wrapper(int req)
     {
         set_signal(0);
     }
-    const int nsig = this->signal();
+
+    const int signum = this->signal();
 
     __ptrace_request ptrq = static_cast<__ptrace_request>(req);
 
     // resume == 1
     // BSD needs 1 as the resume address, Linux ignores it
-    sys::ptrace(ptrq, this->lwpid(), resume, nsig);
+    sys::ptrace(ptrq, this->lwpid(), resume, signum);
     if (resume)
     {
         resumed_ = true;
     }
 
     dbgout(1) << "ptrace(" << ptrq << ", " << lwpid()
-              << ", signal=" << nsig << ")=ok" << endl;
+              << ", signal=" << signum << ")=ok" << endl;
+
     if (!detach)
     {
         runnable_.refresh();

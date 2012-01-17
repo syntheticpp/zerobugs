@@ -2844,7 +2844,8 @@ bool MainWindow::on_debug_event(
         }
         // </hack>
 
-        Temporary<bool, Mutex> setInScope(atDebugEvent_, true, &mutex());
+        //Temporary<bool, Mutex> setInScope(atDebugEvent_, true, &mutex());
+        Temporary<bool, Mutex> setInScope(atDebugEvent_, true, &mainThreadMutex_);
 
         while (!process_debug_event(thread, eventType))
         {
@@ -2905,9 +2906,10 @@ void MainWindow::update_thread_view(RefPtr<Thread> thread)
 
 ////////////////////////////////////////////////////////////////
 bool
-MainWindow::process_debug_event( const RefPtr<Thread>& thread,
-                                 EventType eventType
-                               ) volatile
+MainWindow::process_debug_event(
+
+    const RefPtr<Thread>& thread,
+    EventType             eventType ) volatile
 {
     assert_main_thread();
     string error;
@@ -4357,7 +4359,8 @@ bool MainWindow::is_at_debug_event() const
 {
     for (int retry = 0; retry < 3; ++retry)
     {
-        Lock<Mutex> lock(mutex(), TryLock());
+        //Lock<Mutex> lock(mutex(), TryLock());
+        Lock<Mutex> lock(mainThreadMutex_, TryLock());
         if (lock)
         {
 

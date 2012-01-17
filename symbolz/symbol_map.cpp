@@ -500,8 +500,6 @@ RefPtr<SymbolTable> SymbolMapImpl::read_tables(
 
         if (tableMap.insert(make_pair(addr, symtbl)).second)
         {
-            IF_DEBUG(clog << "LOADED " << hex << addr << dec << ": " << path << endl);
-
             // Notify the events observer that the table was loaded;
             // NOTE: this is done only AFTER the table is inserted into
             // the map, so that lookup_table will find this table if

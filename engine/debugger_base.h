@@ -351,7 +351,7 @@ protected:
 private:
     void resume_threads();
 
-    void check_unhandled_events(const Lock<Mutex>&);
+    bool check_unhandled_events(const Lock<Mutex>&);
 
     /**
      * map path without following symbolic links.

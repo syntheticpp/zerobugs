@@ -137,7 +137,7 @@ public:
      */
     RefPtr<ThreadImpl> create_thread(long id, pid_t, int);
 
-    RefPtr<ThreadImpl> handle_fork(pid_t);
+    RefPtr<ThreadImpl> handle_fork(pid_t, int status);
     RefPtr<ThreadImpl> handle_exec(pid_t);
 
     void detach_internal();
@@ -175,6 +175,10 @@ private:
     bool handle_extended_event(Thread&, int eventType);
 
     bool check_extended_event(Thread*);
+
+    bool is_thread(pid_t) const;
+    void on_clone(pid_t);
+    void on_fork(pid_t, size_t wordSize, int status);
 
     /**
      * @return true if thread is exiting

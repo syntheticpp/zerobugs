@@ -941,6 +941,7 @@ void DebuggerEngine::on_syscall(
      && ((ncall < 0) || (sender > 0 && sender != thread.lwpid()))
       )
     {
+        // TODO: use PTRACE_O_TRACESYSGOOD
         if (!ignoreUnknownTrap)
         {
             // does not look like a system call, break in debugger
@@ -951,6 +952,7 @@ void DebuggerEngine::on_syscall(
     {
         ostringstream buf;
         buf << "System call #" << ncall;
+
         set_event_description(thread, programCount, buf.str());
 
         if (this->options() & OPT_TRACE_SYSCALLS)

@@ -259,6 +259,8 @@ struct Target : public MemoryIO, public Visitable<bool>
     virtual void read_environment(SArray&) const = 0;
 
     virtual bool read_state(const Thread&, RunnableState&) const = 0;
+    virtual bool read_state(pid_t, RunnableState&, std::string&) const
+        { return false; }
 
     /**
      * @return the command line that started the
@@ -299,6 +301,11 @@ struct Target : public MemoryIO, public Visitable<bool>
     virtual std::string thread_name(pid_t) const;
 
     virtual void update_threads_info() { }
+
+    // linux-specific
+    virtual bool is_thread(pid_t) const { return false; }
+    virtual void on_clone(pid_t) { }
+    virtual void on_fork(pid_t, size_t, int) { }
 
     ////////////////////////////////////////////////////////////
     //

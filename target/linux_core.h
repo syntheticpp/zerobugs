@@ -92,7 +92,9 @@ public:
     *  @todo: throw logic_error? any better ideas?
     */
     virtual bool read_state(const Thread&, RunnableState&) const
-    { return false; }
+        { return false; }
+    virtual bool read_state(pid_t, RunnableState&, std::string&) const
+        { return false; }
 
     virtual std::auto_ptr<DebugRegsBase> get_debug_regs(Thread&) const;
 

@@ -31,8 +31,7 @@ using namespace std;
 using namespace eventlog;
 
 
-static void
-attach_new_debugger_instance(pid_t pid)
+static void attach_new_debugger_instance(pid_t pid)
 {
     // construct command line
     ostringstream cmd;
@@ -52,15 +51,81 @@ attach_new_debugger_instance(pid_t pid)
     }
 }
 
+void LinuxLiveTarget::on_clone(pid_t pid)
+{
+    const size_t nThreads = enum_threads();
+    bool createThread = false;
+
+#if DEBUG
+    clog << __func__ << ": got " << nThreads << " thread(s)" << endl;
+#endif
+    if (nThreads > 1)
+    {
+        createThread = true;
+    }
+    else
+    {
+        // Make sure that event-reporting is activated;
+        // for dynamically linked target this also results
+        // in calling on_thread() which creates a new thread.
+        iterate_threads(*this);
+
+        if (enum_threads() <= 1)
+        {
+            createThread = true;
+        }
+    }
+
+    if (createThread)
+    {
+        const int status = 0;
+
+        // passing a status=0 to create_thread causes
+        // a wait_update_status call to update status
+        create_thread(0, pid, status);
+    }
+}
+
+
+void LinuxLiveTarget::on_fork(pid_t pid, size_t wordSize, int status)
+{
+#if DEBUG
+    clog << "fork " << wordSize << "-bit target" << endl;
+#endif
+    // make a new target for the forked process
+    RefPtr<LinuxLiveTarget> target = new LinuxLiveTarget(debugger(), wordSize);
+
+    debugger().add_target(target);
+
+    Temporary<bool> setFlag(target->resumeNewThreads_, resumeNewThreads_);
+    RefPtr<SharedString> cmd = CHKPTR(process())->command_line();
+
+    // create the forked process with same arguments as parent
+    ExecArg args(cmd ? cmd->c_str() : process()->name());
+    target->init_process(pid, &args, process()->origin(), process()->name());
+    target->init_symbols(symbols());
+
+    RefPtr<Thread> thread = target->handle_fork(pid, status);
+    assert(target->get_thread(pid, 0) == thread.get());
+
+    if (debugger().options() & Debugger::OPT_SPAWN_ON_FORK)
+    {
+        debugger().cleanup(*thread);
+        sys::ptrace(PTRACE_DETACH, thread->lwpid(), 0, SIGSTOP);
+
+        attach_new_debugger_instance(pid);
+    }
+}
+
 
 /**
  * @return true if the debugger may continue without stopping
  * on this event
  */
-bool
-LinuxLiveTarget::handle_extended_event(Thread& thread, int event)
+bool LinuxLiveTarget::handle_extended_event(Thread& thread, int event)
 {
     word_t pid = 0;
+
     if (event == PTRACE_EVENT_EXEC)
     {
         pid = thread.lwpid();
@@ -74,77 +139,20 @@ LinuxLiveTarget::handle_extended_event(Thread& thread, int event)
     switch (event)
     {
     case PTRACE_EVENT_CLONE:
-        {
-            const size_t nThreads = enum_threads();
-            bool createThread = false;
-
-            dbgout(0) << "PTRACE_EVENT_CLONE, currently got "
-                      << nThreads << " thread(s)" << endl;
-
-            if (nThreads > 1)
-            {
-                createThread = true;
-            }
-            else
-            {
-                // Make sure that event-reporting is activated;
-                // for dynamically linked target this also results
-                // in calling on_thread() which creates a new thread.
-                iterate_threads(*this);
-
-                if (enum_threads() <= 1)
-                {
-                    createThread = true;
-                }
-            }
-
-            if (createThread)
-            {
-                const int status = 0;
-
-                // passing a status=0 to create_thread causes
-                // a wait_update_status call to update status
-                create_thread(0, pid, status);
-            }
-        }
+        on_clone(pid);
         break;
 
     case PTRACE_EVENT_FORK:
-        assert(!debugger().get_thread(pid)); //must not be already attached
-        {
-            const int wordSize = thread.is_32_bit() ? 32 : __WORDSIZE;
+        // must not be already in our list of threads
+        assert(!debugger().get_thread(pid)); 
+        on_fork(pid, thread.is_32_bit() ? 32 : __WORDSIZE, 0);
 
-            // make a new target for the forked process
-            RefPtr<LinuxLiveTarget> target = new LinuxLiveTarget(debugger(), wordSize);
-
-            debugger().add_target(target);
-
-            Temporary<bool> setFlag(target->resumeNewThreads_, resumeNewThreads_);
-            RefPtr<SharedString> cmd = CHKPTR(process())->command_line();
-
-            // create the forked process with same arguments as parent
-            ExecArg args(cmd ? cmd->c_str() : process()->name());
-            target->init_process(pid, &args, process()->origin(), process()->name());
-            target->init_symbols(symbols());
-
-            RefPtr<Thread> thread = target->handle_fork(pid);
-            assert(target->get_thread(pid, 0) == thread.get());
-
-            if (debugger().options() & Debugger::OPT_SPAWN_ON_FORK)
-            {
-                debugger().cleanup(*thread);
-                sys::ptrace(PTRACE_DETACH, thread->lwpid(), 0, SIGSTOP);
-
-                attach_new_debugger_instance(pid);
-            }
-        }
         break;
 
     case PTRACE_EVENT_EXEC:
-        {
-            assert(thread.target() == this);
-            // assert(thread.is_forked());
+        assert(thread.target() == this);
 
+        {
             RefPtr<Target> self(this);
 
             cleanup(thread);
@@ -169,6 +177,7 @@ LinuxLiveTarget::handle_extended_event(Thread& thread, int event)
     default:
         clog << __func__ << ": " << event << endl;
         assert(false);
+        return false;
     }
     return true;
 }

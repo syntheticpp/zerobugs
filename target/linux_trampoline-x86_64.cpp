@@ -61,9 +61,9 @@ bool check_trampoline64(const Thread& thread, const Frame& f)
     {
         result = true;
     }
-#if DEBUG
-    std::clog << __func__ << ": " << result << std::endl;
-#endif
+
+    // std::clog << __func__ << ": " << result << std::endl;
+
     return result;
 }
 

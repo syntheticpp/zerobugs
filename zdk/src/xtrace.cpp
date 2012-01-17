@@ -28,9 +28,10 @@ using namespace std;
 // On newer kernels, kill() sends the signal to all the
 // processes in a thread group; we need to kill threads
 // individually, use tkill() instead of kill().
-#ifndef __NR_tkill
- #define __NR_tkill 238
-#endif
+
+//#ifndef __NR_tkill
+ //#define __NR_tkill 238
+//#endif
 
 #ifdef _syscall2
  _syscall2(int, tkill, pid_t, lwpid, int, signum);

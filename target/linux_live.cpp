@@ -24,6 +24,7 @@
 #include "zdk/variant_util.h"
 #include "zdk/32_on_64.h"
 #include "dharma/canonical_path.h"
+#include "dharma/directory.h"
 #include "dharma/environ.h"
 #include "dharma/process_name.h"
 #include "dharma/sigutil.h"
@@ -58,31 +59,27 @@ static pid_t get_signal_sender_pid(pid_t lwpid)
 }
 
 
-static bool
-set_stopped(RefPtr<ThreadImpl> thread, bool expectStop = false)
+static bool set_stopped(RefPtr<ThreadImpl> thread, bool expectStop = false)
 {
     if (thread->signal() == SIGSTOP)
     {
-        if (expectStop)
-        {
-            return true;
-        }
-        //
         // use the signfo_t struct to determine for sure
         // that the signal came from us
-        //
-        const pid_t pid = get_signal_sender_pid(thread->lwpid());
 
-        if (pid == 0 || pid == getpid())
+        const pid_t pid = get_signal_sender_pid(thread->lwpid());
+    
+        if (pid == 0 || pid == getpid() || expectStop)
         {
             thread->set_stopped_by_debugger(true);
             return true;
         }
     }
-    else if (expectStop && !thread->is_exiting()
-                        && !thread_finished(*thread))
+    else if (expectStop)
     {
-        thread->set_stop_expected();
+    #if 0
+        clog << __func__ << ": " << thread->lwpid() << endl;
+    #endif
+        thread->set_stop_expected(true);
     }
     return false;
 }
@@ -167,6 +164,10 @@ Thread* LinuxLiveTarget::exec(
     {
         set_word_size(32);
     }
+    else
+    {
+        assert(word_size() == __WORDSIZE);
+    }
     return thread.get();
 }
 
@@ -209,10 +210,21 @@ RefPtr<Thread> LinuxLiveTarget::new_thread(
 
 
 ////////////////////////////////////////////////////////////////
-RefPtr<ThreadImpl> LinuxLiveTarget::handle_fork(pid_t lwpid)
+RefPtr<ThreadImpl> LinuxLiveTarget::handle_fork(
+
+    pid_t   lwpid,
+    int     status )
+
 {
     RefPtr<ThreadImpl> thread(new ThreadImpl(*this, 0, lwpid));
-    thread->wait_update_status(true);
+    if (status)
+    {
+        thread->set_status(status);
+    }
+    else
+    {
+        thread->wait_update_status(true);
+    }
     thread->set_forked();
 
     set_stopped(thread);
@@ -282,7 +294,6 @@ RefPtr<ThreadImpl> LinuxLiveTarget::handle_exec(pid_t pid)
 
     thread->set_forked();
     thread->set_execed();
-    thread->set_stop_expected(false);
 
     set_ptrace_options(pid);
     uninitialize_linker_events();
@@ -307,8 +318,10 @@ RefPtr<ThreadImpl> LinuxLiveTarget::handle_exec(pid_t pid)
 
 
 ////////////////////////////////////////////////////////////////
-RefPtr<ThreadImpl>
-LinuxLiveTarget::create_thread(long id, pid_t lwpid, int status)
+RefPtr<ThreadImpl> LinuxLiveTarget::create_thread(
+    long    id,
+    pid_t   lwpid,
+    int     status)
 {
     RefPtr<ThreadImpl> thread(new ThreadImpl(*this, id, lwpid));
 
@@ -375,13 +388,13 @@ void LinuxLiveTarget::set_ptrace_options(pid_t pid)
                   << " old_kernel=" << oldKernel_ << endl;
     }
 
-    int options = (PTRACE_O_TRACECLONE | PTRACE_O_TRACEEXIT);
+    int options = PTRACE_O_TRACECLONE | PTRACE_O_TRACEEXIT | PTRACE_O_TRACESYSGOOD;
 
     if (debugger().trace_fork())
     {
         options |= PTRACE_O_TRACEFORK;
-        options |= PTRACE_O_TRACEVFORK;
-        options |= PTRACE_O_TRACEVFORKDONE;
+        //options |= PTRACE_O_TRACEVFORK;
+        //options |= PTRACE_O_TRACEVFORKDONE;
         options |= PTRACE_O_TRACEEXEC;
     }
 
@@ -394,9 +407,13 @@ void LinuxLiveTarget::set_ptrace_options(pid_t pid)
             if (errno != EINTR)
             {
             #ifdef DEBUG
-                clog << __func__ << " failed\n";
+                clog << __func__ << " failed, errno=" << errno << endl;
             #endif
-                return; // non-critical
+            #if 0
+                return;
+            #else
+                throw SystemError(__func__, errno);
+            #endif
             }
         }
         dbgout(0) << __func__ << ": " << hex << options << dec << endl;
@@ -492,6 +509,7 @@ void LinuxLiveTarget::attach(pid_t pid)
     assert(enum_threads() == 0); // pre-condition
 
     const bool sigcont = ::attach(pid, *this);
+    dbgout(0) << __func__ << "(" << pid << ") sigcont=" << sigcont << endl;
 
     int status = 0;
     sys::waitpid(pid, &status, __WALL);
@@ -680,13 +698,6 @@ LinuxLiveTarget::collect_threads_to_stop(
 
         RefPtr<ThreadImpl> thread = interface_cast<ThreadImpl>(*i);
 
-        if (thread->is_stop_expected())
-        {
-            // we have already sent it a SIGSTOP which has not 
-            // arrived yet
-            continue;
-        }
-
         assert(!(*i)->is_exiting());
         assert(!thread_finished(**i));
 
@@ -702,6 +713,7 @@ LinuxLiveTarget::collect_threads_to_stop(
             if (!thread->has_resumed())
             {
                 dbgout(0) << thread->lwpid() << ": already stopped" << endl;
+                thread->set_stop_expected(false);
                 break;
             }
             // fall through
@@ -765,6 +777,14 @@ bool LinuxLiveTarget::stop_all_threads(Thread* current)
         for (; i != threads.end(); ++i)
         {
             dbgout(0) << __func__ << ": " << i->first << endl;
+            
+            if (i->second->is_stop_expected())
+            {
+                dbgout(1) << __func__ << ": stop pending" << endl;
+                // we have already sent it a SIGSTOP which has yet  
+                // to be delivered
+                continue;
+            }
 
             sys::kill_thread(i->first, SIGSTOP);
         }
@@ -931,13 +951,18 @@ size_t LinuxLiveTarget::resume_all_threads()
 
         if (thread.has_resumed())
         {
-            switch (get_thread_state(thread))
+            const Runnable::State state = get_thread_state(thread);
+
+            switch (state)
             {
             case Runnable::RUNNING:
                 ++resumedCount;
                 continue;
 
             case Runnable::UNKNOWN:
+                clog << __func__ << ": " << thread.lwpid();
+                clog << ": unknown state " << int(state) << endl;
+
                 continue;
 
             default:
@@ -1542,6 +1567,8 @@ LinuxLiveTarget::read_state(
 #undef EXTRACT
 #undef EXTRACT_AND_IGNORE
 
+    state.state_ = toupper(state.state_);
+
     read_uids( *this, lwpid, state );
     return *in;
 }
@@ -1667,5 +1694,20 @@ string LinuxLiveTarget::thread_name(pid_t lwpid) const
 void LinuxLiveTarget::update_threads_info()
 {
     iterate_threads(*this);
+}
+
+////////////////////////////////////////////////////////////////
+bool LinuxLiveTarget::is_thread(pid_t pid) const
+{
+    ostringstream pidstr;
+    pidstr << pid;
+
+    const Directory ls(procfs_root(), pidstr.str().c_str());
+    bool result = ls.empty();
+
+#if DEBUG
+    clog << __func__ << "(" << pid << ")=" << result << endl;
+#endif
+    return result;
 }
 // vim: tabstop=4:softtabstop=4:expandtab:shiftwidth=4
