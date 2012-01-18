@@ -522,9 +522,6 @@ BEGIN_SLOT_(bool, CodeView::on_mouse_timer,())
     assert_ui_thread();
     if (!can_interact())
     {
-    #if DEBUG
-        clog << __func__ << ": busy" << endl;
-    #endif
         return false;
     }
     int x = 0, y = 0;

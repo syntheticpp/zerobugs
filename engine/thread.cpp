@@ -852,6 +852,7 @@ void ThreadImpl::set_status_internal(int status)
 
     status_     = status;
     resumed_    = false;
+    sender_     = -1;   // pid of signal sender
 
     trace_.reset();
 

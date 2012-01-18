@@ -432,24 +432,20 @@ void PythonGate::on_detach(Thread* thread)
 bool PythonGate::debug_event(RefPtr<DebugEvent> event)
 {
     bool ret = call_<bool>("on_event", event);
- /*
-    if (ret)
-    {
-        grabEvent_ = true;
-    } */
     return ret;
 }
 
 
 
-void PythonGate::send_debug_event
-(
-    DebugEvent::Type type,
-    const char* name,
-    Thread* thread,
-    int sysCallNum
+void PythonGate::send_debug_event (
+    DebugEvent::Type    type,
+    const char*         name,
+    Thread*             thread,
+    int                 sysCallNum
 )
 {
+    assert (sysCallNum < 0 || type == DebugEvent::SYSCALL_ENTER);
+
     RefPtr<DebugEvent> event(new DebugEvent(type, thread, sysCallNum));
 
     bool gtkMode = ThreadMarshaller::instance().is_gtk_mode_active();
@@ -568,7 +564,7 @@ const char* PythonGate::description() const
 
 const char* PythonGate::copyright() const
 {
-    return "Copyright 2010  Cristian Vlasceanu";
+    return "";
 }
 
 

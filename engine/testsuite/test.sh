@@ -64,6 +64,7 @@ source test_step.sh
 source test_strcmp.sh
 source test_symbol_map.sh
 source test_threads.sh
+source test_threads_stop.sh
 source test_throw.sh
 source test_vector.sh
 source test_virt_call.sh
@@ -220,6 +221,7 @@ COMMON_TESTS=(
     test_segv_2
     test_sigtrap,no-ppc
     test_threads,stabs+,no-ppc
+    test_threads_stop,stabs+,no-ppc
 #   test_threads_static,stabs+,no-ppc
 # known to fail with GCC 2.95 
 #   test_virt_call,stabs+

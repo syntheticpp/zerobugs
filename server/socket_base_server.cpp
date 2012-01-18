@@ -35,7 +35,7 @@ void SocketBaseServer::init(int& argc, char**& argv)
             std::clog << __func__ << ": port=" << port<< std::endl;
     #endif
         }
-        ON_ARG("--foregnd")
+        ON_ARG("--fg")
         {
             foregnd_ = true;
         }

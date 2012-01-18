@@ -1147,6 +1147,14 @@ bool DebuggerBase::check_unhandled_events(const Lock<Mutex>& lock)
         const pid_t pid = i->first;
         const int status = i->second;
 
+        // We should not see this -- if we missed handling a 
+        // debug event it is very likely due to a programming error
+        // (or, less likely due to some ptrace / kernel change).
+
+        // This function is a paranoid last line of defense that
+        // attempts to recover from such cases.
+
+        clog << "***************** WARNING ****************" << endl;
         clog << __func__ << " " << pid << ": " << hex << status << dec << endl;
 
         if (WIFSTOPPED(status))
@@ -1200,12 +1208,6 @@ bool DebuggerBase::check_unhandled_events(const Lock<Mutex>& lock)
                 }
                 target->on_fork(pid, word, status);
             }
-           /* 
-            if (Thread* t = target->get_thread(pid))
-            {
-                queue_event(interface_cast<ThreadImpl*>(t));
-                resume = false;
-            } */
         }
     }
     return resume;
@@ -1911,8 +1913,7 @@ DebuggerBase::map_path_no_follow(
 
 
 ////////////////////////////////////////////////////////////////
-bool
-DebuggerBase::map_path(const Process* proc, string& path) const
+bool DebuggerBase::map_path(const Process* proc, string& path) const
 {
     bool result = map_path_no_follow(proc, path);
     if (result)

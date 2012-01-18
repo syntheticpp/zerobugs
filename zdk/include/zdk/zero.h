@@ -4,7 +4,7 @@
 // $Id: zero.h 714 2010-10-17 10:03:52Z root $
 //
 // -------------------------------------------------------------------------
-// This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu
+// This file is part of ZeroBugs, Copyright (c) 2004 - 2012 Cristian L. Vlasceanu
 //
 // Distributed under the Boost Software License, Version 1.0.
 // (See accompanying file LICENSE_1_0.txt or copy at
@@ -33,7 +33,8 @@
 #include "zdk/stack.h"
 
 
-struct Target; // opaque
+
+struct Target;              // opaque
 
 struct BreakPoint;
 struct BreakPointAction;
@@ -1130,8 +1131,6 @@ DECLARE_ZDK_INTERFACE_(SymbolMonitor, Unknown2)
 Runnable* get_runnable(Thread* thread);
 Runnable* get_runnable(Thread* thread, std::nothrow_t);
 
-
-// Copyright (c) 2004, 2005, 2006, 2007 Cristian L. Vlasceanu
 
 #endif // ZERO_H__82331446_EC88_46A0_9C85_8EEDD168EA79
 // vim: tabstop=4:softtabstop=4:expandtab:shiftwidth=4

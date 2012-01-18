@@ -154,9 +154,9 @@ function run()
     then    
        	echo todo: icc test?
     else
-        #test_threads -gdwarf-2
-        #test_threads -gstabs+
-        #test_threads_static -gdwarf-2
+        test_threads -gdwarf-2
+        test_threads -gstabs+
+        test_threads_static -gdwarf-2
         test_threads_static -gstabs+
     fi
 }

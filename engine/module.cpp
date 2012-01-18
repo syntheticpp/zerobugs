@@ -215,8 +215,11 @@ namespace
  * Restores the saved breakpoints for the MODULE, using the map
  * of breakpoint images stored in THIS module
  */
-void
-ModuleImpl::restore(Debugger& debugger, Process& proc, Module& module)
+void ModuleImpl::restore(
+
+    Debugger&   debugger,
+    Process&    proc,
+    Module&     module)
 {
     assert(name_.get());
     assert(module.name()->is_equal(name_->c_str()));
@@ -263,13 +266,14 @@ ModuleImpl::restore(Debugger& debugger, Process& proc, Module& module)
 
 
 void ModuleImpl::restore_breakpoint(
-    Debugger& debugger,
+
+    Debugger&               debugger,
     RefPtr<BreakPointImage> img,
-    addr_t bpntAddr,
-    Thread* thread,
-    Module& module,
-    SymbolTable* table,
-    word_t offs)
+    addr_t                  bpntAddr,
+    Thread*                 thread,
+    Module&                 module,
+    SymbolTable*            table,
+    word_t                  offs)
 {
     assert(table);
     // todo: come up with some way to match saved thread

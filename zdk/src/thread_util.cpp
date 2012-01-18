@@ -52,12 +52,12 @@ bool thread_finished(const Thread& thread)
 
     const bool result =
         WIFEXITED(status) || WIFSIGNALED(status) /* || WCOREDUMP(status) */;
-#ifdef DEBUG
+/* #ifdef DEBUG
     if (result)
     {
         clog << __func__ << ": status=" << hex << status << dec << ", " << result << endl;
     }
-#endif
+#endif */
     assert(result != WIFSTOPPED(status));
 
     return result;

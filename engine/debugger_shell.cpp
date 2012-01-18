@@ -78,7 +78,7 @@ using namespace eventlog;
 size_t max_array_range();
 
 static const char banner[] = "Zero (v%d.%d.%d " __DATE__ " " __TIME__
-")\nThe Linux Application Debugger (%s %s/%s) %s@%s\n%s\n";
+")\nThe Linux Application Debugger (%s %s/%s) %s@%s\n%s";
 
 static void auto_complete_breakpoints(const char*, vector<string>&);
 static void auto_complete_debug_sym(const char*, vector<string>&);
@@ -296,6 +296,9 @@ Command DebuggerShell::cmd_[] =
     { "where", &DebuggerShell::cmd_where, 0,
       " [depth]: print backtrace, optional argument controls the depth of\n"
       "the backtrace (how many steps back to show); same as 'bt'"
+    },
+
+    { "yield", &DebuggerShell::cmd_yield, 0, ""
     },
 };
 
@@ -1003,9 +1006,14 @@ void DebuggerShell::print_banner() const
     struct utsname sysinfo;
     uname(&sysinfo);
 
-    printf(banner, ENGINE_MAJOR, ENGINE_MINOR, ENGINE_REVISION,
+    char buf[1024] = { 0 };
+
+    snprintf(buf, sizeof(buf), 
+        banner, ENGINE_MAJOR, ENGINE_MINOR, ENGINE_REVISION,
         sysinfo.sysname, sysinfo.release, sysinfo.machine,
         USER, HOSTNAME, copyright());
+
+    cout << buf << endl;
 }
 
 
@@ -3300,6 +3308,29 @@ bool DebuggerShell::cmd_where(Thread* thread, const vector<string>& argv)
     }
     cout << endl;
     return false;
+}
+
+
+////////////////////////////////////////////////////////////////
+// 
+// For automated tests only -- don't read too much into it ;)
+//
+bool DebuggerShell::cmd_yield(Thread* thread, const vector<string>& argv)
+{
+    long seconds = 0;
+
+    for (size_t i = 0; i != argv.size(); ++i)
+    {
+        if (argv[i][0] == '-')
+        {
+        }
+        else
+        {
+            seconds = strtol(argv[i].c_str(), 0, 0);
+        }
+    }
+    alarm( seconds );
+    return true;
 }
 
 ////////////////////////////////////////////////////////////////

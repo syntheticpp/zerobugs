@@ -64,8 +64,8 @@ function run()
 {
     source common.sh
     #test_fork -gdwarf-23 -feliminate-dwarf2-dups 
-    test_fork -gdwarf-23
-    #test_fork -gstabs+
+    test_fork -gdwarf-2
+    test_fork -gstabs+
 }
 
 # run this test standalone

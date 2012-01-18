@@ -156,7 +156,7 @@ namespace XTrace
         Arg(long i)  : i_(i) { }
     };
 
-    struct ZDK_LOCAL Services : public RefCounted
+    struct ZDK_EXPORT Services : public RefCounted
     {
         virtual ~Services() throw() = 0;
 
@@ -172,32 +172,32 @@ namespace XTrace
     };
 
 
-    RefPtr<Services> services() throw();
-    void set_services(const RefPtr<Services>&) throw();
+    RefPtr<Services> ZDK_EXPORT services() throw();
+    void ZDK_EXPORT set_services(const RefPtr<Services>&) throw();
 
 
-    inline void ZDK_LOCAL exec(char* const argv[], const char* const* env)
+    inline void ZDK_EXPORT exec(char* const argv[], const char* const* env)
     {
         return services()->exec(argv, env);
     }
 
-    inline pid_t ZDK_LOCAL waitpid(pid_t pid, int* status, int options)
+    inline pid_t ZDK_EXPORT waitpid(pid_t pid, int* status, int options)
     {
         return services()->waitpid(pid, status, options);
     }
 
-    inline int ZDK_LOCAL kill(pid_t pid, int nsig)
+    inline int ZDK_EXPORT kill(pid_t pid, int nsig)
     {
         return services()->kill(pid, nsig);
     }
 
-    inline int ZDK_LOCAL kill_thread(pid_t pid, int nsig)
+    inline int ZDK_EXPORT kill_thread(pid_t pid, int nsig)
     {
         return services()->kill_thread(pid, nsig);
     }
 
     template<typename T, typename U>
-    inline long ZDK_LOCAL ptrace(__ptrace_request request, pid_t pid, T addr, U data)
+    inline long ZDK_EXPORT ptrace(__ptrace_request request, pid_t pid, T addr, U data)
     {
         return services()->ptrace(request, pid, addr, data);
     }

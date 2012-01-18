@@ -136,9 +136,11 @@ static bool inline support_d_language(Debugger&, Thread& thread)
     }
     SymbolEnum syms;
 
-    CHKPTR(thread.symbols())->enum_symbols("_Dmain",
-                                            &syms,
-                                            SymbolTable::LKUP_ISMANGLED);
+    CHKPTR(thread.symbols())->enum_symbols(
+        "_Dmain",
+        &syms,
+        SymbolTable::LKUP_ISMANGLED);
+
     if (!syms.empty())
     {
         setenv("ZERO_D_SUPPORT", "true", 1);
@@ -769,6 +771,7 @@ void DebuggerEngine::on_event(Thread& thread)
                     // If we got a SIGTRAP and no breakpoint found
                     // at the program counter, it may be either because
                     // of single-stepping thru a thread or a system call.
+
                     on_single_step_or_syscall(*runnable, thread);
                 }
                 else
@@ -782,7 +785,8 @@ void DebuggerEngine::on_event(Thread& thread)
         // if the signal occurred during an expression evaluation,
         // give the chance to handle the event to the observers registered
         // with the interpreter (the observers implement the ExprEvents
-        // interface, see zdk/expr.h)
+        // interface, see zdk/expr.h)a
+
         if (notify_expr_events(thread, addr, exprObserver_))
         {
             if (signum == SIGTRAP)
@@ -842,7 +846,7 @@ void DebuggerEngine::on_watchpoint(
     reg_t       condition)
 {
 #if !defined(__i386__) && !defined(__x86_64__)
-// todo: defined and use HAVE_WATCHPOINT_SUPPORT macro
+// todo: define and use HAVE_WATCHPOINT_SUPPORT macro
  #warning watchpoints unsupported on this platform
 #endif
     assert(condition == DebugRegs::BREAK_ON_DATA_WRITE
@@ -880,6 +884,7 @@ void DebuggerEngine::on_single_step_or_syscall(
     {
         // stepping over a source code line which
         // encompasses a range of addresses?
+
         if (thread.is_line_stepping())
         {
             runnable.set_single_step_mode(false);
@@ -896,6 +901,7 @@ void DebuggerEngine::on_single_step_or_syscall(
                 // set flag to indicate we're single-stepping;
                 // step mode will be turned off after
                 // the pending breakpoint actions are executed
+
                 sched_->step_ = true;
             }
             else
@@ -910,18 +916,40 @@ void DebuggerEngine::on_single_step_or_syscall(
     }
 }
 
+/**
+ * Is this a valid syscall trap?
+ * Determine if SIGTRAP was sent by a syscall -- should be
+ * factored under Target when we really care about other OS-es.
+ */
+static bool valid_syscall_trap( const Thread& thread )
+{
+    const int status = thread.status();
+
+    if ( WSTOPSIG(status) == (SIGTRAP | 0x80) )
+    {
+        return true;
+    }
+
+    // Heuristic for older Linux kernels that 
+    // do not support PTRACE_O_TRACESYSGOOD.
+
+    const pid_t sender = thread.get_signal_sender();
+    const long ncall = thread.syscall_num();
+   
+    // sender <= 0: trap originated in kernel?
+    return (ncall >= 0) && (sender <= 0 || sender == thread.lwpid());
+}
+
 
 ////////////////////////////////////////////////////////////////
 void DebuggerEngine::on_syscall(
 
-    Runnable&   runnable,
+    Runnable&   /* runnable */,
     Thread&     thread,
     addr_t      programCount)
 {
     static bool ignoreUnknownTrap =
         env::get_bool("ZERO_IGNORE_UNKNOWN_TRAP", true);
-
-    pid_t sender = 0; // origin of SIGTRAP
 
     // Threads are being resumed with PTRACE_SYSCALL until the
     // linker events breakpoint is set. PTRACE_CONT is used
@@ -930,42 +958,44 @@ void DebuggerEngine::on_syscall(
 
     if (RefPtr<Target> target = thread.target())
     {
-        sender = target->get_signal_sender_pid(thread);
         usingPtraceCont = target->has_linker_events();
     }
 
-    const long ncall = thread.syscall_num();
-    dbgout(1) << __func__ << ": " << ncall << ", from " << sender << endl;
-
-    if (usingPtraceCont
-     && ((ncall < 0) || (sender > 0 && sender != thread.lwpid()))
-      )
+    // ignore traps caused by ptrace(PTRACE_SYSCALL)
+    if ( !usingPtraceCont || !valid_syscall_trap(thread) )
     {
-        // TODO: use PTRACE_O_TRACESYSGOOD
-        if (!ignoreUnknownTrap)
+        // does not look like a legit syscall trap, break in 
+        // the debugger only if the ZERO_IGNORE_UNKNOWN_TRAP
+        // environment variable is set to "false"
+
+        if ( !ignoreUnknownTrap && usingPtraceCont )
         {
-            // does not look like a system call, break in debugger
             schedule_interactive_mode(&thread, E_THREAD_STOPPED);
         }
     }
     else
     {
+        const long ncall = thread.syscall_num();
+
         ostringstream buf;
+
         buf << "System call #" << ncall;
 
         set_event_description(thread, programCount, buf.str());
 
-        if (this->options() & OPT_TRACE_SYSCALLS)
+        if (this->options() & (OPT_TRACE_SYSCALLS | OPT_BREAK_ON_SYSCALLS))
         {
             PluginList plugins = plugins_;
             for (PluginList::iterator i = plugins.begin(), end = plugins.end();
                 i != end;
                 ++i)
             {
+                // notify plugins about the syscall trap event
                 ActionScope scope(actionContextStack_, *i);
                 (*i)->on_syscall(&thread, ncall);
             }
         }
+
         if (this->options() & OPT_BREAK_ON_SYSCALLS)
         {
             schedule_interactive_mode(&thread, E_SYSCALL);
@@ -1036,15 +1066,7 @@ bool DebuggerEngine::try_breakpoints(Runnable& runnable, addr_t pc)
         // search for global breakpoints first
         bpnt = get_breakpoint(*process, pc, &thread);
     }
-    result = schedule_soft(runnable, thread, bpnt.get(), pc);
-#if 0 /* Thu Jul 31 09:43:56 PDT 2008
-         get_breakpoint(const Process&, addr_t) now searches
-         for emulated breakpoints
-       */
-    // then look for per-thread software breakpoints:
-    bpnt = get_breakpoint(thread, pc);
     result |= schedule_soft(runnable, thread, bpnt.get(), pc);
-#endif
     return result;
 }
 
@@ -1125,8 +1147,8 @@ static void reenable_breakpoint(
 
 ////////////////////////////////////////////////////////////////
 void DebuggerEngine::exec_pending_actions(
-    RunnableImpl* runnable,
-    Thread& thread)
+    RunnableImpl*   runnable,
+    Thread&         thread)
 {
     if (!sched_)
     {
@@ -1197,8 +1219,8 @@ void DebuggerEngine::exec_pending_actions(
 
 ////////////////////////////////////////////////////////////////
 void DebuggerEngine::schedule_actions(
-    Runnable& runnable,
-    Thread& thread,
+    Runnable&   runnable,
+    Thread&     thread,
     BreakPoint& bpnt)
 {
     // turn breakpoint off temporarily; will re-enable after
@@ -3377,10 +3399,11 @@ bool DebuggerEngine::on_interface(
 
 ////////////////////////////////////////////////////////////////
 static bool init_plugin (
-    ImportPtr<GenericPlugin>& plugin,
-    DebuggerEngine* engine,
-    int& argc, char**& argv,
-    set<string>& errs)
+    ImportPtr<GenericPlugin>&   plugin,
+    DebuggerEngine*             engine,
+    int&                        argc,
+    char**&                     argv,
+    set<string>&                errs)
 {
     bool result = false;
 
@@ -3401,7 +3424,9 @@ static bool init_plugin (
 
 
 ////////////////////////////////////////////////////////////////
-static void start_plugin(ImportPtr<GenericPlugin>& plugin, set<string>& errs)
+static void start_plugin(
+    ImportPtr<GenericPlugin>&   plugin,
+    set<string>&                errs)
 {
     try
     {

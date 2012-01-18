@@ -47,28 +47,35 @@ using namespace eventlog;
 
 
 /**
- * waitpid / exec / ptrace on remote server
+ * Implements the Xtrace::Services interface by proxy-ing
+ * waitpid / exec / ptrace on to the remote zserver.
  */
 CLASS RemoteServices : public RefCountedImpl<XTrace::Services>
 {
-    RefPtr<XTrace::Services> srv_;
-    ObjectFactory& f_;
-    RPC::Stream& stream_;
+    RefPtr<XTrace::Services>    srv_;
+    ObjectFactory&              f_;
+    RPC::Stream&                stream_;
 
     int kill(pid_t, int, bool all);
 
 public:
-    RemoteServices(ObjectFactory& f, RPC::Stream& s)
-        : srv_(XTrace::services()), f_(f), stream_(s)
+    RemoteServices(
+
+        Debugger&       /* dbg */,
+        ObjectFactory&  f,
+        RPC::Stream&    s)
+
+        : srv_(XTrace::services())
+        , f_(f)
+        , stream_(s)
     { }
     ~RemoteServices() throw()
-    {
-    }
+    { }
 
     void restore()
     {
     #if DEBUG
-        clog << __func__ << ": restoring XTrace services" << endl;
+        clog << __PRETTY_FUNCTION__ << endl;
     #endif
         XTrace::set_services(srv_);
     }
@@ -358,7 +365,7 @@ ProxyTarget::ProxyTarget(debugger_type& dbg, size_t size)
     : LinuxLiveTarget(dbg, size)
     , sock_(socket(AF_INET, SOCK_STREAM, 0))
     , stream_(sock_)
-    , xtraceSrv_(new RemoteServices(factory(), stream_))
+    , xtraceSrv_(new RemoteServices(dbg, factory(), stream_))
 {
     if (!sock_.is_valid())
     {

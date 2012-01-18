@@ -42,9 +42,6 @@ void DynamicLibHandleTraits::dispose(void*& handle) throw()
 
         if (res == 0)
         {
-    #if DEBUG
-            clog << "Unloaded: " << hex << handle << dec << endl;
-    #endif
             handle = 0;
         }
     #if DEBUG

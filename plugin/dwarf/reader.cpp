@@ -68,8 +68,7 @@ typedef boost::shared_ptr<InlinedInstance> InlinePtr;
 
 
 static const char copyright_text[] =
-  "Copyright 2004 - 2012 (c) Cristian Vlasceanu.\n"
-  "libdwarf: "
+  "Based on libdwarf,\n"
   "Copyright (C) 2000,2001,2003,2004,2005,2006 Silicon Graphics, Inc.\n"
   "All Rights Reserved. Portions Copyright 2002,2007 Sun Microsystems, Inc.\n"
   "All rights reserved. Portions Copyright 2007 David Anderson. All rights reserved.\n"
@@ -123,14 +122,6 @@ Plugin* create_plugin(uuidref_t iid)
     return 0;
 }
 
-
-/*
-static time_t module_time(const string& filename)
-{
-    struct stat stbuf;
-    sys::stat(filename, stbuf);
-    return stbuf.st_mtime;
-} */
 
 
 namespace

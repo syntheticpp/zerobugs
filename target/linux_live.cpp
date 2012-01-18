@@ -48,6 +48,8 @@ using namespace std;
 using namespace eventlog;
 
 
+// Use the signfo_t struct to determine for sure
+// that the signal came from us.
 static pid_t get_signal_sender_pid(pid_t lwpid)
 {
     siginfo_t siginfo = { 0 };
@@ -63,11 +65,10 @@ static bool set_stopped(RefPtr<ThreadImpl> thread, bool expectStop = false)
 {
     if (thread->signal() == SIGSTOP)
     {
-        // use the signfo_t struct to determine for sure
-        // that the signal came from us
+        assert( !thread->is_stop_expected() );
 
-        const pid_t pid = get_signal_sender_pid(thread->lwpid());
-    
+        const pid_t pid = thread->get_signal_sender();
+
         if (pid == 0 || pid == getpid() || expectStop)
         {
             thread->set_stopped_by_debugger(true);
@@ -76,9 +77,6 @@ static bool set_stopped(RefPtr<ThreadImpl> thread, bool expectStop = false)
     }
     else if (expectStop)
     {
-    #if 0
-        clog << __func__ << ": " << thread->lwpid() << endl;
-    #endif
         thread->set_stop_expected(true);
     }
     return false;

@@ -105,7 +105,7 @@ END_INTERFACE_MAP()
 
     const char* copyright() const
     {
-        return "Copyright (c) 2010 Cristian Vlasceanu\n"
+        return "Based on libudis86 (http://udis86.sourceforge.net/)\n"
 "libudis86: Copyright (c) 2002, 2003, 2004, 2005, 2006, 2007, 2008 vivek@sig9.com\n"
 "All rights reserved.\n"
 "\n"
@@ -488,11 +488,6 @@ void Disasm86::print_call_or_jmp(SymbolCallback* symLookup, addr_t addr, ostream
     if (symLookup)
     {
         addr += static_cast<int>(ud_.operand[0].lval.udword);
-
-        /* if (ud_.operand[0].type == UD_OP_REG)
-        {
-            addr = ud_.operand[0].base;
-        } */
 
         if (const Symbol* sym = symLookup->notify(addr, false))
         {

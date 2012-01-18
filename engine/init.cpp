@@ -31,6 +31,7 @@ static auto_ptr<DebuggerShell>& debugger()
 
 Debugger* debugger_init(int argc, char* argv[])
 {
+    // instantiate it while we are single-threaded
     debugger();
 
 #ifdef DEBUG_OBJECT_LEAKS

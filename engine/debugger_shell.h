@@ -167,6 +167,10 @@ private:
     bool cmd_watch(Thread*, const std::vector<std::string>&);
     bool cmd_where(Thread*, const std::vector<std::string>&);
 
+    // for testing / deubgging -- yield control to debuggee
+    // for specified amount of seconds
+    bool cmd_yield(Thread*, const std::vector<std::string>&);
+
     void dump(std::ostream&, Thread&, addr_t begin, addr_t end);
 
     void select_frame(Thread&, int);

@@ -24,6 +24,8 @@ using namespace boost::python;
 Mutex DebugEvent::mutex_;
 std::vector<int> DebugEvent::pendingCalls_;
 
+static const uint64_t traceSyscalls = 
+    Debugger::OPT_TRACE_SYSCALLS | Debugger::OPT_BREAK_ON_SYSCALLS;
 
 
 DebugEvent::DebugEvent(Type type, Thread* thread, int syscallNum)
@@ -49,7 +51,6 @@ DebugEvent::DebugEvent(Type type, Thread* thread, int syscallNum)
     }
     else if (type == SYSCALL_ENTER)
     {
-        // throw std::logic_error("negative syscall number");
         type_ = SYSCALL_LEAVE;
     }
 
@@ -60,7 +61,7 @@ DebugEvent::DebugEvent(Type type, Thread* thread, int syscallNum)
         if (pendingCalls_.empty())
         {
         #if 0
-            throw std::logic_error("empty pending call stack");
+            throw std::logic_error("SYSCALL_LEAVE: empty pending stack");
         #else
             std::cerr << "SYSCALL_LEAVE: empty pending calls" << std::endl;
         #endif
@@ -84,7 +85,7 @@ DebugEvent::~DebugEvent() throw()
         case SYSCALL_ENTER:
             // syscall tracing got turned off?
             if (thread_ &&
-                !(thread_->debugger()->options() & Debugger::OPT_TRACE_SYSCALLS)
+                (thread_->debugger()->options() & traceSyscalls) == 0
                )
             {
                 Lock<Mutex> lock(mutex_);
