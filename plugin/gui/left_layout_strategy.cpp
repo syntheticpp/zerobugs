@@ -34,6 +34,7 @@ LeftLayoutStrategy::LeftLayoutStrategy(Debugger& dbg, Container& c)
     , leftBook_(new Notebook_Adapt)
     , bottomBook_(new Notebook_Adapt)
     , varView_(NULL)
+    , threadsViewIndex_(-1)
 {
     leftBook_->set_tab_pos(Gtk_FLAG(POS_BOTTOM));
     bottomBook_->set_tab_pos(Gtk_FLAG(POS_BOTTOM));
@@ -119,9 +120,18 @@ void LeftLayoutStrategy::add_stack_view(Widget& w)
 
 void LeftLayoutStrategy::add_threads_view(Widget& w)
 {
-    bottomBook_->append_page(w, "Threads");
+    threadsViewIndex_ = bottomBook_->append_page(w, "Threads");
     bottomBook_->set_tab_detachable(w);
     bottomBook_->set_tab_reorderable(w);
+}
+
+
+void LeftLayoutStrategy::show_threads_view()
+{
+    if (threadsViewIndex_ >= 0)
+    {
+        bottomBook_->set_current_page(threadsViewIndex_);
+    }
 }
 
 

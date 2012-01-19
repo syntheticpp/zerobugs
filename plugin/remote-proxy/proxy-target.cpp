@@ -28,6 +28,7 @@
 #include "dharma/exec_arg.h"
 #include "dharma/syscall_wrap.h"
 #include "dharma/system_error.h"
+#include "dharma/virtual_dso.h"
 #include "engine/debugger_base.h"
 #include "engine/process.h"
 #include "engine/ptrace.h"
@@ -119,7 +120,7 @@ pid_t RemoteServices::waitpid(pid_t pid, int* status, int options)
         }
         else
         {
-            throw runtime_error("RPC error");
+            throw runtime_error(string(__func__) +  ": RPC error");
         }
     }
     catch (const SystemError& e)
@@ -143,7 +144,7 @@ pid_t RemoteServices::kill(pid_t pid, int sig, bool all)
     {
         if (!RPC::send(f_, __func__, stream_, msg))
         {
-            throw runtime_error("RPC error");
+            throw runtime_error(string(__func__) +  ": RPC error");
         }
     }
     catch (const SystemError& e)
@@ -222,7 +223,7 @@ long RemoteServices::ptrace(__ptrace_request req,
         }
         else
         {
-            throw runtime_error("RPC error");
+            throw runtime_error(string(__func__) +  ": RPC error");
         }
     }
     catch (const SystemError& e)
@@ -439,7 +440,7 @@ Thread* ProxyTarget::exec(const ExecArg& args, const char* const* env)
     }
     else
     {
-        throw runtime_error("RPC error");
+        throw runtime_error(string(__func__) +  ": RPC error");
     }
 }
 
@@ -461,7 +462,7 @@ string ProxyTarget::get_system_release() const
     }
     else
     {
-        throw runtime_error("RPC error");
+        throw runtime_error(string(__func__) +  ": RPC error");
     }
 }
 
@@ -477,6 +478,42 @@ void ProxyTarget::read_memory
 ) const
 {
     Memory<>::read_using_ptrace(pid, seg, addr, buf, len, nRead);
+}
+
+
+VirtualDSO* ProxyTarget::read_virtual_dso() const
+{
+    VirtualDSO* result = 0;
+    
+    if (process()) try
+    {
+        addr_t addr = 0;
+        size_t sz = 0;
+
+        AuxVect v = aux_vect();
+
+        if (get_sysinfo_ehdr(v, addr, sz))
+        {
+            vector<char> buf(sz);
+
+            // read from /proc/PID/mem on the remote target
+            ostringstream mem;
+            mem << procfs_root() << process()->pid() << "/mem";
+
+            auto_ptr<remote_ifstream> targetMemory(
+                new remote_ifstream(factory(), stream_, mem.str().c_str()));
+
+            targetMemory->seek(addr);
+            targetMemory->read(&buf[0], buf.size());
+
+            result = new VirtualDSO(buf, addr);
+        }
+    }
+    catch (const exception& e)
+    {
+        dbgout(0) << __func__ << ": " << e.what() << endl;
+    }
+    return result;
 }
 
 
@@ -541,7 +578,7 @@ RefPtr<SharedString> ProxyTarget::process_name(pid_t pid) const
         new RPC::RemoteIO(RPC::RIO_READ_LINK, bytes, len);
     if (!RPC::send(factory(), __func__, stream_, msg))
     {
-        throw runtime_error("RPC error");
+        throw runtime_error(string(__func__) +  ": RPC error");
     }
     const vector<uint8_t>& buf = RPC::value<RPC::rio_data>(*msg);
     assert(!buf.empty());

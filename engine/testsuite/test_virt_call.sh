@@ -86,6 +86,7 @@ function run()
         test_virt_call -g $@
     else
         test_virt_call -gdwarf-2
+        test_virt_call -ggdb
         test_virt_call -gstabs+ 
     fi
 }

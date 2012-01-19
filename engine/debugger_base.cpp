@@ -1607,11 +1607,15 @@ void DebuggerBase::read_process_history(Process& process)
                 const RefPtr<ModuleImpl>& mod = i->second;
                 try
                 {
+                    // test that the file still exists
+                    struct stat s;
+                    sys::stat(mod->name()->c_str(), s);
+                    
                     symbols->add_module(mod->name()->c_str());
                 }
                 catch (const exception& e)
                 {
-                    clog << e.what() << endl;
+                    clog << __func__ << ": " << e.what() << endl;
                 }
             }
         }

@@ -694,6 +694,7 @@ void* GUI::run(void* p)
 void GUI::handle_exception() throw()
 {
     string msg;
+    bool showAsStatus = false;
 
     try
     {
@@ -701,6 +702,11 @@ void GUI::handle_exception() throw()
         clog << __func__ << ": rethrowing exception" << endl;
     #endif
         throw;
+    }
+    catch (const ThreadBusy& e)
+    {
+        msg = e.what();
+        showAsStatus = true;
     }
     catch (const std::exception& e)
     {
@@ -717,7 +723,14 @@ void GUI::handle_exception() throw()
     }
     else if (MainWindow* w = theGUI_->mainWindow_.get())
     {
-        w->error_message(msg);
+        if (showAsStatus)
+        {
+            w->status_message(msg);
+        }
+        else
+        {
+            w->error_message(msg);
+        }
     }
 }
 

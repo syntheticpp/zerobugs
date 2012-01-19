@@ -44,6 +44,7 @@ protected:
     virtual void add_stack_view(Gtk::Widget&);
 
     virtual void add_threads_view(Gtk::Widget&);
+    virtual void show_threads_view();
 
     virtual void add_variables_view(Gtk::Widget&);
 
@@ -70,6 +71,7 @@ protected:
     NotebookPtr rightBook_;
     NotebookPtr bottomBook_;
     Gtk::Widget* varView_;
+    gint threadsViewIndex_;
 };
 
 

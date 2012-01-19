@@ -60,6 +60,8 @@ private:
     RefPtr<SharedString> process_name(pid_t) const;
 
     const char* id() const { return id_.c_str(); }
+    
+    virtual VirtualDSO* read_virtual_dso() const;
 
 private:
     mutable auto_fd             sock_;

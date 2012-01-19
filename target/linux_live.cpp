@@ -391,9 +391,21 @@ void LinuxLiveTarget::set_ptrace_options(pid_t pid)
     if (debugger().trace_fork())
     {
         options |= PTRACE_O_TRACEFORK;
-        //options |= PTRACE_O_TRACEVFORK;
-        //options |= PTRACE_O_TRACEVFORKDONE;
+        options |= PTRACE_O_TRACEVFORK;
+        options |= PTRACE_O_TRACEVFORKDONE;
         options |= PTRACE_O_TRACEEXEC;
+    }
+    else
+    {
+        // The only valid use-case for disabling tracing forked 
+        // process is to debug the debugger with itself, so that
+        // we don't "grandfather" its debug target. The user
+        // should be warned in all other cases that the flag
+        // is turned off.
+
+        debugger().message(
+            "Warning: debugging forked processes is currently disabled",
+            Debugger::MSG_INFO);
     }
 
     if (options)
@@ -404,14 +416,7 @@ void LinuxLiveTarget::set_ptrace_options(pid_t pid)
         {
             if (errno != EINTR)
             {
-            #ifdef DEBUG
-                clog << __func__ << " failed, errno=" << errno << endl;
-            #endif
-            #if 0
-                return;
-            #else
                 throw SystemError(__func__, errno);
-            #endif
             }
         }
         dbgout(0) << __func__ << ": " << hex << options << dec << endl;
@@ -632,8 +637,7 @@ void LinuxLiveTarget::detach(bool no_throw)
 
 
 ////////////////////////////////////////////////////////////////
-bool
-LinuxLiveTarget::set_status_after_stop (
+void LinuxLiveTarget::set_status_after_stop (
 
     const RefPtr<ThreadImpl>&   tptr,
     int                         status,
@@ -654,8 +658,6 @@ LinuxLiveTarget::set_status_after_stop (
             debugger().queue_event(tptr);
         }
     }
-// todo: the result seems to be ignored, remove this
-    return eventType == PTRACE_EVENT_EXIT;
 }
 
 
@@ -696,7 +698,6 @@ LinuxLiveTarget::collect_threads_to_stop(
 
         RefPtr<ThreadImpl> thread = interface_cast<ThreadImpl>(*i);
 
-        assert(!(*i)->is_exiting());
         assert(!thread_finished(**i));
 
         const Runnable::State state = get_thread_state(*CHKPTR(thread));
@@ -1332,10 +1333,12 @@ VirtualDSO* LinuxLiveTarget::read_virtual_dso() const
             if (get_sysinfo_ehdr(v, addr, sz))
             {
                 ostringstream mem;
-                // read one page from /proc/PID/mem
+
+                // read from /proc/PID/mem
                 mem << procfs_root() << process()->pid() << "/mem";
 
                 auto_fd fd(open(mem.str().c_str(), O_RDONLY));
+
                 if (fd.get())
                 {
                     result = new VirtualDSO(fd.get(), addr, sz);

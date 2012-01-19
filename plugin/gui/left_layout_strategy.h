@@ -44,6 +44,7 @@ protected:
     virtual void add_stack_view(Gtk::Widget&);
 
     virtual void add_threads_view(Gtk::Widget&);
+    virtual void show_threads_view();
 
     virtual void add_variables_view(Gtk::Widget&);
 
@@ -61,15 +62,16 @@ protected:
     void on_switch_page_right(GtkNotebookPage*, guint pageNum);
 
 private:
-    Debugger& dbg_;
-    Gtk::Container& container_;
-    PanedPtr hpaned_;
-    PanedPtr vpaned_;
-    NotebookPtr leftBook_;
-    NotebookPtr bottomBook_;
-    SigC::Connection c1_, c2_;
+    Debugger&           dbg_;
+    Gtk::Container&     container_;
+    PanedPtr            hpaned_;
+    PanedPtr            vpaned_;
+    NotebookPtr         leftBook_;
+    NotebookPtr         bottomBook_;
+    SigC::Connection    c1_, c2_;
 
-    Gtk::Widget* varView_;
+    Gtk::Widget*        varView_;
+    gint                threadsViewIndex_;
 };
 
 

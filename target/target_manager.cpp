@@ -58,7 +58,7 @@ TargetManager::remove_target_internal(const RefPtr<Target>& ptr)
     assert(iterCount_ == 0);
 
     Container::iterator i(find(targets_.begin(), targets_.end(), ptr));
-    assert (i != targets_.end());
+
     if (i != targets_.end())
     {
 /* #ifdef DEBUG

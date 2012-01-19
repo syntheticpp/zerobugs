@@ -28,7 +28,9 @@
 extern "C" int kill_thread(pid_t, int);
 
 
-#if !defined(HAVE_SYS_PTRACE_H)
+// Hmm... This looks like a very bad idea
+#if 0 // !(HAVE_SYS_PTRACE_H)
+
 /* Type of the REQUEST argument to `ptrace.' If ptrace is not defined
    on this system, fallback to the Linux definition of __ptrace_request. */
 enum __ptrace_request
@@ -134,7 +136,8 @@ enum __ptrace_request
   PTRACE_SETSIGINFO = 0x4203
 #define PT_SETSIGINFO PTRACE_SETSIGINFO
 };
-#endif // !defined(HAVE_SYS_PTRACE_H)
+#endif // !(HAVE_SYS_PTRACE_H)
+
 
 
 /* XTrace (read Cross-Trace is a level of indirection that abstracts

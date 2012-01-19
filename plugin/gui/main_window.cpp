@@ -315,7 +315,7 @@ MainWindow::MainWindow(Debugger& debugger, const string& strategy)
     , breakpointCount_(0)
     , waiting_(false)
     , ownsUserInteraction_(true)
-    , atDebugEvent_(false)
+    , atDebugEvent_(0)
     , maximized_(false)
     , viewMode_(0)
 {
@@ -1058,10 +1058,8 @@ BEGIN_SLOT(MainWindow::on_thread_selection,(pid_t lwpid,
         if (Thread* thread = debugger().get_thread(lwpid, id))
         {
             set_title(string("zero: ") + thread->filename());
-            CALL_MAIN_THREAD_(
-                command(&Debugger::set_current_thread,
-                        &debugger(),
-                        thread));
+            CALL_MAIN_THREAD_( 
+                command(&Debugger::set_current_thread, &debugger(), thread) );
         }
         else
         {
@@ -2801,6 +2799,20 @@ void MainWindow::wait_and_process_responses() volatile
     }
 }
 
+class AutoFlag : boost::noncopyable
+{
+    volatile atomic_t& flag_;
+
+public:
+    explicit AutoFlag( volatile atomic_t& flag ) : flag_(flag)
+    {
+        atomic_inc(flag_);
+    }
+    ~AutoFlag()
+    {
+        atomic_dec(flag_);
+    }
+};
 
 ////////////////////////////////////////////////////////////////
 bool MainWindow::on_debug_event(
@@ -2823,7 +2835,6 @@ bool MainWindow::on_debug_event(
     }
     else if (ownsUserInteraction_)
     {
-        // <hack>
         // True up breakpoint count, on_insert_breakpoint / on_remove_breakpoint
         // are not very accurate;
         // the culprit is the engine's breakpoint manager: when a deferred bpnt
@@ -2842,10 +2853,8 @@ bool MainWindow::on_debug_event(
 
             breakpointCount_ = observ.count();
         }
-        // </hack>
 
-        //Temporary<bool, Mutex> setInScope(atDebugEvent_, true, &mutex());
-        Temporary<bool, Mutex> setInScope(atDebugEvent_, true, &mainThreadMutex_);
+        AutoFlag autoFlag(atDebugEvent_);
 
         while (!process_debug_event(thread, eventType))
         {
@@ -2905,19 +2914,27 @@ void MainWindow::update_thread_view(RefPtr<Thread> thread)
 
 
 ////////////////////////////////////////////////////////////////
-bool
-MainWindow::process_debug_event(
+bool MainWindow::process_debug_event(
 
     const RefPtr<Thread>& thread,
     EventType             eventType ) volatile
 {
     assert_main_thread();
+
     string error;
 
     try
     {
-        Lock<Mutex> lock(mutex());
+        Lock<Mutex> lock(mutex(), TryLock());
 
+        if (!lock)
+        {
+            // the UI owns the mutex -- and is perhaps
+            // waiting for the main thread to handle a
+            // response
+            return false;
+        }
+        
         // Update the data for the various views, but do not
         // display anything just yet, since the main thread cannot
         // call Gtk functions directly; after the data is updated,
@@ -2945,6 +2962,7 @@ MainWindow::process_debug_event(
     {
         error = e.what();
     }
+
     if (!error.empty())
     {
         cerr << __func__ << ": " << error << endl;
@@ -3010,6 +3028,11 @@ void MainWindow::on_attached(RefPtr<Thread> thread)
 
         ThreadViewHelper helper(*threadView_);
         debugger().enum_threads(&helper);
+
+        // automatically show the thrads view when
+        // new threads are created -- maybe this
+        // behavior should be controlled by an option?
+        layoutStrategy_->show_threads_view();
     }
 
     if (!current_thread())
@@ -3173,7 +3196,7 @@ void MainWindow::show_progress_indicator(string what, double percent)
 ////////////////////////////////////////////////////////////////
 void MainWindow::update_display(EventType event)
 {
-    if (is_shutting_down() || !atDebugEvent_)
+    if (is_shutting_down() || !is_at_debug_event())
     {
         return;
     }
@@ -4357,24 +4380,7 @@ bool MainWindow::on_invalid_utf8(const char* text, size_t lineNum)
 
 bool MainWindow::is_at_debug_event() const
 {
-    for (int retry = 0; retry < 3; ++retry)
-    {
-        //Lock<Mutex> lock(mutex(), TryLock());
-        Lock<Mutex> lock(mainThreadMutex_, TryLock());
-        if (lock)
-        {
-
-            dbgout(1) << __func__ << ": " << atDebugEvent_ << endl;
-            return atDebugEvent_;
-        }
-#if DEBUG
-        else
-        {
-            clog << __func__ << ": failed to acquire lock." << endl;
-        }
-#endif
-    }
-    return false;
+    return atomic_test(atDebugEvent_);
 }
 
 

@@ -83,6 +83,7 @@ protected:
         if (sortModel_)
         {
             int sortCol = 0;
+
             Gtk::SortType sortOrder = Gtk::SORT_DESCENDING;
             if (sortModel_->get_sort_column_id(sortCol, sortOrder))
             {
@@ -104,6 +105,10 @@ protected:
             }
             set_sort_column(ncol, sortOrder);
         }
+        set_search_column(ncol);
+    #if DEBUG
+        std::clog << __func__ << ": " << ncol << std::endl;
+    #endif
     }
 
     ColumnClickSignal columnClick_;

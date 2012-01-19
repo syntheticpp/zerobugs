@@ -628,7 +628,7 @@ private:
     size_t              breakpointCount_;
     bool                waiting_;   // waiting responses from UI
     bool                ownsUserInteraction_;
-    bool                atDebugEvent_;
+    atomic_t            atDebugEvent_;
     bool                maximized_;
 
     MemoryViews         memoryViews_;

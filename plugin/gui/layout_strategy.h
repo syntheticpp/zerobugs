@@ -42,6 +42,7 @@ struct ZDK_LOCAL LayoutStrategy : public Gtk::Base
     virtual void add_variables_view(Gtk::Widget&) = 0;
 
     virtual void add_threads_view(Gtk::Widget&) = 0;
+    virtual void show_threads_view() = 0;
 
     virtual void add_watches_view(Gtk::Widget&) = 0;
 

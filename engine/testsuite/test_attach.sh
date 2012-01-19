@@ -48,7 +48,7 @@ int main()
 }
 ---end---
 
-build ${1:-$debug} -lpthread foo.cpp
+build ${1:-$debug} foo.cpp -lpthread
 shift
 
 #write test script for the AutoTest plugin

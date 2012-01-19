@@ -70,6 +70,8 @@ public:
     }
     ~remote_file_buf() { }
     void close();
+    
+    void seek(word_t offset);
 };
 
 
@@ -82,11 +84,26 @@ protected:
 };
 
 
+/**
+ * Provide an input stream abstraction that hides the details 
+ * of the RCP required to read from a file on the remote target.
+ */
 CLASS remote_ifstream : remote_ifstream_base, public std::istream
 {
 public:
     remote_ifstream(ObjectFactory&, RPC::Stream&, const char* filename);
+
     ~remote_ifstream();
+
+    // this is only intended to work in the following use-case:
+    // open a stream
+    // seek to some offset
+    // read
+    // close
+    void seek(word_t offset)
+    {
+        buf_->seek(offset);
+    }
 };
 
 

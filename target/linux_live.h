@@ -164,6 +164,8 @@ protected:
 
     std::string thread_name(pid_t) const;
 
+    std::vector<std::pair<word_t, word_t> > aux_vect() const;
+
 private:
     virtual pid_t get_signal_sender_pid(const Thread&) const;
 
@@ -180,14 +182,9 @@ private:
     void on_clone(pid_t);
     void on_fork(pid_t, size_t wordSize, int status);
 
-    /**
-     * @return true if thread is exiting
-     */
-    bool set_status_after_stop(const RefPtr<ThreadImpl>&, int status, bool);
+    void set_status_after_stop(const RefPtr<ThreadImpl>&, int status, bool);
 
-    std::vector<std::pair<word_t, word_t> > aux_vect() const;
-
-    VirtualDSO* read_virtual_dso() const;
+    virtual VirtualDSO* read_virtual_dso() const;
 
     void cache_main_thread_unique(const td_thrhandle_t&, pid_t);
 

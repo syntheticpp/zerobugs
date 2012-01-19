@@ -36,6 +36,7 @@ source test_namespace.sh
 source test_path_map.sh
 source test_ptr_call.sh
 source test_recursive.sh
+source test_remote_step.sh
 source test_ret_fun.sh
 source test_ret_obj.sh
 source test_ret_val.sh
@@ -222,9 +223,7 @@ COMMON_TESTS=(
     test_sigtrap,no-ppc
     test_threads,stabs+,no-ppc
     test_threads_stop,stabs+,no-ppc
-#   test_threads_static,stabs+,no-ppc
-# known to fail with GCC 2.95 
-#   test_virt_call,stabs+
+   test_threads_static,stabs+,no-ppc
     test_vector
 
     # NOTE this test may create problems on Virtual PC
@@ -235,6 +234,7 @@ LINUX_TESTS=(
     test_rtti_with_templates,no-ppc
 )
 LINUX26_TESTS=(
+#TODO: fix these:
     #test_attach
     #test_attach2
 
@@ -242,6 +242,8 @@ LINUX26_TESTS=(
     test_fork_mt
     test_forkexec 
 	test_forkexec_mt 
+
+	test_remote_step_over
 )
 
 for T in "${COMMON_TESTS[@]}"

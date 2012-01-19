@@ -16,6 +16,7 @@
 #include "zdk/zero.h"
 #include "dharma/directory.h"
 #include "dharma/syscall_wrap.h"
+#include "dharma/symbol_util.h"
 #include "dharma/virtual_dso.h"
 #include "engine/thread.h"
 #include "symbolz/private/symbol_table_impl.h"
@@ -208,13 +209,13 @@ LinuxTarget::set_registers(Thread& thread, ZObject* usr, ZObject* fpu)
     }
 }
 
-
 RefPtr<SymbolTable> LinuxTarget::vdso_symbol_tables() const
 {
     if (!vdso_)
     {
         vdso_ = read_virtual_dso();
     }
+
     if (!vdsoTables_ && vdso_)
     {
         // It would be cute to use "linux-gate.so.1" here
@@ -240,6 +241,20 @@ RefPtr<SymbolTable> LinuxTarget::vdso_symbol_tables() const
         {
             symTabList->set_is_virtual_shared_object();
             vdsoTables_ = symTabList;
+
+        #if DEBUG
+
+            clog << " ----------- " << __func__ << " --------------\n";
+            SymbolEnum symbols;
+            symTabList->enum_symbols(NULL, &symbols, SymbolTable::LKUP_DYNAMIC);
+
+            for (auto s = symbols.begin(); s != symbols.end(); ++s)
+            {
+                print_symbol(clog, **s);
+                clog << "\n";
+            }
+
+        #endif
         }
     }
     return vdsoTables_;

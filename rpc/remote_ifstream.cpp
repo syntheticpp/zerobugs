@@ -37,10 +37,22 @@ remote_ifstream::remote_ifstream(ObjectFactory& f, Stream& s, const char* filena
 {
 }
 
-
 remote_ifstream::~remote_ifstream()
 {
     if (buf_) buf_->close();
+}
+
+
+void remote_file_buf::seek(word_t offset)
+{
+    vector<uint8_t> buf(sizeof(word_t) * 3);
+    word_t* p = reinterpret_cast<word_t*>(&buf[0]);
+    *p++ = fd_;
+    *p++ = offset;
+    *p = SEEK_SET;
+
+    RefPtr<RemoteIO> msg(new RemoteIO(RIO_SEEK, &buf[0], buf.size()));
+    rpc_.send(__func__, msg);
 }
 
 

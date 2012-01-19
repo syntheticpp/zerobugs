@@ -72,6 +72,8 @@ SelectPidDialog::SelectPidDialog
     tree_->get_column(1)->set_sort_column(1);
     tree_->get_column(2)->set_sort_column(2);
     tree_->get_column(3)->set_sort_column(3);
+
+    tree_->set_search_column(2);
 #else
     tree_->column(0).set_width(150);
     tree_->column(0).set_passive();

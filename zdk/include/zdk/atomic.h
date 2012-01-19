@@ -118,6 +118,11 @@ inline bool ZDK_LOCAL atomic_test(volatile atomic_t& v)
     return !compare_and_swap(&v.counter, (AO_t)0, (AO_t)0);
 }
 
+inline bool ZDK_LOCAL atomic_test(const volatile atomic_t& v)
+{
+    return !compare_and_swap(&const_cast<volatile atomic_t&>(v).counter, (AO_t)0, (AO_t)0);
+}
+
 
 #endif
 

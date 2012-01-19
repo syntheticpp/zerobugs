@@ -5,8 +5,9 @@
 # Test step over
 ################################################################
 
-function test_step_over()
+function test_remote_step_over()
 {
+killall -9 zserver
 echo ----- ${FUNCNAME}${1:-$debug} ----- >> $logfile
 rm -f $config
 cat > ./foo.cpp << '---end---'
@@ -49,13 +50,18 @@ int main()
 
 #write test script (processed by the AutoTest plugin)
 cat > script << '---end---'
-call { exec a.out }
 call { break main }
 call continue
-
+call next
+call list
+call line
+expect { 30
+}
 call next
 call next
-call next
+call { eval res }
+expect { 42
+}
 call list
 call line
 expect {
@@ -68,12 +74,13 @@ call quit
 dbgopt=${1:-$debug}
 shift
 
-build $dbgopt -DTEST_NAMESPACE foo.cpp
-run_debugger $@
-
 build $dbgopt foo.cpp
-run_debugger $@
+../../bin/zserver
+ZERO_REMOTE_PATH="127.0.1.10:/" run_debugger remote://127.0.0.1/`pwd`/a.out
+
+killall -9 zserver
 }
+
 
 function run()
 {
@@ -81,10 +88,10 @@ function run()
 
     if [ "$compiler" = icc ]
     then
-        test_step_over -g
+        test_remote_step_over -g
     else
-        test_step_over -gstabs+ $@
-        test_step_over -gdwarf-2 $@
+        #test_remote_step_over -gstabs+ $@
+        test_remote_step_over -gdwarf-2 $@
     fi
 }
 

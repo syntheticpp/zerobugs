@@ -22,6 +22,22 @@
 #define TRY_LOCK(lck, mx, ...) \
     Lock<Mutex> lck(mx, TryLock()); try_lock(__func__, lck, ##__VA_ARGS__)
 
+class ThreadBusy : public std::exception
+{
+public:
+    explicit ThreadBusy(const std::string& what) : what_(what) { }
+    virtual ~ThreadBusy() throw() { }
+
+    const char* what() const throw()
+    {
+        return what_.c_str();
+    }
+
+private:
+    std::string what_;
+};
+
+
 template<typename M>
 static void try_lock(const std::string& func,
                      Lock<M>& lock,
@@ -31,7 +47,7 @@ static void try_lock(const std::string& func,
     // but at least we don't deadlock
     if (!lock)
     {
-        throw std::logic_error(func + ": " + name + " thread busy");
+        throw ThreadBusy(func + ": " + name + " thread busy");
     }
 }
 

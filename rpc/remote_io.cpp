@@ -69,6 +69,9 @@ static FileTable::iterator find(int file, const char* func)
 static word_t rio_read(int file, vector<uint8_t>& data)
 {
     FileTable::iterator i = find(file, __func__);
+
+    file = i->second.file_;
+
     const word_t bytesRead = read(file, &data[0], data.size());
     if (bytesRead < 0)
     {
@@ -117,6 +120,31 @@ static void rio_read_link(vector<uint8_t>& data)
 }
 
 
+static void rio_seek(vector<uint8_t>& data)
+{
+    if (data.size() != sizeof(word_t) * 3)
+    {
+        throw invalid_argument(__func__);
+    }
+
+    word_t* p = reinterpret_cast<word_t*>(&data[0]);
+    word_t file = *p++;
+    word_t offs = *p++;
+    word_t whence = *p;
+
+    FileTable::iterator i = find(file, __func__);
+
+    file = i->second.file_;
+
+    if (lseek(file, offs, whence) < 0)
+    {
+        throw SystemError(__func__);
+    }
+    // update current position
+    i->second.pos_ = lseek(file, 0, SEEK_CUR);
+}
+
+
 bool RemoteIO::dispatch(InputStream&, OutputStream& out)
 {
     const word_t operation = value<rio_op>(*this);
@@ -135,7 +163,7 @@ bool RemoteIO::dispatch(InputStream&, OutputStream& out)
         break;
 
     case RIO_SEEK:
-        throw runtime_error("RIO_SEEK: not implemented"); //todo
+        rio_seek(value<rio_data>(*this));
         break;
 
     case RIO_CLOSE:

@@ -108,6 +108,10 @@ void LinuxLiveTarget::on_fork(pid_t pid, size_t wordSize, int status)
     RefPtr<Thread> thread = target->handle_fork(pid, status);
     assert(target->get_thread(pid, 0) == thread.get());
 
+    // NOTE: This should probably be moved to the main engine,
+    // or to a base class so we don't have to copy and paste
+    // the code when we implement support for other target OS-es.
+
     if (debugger().options() & Debugger::OPT_SPAWN_ON_FORK)
     {
         debugger().cleanup(*thread);
@@ -174,8 +178,14 @@ bool LinuxLiveTarget::handle_extended_event(Thread& thread, int event)
         interface_cast<ThreadImpl&>(thread).set_exiting();
         break;
 
+    case PTRACE_EVENT_VFORK:
+        throw runtime_error("PTRACE_EVENT_VFORK is not supported");
+    
+    case PTRACE_EVENT_VFORK_DONE:
+        throw runtime_error("PTRACE_EVENT_VFORK_DONE is not supported");
+
     default:
-        clog << __func__ << ": " << event << endl;
+        clog << __func__ << ": unhandled event=" << event << endl;
         assert(false);
         return false;
     }

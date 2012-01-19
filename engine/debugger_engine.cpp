@@ -785,7 +785,7 @@ void DebuggerEngine::on_event(Thread& thread)
         // if the signal occurred during an expression evaluation,
         // give the chance to handle the event to the observers registered
         // with the interpreter (the observers implement the ExprEvents
-        // interface, see zdk/expr.h)a
+        // interface, see zdk/expr.h)
 
         if (notify_expr_events(thread, addr, exprObserver_))
         {

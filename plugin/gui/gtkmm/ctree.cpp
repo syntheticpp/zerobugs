@@ -53,6 +53,7 @@ Gtk::CTree::CTree(const Glib::SArray& columnTitles)
         modelColumns_.push_back(col);
 
         const int n = add_to_view(*i, *col);
+
         if (Gtk::TreeViewColumn* viewCol = get_column(n))
         {
             if (CellRenderer* r = get_column_cell_renderer(n))

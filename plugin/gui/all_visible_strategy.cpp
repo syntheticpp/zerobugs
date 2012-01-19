@@ -106,6 +106,10 @@ void AllVisibleStrategy::add_threads_view(Widget& w)
     CHKPTR(right_)->pack1(w, resizeNo, shrinkNo);
 }
 
+void AllVisibleStrategy::show_threads_view()
+{
+}
+
 
 void AllVisibleStrategy::add_watches_view(Widget&)
 {

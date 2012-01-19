@@ -34,6 +34,7 @@ TabLayoutStrategy::TabLayoutStrategy(Debugger& dbg, Container& c)
     , rightBook_(new Notebook_Adapt)
     , bottomBook_(new Notebook_Adapt)
     , varView_(NULL)
+    , threadsViewIndex_(-1)
 {
     rightBook_->set_tab_pos(Gtk_FLAG(POS_BOTTOM));
     rightBook_->set_scrollable(true);
@@ -118,9 +119,19 @@ void TabLayoutStrategy::add_stack_view(Widget& w)
 
 void TabLayoutStrategy::add_threads_view(Widget& w)
 {
-    rightBook_->append_page(w, "Threads");
+    threadsViewIndex_ = rightBook_->append_page(w, "Threads");
+
     rightBook_->set_tab_detachable(w);
     rightBook_->set_tab_reorderable(w);
+}
+
+
+void TabLayoutStrategy::show_threads_view()
+{
+    if (threadsViewIndex_ >= 0)
+    {
+        rightBook_->set_current_page(threadsViewIndex_);
+    }
 }
 
 
