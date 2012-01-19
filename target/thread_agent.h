@@ -89,7 +89,6 @@ protected:
         assert(td_eventismember(&mask_, TD_CREATE));
         // not interested in TD_DEATH event, for now
         //assert(td_eventismember(&mask_, TD_DEATH));
-        dbgout(1)  << "thread died" << endl;
 
         TD_ENFORCE(td_thr_event_enable(thr, 1));
         TD_ENFORCE(td_thr_set_event(thr, &mask_));

@@ -327,7 +327,7 @@ public:
 
     void detach();
 
-    void wait_update_status(bool checkUnhandledThreads = false);
+    void wait_update_status(bool checkUnhandledThreads);
 
     void set_call_info(addr_t caller = 0);
 

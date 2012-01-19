@@ -134,11 +134,20 @@ protected:
                 addr_ = 0;
                 detect_multithread_target();
             }
-            else
+        }
+        // adjust addr_ by the base address where process is loaded
+        if (this->process())
+        {
+            if (RefPtr<SymbolMap> symbols = this->process()->symbols())
             {
-                std::clog << __func__ << ": " << this->process_name()->c_str() << std::endl;
+                SymbolTable* table =  symbols->symbol_table_list(this->process_name()->c_str());
+                if (table && addr_ < table->addr())
+                {
+                    addr_ += table->addr();
+                }
             }
         }
+
         if (addr_t addr = get_breakpoint_addr(thread))
         {
             if (BreakPointManager* mgr = this->debugger().breakpoint_manager())
@@ -151,6 +160,7 @@ protected:
                                         action.get()))
                 {
                     inited_ = true;
+
                 #ifdef DEBUG
                     std::clog << __func__ << " successful\n";
                 #endif
@@ -209,7 +219,7 @@ public:
                 size_t nread = 0;
                 thread_read(thread, static_cast<addr_t>(m.l_name), buf, &nread);
                 assert(nread <= PATH_MAX);
-                dbgout(1) << hex << m.l_addr << dec << ": " << buf << endl;
+                dbgout(1) << __func__ << ": " << hex << m.l_addr << dec << ": " << buf << endl;
             #if 0
                 std::string path(&buf[0]);
                 if (path.empty())

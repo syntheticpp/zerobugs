@@ -1876,8 +1876,8 @@ static bool resolve_link(string& path)
 //
 // map source code path without following symbolic links
 //
-bool
-DebuggerBase::map_path_no_follow(
+bool DebuggerBase::map_path_no_follow(
+
     const Process*  proc,
     string&         path) const
 {
@@ -1927,7 +1927,7 @@ bool DebuggerBase::map_path(const Process* proc, string& path) const
             map_path_no_follow(proc, path);
         }
     }
-    dbgout(1) << __func__ << ": " << path << "=" << result << endl;
+    dbgout(2) << __func__ << ": " << path << "=" << result << endl;
     return result;
 }
 

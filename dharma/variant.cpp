@@ -90,7 +90,7 @@ Variant::TypeTag VariantImpl::type_tag() const
 size_t VariantImpl::size() const
 {
     assert(buf_.get());
-    assert(buf_->size() || tag_ == VT_OBJECT || tag_ == VT_NONE);
+    assert(buf_->size() || tag_ == VT_OBJECT || tag_ == VT_NONE || tag_ == VT_VOID);
 
     return buf_->size();
 }
