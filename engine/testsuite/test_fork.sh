@@ -43,7 +43,6 @@ call { break child }
 
 call continue
 call next
-###call test.cancel
 call { eval x }
 expect { 42
 }

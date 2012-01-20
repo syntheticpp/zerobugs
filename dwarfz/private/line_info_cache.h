@@ -10,10 +10,13 @@
 // (See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt)
 // -------------------------------------------------------------------------
+#include "zdk/stdexcept.h"
+#include "zdk/shared_string_impl.h"
+#include "zdk/string_cache.h"
+#include "zdk/weak_ptr.h"
 
 #include <sys/stat.h>
 #include <cstdlib>
-#include <stdexcept>
 #include <boost/utility.hpp>
 // use an associative vector instead of a map, to
 // minimize memory overhead
@@ -21,9 +24,6 @@
 #include "generic/nearest.h"
 #include "interface.h"
 #include "utils.h"
-#include "zdk/shared_string_impl.h"
-#include "zdk/string_cache.h"
-#include "zdk/weak_ptr.h"
 #include "dharma/canonical_path.h"
 #include "dharma/environ.h"
 

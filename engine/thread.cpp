@@ -1783,6 +1783,11 @@ void ThreadImpl::before_resume()
 ////////////////////////////////////////////////////////////////
 bool ThreadImpl::resume(bool* stepped)
 {
+    if (has_resumed())
+    {
+        return true;
+    }
+
     before_resume();
 
     if (resume_stepping())

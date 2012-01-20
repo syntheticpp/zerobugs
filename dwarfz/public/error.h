@@ -11,12 +11,12 @@
 // http://www.boost.org/LICENSE_1_0.txt)
 // -------------------------------------------------------------------------
 
-#include <exception>
+#include "zdk/export.h"
+#include "zdk/stdexcept.h"
 #include <boost/shared_ptr.hpp>
 #include <libelf.h>
 #include <libdwarf.h>
 #include "interface.h"
-#include "zdk/export.h"
 
 // __PRETTY_FUNCTION__ is a gcc extension; __func__ is C99 standard
 #if defined(__GNUC__)

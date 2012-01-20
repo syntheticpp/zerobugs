@@ -66,6 +66,9 @@
 using namespace std;
 using Platform::addr_t;
 
+#if (__GNUC__ >= 4) && !defined(__INTEL_COMPILER)
+    #pragma GCC visibility push(default)
+#endif
 
 extern "C"
 { // C-linkage expected by thread_db
@@ -460,4 +463,7 @@ ps_err_e ps_lsetxmmregs(ps_prochandle*, lwpid_t, const char*)
 
 } // extern "C"
 
+#if (__GNUC__ >= 4) && !defined(__INTEL_COMPILER)
+     #pragma GCC visibility pop
+#endif
 // vim: tabstop=4:softtabstop=4:expandtab:shiftwidth=4

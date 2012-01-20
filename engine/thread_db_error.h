@@ -12,6 +12,8 @@
 // -------------------------------------------------------------------------
 
 #include "zdk/config.h"
+#include "zdk/stdexcept.h"
+
 extern "C"
 {
   #include <thread_db.h>

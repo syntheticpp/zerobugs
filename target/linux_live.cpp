@@ -665,28 +665,40 @@ void LinuxLiveTarget::set_status_after_stop (
 bool LinuxLiveTarget::event_requires_stop(Thread* thread)
 {
     assert(thread);
-    const int sig = thread->signal();
 
-    const bool result = 
-        !check_extended_event(thread) && debugger().signal_policy(sig)->stop();
+    bool result = true;
 
-    dbgout(1) << __func__ << ": " << thread->lwpid() << "=" << result << endl;
+    if (check_extended_event(thread))
+    {
+        result = false;
+    }
+    else
+    {
+        const int sig = thread->signal();
+        result = debugger().signal_policy(sig)->stop();
+    }
+
     return result;
 }
 
 
 ////////////////////////////////////////////////////////////////
-void
-LinuxLiveTarget::collect_threads_to_stop(
+//
+// Build a collection of threads that need to be stopped.
+// Called by stop_all_threads. Currently the debugger stops
+// all threads before handling an event.
+//
+void LinuxLiveTarget::collect_threads_to_stop(
+
     ThreadImplMap&  threadsToStop,
-    Thread*         threadToSkip
+    Thread*         current
     )
 {
     const iterator threadsEnd = threads_end();
 
     for (iterator i = threads_begin(); i != threadsEnd; ++i)
     {
-        if (i->get() == threadToSkip)
+        if (i->get() == current)
         {
             continue;
         }
@@ -719,7 +731,7 @@ LinuxLiveTarget::collect_threads_to_stop(
 
         default:
             {
-                assert(i->get() != threadToSkip);
+                assert(i->get() != current);
 
                 const pid_t lwpid = thread->lwpid();
                 dbgout(0) << lwpid << " state=" << state
@@ -757,19 +769,19 @@ bool LinuxLiveTarget::stop_all_threads(Thread* current)
    per-process basis; getpid() returns the same process ID for
    all the threads. For example, if a signal SIGSTOP is sent, the
    whole process would stop; " */
+    
+ /* http://lwn.net/Articles/446593/
+     When a (possibly multi-threaded) process receives a stopping signal,
+     all threads stop. If some threads are traced, they enter a group-stop.
+     Note that stopping signal will first cause signal-delivery-stop (on one
+     tracee only), and only after it is injected by tracer (or after it was
+     dispatched to a thread which isn't traced), group-stop will be
+     initiated on ALL tracees within multi-threaded process.*/
 
-    /* if (sys::uses_nptl())
-    {
-        if (Process* proc = process())
-        {
-            if (threads.empty())
-            {
-                return true;
-            }
-            sys::kill(proc->pid(), SIGSTOP);
-        }
-    }
-    else */
+    // I could not make this work reliably sending just one signal
+    // to the group leader, so I am taking the approach of tkill-ing
+    // each thread individually. If it turns out to cause scalability 
+    // issues then I will come back to it later.
     {
         ThreadImplMap::const_iterator i = threads.begin();
         
@@ -788,7 +800,9 @@ bool LinuxLiveTarget::stop_all_threads(Thread* current)
             sys::kill_thread(i->first, SIGSTOP);
         }
     }
+
     ThreadImpl* currentImpl = interface_cast<ThreadImpl*>(current);
+    assert(!current || !currentImpl->has_resumed());
 
     wait_for_threads_to_stop(currentImpl, threads, queueEvents);
 
@@ -1022,12 +1036,28 @@ void LinuxLiveTarget::handle_event(Thread* thread)
             ignoreEvent = true; // no further handling needed
         }
     }
+
     if (!ignoreEvent)
     {
         init_linker_events(*thread);
+    
+        const uint64_t stopOnSyscalls = 
+            Debugger::OPT_TRACE_SYSCALLS |
+            Debugger::OPT_BREAK_ON_SYSCALLS;
+
+        const int status = thread->status();
+        if (WSTOPSIG(status) == (SIGTRAP | 0x80))
+        {
+            const uint64_t opts = debugger().options();
+
+            if ((opts & stopOnSyscalls) == 0)
+            {
+                ignoreEvent = true;
+            } 
+        }
 
         // check for ignored signals
-        if (thread_stopped(*thread))
+        if (!ignoreEvent && thread_stopped(*thread))
         {
             const int sig = thread->signal();
             if (!debugger().signal_policy(sig)->stop())
@@ -1046,6 +1076,8 @@ void LinuxLiveTarget::handle_event(Thread* thread)
     if (!ignoreEvent)
     {
         // finally, invoke base class implementation
+        // which will route the event to the engine
+
         UnixTarget::handle_event(thread);
     }
 }

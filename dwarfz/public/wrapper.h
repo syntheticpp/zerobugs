@@ -10,9 +10,9 @@
 // (See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt)
 // -------------------------------------------------------------------------
-
+#include "zdk/config.h"
+#include "zdk/stdexcept.h"
 #include <cassert>
-#include <stdexcept>
 
 #include "die.h"
 #include "error.h"

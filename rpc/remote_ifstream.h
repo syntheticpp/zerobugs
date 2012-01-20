@@ -9,8 +9,9 @@
 // http://www.boost.org/LICENSE_1_0.txt)
 // -------------------------------------------------------------------------
 
+#include "zdk/config.h"
+#include "zdk/stdexcept.h"
 #include <istream>
-#include <stdexcept>
 #include <streambuf>
 #include <string>
 #include <boost/shared_ptr.hpp>

@@ -12,11 +12,11 @@
 // -------------------------------------------------------------------------
 
 #include "zdk/export.h"
+#include "zdk/stdexcept.h"
 #include <algorithm>
 #include <cassert>
 #include <deque>
 #include <functional>
-#include <stdexcept>
 #include <string>
 #include <vector>
 

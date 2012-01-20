@@ -13,36 +13,48 @@ cat > ./foo.cpp << '---end---'
 #include <sys/wait.h>
 void child()
 {
-    execlp("./bar", "bar", "fubar", NULL);
+	execlp("./bar", "bar", "fubar", NULL);
 }
 int main()
 {
-    pid_t pid = getpid();
-    std::cout << "pid=" << pid << std::endl;
+	pid_t pid = getpid();
+	std::cout << "pid=" << pid << std::endl;
 
-    if ((pid = fork()) == 0)
-    {
-        child();
-    }
-    else
-    {
-        std::cout << pid << std::endl;  
-        waitpid(pid, 0, 0);
-    }
-    return 0;
+	if ((pid = fork()) == 0)
+	{
+		child();
+	}
+	else
+	{
+		std::cout << pid << std::endl;	
+		waitpid(pid, 0, 0);
+	}
+	return 0;
 }
 ---end---
 cat > ./bar.cpp << '---end---'
 // bar.cpp
 #include <iostream>
+#include <unistd.h>
+#include <sys/wait.h>
 int main(int argc, char* argv[])
 {
-    std::clog << "&argc=" << &argc << std::endl;
-    for (--argc, ++argv; argc; --argc, ++argv)
-    {
-        std::clog << *argv << std::endl;
-    }
-    return 0;
+	std::clog << "&argc=" << &argc << std::endl;
+	for (--argc, ++argv; argc; --argc, ++argv)
+	{
+		std::clog << *argv << std::endl;
+	}
+
+	pid_t pid = fork();
+	if (pid == 0)
+	{
+		kill(getgid(), SIGSTOP);
+	}
+	else
+	{
+		waitpid(pid, 0, 0);
+	}
+	return 0;
 }
 ---end---
 build $debug $@ foo.cpp -o foo
@@ -83,9 +95,9 @@ run_debugger --main --trace-fork foo
 ################################################################
 function run()
 {
-    source common.sh
-    test_forkexec -gstabs+ 
-    test_forkexec -gdwarf-2
+	source common.sh
+	test_forkexec -gstabs+ 
+	test_forkexec -gdwarf-2
 }
 
 # run this test standalone

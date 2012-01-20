@@ -11,9 +11,9 @@
 // http://www.boost.org/LICENSE_1_0.txt)
 // -------------------------------------------------------------------------
 //
-#include <string>
-#include <exception>
 #include "zdk/export.h"
+#include "zdk/stdexcept.h"
+#include <string>
 
 /**
  * An exception class that wrapps

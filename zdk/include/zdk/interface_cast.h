@@ -11,19 +11,20 @@
 // http://www.boost.org/LICENSE_1_0.txt)
 // -------------------------------------------------------------------------
 
+#include "zdk/stdexcept.h"
+#include "zdk/unknown2.h"
 #include <cassert>
 #include <string>
 #include <exception>
 #include <typeinfo>
 #include <boost/type_traits.hpp>
-#include "zdk/unknown2.h"
 
 
 
 #define BAD_CAST(x) std::string("bad interface cast: ") + x::_type()
 
 
-class bad_interface_cast : public std::exception
+class ZDK_EXPORT bad_interface_cast : public std::exception
 {
 public:
     explicit bad_interface_cast(const std::string& type)

@@ -11,11 +11,11 @@
 // http://www.boost.org/LICENSE_1_0.txt)
 // -------------------------------------------------------------------------
 
+#include "zdk/stdexcept.h"
+#include "zdk/get_pointer.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <sstream>
-#include <stdexcept>
-#include "zdk/get_pointer.h"
 
 
 #if !defined(NDEBUG) || (__GNUC__ < 3)

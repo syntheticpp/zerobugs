@@ -11,8 +11,16 @@
 // http://www.boost.org/LICENSE_1_0.txt)
 // -------------------------------------------------------------------------
 
+#if (__GNUC__ >= 4) && !defined(__INTEL_COMPILER)
+ #pragma GCC visibility push(default)
+#endif
+
 #include <exception>
 #include <stdexcept>
+
+#if (__GNUC__ >= 4) && !defined(__INTEL_COMPILER)
+ #pragma GCC visibility pop
+#endif
 
 #endif // STDEXCEPT_H__66961CBA_B052_4175_A4DA_BC7932E06DA0
 // vim: tabstop=4:softtabstop=4:expandtab:shiftwidth=4

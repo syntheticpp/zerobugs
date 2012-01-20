@@ -12,7 +12,7 @@
 // -------------------------------------------------------------------------
 
 #include "zdk/export.h"
-#include <stdexcept>
+#include "zdk/stdexcept.h"
 #include <string>
 
 struct ZDK_EXPORT ParseError : public std::runtime_error

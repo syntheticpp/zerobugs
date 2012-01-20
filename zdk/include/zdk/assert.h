@@ -13,6 +13,7 @@
 
 #include "zdk/config.h"
 #include "zdk/export.h"
+#include "zdk/stdexcept.h"
 
 #include <assert.h>
 #if (__GNUC__ == 2)
@@ -25,7 +26,6 @@
 #else
 
  #include <limits>
- #include <stdexcept>
  #include <boost/format.hpp>
 
 

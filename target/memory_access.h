@@ -10,13 +10,15 @@
 // (See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt)
 // -------------------------------------------------------------------------
-//
+
+#include "zdk/arch.h"
+#include "zdk/export.h"
+#include "zdk/stdexcept.h"
+
 #include <sys/fcntl.h>
 #include <string>
 #include <sstream>
 #include "generic/auto_file.h"
-#include "zdk/arch.h"
-#include "zdk/export.h"
 #include "target/target.h"
 
 
@@ -93,14 +95,11 @@ struct ZDK_LOCAL MemoryBase
                 buf[i] = sys::ptrace(req, pid, addr, 0);
             }
         }
-        catch (const std::exception& e)
+        catch (const std::exception&)
         {
-        #if DEBUG
-            // std::cerr << __func__ << ": " << e.what() << std::endl;
-        #endif
             if (!readlen) 
             {
-                throw e;
+                throw;
             }
         }
         if (readlen)
@@ -149,8 +148,7 @@ struct ZDK_LOCAL MemoryBase
         SegmentType seg,
         addr_t      addr,
         const Long* buf,
-        size_t      buflen
-    )
+        size_t      buflen)
     {
         const __ptrace_request req =
             seg == Target::CODE_SEGMENT ? PT_WRITE_I : PT_WRITE_D;

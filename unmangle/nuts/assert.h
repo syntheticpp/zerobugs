@@ -11,6 +11,11 @@
 // http://www.boost.org/LICENSE_1_0.txt)
 // -------------------------------------------------------------------------
 
+#if (__GNUC__ >= 4) && !defined(__INTEL_COMPILER)
+ #pragma GCC visibility push(default)
+#endif
+
+
 #include <cassert>
 #include <string>
 #include <stdexcept>
@@ -33,5 +38,9 @@ namespace nuts
         throw std::runtime_error(func + ": fixed memory space exhausted");
     }
 }
+
+#if (__GNUC__ >= 4) && !defined(__INTEL_COMPILER)
+ #pragma GCC visibility pop
+#endif
 #endif // ASSERT_H__261A2F0A_B1BC_4C90_9875_15426B1A7217
 // vim: tabstop=4:softtabstop=4:expandtab:shiftwidth=4

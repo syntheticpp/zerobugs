@@ -11,10 +11,11 @@
 // http://www.boost.org/LICENSE_1_0.txt)
 // -------------------------------------------------------------------------
 
+#include "zdk/config.h"
+#include "zdk/stdexcept.h"
 #include <dwarf.h>
 #include <string.h>
 #include <iomanip>
-#include <stdexcept>
 #include <string>
 #include <typeinfo>
 #include "attr.h"
