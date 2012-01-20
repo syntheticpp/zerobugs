@@ -96,9 +96,9 @@ cat > ./script << '---end---'
 #call ( bar(0) )
 #expect ( 42
 #)
-
 call ( break /all bar )
 call ( continue )
+call ( break main )
 
 call ( next )
 call ( next )

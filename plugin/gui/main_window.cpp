@@ -2537,15 +2537,42 @@ static bool check_current_frame(
         currentSymbolInView = w.program_view()->symbol();
     }
 
-    if (&frame != stackView.top() /*|| currentSymbolInView.get() != frame.function()*/
-        || (currentSymbolInView && currentSymbolInView->addr() != frame.program_count())
-        )
+    bool sameFrame = true;
+    bool stackTop  = true;
+
+    if (&frame != stackView.top())
     {
+        sameFrame = stackTop = false;
+    }
+    else if (
+        currentSymbolInView && 
+        currentSymbolInView->addr() != frame.program_count())
+    {
+        sameFrame = false;
+    }
+
+    while (!sameFrame)
+    {
+        // this condition may occur if we exec a stripped
+        // program -- so if the user is switching to an
+        // exec-ed thread, skip this warning
+
+        if (RefPtr<Thread> t = w.current_thread())
+        {
+            if (stackTop && t->is_execed())
+            {
+                break; 
+            }
+        }
+
         static const string msg =
             "You have navigated away from the current stack frame."
             "\nDo you want to continue?";
+
         w.question_message(msg, &proceed, "confirm_next");
+        break;
     }
+
     return proceed;
 }
 
@@ -2718,8 +2745,7 @@ void MainWindow::message_box_signal()
 
 
 ////////////////////////////////////////////////////////////////
-void
-MainWindow::set_active_thread(RefPtr<Thread> thread) // volatile
+void MainWindow::set_active_thread(RefPtr<Thread> thread)
 {
     assert(pthread_self() == maintid);
 

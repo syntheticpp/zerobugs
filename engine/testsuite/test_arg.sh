@@ -122,7 +122,7 @@ function run()
     then    
        	echo todo: icc test?
     else
-        test_arg -gdwarf-23
+        test_arg -gdwarf-2
         test_arg -gstabs+
     fi
 }

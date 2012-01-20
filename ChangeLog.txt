@@ -1,3 +1,8 @@
+I have stopped updating this file (and the commercial version).
+For change history, please see:
+http://zerobugs.codeplex.com/SourceControl/list/changesets.
+
+
 [07/01/08]
 - variables are now shown in tooltips when hovering over source code
 - begun working on a utility for saving debug into to external database

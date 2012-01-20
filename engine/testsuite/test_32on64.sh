@@ -135,42 +135,42 @@ function run_tests()
 COMMON_TESTS=(
 	test_add_mod
 	test_array,stabs+
-	test_arg
-	test_bits,stabs+
+	#test_arg
+	#test_bits,stabs+
 	test_bitfields
 	test_break
     test_brkpnt
-	test_cast,stabs+
+	#test_cast,stabs+
     test_cond_break
-	test_cstyle_cast
+	#test_cstyle_cast
 	test_const
 	test_core_env
 	test_darray
 	test_dl_core
-	test_env
+	#test_env
 	test_exec
-	test_expr_eval,stabs+
+	#	test_expr_eval,stabs+
     test_expr_lazy
-	test_frame
+	#test_frame
 	test_function_call,stabs+
-	test_inherit,stabs+
-	test_interface,stabs+
+	#test_inherit,stabs+
+	#test_interface,stabs+
 	test_lookup
 	test_nested_struct
 	test_member_cast
 	test_member_data
-	test_namespace,stabs+
+	#test_namespace,stabs+
 	test_oper_call,stabs+
-	test_ptr_call,stabs+
+	#test_ptr_call,stabs+
 	test_recursive
 	test_ret_fun
 	test_ret_obj
 	test_ret_val
-	test_strcmp
+	#test_strcmp
 	test_segv
 	test_segv_2
 	test_sigtrap
-	test_shared_ptr,stabs+
+	#test_shared_ptr,stabs+
 	test_symbol_map
 	test_threads,stabs+
 # known to fail with GCC 2.95 
@@ -180,8 +180,8 @@ COMMON_TESTS=(
 #	test_watchpoint,stabs+
 )
 LINUX_TESTS=(
-	test_rtti
-	test_rtti_with_templates
+	#test_rtti
+	#test_rtti_with_templates
 )
 LINUX26_TESTS=(
 	#test_attach
@@ -198,10 +198,10 @@ done
 if test $GCCVER -gt 2
 	then :
 	    add_common_test test_anon_struct
-		add_common_test test_core
+		#add_common_test test_core
 		add_common_test test_dso
 		add_common_test test_throw
-		add_common_test test_virt_call,stabs+
+		#add_common_test test_virt_call,stabs+
 fi 
 if test `uname` = "Linux"
 then
@@ -210,7 +210,8 @@ then
 		add_common_test $T
 	done
 	case $KVER in
-	2.6*) for T in "${LINUX26_TESTS[@]}"
+    #2.6*|3.*) for T in "${LINUX26_TESTS[@]}"
+    2.6*) for T in "${LINUX26_TESTS[@]}"
 			do 
 				add_common_test $T
 			done;;
@@ -223,12 +224,13 @@ if [ "$compiler" = "icc" ]
 		add_test "test_macro -g3"
 		add_test "test_static_const -g"
 	else 
-		add_test "test_macro -gdwarf-23"
+		#add_test "test_macro -gdwarf-23"
 
-        if test $GCCVER -gt 2
-		then 
-            add_test "test_static_const -gdwarf-2"
-        fi
+        #if test $GCCVER -gt 2
+		#then 
+        #   add_test "test_static_const -gdwarf-2"
+        #fi
+		:
 fi
 
 

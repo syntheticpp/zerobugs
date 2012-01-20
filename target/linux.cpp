@@ -9,6 +9,7 @@
 // http://www.boost.org/LICENSE_1_0.txt)
 // -------------------------------------------------------------------------
 //
+#include <unistd.h>
 #include "dbgout.h"
 #include "debugger_base.h"
 #include "target/linux.h"
@@ -88,8 +89,7 @@ void LinuxTarget::add_thread_internal(const RefPtr<Thread>& thread)
 }
 
 
-bool
-LinuxTarget::remove_thread_internal(const RefPtr<Thread>& thread)
+bool LinuxTarget::remove_thread_internal(const RefPtr<Thread>& thread)
 {
     const pid_t pid = thread->lwpid();
 
@@ -125,23 +125,11 @@ size_t LinuxTarget::enum_threads(EnumCallback<Thread*>* callback)
 
 void LinuxTarget::close_all_files()
 {
-    try
+    const int fmax = getdtablesize();
+    // skip stdin, stdout and stderr
+    for (int f = 3; f != fmax; ++f)
     {
-        Directory fd(procfs_root() + "self/fd");
-
-        Directory::const_iterator i = fd.begin();
-        for (; i != fd.end(); ++i)
-        {
-            const int f = atoi(i.short_path().c_str());
-            if (f > 2)
-            {
-                close(f);
-            }
-        }
-    }
-    catch (const exception& e)
-    {
-        cerr << __func__ << ": " << e.what() << endl;
+        close(f);
     }
 }
 
