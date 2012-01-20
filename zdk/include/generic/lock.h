@@ -81,6 +81,11 @@ public:
     explicit Unlock(T& mx) : mx_(mx), unlocked_(mx.leave(std::nothrow))
     { }
 
+    explicit Unlock(volatile T& mx) 
+        : mx_(mx)
+        , unlocked_(mx.leave(std::nothrow))
+    { }
+
     ~Unlock() { if (unlocked_) mx_.enter(); }
 };
 

@@ -81,6 +81,20 @@ namespace sys
     bool uses_nptl();
 
     void unmask_all_signals();
+
+    class ZDK_LOCAL ImpersonationScope
+    {
+    public:
+        explicit ImpersonationScope(uid_t);
+        ~ImpersonationScope();
+
+    private:
+        //non-copyable, non-assignable
+        ImpersonationScope(const ImpersonationScope&);
+        ImpersonationScope& operator=(const ImpersonationScope&);
+
+        uid_t  euid_;  // effective user id
+    };
 }
 
 #if (__GNUC__ >= 4)

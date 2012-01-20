@@ -430,4 +430,28 @@ void sys::unmask_all_signals()
 }
 
 
+sys::ImpersonationScope::ImpersonationScope(uid_t uid)
+    // save current effective user id
+    : euid_(geteuid())
+{
+    // impersonate uid
+    if (seteuid(uid) < 0)
+    {
+        throw SystemError("seteuid");
+    }
+#if DEBUG
+    clog << "Effective user id=" << geteuid() << endl;
+#endif
+}
+
+
+sys::ImpersonationScope::~ImpersonationScope()
+{
+    // restore to save effective uid
+    seteuid(euid_);
+#if DEBUG
+    clog << "Restored effective user id=" << geteuid() << endl;
+#endif
+}
+
 // vim: tabstop=4:softtabstop=4:expandtab:shiftwidth=4

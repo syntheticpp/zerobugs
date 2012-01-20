@@ -88,14 +88,24 @@ namespace
 
             RefPtr<ModuleImpl> module;
 
-            if (Symbol* symbol = bpnt->symbol())
+            try
             {
-                ZObjectScope scope;
-                if (SymbolTable* table = symbol->table(&scope))
+                // this may fail if breakpoint is in a debuggee thread
+                // that went AWOL
+                if (Symbol* symbol = bpnt->symbol())
                 {
-                    RefPtr<SharedString> modName = table->filename();
-                    module = entry_.get_module(modName);
+                    ZObjectScope scope;
+                    if (SymbolTable* table = symbol->table(&scope))
+                    {
+                        RefPtr<SharedString> modName = table->filename();
+                        module = entry_.get_module(modName);
+                    }
                 }
+            }
+            catch (const exception& e)
+            {
+                clog << "Non-critical error in saving breakpoint: "
+                     << e.what() << endl;
             }
             // we might not know what symbol is associated
             // with the breakpoint, and thus the above block

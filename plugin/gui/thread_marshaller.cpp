@@ -243,6 +243,18 @@ bool ThreadMarshaller::process_responses() volatile
 
             try
             {
+                // cast away volatility. yuck
+                Mutex& respMutex = const_cast<Mutex&>(responses_.mutex());
+
+                // Unlock the responses queue in the scope of processing
+                // a command sent by the UI -- this is a hack. the root
+                // problem is that there are too many mutexes at play:
+                // mainThreadMutex_, mutex_ (which protects the UI state),
+                // and the response and requests respective queue mutexes.
+                // It is thus quite easy to take locks in reverse order.
+                
+                Unlock<Mutex> unlockedScope(respMutex);
+
                 resume |= resp->execute();
                 dbgout(1) << __func__ << ": resume=" << resume << endl;
             }

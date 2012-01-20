@@ -35,6 +35,7 @@
 #include "dharma/exec_arg.h"
 #include "dharma/fstream.h"
 #include "dharma/object_factory.h"
+#include "dharma/path.h"
 #include "dharma/pipe.h"
 #include "dharma/process_name.h"
 #ifdef __unix__
@@ -1338,6 +1339,23 @@ size_t DebuggerBase::enum_processes(EnumCallback<Process*>* cb) const
 
 
 ////////////////////////////////////////////////////////////////
+static uid_t get_config_owner(const string& path)
+{
+    string ownerPath = sys::dirname(path.c_str());
+   
+    // go up one more level
+    ownerPath = sys::dirname(ownerPath.c_str());
+        
+    struct stat stat = { 0 };
+    sys::stat(ownerPath, stat);
+#if DEBUG
+    clog << ownerPath << ": onwer=" << stat.st_uid << endl;
+#endif
+    return stat.st_uid;
+}
+
+
+////////////////////////////////////////////////////////////////
 string DebuggerBase::get_config_path()
 {
     string cfgPath;
@@ -1370,12 +1388,11 @@ string DebuggerBase::get_config_path()
         cfgPath.erase(++n);
         setenv("ZERO_CONFIG_PATH", cfgPath.c_str(), 1);
     }
+
     cfgPath += ".zero/";
+    sys::ImpersonationScope impersonate(get_config_owner(cfgPath));
     sys::mkdir(cfgPath, 0750);
 
-#if DEBUG
-    clog << __func__ << ": " << cfgPath << endl;
-#endif
     return cfgPath;
 }
 
@@ -1430,6 +1447,13 @@ Properties* DebuggerBase::properties()
         settings_ = new Settings(factory_);
 
         string path = get_config_path();
+
+        // Always manipulate config as the effective user that
+        // owns the parent directory -- so that if we ran as root
+        // (sudo), the config files are not locked down for
+        // the original owner.
+        sys::ImpersonationScope impersonate(get_config_owner(path));
+
         settings_->set_string("config_path", path.c_str());
 
         if (settingsPath_.empty())
@@ -1729,6 +1753,12 @@ void DebuggerBase::save_properties()
     Lock<Mutex> lock(settingsMutex_);
     if (settings_)
     {
+        // Always save as the effective user that owns the
+        // parent directory -- so that if we ran as root
+        // (sudo), the config files are not locked down for
+        // the original owner.
+        sys::ImpersonationScope impersonate(get_config_owner(settingsPath_));
+
         ostringstream pid;
         pid << getpid();
         string tmp = settingsPath_ + "." + pid.str();
