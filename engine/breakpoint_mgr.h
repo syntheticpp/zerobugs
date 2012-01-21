@@ -361,37 +361,6 @@ public:
         return result;
     }
 
-/*
-    template<typename T> size_t get_breakpoint_list
-    (
-        const T& t,
-        addr_t addr,
-        std::vector<RefPtr<BreakPoint> >& brkpnts
-    ) const
-    {
-        size_t result = 0;
-
-        Group::const_iterator i = group_.begin();
-        for (; i != group_.end(); ++i)
-        {
-            if (addr)
-            {
-                RefPtr<BreakPoint> bpnt = (*i)->get_breakpoint(t, addr);
-
-                if (bpnt.get())
-                {
-                    brkpnts.push_back(bpnt);
-                    ++result;
-                }
-            }
-            else
-            {
-                result += (*i)->get_breakpoint_list(t, brkpnts);
-            }
-        }
-        return result;
-    }
- */
     void erase(RefPtr<BreakPoint>);
 
     /**

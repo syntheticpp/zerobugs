@@ -267,12 +267,11 @@ RefPtr<ThreadImpl> LinuxLiveTarget::handle_fork(
 ////////////////////////////////////////////////////////////////
 RefPtr<ThreadImpl> LinuxLiveTarget::handle_exec(pid_t pid)
 {
+    // the newly exec-ed process overlays the parent;
+    // we can forget about the breakpoints in the old process
     if (BreakPointManager* mgr = debugger().breakpoint_manager())
     {
-        if (Process* p = process())
-        {
-            mgr->reset(p->pid());
-        }
+        mgr->reset(pid);
     }
 
     reset_process_name();
