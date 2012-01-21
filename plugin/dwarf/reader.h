@@ -45,7 +45,7 @@ namespace Dwarf
         , public DebugInfoReader
         , public FrameHandler
         , public UnitHeadersCallback
-        , VersionInfoImpl<ZERO_API_MAJOR, ZERO_API_MINOR, 66>
+        , VersionInfoImpl<ZERO_API_MAJOR, ZERO_API_MINOR, 67>
         , boost::noncopyable
     {
         // disable copy and assignment

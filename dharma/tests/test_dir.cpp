@@ -11,12 +11,15 @@
 #include <unistd.h>
 #include "../directory.h"
 #include "../canonical_path.h"
+#include "../syscall_wrap.h"
+
 
 using namespace std;
 
 int main(int argc, char* argv[])
 {
-    const Directory procDir("/proc", "[0-9]*");
+    const Directory procDir(".", "*.cpp");
+    assert(procDir.size() == 9);
 
     for (auto i = procDir.begin(); i != procDir.end(); ++i)
     {

@@ -574,6 +574,14 @@ static void set_user_breakpoint(Thread* thread, addr_t addr)
 }
 
 
+
+static word_t get_result(Thread* thread)
+{
+    assert(thread);
+    return thread->result();
+}
+
+
 static void
 enum_breakpoints_(RefPtr<Thread> thread,
                   addr_t addr,
@@ -1053,7 +1061,7 @@ void export_thread()
         .def("regs", regs, regs_overloads(args("frame"),
             "return CPU regs for a given thread and (optional) stack frame")
             )
-
+        .def("result", get_result, "return result of last operation")
         .def("set_breakpoint", set_breakpoint)
         .def("set_breakpoint", set_user_breakpoint)
         .def("symbols", &Thread::symbols,

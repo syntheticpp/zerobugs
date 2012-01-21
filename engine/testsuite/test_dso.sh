@@ -151,7 +151,7 @@ function run()
     else
         #test_dso -gstabs+ $@
         #test_dso -gstabs $@
-        test_dso -gdwarf-2 $@
+        test_dso -ggdb $@
     fi
 }
 

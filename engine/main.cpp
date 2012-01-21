@@ -524,6 +524,17 @@ static void release()
 
 int main(int argc, char* argv[])
 {
+/* 
+    http://pubs.opengroup.org/onlinepubs/007904975/functions/pthread_atfork.html
+
+    "There at least two serious problems with the semantics of fork() in a multi-threaded program.
+    One problem has to do with state (for example, memory) covered by mutexes. Consider the case
+    where one thread has a mutex locked and the state covered by that mutex is inconsistent whilex
+    another thread calls fork(). In the child, the mutex is in the locked state (locked by a nonexistent
+    thread and thus can never be unlocked). Having the child simply reinitialize the mutex is
+    unsatisfactory since this approach does not resolve the question about how to correct or otherwise
+    deal with the inconsistent state in the child." */
+
     if (int err = pthread_atfork(acquire, release, release))
     {
         cerr << "pthread_atfork failed: " << strerror(err) << endl;

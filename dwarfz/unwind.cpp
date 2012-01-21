@@ -140,12 +140,26 @@ get_reg(const RegTable& frame, AddrOps& ops, Dwarf_Half n)
 
 
 ////////////////////////////////////////////////////////////////
-static Dwarf_Addr
-eval_loc(Dwarf_Addr base, const Dwarf_Locdesc& desc) throw()
+static Dwarf_Addr eval_loc(
+
+    Dwarf_Debug             dbg,
+    Dwarf_Addr              base,
+    const Dwarf_Locdesc&    desc) throw()
+
 {
     try
     {
-        return Location::eval(base, 0, &desc);
+        bool isVal = false;
+
+        // okay to pass pc=0 (only needed for cfa computation
+        // currently, which in this context would be circular
+        // anyway)
+        Dwarf_Addr addr(Location::eval(dbg, 0, base, 0, &desc, isVal));
+
+        // do not expect values within frame expressions
+        assert(!isVal);
+
+        return addr;
     }
     catch (const exception& e)
     {
@@ -182,7 +196,7 @@ eval_frame_expr(Dwarf_Debug dbg,
 
     if (desc)
     {
-        result = eval_loc(base, *desc);
+        result = eval_loc(dbg, base, *desc);
 
         dwarf_dealloc(dbg, desc->ld_s, DW_DLA_LOC_BLOCK);
         dwarf_dealloc(dbg, desc, DW_DLA_LOCDESC);
@@ -191,6 +205,9 @@ eval_frame_expr(Dwarf_Debug dbg,
 }
 
 
+/**
+ * Debugging utility.
+ */
 static void
 print(ostream& os, Dwarf_Addr pc, const Dwarf_Regtable3& table)
 {
@@ -208,7 +225,6 @@ print(ostream& os, Dwarf_Addr pc, const Dwarf_Regtable3& table)
         os << flush;
     )
 }
-
 
 
 /**
@@ -384,9 +400,7 @@ compute_cfa(const RegTable& frame,
     else
     {   // otherwise read it from the current thread's state
         cfa = addrOps.read_cpu_reg(ABI::user_reg_index(regnum));
-        IF_DEBUG_FH(
-            clog << __func__ << ": " << hex << cfa << dec << endl;
-        )
+        IF_DEBUG_FH( clog << __func__ << ": " << hex << cfa << dec << endl; )
     }
     if (regs.rt3_cfa_rule.dw_offset_relevant)
     {
@@ -401,6 +415,33 @@ compute_cfa(const RegTable& frame,
     return cfa;
 }
 
+
+/**
+ * Compute the CFA at the local program count.
+ * For supporting DW_OP_call_frame_cfa:
+ */
+Dwarf_Addr Unwind::compute_cfa(Dwarf_Addr pc, AddrOps& ops)
+{
+    Dwarf_Addr cfa = 0;
+
+    if (fde_)
+    {
+        Dwarf_Regtable3 regs;
+        memset(&regs, 0, sizeof regs);
+
+        regs.rt3_reg_table_size = rule_table_size();
+
+        Dwarf_Regtable_Entry3 rules[regs.rt3_reg_table_size];
+        regs.rt3_rules = rules;
+
+        if (get_dwarf_regtable(dbg_, fde_, pc, regs))
+        {
+            RegTable frame; // discard
+            cfa = ::compute_cfa(frame, regs, ops);
+        }
+    }
+    return cfa;
+}
 
 
 /* Algorithm:
@@ -420,6 +461,7 @@ Unwind::step(Dwarf_Addr pc, AddrOps& addrOps, RegTable& frame)
 
     Dwarf_Regtable3 regs;
     memset(&regs, 0, sizeof regs);
+
     regs.rt3_reg_table_size = rule_table_size();
 
     Dwarf_Regtable_Entry3 rules[regs.rt3_reg_table_size];
@@ -433,7 +475,7 @@ Unwind::step(Dwarf_Addr pc, AddrOps& addrOps, RegTable& frame)
     print(clog, frame);
 
     // calculate the Canonical Frame Address
-    Dwarf_Addr cfa = compute_cfa(frame, regs, addrOps);
+    Dwarf_Addr cfa = ::compute_cfa(frame, regs, addrOps);
 
     // get the return address, based on the CFA
     Dwarf_Addr retAddr = get_reg(dbg_,

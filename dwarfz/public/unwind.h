@@ -55,6 +55,12 @@ namespace Dwarf
          */
         Dwarf_Addr step(Dwarf_Addr pc, AddrOps& addrOps, RegTable& regs);
 
+        /**
+         * Compute the CFA at the local program count.
+         * For supporting DW_OP_call_frame_cfa:
+         */
+        Dwarf_Addr compute_cfa(Dwarf_Addr pc, AddrOps& ops);
+
     private:
         Unwind(const Unwind&);
         Unwind& operator=(const Unwind&);

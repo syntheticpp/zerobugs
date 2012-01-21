@@ -9,18 +9,19 @@
 // http://www.boost.org/LICENSE_1_0.txt)
 // -------------------------------------------------------------------------
 
+#include "zdk/stdexcept.h"
 #include <assert.h>
 #include <iostream>
 #include <stack>
-#include <stdexcept>
 #include <dwarf.h>
 #include <pthread.h>
-#include "public/error.h"
+#include "private/log.h"
 #include "public/addr_ops.h"
 #include "public/abi.h"
-#include "private/log.h"
+#include "public/error.h"
 #include "public/impl.h"
 #include "public/location.h"
+#include "public/unwind.h"
 #include "generic/lock.h"
 
 #ifdef __func__
@@ -63,8 +64,10 @@ static void delete_key(void*)
     pthread_key_delete(addrOpsKey);
 }
 
-static int init = pthread_key_create(&addrOpsKey, delete_key);
-
+namespace Dwarf
+{
+    int init = pthread_key_create(&addrOpsKey, delete_key);
+}
 
 /**
  * note: the client must ensure thread-safety
@@ -87,7 +90,7 @@ AddrOps* Dwarf::get_addr_operations()
 
 
 Location::Location(Dwarf_Debug dbg, Dwarf_Attribute attr)
-    : dbg_(dbg), list_(0), size_(0)
+    : dbg_(dbg), list_(0), size_(0), isValue_(false)
 {
     assert(dbg);
     Dwarf_Error err = 0;
@@ -163,6 +166,7 @@ Dwarf_Addr Location::eval(Dwarf_Addr frame,
     DBG << __func__ << " unit base=" << hex << unitBase << dec << "\n";
 
     Dwarf_Addr result = 0;
+    isValue_ = false;
 
     if (list_)
     {
@@ -187,7 +191,7 @@ Dwarf_Addr Location::eval(Dwarf_Addr frame,
             if ((pc >= lopc) && (pc < hipc))
             {
                 DBG << "evaluating loc[" << i << "]\n";
-                result = eval(frame, moduleBase, loc);
+                result = eval(dbg_, pc, frame, moduleBase, loc, isValue_);
                 DBG << __func__ << "=" << hex << result << dec << "\n" ;
                 break;
             }
@@ -316,9 +320,12 @@ static void op_plus(Stack& stack)
  * Evaluate an address using a simple stack machine
  */
 Dwarf_Addr
-Location::eval(Dwarf_Addr frameBase,
+Location::eval(Dwarf_Debug dbg,
+               Dwarf_Addr pc,
+               Dwarf_Addr frameBase,
                Dwarf_Addr moduleBase,
-               const Dwarf_Locdesc* desc)
+               const Dwarf_Locdesc* desc,
+               bool& isValue)
 {
     AddrOps* addrOps = get_addr_operations();
     if (!addrOps)
@@ -560,6 +567,19 @@ Location::eval(Dwarf_Addr frameBase,
         case DW_OP_consts:
             DBG << "const: " << (Dwarf_Signed)loc.lr_number << "\n";
             stack.push(loc.lr_number);
+            break;
+
+        case DW_OP_call_frame_cfa:  // DWARF 3f
+            {   // temporary stack unwinder for computing
+                // the Canonical Frame Address
+                Unwind unwind(dbg);
+                stack.push(unwind.compute_cfa(pc, *addrOps));
+            }
+            break;
+
+        case DW_OP_stack_value:     // DWARF 4
+            assert(!stack.empty());
+            isValue = true;
             break;
 
         default:

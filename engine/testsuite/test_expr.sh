@@ -12,6 +12,7 @@ rm -f $config
 cat > ./foo.cpp << '---end---'
 ////////////////////////////////////////////////////////////////
 // foo.cpp
+#include <iostream>
 struct C { double val; C() : val(1.05) {} };
 static C _c;
 #ifdef TEST_NAMESPACE
@@ -23,34 +24,43 @@ struct B
 #endif
 struct A
 {
-    short s;
-    unsigned short us;
-    char c;
-    unsigned char uc;
+	short s;
+	unsigned short us;
+	char c;
+	unsigned char uc;
 
-    C* next;
+	C* next;
 
-    static int fuk;
+	static int fuk;
 
-    A() : s(32767), us(65535), c(127), uc(255), next(0) {}
+	A() : s(32767), us(65535), c(127), uc(255), next(0) {}
 
-    int foo()
-    {
-        return s;
-    }
+	int foo()
+	{
+		return s;
+	}
 };
 };
 int B::A::fuk = 42;
+void foo(int i)
+{
+	i++;
+	std::cout << i << std::endl;
+	std::cout << "hello" << std::endl;
+}
 
 int main()
 {
-    B::A a;
-    int res = B::A::fuk;
-    //A a;
-    //return A::fuk;
+	B::A a;
+	int res = B::A::fuk;
+	//A a;
+	//return A::fuk;
 
-    a.next = &_c;
-    return res + a.foo();
+	a.next = &_c;
+	res += a.foo();
+	int i = 42;
+	foo(i);
+	return res;
 }
 ---end---
 
@@ -98,8 +108,8 @@ expect {
 #---end---
 #ARCH=`uname -a | cut -f11 -d' '`
 #if [ $ARCH = "x86_64" ]
-#    then echo invalid operands of types B::A and long to operator AND >> script
-#    else echo invalid operands of types B::A and int to operator AND >> script
+#	 then echo invalid operands of types B::A and long to operator AND >> script
+#	 else echo invalid operands of types B::A and int to operator AND >> script
 #fi
 #echo "#$ARCH" >> script
 #cat >> script << '---end---'
@@ -134,7 +144,7 @@ invalid operands of types int and complex float to operator >>
 call { eval a.next->uc }
 expect { C*: could not get pointed object
 }
-
+call a.prev
 call next
 call next
 call { eval a.next->val }
@@ -145,14 +155,20 @@ call { eval (&a)->val }
 expect { B::A has no member named 'val'
 }
 
-call { eval a.prev }
+call step
+call step
 
-call step
-call step
 call { eval next->val }
 expect { 1.05
 }
-
+call ret
+call next
+call step
+call next
+call { eval i }
+expect {
+42
+}
 call quit
 ---end---
 
@@ -168,15 +184,17 @@ run_debugger $@
 
 function run()
 {
-    source common.sh
+	source common.sh
 
-    if [ "$compiler" = icc ]
-    then
-        test_expr_eval -g
-    else
-        test_expr_eval -gstabs+ $@
-        test_expr_eval -gdwarf-2 $@
-    fi
+	if [ "$compiler" = icc ]
+	then
+		test_expr_eval -g
+	else
+		test_expr_eval -gstabs+ $@
+		test_expr_eval -gdwarf-2 $@
+		test_expr_eval -g $@
+		test_expr_eval -ggdb $@
+	fi
 }
 
 source suffix.sh

@@ -397,15 +397,19 @@ void LinuxLiveTarget::set_ptrace_options(pid_t pid)
     }
     else
     {
+        static bool warnOnce = true;
         // The only valid use-case for disabling tracing forked 
         // process is to debug the debugger with itself, so that
         // we don't "grandfather" its debug target. The user
         // should be warned in all other cases that the flag
         // is turned off.
-
-        debugger().message(
-            "Warning: debugging forked processes is currently disabled",
-            Debugger::MSG_INFO);
+        if (warnOnce)
+        {
+            warnOnce = false;
+            debugger().message(
+                "Warning: debugging forked processes is currently disabled",
+                Debugger::MSG_INFO);
+        }
     }
 
     if (options)

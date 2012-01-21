@@ -834,12 +834,12 @@ void EmitDebugSymbol::operator()(const Dwarf::Datum& dat)
     boost::shared_ptr<Dwarf::Type> type = dat.type();
     if (!type)
     {
-        //throw logic_error(string("datum with null type: ") + dat.name());
         cerr << "*** Warning: " << "datum with null type: " << dat.name() << endl;
         return;
     }
     addr_t val = 0;
     bool isRegister = false;
+    bool isValue = false;
 
     dbgout(0) << "calculating frame_base" << endl;
     const addr_t frameBase = frame_base();
@@ -850,10 +850,12 @@ void EmitDebugSymbol::operator()(const Dwarf::Datum& dat)
         dbgout(0) << "loc="<< loc << endl;
         const addr_t programCount = CHKPTR(frame_)->program_count();
         val = loc->eval(frameBase, moduleAdjust_, unitBase_, programCount);
-        isRegister = loc->is_register(programCount, unitBase_);
+        isValue = loc->is_value();
+        isRegister = !isValue && loc->is_register(programCount, unitBase_);
+
         // experiment: deal with return-value-optimization,
         // location contains the address of a pointer to the variable
-        if (dat.access() == a_private)
+        if ((dat.access() == a_private) && !isValue)
         {
             size_t count = 0;
             thread_read(*thread_, val, val, &count);
@@ -892,6 +894,7 @@ void EmitDebugSymbol::operator()(const Dwarf::Datum& dat)
             val = syms.front()->addr();
         }
     }
+
     if (type)
     {
         dbgout(0) << dat.name() << ", Dwarf::Type=" << type->name()
@@ -933,15 +936,24 @@ void EmitDebugSymbol::operator()(const Dwarf::Datum& dat)
 
             if (val)
             {
-                // note: val is the symbol's address
-
-                sym = DebugSymbolImpl::create(  &reader_,
+                if (isValue)
+                {
+                    ostringstream buf;
+                    buf << val;
+                    sym = DebugSymbolImpl::create(*thread_, *adaptedType, buf.str(), name);
+                    sym->set_constant();
+                }
+                else
+                {
+                    // note: val is the symbol's address
+                    sym = DebugSymbolImpl::create(  &reader_,
                                                 *thread_,
                                                 *adaptedType,
                                                 *name,
                                                 val,
                                                 decl_file(fun_, dat).get(),
                                                 dat.decl_line());
+                }
             }
             else
             {

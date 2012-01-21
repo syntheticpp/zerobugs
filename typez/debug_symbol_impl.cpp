@@ -369,7 +369,7 @@ void DebugSymbolImpl::read(DebugSymbolEvents* events, long bitmask)
     }
     catch (exception& e)
     {
-        cerr << __func__ << '(' << name() << "): " << e.what() << endl;
+        cerr << __func__ << "(var=" << name() << "): " << e.what() << endl;
     }
     catch (...)
     {
@@ -391,7 +391,6 @@ void DebugSymbolImpl::read_bit_field(DebugSymbolEvents* events, bitsize_t mask)
 
         Value<int> v;
         v.read(*this);
-        //clog << bitset<sizeof(int)*4>(mask) << endl;
 
         int tmp = v.value() & mask;
 

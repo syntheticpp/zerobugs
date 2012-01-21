@@ -86,6 +86,21 @@ static list lookup_by_name(SymbolTable* symbols, const char* name)
 }
 
 
+class NullManager : public ZObjectManager
+{
+    void manage(ZObject*) { }
+
+    bool query_interface(uuidref_t, void**) { return false; }
+};
+
+// hmm, this may leak
+static Process* get_process(const SymbolTable* table)
+{
+    NullManager phb;
+    return table->process(&phb);
+}
+
+
 void export_symbol_table()
 {
     class_<SymbolTable, bases<>, noncopyable>("SymbolTable", no_init)
@@ -95,7 +110,7 @@ void export_symbol_table()
         .def("is_dynamic", &SymbolTable::is_dynamic)
         .def("lookup", lookup_by_addr, "lookup symbol by address")
         .def("lookup", lookup_by_name, "lookup symbol by name")
-        .def("process", &SymbolTable::process,
+        .def("process", get_process,
             "get the process to which this table belongs",
             locked<return_value_policy<reference_existing_object> >()
             )

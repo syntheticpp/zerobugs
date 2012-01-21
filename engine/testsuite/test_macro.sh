@@ -127,8 +127,8 @@ function run()
     then    
         test_macro -g3 $@
     else
-        test_macro -g3 $@
-        #test_macro -gdwarf-23 $@
+        #test_macro -g3 $@
+        test_macro -gdwarf-2 -g3 $@
     fi
 }
 

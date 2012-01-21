@@ -67,13 +67,10 @@ namespace Dwarf
                 assert(constVal->size() >= sizeof(Dwarf_Unsigned));
                 buf << *static_cast<const Dwarf_Unsigned*>(constVal->data());
             }
-            //string tmp(klass_->name()->c_str());
-            //tmp += "::";
-            //tmp += name->c_str();
+
             value = DebugSymbolImpl::create(thread,
                                             type,
                                             buf.str(),
-                                            //shared_string(tmp).get());
                                             name);
             value->set_constant();
         }

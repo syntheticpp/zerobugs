@@ -26,7 +26,9 @@ source test_dso_debug.sh
 source test_env.sh
 source test_exec.sh
 source test_expr.sh
+source test_expr_dwarf3.sh
 source test_expr_lazy.sh
+source test_expr_opt.sh
 source test_frame.sh
 source test_inherit.sh
 source test_interface.sh
@@ -118,6 +120,7 @@ function add_common_test()
                 add_test "$T -gstabs+"
         fi;
         add_test "$T -gdwarf-2"
+        add_test "$T -ggdb"
 
         #add_test "$T -gdwarf-2 -feliminate-dwarf2-dups"
     fi
@@ -300,6 +303,9 @@ fi
 
 
 add_test test_interface -gdwarf-2
+
+add_test test_expr_opt
+add_test test_expr_dwarf3
 
 #todo
 #add_test test_dwarf_reg -O0
