@@ -1,0 +1,8 @@
+#!/bin/bash
+sudo checkinstall --pkgname zerobugs --pkglicense Boost --maintainer cristian@zerobugs.org \
+--requires "libelf1,libgtkmm-2.4-dbg,libgtkhtml3.14-19,libgtksourceview2.0-0,libgtksourceviewmm-2.0-2,libboost-python1.42.0" \
+--pkggroup Development \
+--nodoc \
+--strip=no \
+--pkgsource "http://zerobugs.codeplex.com/" \
+-D ./build --install

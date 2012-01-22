@@ -104,9 +104,9 @@ depend:
 	@if test -f $(LIB_LIST); then  :; else echo "Did you forget to make tidy?"; exit 1; fi
 	sort -u $(LIB_LIST) > tmp && mv tmp $(LIB_LIST)
 
-# Make TGZ distribution (NOTE this has not been used/tested in a while)
-dist: all
-	sh make/mkdist
+
+install: all
+	make/install.sh
 
 # Archive up the source tree
 TARFILE=zero.$(shell date +%m%d%y).tar.bz2

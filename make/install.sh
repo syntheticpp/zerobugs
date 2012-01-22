@@ -154,7 +154,7 @@ plugin/.zero.py         zero/plugin/.zero.py\n
 misc/zero-gtkrc-2.0     zero/plugin/zero-gtkrc-2.0\n
 lib/libdwarf.so         zero/lib/libdwarf.so\n
 lib/libdemangle_d.so    zero/lib/libdemangle_d.so\n
-help                    zero/help\n
+help/          			zero/help\n
 zeroicon.png            zero/zeroicon.png\n
 LIBDWARFCOPYRIGHT       zero/LIBDWARFCOPYRIGHT"
 
@@ -174,6 +174,8 @@ do
 done
 mkdir -p /usr/share/applications
 cp zero.desktop /usr/share/applications
+
+rm -rf $PREFIX/zero/help/.svn
 
 install_wrapper_script
 
