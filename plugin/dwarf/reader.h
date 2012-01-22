@@ -250,9 +250,9 @@ namespace Dwarf
         Handle get_debug_handle(ino_t, const RefPtr<Process>&) const;
         Handle get_debug_handle(SharedString*, const RefPtr<Process>&) const;
 
-        Handle
-        get_debug_handle(const RefPtr<SharedString>& file,
-                         const RefPtr<Process>& process) const
+        Handle get_debug_handle(
+            const RefPtr<SharedString>& file,
+            const RefPtr<Process>&      process) const
         {
             return get_debug_handle(file.get(), process);
         }
@@ -268,8 +268,9 @@ namespace Dwarf
 
         Debugger* debugger() const { return debugger_; }
 
-        boost::shared_ptr<Type> db_lookup_type(const RefPtr<Process>&,
-                                               const char* typeName) const;
+        boost::shared_ptr<Type> db_lookup_type(
+            const RefPtr<Process>&,
+            const char* typeName) const;
 
     private:
         // helpers

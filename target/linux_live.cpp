@@ -231,7 +231,7 @@ RefPtr<ThreadImpl> LinuxLiveTarget::handle_fork(
     add_thread(thread);
     init_thread_agent();
 
-    bool failed = false;
+    string error;
 
     // NOTE: order of operations is important: on_attach()
     // creates the breakpoint manager for the forked thread;
@@ -245,17 +245,23 @@ RefPtr<ThreadImpl> LinuxLiveTarget::handle_fork(
     }
     catch (const exception& e)
     {
-        failed = true;
-        debugger().message(e.what(), Debugger::MSG_ERROR, thread.get());
+        error = e.what();
     }
 
-    if (failed)
+    if (!error.empty())
     {
-        thread->set_signal(SIGKILL);
+        debugger().message(error.c_str(), Debugger::MSG_ERROR, thread.get());
+
+        // The fork-ed process may be in a whacky state, if we tried poking
+        // some breakpoints and failed halfway through... not sure what the
+        // best course of action is here. Looks like a Heisenbug factory.
+
+        // thread->set_signal(SIGKILL);
     }
 
-    if (resumeNewThreads_
-        && (debugger().options() & Debugger::OPT_SPAWN_ON_FORK) == 0)
+    bool spawnOnFork = debugger().options() & Debugger::OPT_SPAWN_ON_FORK;
+
+    if (resumeNewThreads_ && !spawnOnFork)
     {
         dbgout(0) << "resuming new thread (" << thread->lwpid() << ")" << endl;
         thread->resume();

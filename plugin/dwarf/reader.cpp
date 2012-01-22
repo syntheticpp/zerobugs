@@ -660,6 +660,7 @@ namespace Dwarf
                     return base;
                 }
             }
+
             if (fun_)
             {
                 addr_t addr = frame_ ? frame_->program_count() : 0;
@@ -683,6 +684,14 @@ namespace Dwarf
 
     protected:
         void read_from_register(DataType&, addr_t, SharedString&);
+
+        void emit_symbol (
+            const Dwarf::Datum&,
+            boost::shared_ptr<Dwarf::Type>,
+            addr_t, /* address or value */
+            addr_t, /* frame base       */
+            bool    /* isRegister       */,
+            bool    /* isValue          */);
 
     private:
         Reader&             reader_;
@@ -781,12 +790,101 @@ static bool name_equals(const Dwarf::Datum& dat, const char* str)
 }
 
 
+void EmitDebugSymbol::emit_symbol(
+
+    const Dwarf::Datum&             dat,
+    boost::shared_ptr<Dwarf::Type>  type,
+    addr_t                          val,
+    addr_t                          frameBase,
+    bool                            isRegister,
+    bool                            isValue )
+{
+    assert(type);
+
+    dbgout(0) << dat.name() << ", Dwarf::Type=" << type->name()
+              << (isRegister ? " (register) " : " ");
+    dbgout(0) << "val=0x" << hex << val << dec << endl;
+
+    // According to the DWARF standard: In the case
+    // of locations used for structure members, the
+    // computation assumes that the base address of the
+    // containing structure has been pushed on the
+    // stack before evaluation the addressing operation.
+    //
+    addr_t addr = val;
+    if (isRegister || addr == 0)
+    {
+        addr = frameBase;
+    }
+
+    TypeAdapter adapter(&reader_, thread_, addr, typeMap_);
+    RefPtr<DataType> adaptedType = adapter.apply(type);
+
+    if (!adaptedType)
+    {
+        throw logic_error(string("Could not adapt ") + typeid(*type).name());
+    }
+    RefPtr<SharedString> name(shared_string(dat.name()));
+
+    if (isRegister)
+    {
+        dbgout(0) << dat.name() << "=" << val << endl;
+        read_from_register(*adaptedType, val, *name);
+
+        ++count_;
+    }
+    else
+    {
+        RefPtr<DebugSymbolImpl> sym;
+
+        if (val)
+        {
+            if (isValue)
+            {
+                ostringstream buf;
+                buf << val;
+                sym = DebugSymbolImpl::create(*thread_, *adaptedType, buf.str(), name);
+                sym->set_constant();
+            }
+            else
+            {
+                // note: val is the symbol's address
+                sym = DebugSymbolImpl::create( 
+                    &reader_,
+                    *thread_,
+                    *adaptedType,
+                    *name,
+                    val,
+                    decl_file(fun_, dat).get(),
+                    dat.decl_line());
+            }
+        }
+        else
+        {
+            sym = const_value(*thread_, dat, *adaptedType, name.get());
+        }
+        if (sym)
+        {
+            ++count_;
+
+            if (events_->notify(sym.get()))
+            {
+                sym->read(events_);
+            }
+            dbgout(0) << sym->value() << endl;
+        }
+    }
+}
+
+
 /**
- * @todo break it up in smaller functions
+
+ * emit symbol
  */
 void EmitDebugSymbol::operator()(const Dwarf::Datum& dat)
 {
     assert(thread_);
+
 
     // skip unnamed objects
     if (dat.name() == 0 || *dat.name() == 0)
@@ -897,79 +995,7 @@ void EmitDebugSymbol::operator()(const Dwarf::Datum& dat)
 
     if (type)
     {
-        dbgout(0) << dat.name() << ", Dwarf::Type=" << type->name()
-                  << (isRegister ? " (register) " : " ");
-        dbgout(0) << "val=0x" << hex << val << dec << endl;
-
-        // According to the DWARF standard: In the case
-        // of locations used for structure members, the
-        // computation assumes that the base address of the
-        // containing structure has been pushed on the
-        // stack before evaluation the addressing operation.
-        //
-        addr_t addr = val;
-        if (isRegister || addr == 0)
-        {
-            addr = frameBase;
-        }
-
-        TypeAdapter adapter(&reader_, thread_, addr, typeMap_);
-        RefPtr<DataType> adaptedType = adapter.apply(type);
-
-        if (!adaptedType)
-        {
-            //throw logic_error(string("Could not adapt ") + type->name());
-            throw logic_error(string("Could not adapt ") + typeid(*type).name());
-        }
-        RefPtr<SharedString> name(shared_string(dat.name()));
-
-        if (isRegister)
-        {
-            dbgout(0) << dat.name() << "=" << val << endl;
-            read_from_register(*adaptedType, val, *name);
-
-            ++count_;
-        }
-        else
-        {
-            RefPtr<DebugSymbolImpl> sym;
-
-            if (val)
-            {
-                if (isValue)
-                {
-                    ostringstream buf;
-                    buf << val;
-                    sym = DebugSymbolImpl::create(*thread_, *adaptedType, buf.str(), name);
-                    sym->set_constant();
-                }
-                else
-                {
-                    // note: val is the symbol's address
-                    sym = DebugSymbolImpl::create(  &reader_,
-                                                *thread_,
-                                                *adaptedType,
-                                                *name,
-                                                val,
-                                                decl_file(fun_, dat).get(),
-                                                dat.decl_line());
-                }
-            }
-            else
-            {
-                sym = const_value(*thread_, dat, *adaptedType, name.get());
-            }
-            if (sym)
-            {
-                ++count_;
-
-                if (events_->notify(sym.get()))
-                {
-                    sym->read(events_);
-                }
-                dbgout(0) << sym->value() << endl;
-            }
-        }
+        emit_symbol(dat, type, val, frameBase, isRegister, isValue);
     }
 }
 
