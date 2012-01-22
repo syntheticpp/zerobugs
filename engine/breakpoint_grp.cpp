@@ -333,18 +333,19 @@ BreakPoint* BreakPointManagerGroup::set_watchpoint(
 }
 
 
+typedef EnumCallback<volatile BreakPoint*> BreakPointCallback;
+
 ////////////////////////////////////////////////////////////////
 size_t BreakPointManagerGroup::enum_breakpoints(
-    EnumCallback<volatile BreakPoint*>* callback,
-    Thread* thread,
-    addr_t  addr,
-    BreakPoint::Type type
+    BreakPointCallback* callback,
+    Thread*             thread,
+    addr_t              addr,
+    BreakPoint::Type    type
     ) const
 {
     size_t count = 0;
 
-    Group::const_iterator i = group_.begin();
-    for (; i != group_.end(); ++i)
+    for (Group::const_iterator i = group_.begin(); i != group_.end(); ++i)
     {
         count += (*i)->enum_breakpoints(callback, thread, addr, type);
     }
@@ -354,15 +355,13 @@ size_t BreakPointManagerGroup::enum_breakpoints(
 
 
 ////////////////////////////////////////////////////////////////
-size_t BreakPointManagerGroup::enum_watchpoints(
-    EnumCallback<volatile BreakPoint*>* callback) const
+size_t BreakPointManagerGroup::enum_watchpoints(BreakPointCallback* cb) const
 {
     size_t count = 0;
 
-    Group::const_iterator i = group_.begin();
-    for (; i != group_.end(); ++i)
+    for (Group::const_iterator i = group_.begin(); i != group_.end(); ++i)
     {
-        count += (*i)->enum_watchpoints(callback);
+        count += (*i)->enum_watchpoints(cb);
     }
     return count;
 }
@@ -371,8 +370,7 @@ size_t BreakPointManagerGroup::enum_watchpoints(
 ////////////////////////////////////////////////////////////////
 BreakPointManager* BreakPointManagerGroup::get_manager(pid_t pid) const
 {
-    Group::const_iterator i = group_.begin();
-    for (; i != group_.end(); ++i)
+    for (Group::const_iterator i = group_.begin(); i != group_.end(); ++i)
     {
         if ((*i)->pid() == pid)
         {
@@ -392,6 +390,7 @@ size_t BreakPointManagerGroup::reset(pid_t pid)
         {
             group_.erase(i);
             clog << "reset breakpoints manager for pid: " << pid << endl;
+
             return 1;
         }
     }
@@ -401,21 +400,21 @@ size_t BreakPointManagerGroup::reset(pid_t pid)
 
 ////////////////////////////////////////////////////////////////
 size_t BreakPointManagerGroup::remove_breakpoint_actions(
-    pid_t pid,
-    pid_t lwpid,
-    addr_t addr,
+    pid_t       pid,
+    pid_t       lwpid,
+    addr_t      addr,
     const char* name)
 {
     size_t removedCount = 0;
 
-    Group::const_iterator i = group_.begin();
-    for (; i != group_.end(); ++i)
+    for (Group::const_iterator i = group_.begin(); i != group_.end(); ++i)
     {
-        if ((pid == 0) || ( (*i)->pid() == pid ))
+        // pid == 0 matches all
+        if (pid && (*i)->pid() != pid)
         {
-            removedCount +=
-                (*i)->remove_breakpoint_actions(pid, lwpid, addr, name);
+            continue;
         }
+        removedCount += (*i)->remove_breakpoint_actions(pid, lwpid, addr, name);
     }
     return removedCount;
 }

@@ -273,8 +273,9 @@ RefPtr<ThreadImpl> LinuxLiveTarget::handle_fork(
 ////////////////////////////////////////////////////////////////
 RefPtr<ThreadImpl> LinuxLiveTarget::handle_exec(pid_t pid)
 {
-    // the newly exec-ed process overlays the parent;
-    // we can forget about the breakpoints in the old process
+    // The newly exec-ed process overlays the parent;
+    // we can forget about the breakpoints in the old process.
+
     if (BreakPointManager* mgr = debugger().breakpoint_manager())
     {
         mgr->reset(pid);
@@ -403,6 +404,7 @@ void LinuxLiveTarget::set_ptrace_options(pid_t pid)
     else
     {
         static bool warnOnce = true;
+
         // The only valid use-case for disabling tracing forked 
         // process is to debug the debugger with itself, so that
         // we don't "grandfather" its debug target. The user

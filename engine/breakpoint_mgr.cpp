@@ -36,8 +36,8 @@ using namespace eventlog;
 ////////////////////////////////////////////////////////////////
 bool BreakPointManagerBase::enable_software_breakpoint(
     Thread& thread,
-    addr_t addr,
-    bool enable)
+    addr_t  addr,
+    bool    enable)
 {
     PhysicalBreakPoint& brkpnt = map_[addr];
 
@@ -118,10 +118,10 @@ bool BreakPointManagerBase::enable_software_breakpoint(
 BreakPointManagerImpl::BreakPointManagerImpl
 (
     RefPtr<Process> process,
-    int  verbose,       // verbosity level
-    bool useHardware,   // use hardware support?
-    Callback onInsert,
-    Callback onRemove
+    int             verbose,       // verbosity level
+    bool            useHardware,   // use hardware support?
+    Callback        onInsert,
+    Callback        onRemove
 )
   : BreakPointManagerBase(process)
   , verbose_(verbose)
@@ -994,9 +994,9 @@ size_t BreakPointManagerImpl::remove_actions (
 
 ////////////////////////////////////////////////////////////////
 size_t BreakPointManagerImpl::remove_breakpoint_actions (
-    pid_t pid,
-    pid_t lwpid, // todo FreeBSD: use thread_id instead
-    addr_t addr,
+    pid_t       pid,
+    pid_t       lwpid, // todo FreeBSD: use thread_id instead
+    addr_t      addr,
     const char* name)
 {
     size_t removedCount = 0;
@@ -1051,10 +1051,10 @@ size_t BreakPointManagerImpl::remove_breakpoint_actions (
 
 ////////////////////////////////////////////////////////////////
 RefPtr<BreakPointBase> BreakPointManagerImpl::find_breakpoint(
-    Thread* thread,
-    BreakPoint::Type type,
-    addr_t addr,
-    BreakPointMap*& mptr)
+    Thread*             thread,
+    BreakPoint::Type    type,
+    addr_t              addr,
+    BreakPointMap*&     mptr)
 {
     assert(type != BreakPoint::ANY);
     RefPtr<BreakPointBase> bpnt;
@@ -1094,4 +1094,10 @@ Thread* BreakPointManagerImpl::get_thread(Runnable* runnable) const
     return thread;
 }
 
+
+////////////////////////////////////////////////////////////////
+size_t BreakPointManagerImpl::reset( pid_t )
+{
+    return 0;
+}
 // vim: tabstop=4:softtabstop=4:expandtab:shiftwidth=4

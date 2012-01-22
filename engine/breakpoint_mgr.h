@@ -28,8 +28,9 @@ typedef void (DebuggerEngine::*Callback)(volatile BreakPoint*);
 /**
  * BreakPointManager implementation
  */
-CLASS BreakPointManagerImpl : public BreakPointManagerBase
-                            , public EnumCallback<volatile BreakPoint*>
+CLASS BreakPointManagerImpl 
+    : public BreakPointManagerBase
+    , public EnumCallback<volatile BreakPoint*>
 {
 public:
     typedef std::vector<RefPtr<BreakPointBase> > BreakPointList;
@@ -279,7 +280,7 @@ private:
         return result;
     }
 
-    size_t reset( pid_t ) { return 0; }
+    size_t reset( pid_t );
 
 private:
     mutable Mutex mutex_;

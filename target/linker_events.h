@@ -220,20 +220,9 @@ public:
                 thread_read(thread, static_cast<addr_t>(m.l_name), buf, &nread);
                 assert(nread <= PATH_MAX);
                 dbgout(1) << __func__ << ": " << hex << m.l_addr << dec << ": " << buf << endl;
-            #if 0
-                std::string path(&buf[0]);
-                if (path.empty())
-                {
-                    // path = this->process_name();
-                }
-                else
-                {
-                    this->debugger().map_path(this->process(), path);
-                }
-                RefPtr<LinkDataImpl> ldata(new LinkDataImpl(m.l_addr, path.c_str()));
-            #else
+
                 RefPtr<LinkDataImpl> ldata(new LinkDataImpl(m.l_addr, buf));
-            #endif
+
                 if (!head)
                 {
                     head = ldata;

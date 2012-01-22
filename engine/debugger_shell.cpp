@@ -3605,7 +3605,6 @@ bool DebuggerShell::cmd_show(Thread* thp, const vector<string>& argv)
 #endif
     else if (argv[1] == "signals")
     {
-        //unsigned int n = SIGUNUSED + 1;
         unsigned int n = 32;
         if ((argv.size() > 2) && (argv[2] == "/all"))
         {

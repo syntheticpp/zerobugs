@@ -145,11 +145,7 @@ bool Location::is_register(Dwarf_Addr pc, Dwarf_Addr base) const
                 }
                 else if (loc.lr_atom >= DW_OP_reg0 && loc.lr_atom < DW_OP_reg31)
                 {
-                    //const size_t nr = loc.lr_atom - DW_OP_reg0;
-                    //if (nr < ABI::user_reg_count())
-                    {
-                        result = true;
-                    }
+                    result = true;
                 }
             }
         }
@@ -204,7 +200,7 @@ Dwarf_Addr Location::eval(Dwarf_Addr frame,
 static void handle_empty_stack(const string& func)
 {
     Dwarf::log<warn>() << func << ": stack empty" << "\n";
-    if (/* const char* var = */ getenv("ZERO_DWARF_ABORT_EMPTY_STACK"))
+    if (getenv("ZERO_DWARF_ABORT_EMPTY_STACK"))
     {
         abort();
     }
@@ -222,7 +218,6 @@ static void op_deref(Stack& stack)
     AddrOps* addrOps = get_addr_operations();
     if (!addrOps)
     {
-        //Dwarf::log<warn>() << __func__ << ": addrOps not set\n";
         throw runtime_error("op_deref: memory operations not set");
     }
     else
