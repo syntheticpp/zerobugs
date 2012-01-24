@@ -190,7 +190,9 @@ namespace
             RefPtr<SharedString> linkName = part.linkage_name();
 
             RefPtr<DebugSymbol> v = const_value(*thread_, part, *adaptedType, name.get());
+        #if DEBUG
             clog << "const_value: " << v.get() << endl;
+        #endif
             klass_->add_member(name, linkName, 0, 0, *adaptedType, true, v.get());
         }
 

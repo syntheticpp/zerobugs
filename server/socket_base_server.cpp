@@ -46,6 +46,10 @@ void SocketBaseServer::init(int& argc, char**& argv)
 
     if (!foregnd_)
     {
-        daemon(1, 0);
+        int result = daemon(1, 0);
+        if (result != 0)
+        {
+            _exit(result);
+        }
     }
 }

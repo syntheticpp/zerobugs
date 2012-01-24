@@ -189,7 +189,8 @@ CXXFLAGS+=$(INCLUDE)
   endif
  else
   ### release build ###
-  DEBUG_FORMAT+=-DNDEBUG
+  #allow asserts for now
+  #DEBUG_FORMAT+=-DNDEBUG
   ifeq ($(CXX_MAJOR),2)
 	CXXFLAGS+=-fno-default-inline 
   endif	

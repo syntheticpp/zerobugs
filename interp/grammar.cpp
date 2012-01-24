@@ -1,24 +1,23 @@
-/* A Bison parser, made by GNU Bison 2.3.  */
+
+/* A Bison parser, made by GNU Bison 2.4.1.  */
 
 /* Skeleton implementation for Bison's Yacc-like parsers in C
-
-   Copyright (C) 1984, 1989, 1990, 2000, 2001, 2002, 2003, 2004, 2005, 2006
+   
+      Copyright (C) 1984, 1989, 1990, 2000, 2001, 2002, 2003, 2004, 2005, 2006
    Free Software Foundation, Inc.
-
-   This program is free software; you can redistribute it and/or modify
+   
+   This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
-   the Free Software Foundation; either version 2, or (at your option)
-   any later version.
-
+   the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
+   
    This program is distributed in the hope that it will be useful,
    but WITHOUT ANY WARRANTY; without even the implied warranty of
    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
    GNU General Public License for more details.
-
+   
    You should have received a copy of the GNU General Public License
-   along with this program; if not, write to the Free Software
-   Foundation, Inc., 51 Franklin Street, Fifth Floor,
-   Boston, MA 02110-1301, USA.  */
+   along with this program.  If not, see <http://www.gnu.org/licenses/>.  */
 
 /* As a special exception, you may create a larger work that contains
    part or all of the Bison parser skeleton and distribute that work
@@ -29,7 +28,7 @@
    special exception, which will cause the skeleton and the resulting
    Bison output files to be licensed under the GNU General Public
    License without this special exception.
-
+   
    This special exception was added by the Free Software Foundation in
    version 2.2 of Bison.  */
 
@@ -47,7 +46,7 @@
 #define YYBISON 1
 
 /* Bison version.  */
-#define YYBISON_VERSION "2.3"
+#define YYBISON_VERSION "2.4.1"
 
 /* Skeleton name.  */
 #define YYSKELETON_NAME "yacc.c"
@@ -55,9 +54,71 @@
 /* Pure parsers.  */
 #define YYPURE 1
 
+/* Push parsers.  */
+#define YYPUSH 0
+
+/* Pull parsers.  */
+#define YYPULL 1
+
 /* Using locations.  */
 #define YYLSP_NEEDED 0
 
+
+
+/* Copy the first part of user declarations.  */
+
+/* Line 189 of yacc.c  */
+#line 11 "grammar.y"
+
+#include "abstract_decl.h"
+#include "additive_expr.h"
+#include "assign.h"
+#include "bit_expr.h"
+#include "cast_expr.h"
+#include "conditional_expr.h"
+#include "errors.h"
+#include "ident.h"
+#include "interp.h"
+#include "logical_expr.h"
+#include "multiplicative_expr.h"
+#include "parameter_list.h"
+#include "postfix_expr.h"
+#include "qualifier_list.h"
+#include "relational_expr.h"
+#include "type_spec.h"
+#include "unary_expr.h"
+
+
+#define YYPARSE_PARAM   param
+#define YYLEX_PARAM     param 
+#define YYINTERP        reinterpret_cast<Interp*>(YYPARSE_PARAM)
+
+
+#define yyerror(msg) assert(YYPARSE_PARAM); \
+    reinterpret_cast<Interp*>(YYPARSE_PARAM)->error(msg);
+
+
+
+/* Line 189 of yacc.c  */
+#line 104 "grammar.cpp"
+
+/* Enabling traces.  */
+#ifndef YYDEBUG
+# define YYDEBUG 0
+#endif
+
+/* Enabling verbose error messages.  */
+#ifdef YYERROR_VERBOSE
+# undef YYERROR_VERBOSE
+# define YYERROR_VERBOSE 1
+#else
+# define YYERROR_VERBOSE 0
+#endif
+
+/* Enabling the token table.  */
+#ifndef YYTOKEN_TABLE
+# define YYTOKEN_TABLE 0
+#endif
 
 
 /* Tokens.  */
@@ -135,142 +196,22 @@
      STATIC_CAST = 324
    };
 #endif
-/* Tokens.  */
-#define IDENTIFIER 258
-#define CONSTANT 259
-#define STRING_LITERAL 260
-#define SIZEOF 261
-#define PTR_OP 262
-#define INC_OP 263
-#define DEC_OP 264
-#define LEFT_OP 265
-#define RIGHT_OP 266
-#define LE_OP 267
-#define GE_OP 268
-#define EQ_OP 269
-#define NE_OP 270
-#define AND_OP 271
-#define OR_OP 272
-#define MUL_ASSIGN 273
-#define DIV_ASSIGN 274
-#define MOD_ASSIGN 275
-#define ADD_ASSIGN 276
-#define SUB_ASSIGN 277
-#define LEFT_ASSIGN 278
-#define RIGHT_ASSIGN 279
-#define AND_ASSIGN 280
-#define XOR_ASSIGN 281
-#define OR_ASSIGN 282
-#define TYPE_NAME 283
-#define VPTR_OP 284
-#define TYPEDEF 285
-#define EXTERN 286
-#define STATIC 287
-#define AUTO 288
-#define REGISTER 289
-#define CHAR 290
-#define SHORT 291
-#define INT 292
-#define LONG 293
-#define SIGNED 294
-#define UNSIGNED 295
-#define FLOAT 296
-#define DOUBLE 297
-#define CONST 298
-#define VOLATILE 299
-#define VOID 300
-#define KLASS 301
-#define STRUCT 302
-#define UNION 303
-#define ENUM 304
-#define ELIPSIS 305
-#define RANGE 306
-#define CASE 307
-#define DEFAULT 308
-#define IF 309
-#define ELSE 310
-#define SWITCH 311
-#define WHILE 312
-#define DO 313
-#define FOR 314
-#define GOTO 315
-#define CONTINUE 316
-#define BREAK 317
-#define RETURN 318
-#define DOUBLE_COLON 319
-#define TEMPLATE_TYPENAME 320
-#define CONST_CAST 321
-#define DYNAMIC_CAST 322
-#define REINTERPRET_CAST 323
-#define STATIC_CAST 324
 
 
-
-
-/* Copy the first part of user declarations.  */
-#line 11 "grammar.y"
-
-#include "abstract_decl.h"
-#include "additive_expr.h"
-#include "assign.h"
-#include "bit_expr.h"
-#include "cast_expr.h"
-#include "conditional_expr.h"
-#include "errors.h"
-#include "ident.h"
-#include "interp.h"
-#include "logical_expr.h"
-#include "multiplicative_expr.h"
-#include "parameter_list.h"
-#include "postfix_expr.h"
-#include "qualifier_list.h"
-#include "relational_expr.h"
-#include "type_spec.h"
-#include "unary_expr.h"
-
-
-#define YYPARSE_PARAM   param
-#define YYLEX_PARAM     param 
-#define YYINTERP        reinterpret_cast<Interp*>(YYPARSE_PARAM)
-
-
-#define yyerror(msg) assert(YYPARSE_PARAM); \
-    reinterpret_cast<Interp*>(YYPARSE_PARAM)->error(msg);
-
-
-
-/* Enabling traces.  */
-#ifndef YYDEBUG
-# define YYDEBUG 0
-#endif
-
-/* Enabling verbose error messages.  */
-#ifdef YYERROR_VERBOSE
-# undef YYERROR_VERBOSE
-# define YYERROR_VERBOSE 1
-#else
-# define YYERROR_VERBOSE 0
-#endif
-
-/* Enabling the token table.  */
-#ifndef YYTOKEN_TABLE
-# define YYTOKEN_TABLE 0
-#endif
 
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 typedef int YYSTYPE;
+# define YYSTYPE_IS_TRIVIAL 1
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
 # define YYSTYPE_IS_DECLARED 1
-# define YYSTYPE_IS_TRIVIAL 1
 #endif
-
 
 
 /* Copy the second part of user declarations.  */
 
 
-/* Line 216 of yacc.c.  */
-#line 274 "grammar.cpp"
+/* Line 264 of yacc.c  */
+#line 215 "grammar.cpp"
 
 #ifdef short
 # undef short
@@ -345,14 +286,14 @@ typedef short int yytype_int16;
 #if (defined __STDC__ || defined __C99__FUNC__ \
      || defined __cplusplus || defined _MSC_VER)
 static int
-YYID (int i)
+YYID (int yyi)
 #else
 static int
-YYID (i)
-    int i;
+YYID (yyi)
+    int yyi;
 #endif
 {
-  return i;
+  return yyi;
 }
 #endif
 
@@ -433,9 +374,9 @@ void free (void *); /* INFRINGES ON USER NAME SPACE */
 /* A type that is properly aligned for any stack member.  */
 union yyalloc
 {
-  yytype_int16 yyss;
-  YYSTYPE yyvs;
-  };
+  yytype_int16 yyss_alloc;
+  YYSTYPE yyvs_alloc;
+};
 
 /* The size of the maximum gap between one aligned stack and the next.  */
 # define YYSTACK_GAP_MAXIMUM (sizeof (union yyalloc) - 1)
@@ -469,12 +410,12 @@ union yyalloc
    elements in the stack, and YYPTR gives the new location of the
    stack.  Advance YYPTR to a properly aligned location for the next
    stack.  */
-# define YYSTACK_RELOCATE(Stack)					\
+# define YYSTACK_RELOCATE(Stack_alloc, Stack)				\
     do									\
       {									\
 	YYSIZE_T yynewbytes;						\
-	YYCOPY (&yyptr->Stack, Stack, yysize);				\
-	Stack = &yyptr->Stack;						\
+	YYCOPY (&yyptr->Stack_alloc, Stack, yysize);			\
+	Stack = &yyptr->Stack_alloc;					\
 	yynewbytes = yystacksize * sizeof (*Stack) + YYSTACK_GAP_MAXIMUM; \
 	yyptr += yynewbytes / sizeof (*yyptr);				\
       }									\
@@ -1181,17 +1122,20 @@ yy_symbol_print (yyoutput, yytype, yyvaluep)
 #if (defined __STDC__ || defined __C99__FUNC__ \
      || defined __cplusplus || defined _MSC_VER)
 static void
-yy_stack_print (yytype_int16 *bottom, yytype_int16 *top)
+yy_stack_print (yytype_int16 *yybottom, yytype_int16 *yytop)
 #else
 static void
-yy_stack_print (bottom, top)
-    yytype_int16 *bottom;
-    yytype_int16 *top;
+yy_stack_print (yybottom, yytop)
+    yytype_int16 *yybottom;
+    yytype_int16 *yytop;
 #endif
 {
   YYFPRINTF (stderr, "Stack now");
-  for (; bottom <= top; ++bottom)
-    YYFPRINTF (stderr, " %d", *bottom);
+  for (; yybottom <= yytop; yybottom++)
+    {
+      int yybot = *yybottom;
+      YYFPRINTF (stderr, " %d", yybot);
+    }
   YYFPRINTF (stderr, "\n");
 }
 
@@ -1225,11 +1169,11 @@ yy_reduce_print (yyvsp, yyrule)
   /* The symbols being reduced.  */
   for (yyi = 0; yyi < yynrhs; yyi++)
     {
-      fprintf (stderr, "   $%d = ", yyi + 1);
+      YYFPRINTF (stderr, "   $%d = ", yyi + 1);
       yy_symbol_print (stderr, yyrhs[yyprhs[yyrule] + yyi],
 		       &(yyvsp[(yyi + 1) - (yynrhs)])
 		       		       );
-      fprintf (stderr, "\n");
+      YYFPRINTF (stderr, "\n");
     }
 }
 
@@ -1509,10 +1453,8 @@ yydestruct (yymsg, yytype, yyvaluep)
 	break;
     }
 }
-
 
 /* Prevent warnings from -Wmissing-prototypes.  */
-
 #ifdef YYPARSE_PARAM
 #if defined __STDC__ || defined __cplusplus
 int yyparse (void *YYPARSE_PARAM);
@@ -1531,10 +1473,9 @@ int yyparse ();
 
 
 
-
-/*----------.
-| yyparse.  |
-`----------*/
+/*-------------------------.
+| yyparse or yypush_parse.  |
+`-------------------------*/
 
 #ifdef YYPARSE_PARAM
 #if (defined __STDC__ || defined __C99__FUNC__ \
@@ -1558,22 +1499,46 @@ yyparse ()
 #endif
 #endif
 {
-  /* The look-ahead symbol.  */
+/* The lookahead symbol.  */
 int yychar;
 
-/* The semantic value of the look-ahead symbol.  */
+/* The semantic value of the lookahead symbol.  */
 YYSTYPE yylval;
 
-/* Number of syntax errors so far.  */
-int yynerrs;
+    /* Number of syntax errors so far.  */
+    int yynerrs;
 
-  int yystate;
+    int yystate;
+    /* Number of tokens to shift before error messages enabled.  */
+    int yyerrstatus;
+
+    /* The stacks and their tools:
+       `yyss': related to states.
+       `yyvs': related to semantic values.
+
+       Refer to the stacks thru separate pointers, to allow yyoverflow
+       to reallocate them elsewhere.  */
+
+    /* The state stack.  */
+    yytype_int16 yyssa[YYINITDEPTH];
+    yytype_int16 *yyss;
+    yytype_int16 *yyssp;
+
+    /* The semantic value stack.  */
+    YYSTYPE yyvsa[YYINITDEPTH];
+    YYSTYPE *yyvs;
+    YYSTYPE *yyvsp;
+
+    YYSIZE_T yystacksize;
+
   int yyn;
   int yyresult;
-  /* Number of tokens to shift before error messages enabled.  */
-  int yyerrstatus;
-  /* Look-ahead token as an internal (translated) token number.  */
-  int yytoken = 0;
+  /* Lookahead token as an internal (translated) token number.  */
+  int yytoken;
+  /* The variables used to return semantic value and location from the
+     action routines.  */
+  YYSTYPE yyval;
+
 #if YYERROR_VERBOSE
   /* Buffer for error messages, and its allocated size.  */
   char yymsgbuf[128];
@@ -1581,51 +1546,28 @@ int yynerrs;
   YYSIZE_T yymsg_alloc = sizeof yymsgbuf;
 #endif
 
-  /* Three stacks and their tools:
-     `yyss': related to states,
-     `yyvs': related to semantic values,
-     `yyls': related to locations.
-
-     Refer to the stacks thru separate pointers, to allow yyoverflow
-     to reallocate them elsewhere.  */
-
-  /* The state stack.  */
-  yytype_int16 yyssa[YYINITDEPTH];
-  yytype_int16 *yyss = yyssa;
-  yytype_int16 *yyssp;
-
-  /* The semantic value stack.  */
-  YYSTYPE yyvsa[YYINITDEPTH];
-  YYSTYPE *yyvs = yyvsa;
-  YYSTYPE *yyvsp;
-
-
-
 #define YYPOPSTACK(N)   (yyvsp -= (N), yyssp -= (N))
-
-  YYSIZE_T yystacksize = YYINITDEPTH;
-
-  /* The variables used to return semantic value and location from the
-     action routines.  */
-  YYSTYPE yyval;
-
 
   /* The number of symbols on the RHS of the reduced rule.
      Keep to zero when no symbol should be popped.  */
   int yylen = 0;
+
+  yytoken = 0;
+  yyss = yyssa;
+  yyvs = yyvsa;
+  yystacksize = YYINITDEPTH;
 
   YYDPRINTF ((stderr, "Starting parse\n"));
 
   yystate = 0;
   yyerrstatus = 0;
   yynerrs = 0;
-  yychar = YYEMPTY;		/* Cause a token to be read.  */
+  yychar = YYEMPTY; /* Cause a token to be read.  */
 
   /* Initialize stack pointers.
      Waste one element of value and location stack
      so that they stay on the same level as the state stack.
      The wasted elements are never initialized.  */
-
   yyssp = yyss;
   yyvsp = yyvs;
 
@@ -1655,7 +1597,6 @@ int yynerrs;
 	YYSTYPE *yyvs1 = yyvs;
 	yytype_int16 *yyss1 = yyss;
 
-
 	/* Each stack pointer address is followed by the size of the
 	   data in use in that stack, in bytes.  This used to be a
 	   conditional around just the two extra args, but that might
@@ -1663,7 +1604,6 @@ int yynerrs;
 	yyoverflow (YY_("memory exhausted"),
 		    &yyss1, yysize * sizeof (*yyssp),
 		    &yyvs1, yysize * sizeof (*yyvsp),
-
 		    &yystacksize);
 
 	yyss = yyss1;
@@ -1686,9 +1626,8 @@ int yynerrs;
 	  (union yyalloc *) YYSTACK_ALLOC (YYSTACK_BYTES (yystacksize));
 	if (! yyptr)
 	  goto yyexhaustedlab;
-	YYSTACK_RELOCATE (yyss);
-	YYSTACK_RELOCATE (yyvs);
-
+	YYSTACK_RELOCATE (yyss_alloc, yyss);
+	YYSTACK_RELOCATE (yyvs_alloc, yyvs);
 #  undef YYSTACK_RELOCATE
 	if (yyss1 != yyssa)
 	  YYSTACK_FREE (yyss1);
@@ -1699,7 +1638,6 @@ int yynerrs;
       yyssp = yyss + yysize - 1;
       yyvsp = yyvs + yysize - 1;
 
-
       YYDPRINTF ((stderr, "Stack size increased to %lu\n",
 		  (unsigned long int) yystacksize));
 
@@ -1709,6 +1647,9 @@ int yynerrs;
 
   YYDPRINTF ((stderr, "Entering state %d\n", yystate));
 
+  if (yystate == YYFINAL)
+    YYACCEPT;
+
   goto yybackup;
 
 /*-----------.
@@ -1717,16 +1658,16 @@ int yynerrs;
 yybackup:
 
   /* Do appropriate processing given the current state.  Read a
-     look-ahead token if we need one and don't already have one.  */
+     lookahead token if we need one and don't already have one.  */
 
-  /* First try to decide what to do without reference to look-ahead token.  */
+  /* First try to decide what to do without reference to lookahead token.  */
   yyn = yypact[yystate];
   if (yyn == YYPACT_NINF)
     goto yydefault;
 
-  /* Not known => get a look-ahead token if don't already have one.  */
+  /* Not known => get a lookahead token if don't already have one.  */
 
-  /* YYCHAR is either YYEMPTY or YYEOF or a valid look-ahead symbol.  */
+  /* YYCHAR is either YYEMPTY or YYEOF or a valid lookahead symbol.  */
   if (yychar == YYEMPTY)
     {
       YYDPRINTF ((stderr, "Reading a token: "));
@@ -1758,20 +1699,16 @@ yybackup:
       goto yyreduce;
     }
 
-  if (yyn == YYFINAL)
-    YYACCEPT;
-
   /* Count tokens shifted since error; after three, turn off error
      status.  */
   if (yyerrstatus)
     yyerrstatus--;
 
-  /* Shift the look-ahead token.  */
+  /* Shift the lookahead token.  */
   YY_SYMBOL_PRINT ("Shifting", yytoken, &yylval, &yylloc);
 
-  /* Discard the shifted token unless it is eof.  */
-  if (yychar != YYEOF)
-    yychar = YYEMPTY;
+  /* Discard the shifted token.  */
+  yychar = YYEMPTY;
 
   yystate = yyn;
   *++yyvsp = yylval;
@@ -1811,36 +1748,50 @@ yyreduce:
   switch (yyn)
     {
         case 3:
+
+/* Line 1455 of yacc.c  */
 #line 65 "grammar.y"
     { assert(YYPARSE_PARAM); (yyval) = YYINTERP->yylval(); ;}
     break;
 
   case 5:
+
+/* Line 1455 of yacc.c  */
 #line 67 "grammar.y"
     { (yyval) = (yyvsp[(2) - (3)]); ;}
     break;
 
   case 6:
+
+/* Line 1455 of yacc.c  */
 #line 69 "grammar.y"
     { (yyval) = new ConstCast((yyvsp[(3) - (7)]), (yyvsp[(6) - (7)])); ;}
     break;
 
   case 7:
+
+/* Line 1455 of yacc.c  */
 #line 71 "grammar.y"
     { (yyval) = new DynamicCast((yyvsp[(3) - (7)]), (yyvsp[(6) - (7)])); ;}
     break;
 
   case 8:
+
+/* Line 1455 of yacc.c  */
 #line 73 "grammar.y"
     { (yyval) = new ReinterpretCast((yyvsp[(3) - (7)]), (yyvsp[(6) - (7)])); ;}
     break;
 
   case 9:
+
+/* Line 1455 of yacc.c  */
 #line 75 "grammar.y"
     { (yyval) = new StaticCast((yyvsp[(3) - (7)]), (yyvsp[(6) - (7)])); ;}
     break;
 
   case 10:
+
+/* Line 1455 of yacc.c  */
 #line 80 "grammar.y"
     { RefPtr<ArgumentList> args(new ArgumentList(YYINTERP, (yyvsp[(3) - (6)])));
           args->push_back((yyvsp[(5) - (6)]));
@@ -1849,6 +1800,8 @@ yyreduce:
     break;
 
   case 11:
+
+/* Line 1455 of yacc.c  */
 #line 85 "grammar.y"
     { RefPtr<ArgumentList> args(new ArgumentList(YYINTERP, NULL));
           args->push_back((yyvsp[(4) - (5)]));
@@ -1857,6 +1810,8 @@ yyreduce:
     break;
 
   case 12:
+
+/* Line 1455 of yacc.c  */
 #line 90 "grammar.y"
     { RefPtr<ArgumentList> args(new ArgumentList(YYINTERP, (yyvsp[(3) - (5)])));
           args->push_back(NULL);
@@ -1865,61 +1820,85 @@ yyreduce:
     break;
 
   case 15:
+
+/* Line 1455 of yacc.c  */
 #line 107 "grammar.y"
     { (yyval) = new PostfixExpr(YYINTERP, PostfixExpr::ARRAY, (yyvsp[(1) - (4)]), (yyvsp[(3) - (4)])); ;}
     break;
 
   case 16:
+
+/* Line 1455 of yacc.c  */
 #line 109 "grammar.y"
     { (yyval) = new PostfixExpr(YYINTERP, PostfixExpr::FCALL, (yyvsp[(1) - (3)]), NULL); ;}
     break;
 
   case 17:
+
+/* Line 1455 of yacc.c  */
 #line 111 "grammar.y"
     { (yyval) = new PostfixExpr(YYINTERP, PostfixExpr::FCALL, (yyvsp[(1) - (4)]), (yyvsp[(3) - (4)])); ;}
     break;
 
   case 18:
+
+/* Line 1455 of yacc.c  */
 #line 113 "grammar.y"
     { (yyval) = new PostfixExpr(YYINTERP, PostfixExpr::MEMBER, (yyvsp[(1) - (3)]), (yyvsp[(3) - (3)])); ;}
     break;
 
   case 19:
+
+/* Line 1455 of yacc.c  */
 #line 115 "grammar.y"
     { (yyval) = new PostfixExpr(YYINTERP, PostfixExpr::PTR_TO_MEMBER, (yyvsp[(1) - (4)]), (yyvsp[(4) - (4)])); ;}
     break;
 
   case 20:
+
+/* Line 1455 of yacc.c  */
 #line 117 "grammar.y"
     { (yyval) = new PostfixExpr(YYINTERP, PostfixExpr::PTR_TO_MEMBER, (yyvsp[(1) - (4)]), (yyvsp[(4) - (4)])); ;}
     break;
 
   case 21:
+
+/* Line 1455 of yacc.c  */
 #line 119 "grammar.y"
     { (yyval) = new PostfixExpr(YYINTERP, PostfixExpr::POINTER, (yyvsp[(1) - (3)]), (yyvsp[(3) - (3)])); ;}
     break;
 
   case 22:
+
+/* Line 1455 of yacc.c  */
 #line 121 "grammar.y"
     { (yyval) = new PostfixExpr(YYINTERP, PostfixExpr::VPOINTER, (yyvsp[(1) - (3)]), (yyvsp[(3) - (3)])); ;}
     break;
 
   case 23:
+
+/* Line 1455 of yacc.c  */
 #line 123 "grammar.y"
     { (yyval) = new PostfixExpr(YYINTERP, PostfixExpr::INC, (yyvsp[(1) - (2)]), NULL); ;}
     break;
 
   case 24:
+
+/* Line 1455 of yacc.c  */
 #line 125 "grammar.y"
     { (yyval) = new PostfixExpr(YYINTERP, PostfixExpr::DEC, (yyvsp[(1) - (2)]), NULL); ;}
     break;
 
   case 25:
+
+/* Line 1455 of yacc.c  */
 #line 130 "grammar.y"
     { (yyval) = new ArgumentList(YYINTERP, (yyvsp[(1) - (1)])); ;}
     break;
 
   case 26:
+
+/* Line 1455 of yacc.c  */
 #line 132 "grammar.y"
     {
             ArgumentList* list = &interface_cast<ArgumentList&>(*(yyvsp[(1) - (3)]));
@@ -1931,156 +1910,218 @@ yyreduce:
     break;
 
   case 28:
+
+/* Line 1455 of yacc.c  */
 #line 145 "grammar.y"
     { (yyval) = new UnaryExpr(YYINTERP, UnaryExpr::INCREMENT, (yyvsp[(2) - (2)])); ;}
     break;
 
   case 29:
+
+/* Line 1455 of yacc.c  */
 #line 147 "grammar.y"
     { (yyval) = new UnaryExpr(YYINTERP, UnaryExpr::DECREMENT, (yyvsp[(2) - (2)])); ;}
     break;
 
   case 30:
+
+/* Line 1455 of yacc.c  */
 #line 150 "grammar.y"
     { (yyval) = new UnaryExpr(YYINTERP, UnaryExpr::ADDR, (yyvsp[(2) - (2)])); ;}
     break;
 
   case 31:
+
+/* Line 1455 of yacc.c  */
 #line 152 "grammar.y"
     { (yyval) = new UnaryExpr(YYINTERP, UnaryExpr::DEREF, (yyvsp[(2) - (2)])); ;}
     break;
 
   case 32:
+
+/* Line 1455 of yacc.c  */
 #line 154 "grammar.y"
     { (yyval) = new UnaryExpr(YYINTERP, UnaryExpr::PLUS, (yyvsp[(2) - (2)])); ;}
     break;
 
   case 33:
+
+/* Line 1455 of yacc.c  */
 #line 156 "grammar.y"
     { (yyval) = new UnaryExpr(YYINTERP, UnaryExpr::MINUS, (yyvsp[(2) - (2)])); ;}
     break;
 
   case 34:
+
+/* Line 1455 of yacc.c  */
 #line 158 "grammar.y"
     { (yyval) = new UnaryExpr(YYINTERP, UnaryExpr::BITNEG, (yyvsp[(2) - (2)])); ;}
     break;
 
   case 35:
+
+/* Line 1455 of yacc.c  */
 #line 160 "grammar.y"
     { (yyval) = new UnaryExpr(YYINTERP, UnaryExpr::NEGATE, (yyvsp[(2) - (2)])); ;}
     break;
 
   case 36:
+
+/* Line 1455 of yacc.c  */
 #line 163 "grammar.y"
     { (yyval) = new UnaryExpr(YYINTERP, UnaryExpr::SIZE_OF, (yyvsp[(2) - (2)])); ;}
     break;
 
   case 37:
+
+/* Line 1455 of yacc.c  */
 #line 165 "grammar.y"
     { (yyval) = new UnaryExpr(YYINTERP, UnaryExpr::SIZE_OF, (yyvsp[(3) - (4)])); ;}
     break;
 
   case 39:
+
+/* Line 1455 of yacc.c  */
 #line 170 "grammar.y"
     { (yyval) = new CastExpr((yyvsp[(2) - (4)]), (yyvsp[(4) - (4)])); ;}
     break;
 
   case 41:
+
+/* Line 1455 of yacc.c  */
 #line 176 "grammar.y"
     { (yyval) = new MulExpr(YYINTERP, MulExpr::MUL, (yyvsp[(1) - (3)]), (yyvsp[(3) - (3)])); ;}
     break;
 
   case 42:
+
+/* Line 1455 of yacc.c  */
 #line 178 "grammar.y"
     { (yyval) = new MulExpr(YYINTERP, MulExpr::DIV, (yyvsp[(1) - (3)]), (yyvsp[(3) - (3)])); ;}
     break;
 
   case 43:
+
+/* Line 1455 of yacc.c  */
 #line 180 "grammar.y"
     { (yyval) = new MulExpr(YYINTERP, MulExpr::MOD, (yyvsp[(1) - (3)]), (yyvsp[(3) - (3)])); ;}
     break;
 
   case 45:
+
+/* Line 1455 of yacc.c  */
 #line 186 "grammar.y"
     { (yyval) = new AdditiveExpr(YYINTERP, AdditiveExpr::PLUS, (yyvsp[(1) - (3)]), (yyvsp[(3) - (3)])); ;}
     break;
 
   case 46:
+
+/* Line 1455 of yacc.c  */
 #line 188 "grammar.y"
     { (yyval) = new AdditiveExpr(YYINTERP, AdditiveExpr::MINUS, (yyvsp[(1) - (3)]), (yyvsp[(3) - (3)])); ;}
     break;
 
   case 48:
+
+/* Line 1455 of yacc.c  */
 #line 194 "grammar.y"
     { (yyval) = new BitExpr(YYINTERP, BitExpr::LEFT_SHIFT, (yyvsp[(1) - (3)]), (yyvsp[(3) - (3)])); ;}
     break;
 
   case 49:
+
+/* Line 1455 of yacc.c  */
 #line 196 "grammar.y"
     { (yyval) = new BitExpr(YYINTERP, BitExpr::RIGHT_SHIFT, (yyvsp[(1) - (3)]), (yyvsp[(3) - (3)])); ;}
     break;
 
   case 51:
+
+/* Line 1455 of yacc.c  */
 #line 202 "grammar.y"
     { (yyval) = new RelationalExpr(YYINTERP, RelationalExpr::LT, (yyvsp[(1) - (3)]), (yyvsp[(3) - (3)])); ;}
     break;
 
   case 52:
+
+/* Line 1455 of yacc.c  */
 #line 204 "grammar.y"
     { (yyval) = new RelationalExpr(YYINTERP, RelationalExpr::GT, (yyvsp[(1) - (3)]), (yyvsp[(3) - (3)])); ;}
     break;
 
   case 53:
+
+/* Line 1455 of yacc.c  */
 #line 206 "grammar.y"
     { (yyval) = new RelationalExpr(YYINTERP, RelationalExpr::LTE, (yyvsp[(1) - (3)]), (yyvsp[(3) - (3)])); ;}
     break;
 
   case 54:
+
+/* Line 1455 of yacc.c  */
 #line 208 "grammar.y"
     { (yyval) = new RelationalExpr(YYINTERP, RelationalExpr::GTE, (yyvsp[(1) - (3)]), (yyvsp[(3) - (3)])); ;}
     break;
 
   case 56:
+
+/* Line 1455 of yacc.c  */
 #line 214 "grammar.y"
     { (yyval) = new RelationalExpr(YYINTERP, RelationalExpr::EQ, (yyvsp[(1) - (3)]), (yyvsp[(3) - (3)])); ;}
     break;
 
   case 57:
+
+/* Line 1455 of yacc.c  */
 #line 216 "grammar.y"
     { (yyval) = new RelationalExpr(YYINTERP, RelationalExpr::NEQ, (yyvsp[(1) - (3)]), (yyvsp[(3) - (3)])); ;}
     break;
 
   case 59:
+
+/* Line 1455 of yacc.c  */
 #line 222 "grammar.y"
     { (yyval) = new BitExpr(YYINTERP, BitExpr::AND, (yyvsp[(1) - (3)]), (yyvsp[(3) - (3)])); ;}
     break;
 
   case 61:
+
+/* Line 1455 of yacc.c  */
 #line 228 "grammar.y"
     { (yyval) = new BitExpr(YYINTERP, BitExpr::XOR, (yyvsp[(1) - (3)]), (yyvsp[(3) - (3)])); ;}
     break;
 
   case 63:
+
+/* Line 1455 of yacc.c  */
 #line 234 "grammar.y"
     { (yyval) = new BitExpr(YYINTERP, BitExpr::OR, (yyvsp[(1) - (3)]), (yyvsp[(3) - (3)])); ;}
     break;
 
   case 65:
+
+/* Line 1455 of yacc.c  */
 #line 240 "grammar.y"
     { (yyval) = new LogicalExpr(YYINTERP, LogicalExpr::AND, (yyvsp[(1) - (3)]), (yyvsp[(3) - (3)])); ;}
     break;
 
   case 67:
+
+/* Line 1455 of yacc.c  */
 #line 246 "grammar.y"
     { (yyval) = new LogicalExpr(YYINTERP, LogicalExpr::OR, (yyvsp[(1) - (3)]), (yyvsp[(3) - (3)])); ;}
     break;
 
   case 69:
+
+/* Line 1455 of yacc.c  */
 #line 252 "grammar.y"
     { (yyval) = new ConditionalExpr(YYINTERP, (yyvsp[(1) - (5)]), (yyvsp[(3) - (5)]), (yyvsp[(5) - (5)])); ;}
     break;
 
   case 71:
+
+/* Line 1455 of yacc.c  */
 #line 259 "grammar.y"
     {
             (yyval) = new Assign(YYINTERP, (yyvsp[(1) - (3)]), (yyvsp[(3) - (3)]));
@@ -2088,6 +2129,8 @@ yyreduce:
     break;
 
   case 72:
+
+/* Line 1455 of yacc.c  */
 #line 263 "grammar.y"
     {
             (yyval) = new MulExpr(YYINTERP, MulExpr::MUL, (yyvsp[(1) - (3)]), (yyvsp[(3) - (3)]));
@@ -2096,6 +2139,8 @@ yyreduce:
     break;
 
   case 73:
+
+/* Line 1455 of yacc.c  */
 #line 268 "grammar.y"
     {
             (yyval) = new MulExpr(YYINTERP, MulExpr::DIV, (yyvsp[(1) - (3)]), (yyvsp[(3) - (3)]));
@@ -2104,6 +2149,8 @@ yyreduce:
     break;
 
   case 74:
+
+/* Line 1455 of yacc.c  */
 #line 273 "grammar.y"
     {
             (yyval) = new MulExpr(YYINTERP, MulExpr::MOD, (yyvsp[(1) - (3)]), (yyvsp[(3) - (3)]));
@@ -2112,6 +2159,8 @@ yyreduce:
     break;
 
   case 75:
+
+/* Line 1455 of yacc.c  */
 #line 278 "grammar.y"
     {
             (yyval) = new AdditiveExpr(YYINTERP, AdditiveExpr::PLUS, (yyvsp[(1) - (3)]), (yyvsp[(3) - (3)]));
@@ -2120,6 +2169,8 @@ yyreduce:
     break;
 
   case 76:
+
+/* Line 1455 of yacc.c  */
 #line 283 "grammar.y"
     {
             (yyval) = new AdditiveExpr(YYINTERP, AdditiveExpr::MINUS, (yyvsp[(1) - (3)]), (yyvsp[(3) - (3)]));
@@ -2128,6 +2179,8 @@ yyreduce:
     break;
 
   case 77:
+
+/* Line 1455 of yacc.c  */
 #line 288 "grammar.y"
     {
             (yyval) = new BitExpr(YYINTERP, BitExpr::LEFT_SHIFT, (yyvsp[(1) - (3)]), (yyvsp[(3) - (3)]));
@@ -2136,6 +2189,8 @@ yyreduce:
     break;
 
   case 78:
+
+/* Line 1455 of yacc.c  */
 #line 293 "grammar.y"
     {
             (yyval) = new BitExpr(YYINTERP, BitExpr::RIGHT_SHIFT, (yyvsp[(1) - (3)]), (yyvsp[(3) - (3)]));
@@ -2144,6 +2199,8 @@ yyreduce:
     break;
 
   case 79:
+
+/* Line 1455 of yacc.c  */
 #line 298 "grammar.y"
     {
             (yyval) = new BitExpr(YYINTERP, BitExpr::AND, (yyvsp[(1) - (3)]), (yyvsp[(3) - (3)]));
@@ -2152,6 +2209,8 @@ yyreduce:
     break;
 
   case 80:
+
+/* Line 1455 of yacc.c  */
 #line 303 "grammar.y"
     {
             (yyval) = new BitExpr(YYINTERP, BitExpr::XOR, (yyvsp[(1) - (3)]), (yyvsp[(3) - (3)]));
@@ -2160,6 +2219,8 @@ yyreduce:
     break;
 
   case 81:
+
+/* Line 1455 of yacc.c  */
 #line 308 "grammar.y"
     {
             (yyval) = new BitExpr(YYINTERP, BitExpr::OR, (yyvsp[(1) - (3)]), (yyvsp[(3) - (3)]));
@@ -2168,86 +2229,120 @@ yyreduce:
     break;
 
   case 82:
+
+/* Line 1455 of yacc.c  */
 #line 316 "grammar.y"
     { assert(YYPARSE_PARAM); YYINTERP->set_yylval((yyvsp[(1) - (1)])); ;}
     break;
 
   case 83:
+
+/* Line 1455 of yacc.c  */
 #line 318 "grammar.y"
     { assert(YYPARSE_PARAM); YYINTERP->set_yylval((yyvsp[(1) - (2)])); ;}
     break;
 
   case 85:
+
+/* Line 1455 of yacc.c  */
 #line 328 "grammar.y"
     { (yyval) = new TypeSpec(YYINTERP, TypeSpec::TF_CHAR); ;}
     break;
 
   case 86:
+
+/* Line 1455 of yacc.c  */
 #line 329 "grammar.y"
     { (yyval) = new TypeSpec(YYINTERP, TypeSpec::TF_SHORT); ;}
     break;
 
   case 87:
+
+/* Line 1455 of yacc.c  */
 #line 330 "grammar.y"
     { (yyval) = new TypeSpec(YYINTERP, TypeSpec::TF_INT); ;}
     break;
 
   case 88:
+
+/* Line 1455 of yacc.c  */
 #line 331 "grammar.y"
     { (yyval) = new TypeSpec(YYINTERP, TypeSpec::TF_LONG); ;}
     break;
 
   case 89:
+
+/* Line 1455 of yacc.c  */
 #line 332 "grammar.y"
     { (yyval) = new TypeSpec(YYINTERP, TypeSpec::TF_SIGNED); ;}
     break;
 
   case 90:
+
+/* Line 1455 of yacc.c  */
 #line 333 "grammar.y"
     { (yyval) = new TypeSpec(YYINTERP, TypeSpec::TF_UNSIGNED); ;}
     break;
 
   case 91:
+
+/* Line 1455 of yacc.c  */
 #line 334 "grammar.y"
     { (yyval) = new TypeSpec(YYINTERP, TypeSpec::TF_FLOAT); ;}
     break;
 
   case 92:
+
+/* Line 1455 of yacc.c  */
 #line 335 "grammar.y"
     { (yyval) = new TypeSpec(YYINTERP, TypeSpec::TF_DOUBLE); ;}
     break;
 
   case 93:
+
+/* Line 1455 of yacc.c  */
 #line 336 "grammar.y"
     { (yyval) = new TypeSpec(YYINTERP, TypeSpec::TF_CONST); ;}
     break;
 
   case 94:
+
+/* Line 1455 of yacc.c  */
 #line 337 "grammar.y"
     { (yyval) = new TypeSpec(YYINTERP, TypeSpec::TF_VOLATILE); ;}
     break;
 
   case 95:
+
+/* Line 1455 of yacc.c  */
 #line 338 "grammar.y"
     { (yyval) = new TypeSpec(YYINTERP, TypeSpec::TF_VOID); ;}
     break;
 
   case 96:
+
+/* Line 1455 of yacc.c  */
 #line 339 "grammar.y"
     { (yyval) = verify_class_or_struct((yyvsp[(2) - (2)])); ;}
     break;
 
   case 97:
+
+/* Line 1455 of yacc.c  */
 #line 340 "grammar.y"
     { (yyval) = verify_union((yyvsp[(2) - (2)])); ;}
     break;
 
   case 98:
+
+/* Line 1455 of yacc.c  */
 #line 341 "grammar.y"
     { (yyval) = verify_enum((yyvsp[(2) - (2)])); ;}
     break;
 
   case 101:
+
+/* Line 1455 of yacc.c  */
 #line 348 "grammar.y"
     {
             RefPtr<Ident> id = &interface_cast<Ident&>(*(yyvsp[(2) - (2)]));
@@ -2258,11 +2353,15 @@ yyreduce:
     break;
 
   case 104:
+
+/* Line 1455 of yacc.c  */
 #line 364 "grammar.y"
     { (yyval) = new PointerDeclarator(YYINTERP); ;}
     break;
 
   case 105:
+
+/* Line 1455 of yacc.c  */
 #line 366 "grammar.y"
     {   
             assert((yyvsp[(2) - (2)]).get());
@@ -2271,6 +2370,8 @@ yyreduce:
     break;
 
   case 106:
+
+/* Line 1455 of yacc.c  */
 #line 371 "grammar.y"
     {
             RefPtr<AbstractDeclarator> ptr = new PointerDeclarator(YYINTERP);
@@ -2279,6 +2380,8 @@ yyreduce:
     break;
 
   case 107:
+
+/* Line 1455 of yacc.c  */
 #line 376 "grammar.y"
     {
             assert((yyvsp[(2) - (3)]).get()); 
@@ -2288,6 +2391,8 @@ yyreduce:
     break;
 
   case 108:
+
+/* Line 1455 of yacc.c  */
 #line 382 "grammar.y"
     {
             RefPtr<AbstractDeclarator> ptr = new PointerDeclarator(YYINTERP);
@@ -2296,6 +2401,8 @@ yyreduce:
     break;
 
   case 109:
+
+/* Line 1455 of yacc.c  */
 #line 387 "grammar.y"
     {
             assert((yyvsp[(2) - (3)]).get());
@@ -2306,26 +2413,36 @@ yyreduce:
     break;
 
   case 110:
+
+/* Line 1455 of yacc.c  */
 #line 396 "grammar.y"
     { (yyval) = new ReferenceDeclarator(YYINTERP); ;}
     break;
 
   case 112:
+
+/* Line 1455 of yacc.c  */
 #line 402 "grammar.y"
     { interface_cast<QualifierList&>(*(yyvsp[(1) - (2)])).add((yyvsp[(2) - (2)])); ;}
     break;
 
   case 113:
+
+/* Line 1455 of yacc.c  */
 #line 406 "grammar.y"
     { (yyval) = new QualifierList(YYINTERP, QUALIFIER_CONST); ;}
     break;
 
   case 114:
+
+/* Line 1455 of yacc.c  */
 #line 407 "grammar.y"
     { (yyval) = new QualifierList(YYINTERP, QUALIFIER_VOLATILE); ;}
     break;
 
   case 115:
+
+/* Line 1455 of yacc.c  */
 #line 412 "grammar.y"
     {
             RefPtr<TypeSpecList> list = new TypeSpecList(YYINTERP);
@@ -2335,6 +2452,8 @@ yyreduce:
     break;
 
   case 116:
+
+/* Line 1455 of yacc.c  */
 #line 418 "grammar.y"
     { 
             TypeSpecList& list = interface_cast<TypeSpecList&>(*(yyvsp[(1) - (2)]));
@@ -2344,6 +2463,8 @@ yyreduce:
     break;
 
   case 118:
+
+/* Line 1455 of yacc.c  */
 #line 432 "grammar.y"
     {
             RefPtr<ParamDeclList> list = new ParamDeclList(YYINTERP);
@@ -2354,6 +2475,8 @@ yyreduce:
     break;
 
   case 119:
+
+/* Line 1455 of yacc.c  */
 #line 439 "grammar.y"
     {
             RefPtr<ParamDeclList> list = &interface_cast<ParamDeclList&>(*(yyvsp[(1) - (3)]));
@@ -2364,6 +2487,8 @@ yyreduce:
     break;
 
   case 122:
+
+/* Line 1455 of yacc.c  */
 #line 454 "grammar.y"
     { 
             assert((yyvsp[(2) - (2)]).get()); 
@@ -2372,16 +2497,22 @@ yyreduce:
     break;
 
   case 126:
+
+/* Line 1455 of yacc.c  */
 #line 464 "grammar.y"
     { (yyval) = combine_decl((yyvsp[(1) - (2)]), (yyvsp[(2) - (2)])); ;}
     break;
 
   case 127:
+
+/* Line 1455 of yacc.c  */
 #line 465 "grammar.y"
     { (yyval) = combine_decl((yyvsp[(1) - (2)]), (yyvsp[(2) - (2)])); ;}
     break;
 
   case 128:
+
+/* Line 1455 of yacc.c  */
 #line 470 "grammar.y"
     {
             (yyval) = new RightAssocExpr(YYINTERP, (yyvsp[(2) - (3)])); 
@@ -2389,16 +2520,22 @@ yyreduce:
     break;
 
   case 129:
+
+/* Line 1455 of yacc.c  */
 #line 475 "grammar.y"
     { (yyval) = new PointerDeclarator(YYINTERP); ;}
     break;
 
   case 130:
+
+/* Line 1455 of yacc.c  */
 #line 476 "grammar.y"
     { (yyval) = new ArrayDeclarator(YYINTERP, (yyvsp[(2) - (3)])); ;}
     break;
 
   case 131:
+
+/* Line 1455 of yacc.c  */
 #line 478 "grammar.y"
     {
             (yyval) = new PointerDeclarator(YYINTERP); 
@@ -2406,6 +2543,8 @@ yyreduce:
     break;
 
   case 132:
+
+/* Line 1455 of yacc.c  */
 #line 482 "grammar.y"
     {
             RefPtr<ArrayDeclarator> decl = new ArrayDeclarator(YYINTERP, (yyvsp[(3) - (4)])); 
@@ -2414,16 +2553,22 @@ yyreduce:
     break;
 
   case 133:
+
+/* Line 1455 of yacc.c  */
 #line 488 "grammar.y"
     { (yyval) = new FunctionDeclarator(YYINTERP); ;}
     break;
 
   case 134:
+
+/* Line 1455 of yacc.c  */
 #line 489 "grammar.y"
     { (yyval) = new FunctionDeclarator(YYINTERP, (yyvsp[(2) - (3)])); ;}
     break;
 
   case 135:
+
+/* Line 1455 of yacc.c  */
 #line 492 "grammar.y"
     { 
             RefPtr<FunctionDeclarator> decl = new FunctionDeclarator(YYINTERP); 
@@ -2432,6 +2577,8 @@ yyreduce:
     break;
 
   case 136:
+
+/* Line 1455 of yacc.c  */
 #line 497 "grammar.y"
     { 
             RefPtr<FunctionDeclarator> decl = new FunctionDeclarator(YYINTERP, (yyvsp[(3) - (4)])); 
@@ -2440,6 +2587,8 @@ yyreduce:
     break;
 
   case 138:
+
+/* Line 1455 of yacc.c  */
 #line 506 "grammar.y"
     { 
             /* $$ = $2 */
@@ -2451,6 +2600,8 @@ yyreduce:
     break;
 
   case 139:
+
+/* Line 1455 of yacc.c  */
 #line 514 "grammar.y"
     {
             RefPtr<Ident> ident = &interface_cast<Ident&>(*(yyvsp[(2) - (2)]));
@@ -2462,28 +2613,37 @@ yyreduce:
     break;
 
   case 141:
+
+/* Line 1455 of yacc.c  */
 #line 526 "grammar.y"
     { (yyval) = new Ident((yyvsp[(1) - (3)]), (yyvsp[(3) - (3)])); ;}
     break;
 
   case 142:
+
+/* Line 1455 of yacc.c  */
 #line 528 "grammar.y"
     { (yyval) = new Ident((yyvsp[(1) - (3)]), (yyvsp[(3) - (3)])); ;}
     break;
 
   case 144:
+
+/* Line 1455 of yacc.c  */
 #line 534 "grammar.y"
     { (yyval) = (yyvsp[(3) - (3)]); /* fixme */ ;}
     break;
 
   case 145:
+
+/* Line 1455 of yacc.c  */
 #line 537 "grammar.y"
     { (yyval) = (yyvsp[(3) - (3)]); /* fixme */ ;}
     break;
 
 
-/* Line 1267 of yacc.c.  */
-#line 2487 "grammar.cpp"
+
+/* Line 1455 of yacc.c  */
+#line 2647 "grammar.cpp"
       default: break;
     }
   YY_SYMBOL_PRINT ("-> $$ =", yyr1[yyn], &yyval, &yyloc);
@@ -2493,7 +2653,6 @@ yyreduce:
   YY_STACK_PRINT (yyss, yyssp);
 
   *++yyvsp = yyval;
-
 
   /* Now `shift' the result of the reduction.  Determine what state
      that goes to, based on the state we popped back to and the rule
@@ -2559,7 +2718,7 @@ yyerrlab:
 
   if (yyerrstatus == 3)
     {
-      /* If just tried and failed to reuse look-ahead token after an
+      /* If just tried and failed to reuse lookahead token after an
 	 error, discard it.  */
 
       if (yychar <= YYEOF)
@@ -2576,7 +2735,7 @@ yyerrlab:
 	}
     }
 
-  /* Else will try to reuse look-ahead token after shifting the error
+  /* Else will try to reuse lookahead token after shifting the error
      token.  */
   goto yyerrlab1;
 
@@ -2633,9 +2792,6 @@ yyerrlab1:
       YY_STACK_PRINT (yyss, yyssp);
     }
 
-  if (yyn == YYFINAL)
-    YYACCEPT;
-
   *++yyvsp = yylval;
 
 
@@ -2660,7 +2816,7 @@ yyabortlab:
   yyresult = 1;
   goto yyreturn;
 
-#ifndef yyoverflow
+#if !defined(yyoverflow) || YYERROR_VERBOSE
 /*-------------------------------------------------.
 | yyexhaustedlab -- memory exhaustion comes here.  |
 `-------------------------------------------------*/
@@ -2671,7 +2827,7 @@ yyexhaustedlab:
 #endif
 
 yyreturn:
-  if (yychar != YYEOF && yychar != YYEMPTY)
+  if (yychar != YYEMPTY)
      yydestruct ("Cleanup: discarding lookahead",
 		 yytoken, &yylval);
   /* Do not reclaim the symbols of the rule which action triggered
@@ -2697,6 +2853,8 @@ yyreturn:
 }
 
 
+
+/* Line 1675 of yacc.c  */
 #line 539 "grammar.y"
 
 
