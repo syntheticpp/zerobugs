@@ -820,7 +820,9 @@ void DebuggerBase::quit()
 ////////////////////////////////////////////////////////////////
 void DebuggerBase::on_attach(Thread& thread)
 {
-    //clog << "attached: " << thread.name() << "\n";
+#if DEBUG
+    clog << "attached: " << thread.name() << "\n";
+#endif
     thread_set_event_description(thread, "Attached");
 }
 
@@ -1672,9 +1674,8 @@ bool DebuggerBase::restore_module(
         // as a template for restoring breakpoints in the
         // current module
 
-        if (RefPtr<ModuleImpl> module =
-             entry->get_module(currentMod.name())
-           )
+        RefPtr<ModuleImpl> module = entry->get_module(currentMod.name());
+        if (module.get())
         {
             module->restore(*this, proc, currentMod);
             result = true;

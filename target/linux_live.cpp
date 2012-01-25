@@ -273,13 +273,7 @@ RefPtr<ThreadImpl> LinuxLiveTarget::handle_fork(
 ////////////////////////////////////////////////////////////////
 RefPtr<ThreadImpl> LinuxLiveTarget::handle_exec(pid_t pid)
 {
-    // The newly exec-ed process overlays the parent;
-    // we can forget about the breakpoints in the old process.
-
-    if (BreakPointManager* mgr = debugger().breakpoint_manager())
-    {
-        mgr->reset(pid);
-    }
+    assert(empty());
 
     reset_process_name();
 
@@ -303,6 +297,8 @@ RefPtr<ThreadImpl> LinuxLiveTarget::handle_exec(pid_t pid)
     uninitialize_linker_events();
 
     add_thread(thread);
+    assert(thread->symbols() == symbols());
+
     debugger().on_attach(*thread);
 
     init_thread_agent(true);
@@ -405,8 +401,8 @@ void LinuxLiveTarget::set_ptrace_options(pid_t pid)
     {
         static bool warnOnce = true;
 
-        // The only valid use-case for disabling tracing forked 
-        // process is to debug the debugger with itself, so that
+        // A valid use-case for disabling tracing forked 
+        // process is debugging this debugger with itself, so that
         // we don't "grandfather" its debug target. The user
         // should be warned in all other cases that the flag
         // is turned off.
@@ -604,7 +600,7 @@ void LinuxLiveTarget::detach_internal()
             processID = proc->pid();
         }
     }
-    resume_all_threads();
+    resume_all_threads(); // in case of some external SIGSTOP
     stop_all_threads();
 
     ThreadList threadList(threads_begin(), threads_end());
@@ -617,7 +613,7 @@ void LinuxLiveTarget::detach_internal()
         remove_thread(thread);
     }
 
-    if (processID /* && size() */)
+    if (processID)
     {
         kill_threads(processID, threadList);
     }

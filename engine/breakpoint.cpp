@@ -275,6 +275,7 @@ bool BreakPointBase::add_action(Action* action)
 {
     if (action)
     {
+        assert(action->name());
         // use the cookie to ensure uniqueness of this action;
         // the search is linear, but I don't expect many actions
         // to be attached to the breakpoint.
@@ -288,8 +289,15 @@ bool BreakPointBase::add_action(Action* action)
                 clog << __func__ << ": " << action->name() << ", "
                      << hex << (*i)->cookie()
                      << " new action=" << cookie << dec << endl; */
+                assert((*i)->name());
 
-                if ((*i)->cookie() == cookie)
+                // [Tue Jan 24 21:46:55 PST 2012] enforce uniqueness
+                // within the "namespace" of the breakpoint action,
+                // not globally (as it is nearly impossible to keep
+                // track of cookie values -- unless I change the API
+                // and make them GUIDs rather than word_t).
+                if ((*i)->cookie() == cookie
+                 && strcmp((*i)->name(), action->name()) == 0)
                 {
                     return false;
                 }
@@ -515,6 +523,10 @@ void BreakPointBase::print(ostream& outs) const volatile
                 outs << symbol->demangled_name(0)->c_str();
             }
         }
+    #if DEBUG
+        outs << " (action=" << (void*)(&*i) << " cookie=" 
+             << (*i)->cookie() << " this=" << (void*)this << ")";
+    #endif
         outs << endl;
     }
 }
@@ -798,9 +810,11 @@ void HardwareBreakPoint::execute_actions(Thread* th)
 
 
 ////////////////////////////////////////////////////////////////
-bool HardwareBreakPoint::do_enable(Thread& thread,
-                                   bool onOff,
-                                   string& err) volatile throw()
+bool HardwareBreakPoint::do_enable(
+    Thread&     thread,
+    bool        onOff,
+    string&     err
+) volatile throw()
 {
     try
     {

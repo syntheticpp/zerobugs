@@ -197,6 +197,14 @@ bool BreakPointManagerImpl::on_thread_created(Thread& thread)
 
     if (thread.is_live() && thread_in_process(thread, pid()))
     {
+        if (thread.is_execed())
+        {
+            assert(perThreadBreakPoints_.empty());
+            assert(globalBreakPoints_.empty());
+            assert(deferred_.empty());
+            assert(watchPoints_.empty());
+        }
+
         perThreadBreakPoints_[thread.lwpid()];
         handled = true;
     }
@@ -259,8 +267,7 @@ void BreakPointManagerImpl::on_thread_unmanage(Thread& thread)
         }
 
         // remove all watchpoints for this thread
-        vector<RefPtr<WatchPoint> >::iterator i = watchPoints_.begin();
-        for (; i != watchPoints_.end(); )
+        for (auto i = watchPoints_.begin(); i != watchPoints_.end(); )
         {
             if ((*i)->thread() == &thread)
             {
@@ -493,6 +500,7 @@ static void check_set_breakpoint_contract_in(
     {
         throw runtime_error("operation requires a live thread");
     }
+
     if (type == BreakPoint::SOFTWARE)
     {
         // are we still attached to the main thread?
@@ -501,8 +509,9 @@ static void check_set_breakpoint_contract_in(
             throw logic_error("thread not attached");
         }
     }
-    else if (!thread_in_process(*thread, pid))
+    if (!thread_in_process(*thread, pid))
     {
+        assert(false);
         throw logic_error("thread belongs to another process");
     }
 }
@@ -709,19 +718,19 @@ BreakPoint* BreakPointManagerImpl::set_watchpoint(
 }
 
 
+typedef EnumCallback<volatile BreakPoint*> BreakPointCallback;
+
 ////////////////////////////////////////////////////////////////
 size_t BreakPointManagerImpl::enum_deferred(
-    Thread* thread,
-    addr_t addr,
-    BreakPoint::Type type,
-    EnumCallback<volatile BreakPoint*>* callback
+    Thread*             thread,
+    addr_t              addr,
+    BreakPoint::Type    type,
+    BreakPointCallback* callback
     ) const
 {
     size_t count = 0;
 
-    BreakPointList::const_iterator i = deferred_.begin();
-
-    for (; i != deferred_.end(); ++i)
+    for (auto i = deferred_.begin(); i != deferred_.end(); ++i)
     {
         if (breakpoint_matches(*i, thread, addr, type))
         {
@@ -735,9 +744,10 @@ size_t BreakPointManagerImpl::enum_deferred(
 
 ////////////////////////////////////////////////////////////////
 RefPtr<BreakPointBase> BreakPointManagerImpl::find_deferred(
-    Thread* thread,
-    BreakPoint::Type type,
-    addr_t addr
+
+    Thread*             thread,
+    BreakPoint::Type    type,
+    addr_t              addr
     )const
 {
     BreakPointList::const_iterator i = deferred_.begin();
@@ -753,18 +763,19 @@ RefPtr<BreakPointBase> BreakPointManagerImpl::find_deferred(
 }
 
 
+
 ////////////////////////////////////////////////////////////////
 size_t BreakPointManagerImpl::enum_breakpoints(
+
     BreakPointMap           breakpoints,
     addr_t                  addr,
     BreakPoint::Type        type,
-    EnumCallback<volatile BreakPoint*>* callback
+    BreakPointCallback*     callback
 )
 {
     size_t result = 0;
 
-    BreakPointMap::const_iterator i = breakpoints.begin();
-    for (; i != breakpoints.end(); ++i)
+    for (auto i = breakpoints.begin(); i != breakpoints.end(); ++i)
     {
         BreakPoint* bpnt = i->second.get();
 
@@ -785,10 +796,11 @@ size_t BreakPointManagerImpl::enum_breakpoints(
 
 ////////////////////////////////////////////////////////////////
 size_t BreakPointManagerImpl::enum_breakpoints(
-    EnumCallback<volatile BreakPoint*>* callback,
-    Thread* thread,
-    addr_t  addr,
-    BreakPoint::Type type
+
+    BreakPointCallback* callback,
+    Thread*             thread,
+    addr_t              addr,
+    BreakPoint::Type    type
     ) const
 {
     size_t resultCount = 0;
@@ -798,8 +810,7 @@ size_t BreakPointManagerImpl::enum_breakpoints(
 
     if (thread)
     {
-        PerThreadBreakPoints::const_iterator k =
-            perThreadBreakPoints_.find(thread->lwpid());
+        auto k = perThreadBreakPoints_.find(thread->lwpid());
 
         assert(k != perThreadBreakPoints_.end());
         mptr = &k->second;
@@ -810,14 +821,14 @@ size_t BreakPointManagerImpl::enum_breakpoints(
 
     if (!thread)
     {
-        PerThreadBreakPoints::const_iterator k =
-            perThreadBreakPoints_.begin();
+        auto k = perThreadBreakPoints_.begin();
 
         for (; k != perThreadBreakPoints_.end(); ++k)
         {
             resultCount += enum_breakpoints(k->second, addr, type, callback);
         }
     }
+
     if ((resultCount == 0) || (thread == 0) || (addr == 0))
     {
         resultCount += enum_deferred(thread, addr, type, callback);
@@ -828,8 +839,7 @@ size_t BreakPointManagerImpl::enum_breakpoints(
 
 ////////////////////////////////////////////////////////////////
 size_t BreakPointManagerImpl::enum_watchpoints(
-    EnumCallback<volatile BreakPoint*>* callback
-    ) const
+    BreakPointCallback* callback) const
 {
     THREAD_SAFE;
     size_t result = 0;
@@ -1100,4 +1110,5 @@ size_t BreakPointManagerImpl::reset( pid_t )
 {
     return 0;
 }
+
 // vim: tabstop=4:softtabstop=4:expandtab:shiftwidth=4

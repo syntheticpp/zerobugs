@@ -24,13 +24,15 @@ class WatchPoint;
 
 typedef void (DebuggerEngine::*Callback)(volatile BreakPoint*);
 
+typedef EnumCallback<volatile BreakPoint*> BreakPointCallback;
+
 
 /**
  * BreakPointManager implementation
  */
 CLASS BreakPointManagerImpl 
     : public BreakPointManagerBase
-    , public EnumCallback<volatile BreakPoint*>
+    , public BreakPointCallback
 {
 public:
     typedef std::vector<RefPtr<BreakPointBase> > BreakPointList;
@@ -136,7 +138,7 @@ public:
      */
     virtual size_t enum_breakpoints
       (
-        EnumCallback<volatile BreakPoint*>*,
+        BreakPointCallback*,
         Thread* = 0,
         addr_t = 0,
         BreakPoint::Type = BreakPoint::ANY
@@ -144,7 +146,7 @@ public:
 
     virtual size_t enum_watchpoints
       (
-        EnumCallback<volatile BreakPoint*>*
+        BreakPointCallback*
       ) const;
 
     // calls clone_breakpoint
@@ -185,7 +187,7 @@ private:
         BreakPointMap,
         addr_t,
         BreakPoint::Type,
-        EnumCallback<volatile BreakPoint*>*
+        BreakPointCallback*
       );
 
     /**
@@ -196,7 +198,7 @@ private:
         Thread*,
         addr_t,
         BreakPoint::Type,
-        EnumCallback<volatile BreakPoint*>*
+        BreakPointCallback*
       ) const;
 
     /**
@@ -283,20 +285,20 @@ private:
     size_t reset( pid_t );
 
 private:
-    mutable Mutex mutex_;
-    PerThreadBreakPoints perThreadBreakPoints_;
+    mutable Mutex                   mutex_;
+    PerThreadBreakPoints            perThreadBreakPoints_;
 
-    BreakPointMap globalBreakPoints_;
+    BreakPointMap                   globalBreakPoints_;
 
     std::vector<RefPtr<WatchPoint> > watchPoints_;
 
-    BreakPointList deferred_;
+    BreakPointList                  deferred_;
 
-    mutable int verbose_;   // verbosity level, for debug
-    bool useHardware_;      // use hardware break points?
+    mutable int                     verbose_;   // verbosity level, for debug
+    bool                            useHardware_;      // use hardware break points?
 
-    Callback onInsert_;
-    Callback onRemove_;
+    Callback                        onInsert_;
+    Callback                        onRemove_;
 };
 
 
@@ -394,13 +396,13 @@ public:
      * @return the number of matching break points.
      */
     virtual size_t enum_breakpoints(
-        EnumCallback<volatile BreakPoint*>*,
+        BreakPointCallback*,
         Thread* = 0,
         addr_t = 0,
         BreakPoint::Type = BreakPoint::ANY) const;
 
     virtual size_t enum_watchpoints(
-        EnumCallback<volatile BreakPoint*>*) const;
+        BreakPointCallback*) const;
 
     size_t remove_breakpoint_actions(pid_t, pid_t, addr_t, const char*);
 
@@ -413,7 +415,7 @@ private:
 
     void replicate_breakpoints(Thread&, BreakPointManagerImpl&);
 
-    RefPtr<Process> process_;
+    //RefPtr<Process> process_;
     mutable int verbose_;      // verbosity level, for debug
     bool        useHardware_;  // use hardware break points?
     Callback    onInsert_;

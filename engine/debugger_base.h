@@ -246,7 +246,10 @@ public:
      */
     virtual void on_attach(Thread&);
 
-    bool trace_fork() const { return (options() & OPT_TRACE_FORK) != 0; }
+    bool trace_fork() const 
+    {
+        return (options() & OPT_TRACE_FORK) != 0;
+    }
 
     virtual void critical_error(Thread*, const char*) { }
 

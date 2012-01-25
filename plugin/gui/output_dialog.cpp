@@ -53,9 +53,9 @@ OutputDialog::~OutputDialog()
 #ifdef GTKMM_2
 bool OutputDialog::on_data(Glib::IOCondition cond)
 {
-#ifdef DEBUG
-    clog << __func__ << ": cond=" << cond << endl;
-#endif
+//#ifdef DEBUG
+//    clog << __func__ << ": cond=" << cond << endl;
+//#endif
     char buf[512];
     vector<char> data;
 

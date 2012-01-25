@@ -53,6 +53,7 @@ source test_fork.sh
 source test_fork_mt.sh
 source test_forkexec.sh
 source test_forkexec_mt.sh
+source test_forkexec_throw.sh
 source test_fun_call.sh
 source test_oper_call.sh
 source test_ref_ptr.sh
@@ -245,6 +246,7 @@ LINUX26_TESTS=(
     test_fork_mt
     test_forkexec 
 	test_forkexec_mt 
+	test_forkexec_throw
 
 	test_remote_step_over
 )

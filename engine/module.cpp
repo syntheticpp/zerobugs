@@ -254,7 +254,6 @@ void ModuleImpl::restore(
     BreakPointMap::iterator i = breakpoints_.begin();
     for (; i != breakpoints_.end(); ++i)
     {
-        assert(i->first >= this->addr());
         restore_breakpoint(debugger,
                            i->second,   // breakpoint image
                            i->first,    // address

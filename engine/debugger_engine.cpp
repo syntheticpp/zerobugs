@@ -529,7 +529,7 @@ void DebuggerEngine::on_attach(Thread& thread)
     }
 #endif // DEBUG
 
-    if (!breakPointMgr_) // first thread?
+    if (!breakPointMgr_)
     {
         // create a new, clean-state breakpoint manager
         breakPointMgr_.reset(
@@ -564,7 +564,7 @@ void DebuggerEngine::on_attach(Thread& thread)
             bind2nd(mem_fun(&DebuggerPlugin::on_attach), &thread),
             mem_fun_ref(&ImportPtr<DebuggerPlugin>::get)));
 
-    if (firstThread)
+    if (firstThread || thread.is_execed())
     {
         // restore breakpoints and other settings if necessary
         // NOTE: this needs to happen AFTER all plug-ins have
@@ -585,10 +585,12 @@ void DebuggerEngine::on_attach(Thread& thread)
             }
         }
     }
+
     if (thread.is_execed())
     {
         set_have_new_program(true);
     }
+
     // give the plugins a chance to update their states
     message("attached", MSG_UPDATE, &thread, false);
 }
@@ -643,15 +645,17 @@ void DebuggerEngine::cleanup(Thread& thread)
     {
         breakPointMgr_->on_thread_unmanage(thread);
     }
+
     if (TargetManager::empty())
     {
         dbgout(0) << __func__ << ": detaching" << endl;
         detach();
-
+    #if 0
         if (thread.is_forked())
         {
             quit();
         }
+    #endif
     }
 }
 
@@ -1085,6 +1089,7 @@ void DebuggerEngine::on_hardware_break(
     // SIGTRAP before the instruction is executed, which
     // means that for a code break point, the address
     // must equal the program counter.
+
     if (addr != pc)
     {
         assert(condition != DebugRegs::BREAK_ON_INSTRUCTION);
@@ -1437,7 +1442,12 @@ BreakPoint* DebuggerEngine::set_temp_breakpoint (
         {
             type = BreakPoint::EMULATED;
         }
-        bpnt = breakpoint_manager()->set_breakpoint(runnable, type, addr, action.get());
+        BreakPointManager* mgr = breakpoint_manager();
+        if (mgr == NULL)
+        {
+            throw logic_error(__func__ + string(": no breakpoint manager"));
+        }
+        bpnt = mgr->set_breakpoint(runnable, type, addr, action.get());
     }
     assert(!bpnt || bpnt->ref_count() > 1);
     return bpnt.get();
@@ -3763,10 +3773,13 @@ void DebuggerEngine::set_breakpoint_at_catch(Thread* thread)
         SymbolTable::LKUP_ISMANGLED;
 
     FunctionEnum funcs;
+
     if (thread->symbols()->enum_symbols("__cxa_begin_catch", &funcs, mode))
     {
+        static const word_t cookie = 1;
+
         RefPtr<BreakPointAction> act(new EngineAction(
-            *this, "__catch", &DebuggerEngine::break_at_catch, true));
+            *this, "__catch", &DebuggerEngine::break_at_catch, true, cookie));
 
         set_breakpoint(*thread, funcs, act.get());
     }
@@ -3790,9 +3803,14 @@ void DebuggerEngine::set_breakpoint_at_throw(
     // a function, and removes it upon returning from the call.
 
     const char* actionName = permanent ? "__throw" : "__throw_once";
+    static const word_t cookie = 1;
 
     RefPtr<BreakPointAction> action(new EngineAction(
-            *this, actionName, &DebuggerEngine::break_at_throw, permanent));
+            *this,
+            actionName,
+            &DebuggerEngine::break_at_throw,
+            permanent,
+            cookie));
     
     FunctionEnum funcs;
 
@@ -3810,18 +3828,20 @@ void DebuggerEngine::set_breakpoint_at_throw(
 
 
 ////////////////////////////////////////////////////////////////
-void DebuggerEngine::set_breakpoint(Thread& thread,
-                                    const SymbolEnum& funcs,
-                                    BreakPoint::Action* action)
+void DebuggerEngine::set_breakpoint(
+
+    Thread&             thread,
+    const SymbolEnum&   funcs,
+    BreakPoint::Action* action)
 {
     if (!funcs.empty())
     {
         Runnable* runnable = get_runnable(&thread);
 
-        FunctionEnum::const_iterator i = funcs.begin();
-        for (; i != funcs.end(); ++i)
+        for (auto i = funcs.begin(); i != funcs.end(); ++i)
         {
             Symbol* sym = i->get();
+
             ZObjectScope scope;
             SymbolTable* table = sym->table(&scope);
             if (!table)
@@ -3840,9 +3860,13 @@ void DebuggerEngine::set_breakpoint(Thread& thread,
             {
                 dbgout(0) << __func__ << ": deferred brkpnt in "
                           << table->filename() << endl;
-
+            #if 0
+                // this may create problems if the target is an exec-ed process
                 //NULL means "all threads"
                 sym->set_deferred_breakpoint(BreakPoint::GLOBAL, NULL, action);
+            #else
+                sym->set_deferred_breakpoint(BreakPoint::GLOBAL, get_runnable(&thread), action);
+            #endif
             }
         }
     }

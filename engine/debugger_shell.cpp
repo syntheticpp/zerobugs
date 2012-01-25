@@ -3247,6 +3247,7 @@ bool DebuggerShell::cmd_where(Thread* thread, const vector<string>& argv)
 {
     check_thread(thread);
     size_t maxDepth = UINT_MAX;
+    bool currentFunction = false;
 
     if (argv.size() > 2)
     {
@@ -3254,7 +3255,12 @@ bool DebuggerShell::cmd_where(Thread* thread, const vector<string>& argv)
     }
     else if (argv.size() > 1)
     {
-        if (size_t n = strtoul(argv[1].c_str(), 0, 10))
+        if (argv[1] == "/func")
+        {
+            currentFunction = true;
+            maxDepth = 1;
+        }
+        else if (size_t n = strtoul(argv[1].c_str(), 0, 10))
         {
             maxDepth = n;
         }
@@ -3276,7 +3282,12 @@ bool DebuggerShell::cmd_where(Thread* thread, const vector<string>& argv)
         assert(frame);
 
         ostringstream buf;
-        if (frame->is_signal_handler())
+        if (currentFunction)
+        {
+            RefPtr<Symbol> func = frame->function();
+            buf << func->demangled_name();
+        }
+        else if (frame->is_signal_handler())
         {
             buf << " #" << i << " 0x" << hex;
             buf << setw(2 * sizeof(addr_t)) << setfill('0');

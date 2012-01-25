@@ -143,7 +143,6 @@ private:
     bool cmd_enable(Thread*, const std::vector<std::string>&);
     bool cmd_exec(Thread*, const std::vector<std::string>&);
     bool cmd_frame(Thread*, const std::vector<std::string>&);
-    bool cmd_freeze(Thread*, const std::vector<std::string>&);
     bool cmd_help(Thread*, const std::vector<std::string>&);
     bool cmd_handle(Thread*, const std::vector<std::string>&);
     bool cmd_loadcore(Thread*, const std::vector<std::string>&);

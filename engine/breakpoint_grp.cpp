@@ -61,6 +61,7 @@ BreakPointManagerGroup::replicate_breakpoints (
 )
 {
     assert(forkedThread.is_forked());
+
     // forked thread must have a parent, group should not be empty
     assert(!group_.empty());
 
@@ -84,7 +85,7 @@ BreakPointManagerGroup::replicate_breakpoints (
             // clone breakpoints
             (*i)->enum_breakpoints(&mgr);
 
-        #ifdef DEBUG
+        #if 0
             clog << "===== PHYSICAL BREAKPOINT MAP =====\n";
             const PhysicalMap& pm = mgr.physical_map();
             for (PhysicalMap::const_iterator i = pm.begin();
@@ -118,9 +119,12 @@ bool BreakPointManagerGroup::on_thread_created(Thread& thread)
     {
         if (thread.is_forked())
         {
+            Process* process = CHKPTR(thread.process());
+
             // create a new breakpoint manager for the forked thread
+
             RefPtr<BreakPointManagerImpl> mgr =
-                new BreakPointManagerImpl(  CHKPTR(thread.process()),
+                new BreakPointManagerImpl(  process,
                                             verbose_,
                                             useHardware_,
                                             onInsert_,
@@ -133,12 +137,12 @@ bool BreakPointManagerGroup::on_thread_created(Thread& thread)
         }
         else
         {
-            // notify all managers in group that a new thread has
+            // Notify all managers in group that a new thread has
             // been created; the breakpoint manager for the process
             // where the new thread belongs picks up the notification,
-            // all others ignore it
-            Group::iterator i = group_.begin();
-            for (; i != group_.end() && !handled; ++i)
+            // all others ignore it.
+
+            for (auto i = group_.begin(); i != group_.end() && !handled; ++i)
             {
                 handled = (*i)->on_thread_created(thread);
             }
@@ -184,9 +188,11 @@ void BreakPointManagerGroup::on_thread_unmanage(Thread& thread)
 ////////////////////////////////////////////////////////////////
 void BreakPointManagerGroup::on_exec(Thread& thread)
 {
-    // create a new breakpoint manager
+    Process* process = CHKPTR(thread.process());
+
+    // create a brand new breakpoint manager
     RefPtr<BreakPointManagerImpl> mgr =
-        new BreakPointManagerImpl(  CHKPTR(thread.process()),
+        new BreakPointManagerImpl(  process,
                                     verbose_,
                                     useHardware_,
                                     onInsert_,
@@ -198,13 +204,17 @@ void BreakPointManagerGroup::on_exec(Thread& thread)
     {
         if ((*i)->pid() == mgr->pid())
         {
-            dbgout(0) << __func__ << ": replacing manager" << endl;
+        #if DEBUG
+            clog << "Replacing breakpoint manager for process: " 
+                 << process->pid() << endl;
+        #endif
 
             *i = mgr; // replace the old manager
             return;
         }
         ++i;
     }
+
     // just in case (although we should never get here):
     group_.push_back(mgr);
 }
@@ -244,17 +254,27 @@ void BreakPointManagerGroup::erase(RefPtr<BreakPoint> bpnt)
 
 ////////////////////////////////////////////////////////////////
 /// activate deferred breakpoint
-void
-BreakPointManagerGroup::activate(RefPtr<BreakPoint> bpnt,
-                                 const SymbolTable& symTab)
+void BreakPointManagerGroup::activate(
+
+    RefPtr<BreakPoint> bpnt,
+    const SymbolTable& symTab)
 {
     assert(bpnt);
 
-    if (!bpnt->is_deferred()) throw invalid_argument(__func__);
-
-    Group::iterator i = group_.begin();
-    for (; i != group_.end(); ++i)
+    if (!bpnt->is_deferred())
     {
+        throw invalid_argument(__func__);
+    }
+
+    Process* process = bpnt->thread() ? bpnt->thread()->process() : NULL;
+
+    for (Group::iterator i = group_.begin(); i != group_.end(); ++i)
+    {
+        if (process && process->pid() != (*i)->pid())
+        {
+            continue;
+        }
+
         (*i)->activate(bpnt, symTab);
     }
 }
@@ -275,6 +295,7 @@ BreakPointBase* BreakPointManagerGroup::set_breakpoint(
     {
         addr = sym->addr();
     }
+
     for (Group::iterator i(group_.begin()); i != group_.end(); ++i)
     {
         // This prevents breakpoints to be inserted in fork()ed and
@@ -333,10 +354,9 @@ BreakPoint* BreakPointManagerGroup::set_watchpoint(
 }
 
 
-typedef EnumCallback<volatile BreakPoint*> BreakPointCallback;
-
 ////////////////////////////////////////////////////////////////
 size_t BreakPointManagerGroup::enum_breakpoints(
+
     BreakPointCallback* callback,
     Thread*             thread,
     addr_t              addr,
@@ -389,11 +409,12 @@ size_t BreakPointManagerGroup::reset(pid_t pid)
         if ((*i)->pid() == pid)
         {
             group_.erase(i);
-            clog << "reset breakpoints manager for pid: " << pid << endl;
+            clog << "Reset breakpoints manager for pid: " << pid << endl;
 
             return 1;
         }
     }
+    clog << "breakpoints manager for pid: " << pid <<  " not found" << endl;
     return 0;
 }
 
