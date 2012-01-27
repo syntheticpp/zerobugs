@@ -358,12 +358,12 @@ MainWindow::MainWindow(Debugger& debugger, const string& strategy)
     vbox->show();
     this->add(*vbox);
 
-    maximized_ = props.get_word("WINDOW_MAXIMIZED", false);
+    maximized_ = props.get_word(WINDOW_MAXIMIZED, false);
     
-    word_t w = props.get_word("WINDOW_WIDTH", WINDOW_DEFAULT_WIDTH);
-    word_t h = props.get_word("WINDOW_HEIGHT", WINDOW_DEFAULT_HEIGHT);
-    word_t x = props.get_word("WINDOW_X", 0);
-    word_t y = props.get_word("WINDOW_Y", 0);
+    word_t w = props.get_word(WINDOW_WIDTH, WINDOW_DEFAULT_WIDTH);
+    word_t h = props.get_word(WINDOW_HEIGHT, WINDOW_DEFAULT_HEIGHT);
+    word_t x = props.get_word(WINDOW_X, 0);
+    word_t y = props.get_word(WINDOW_Y, 0);
 
     set_default_size(w, h);
 

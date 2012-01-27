@@ -20,8 +20,14 @@ void query_plugin(InterfaceRegistry* registry)
     registry->update(DebuggerPlugin::_uuid());
 }
 
+int32_t query_version(int32_t* minor)
+{
+    if (minor) *minor = ZDK_MINOR;
+    return ZDK_MAJOR;
+}
 
 
+////////////////////////////////////////////////////////////////
 Plugin* create_plugin(uuidref_t iid)
 {
     Plugin* plugin = 0;
@@ -159,10 +165,10 @@ bool ${PLUGIN_CLASS}::on_progress(const char* what, double percent, word_t cooki
 
 
 bool ${PLUGIN_CLASS}::on_message (
-    const char* what,
-    Debugger::MessageType type,
-    Thread* thread,
-    bool async)
+    const char*             what,
+    Debugger::MessageType   type,
+    Thread*                 thread,
+    bool                    async)
 {
     return false;
 }
@@ -177,19 +183,19 @@ const char* ${PLUGIN_CLASS}::description() const
 
 const char* ${PLUGIN_CLASS}::copyright() const
 {
-    return "Copyright 2008 $USER@$HOST";
+    return "Copyright 2012 $USER@$HOST";
 }
 
 
 
 IF ${DEBUG_IMPL}
 size_t ${PLUGIN_CLASS}::enum_locals(
-    Thread* thread,
-    const char* name,
-    Frame* frame,
-    Symbol* func,
-    DebugSymbolEvents*,
-    bool paramOnly
+    Thread*             thread,
+    const char*         name,
+    Frame*              frame,
+    Symbol*             func,
+    DebugSymbolEvents*  events,
+    bool                paramOnly
 )
 {
     return 0;
@@ -198,12 +204,12 @@ size_t ${PLUGIN_CLASS}::enum_locals(
 
 
 size_t ${PLUGIN_CLASS}::enum_globals(
-    Thread* thread,
-    const char* name,
-    Symbol* func,
-    DebugSymbolEvents*,
-    LookupScope,
-    bool)
+    Thread*             thread,
+    const char*         name,
+    Symbol*             func,
+    DebugSymbolEvents*  events,
+    LookupScope         scope,
+    bool                enumFuncs /* include functions in result? */)
 {
     return 0;
 }
