@@ -1,7 +1,7 @@
 #ifndef SYM_H__8590A83D_2145_4CFE_83CA_33113463F13D
 #define SYM_H__8590A83D_2145_4CFE_83CA_33113463F13D
 //
-// $Id: sym.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

@@ -6,7 +6,7 @@
 // http://www.boost.org/LICENSE_1_0.txt)
 // -------------------------------------------------------------------------
 //
-// $Id: fbsd-i386.cpp 394 2008-03-09 22:04:53Z root $
+// $Id$
 //
 #include <assert.h>
 #include <sys/param.h>

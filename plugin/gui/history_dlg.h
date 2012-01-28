@@ -1,7 +1,7 @@
 #ifndef HISTORY_DLG_H__3FAF2C42_C832_4283_A586_4F5A13AEDD8A
 #define HISTORY_DLG_H__3FAF2C42_C832_4283_A586_4F5A13AEDD8A
 //
-// $Id: history_dlg.h 720 2010-10-28 06:37:54Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

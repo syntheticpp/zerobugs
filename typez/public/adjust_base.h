@@ -1,7 +1,7 @@
 #ifndef ADJUST_BASE_H__95684845_D150_4358_8260_996CB71D29C9
 #define ADJUST_BASE_H__95684845_D150_4358_8260_996CB71D29C9
 //
-// $Id: adjust_base.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

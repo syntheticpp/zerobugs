@@ -1,7 +1,7 @@
 #ifndef UTILS_H__6A0BEF97_4723_4D2E_BC92_3F7B61E7F4CE
 #define UTILS_H__6A0BEF97_4723_4D2E_BC92_3F7B61E7F4CE
 //
-// $Id: utils.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

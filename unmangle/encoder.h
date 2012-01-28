@@ -1,7 +1,7 @@
 #ifndef ENCODER_H__1C552AE1_2014_4B9A_A25C_D6A5CCE47F7D
 #define ENCODER_H__1C552AE1_2014_4B9A_A25C_D6A5CCE47F7D
 //
-// $Id: encoder.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

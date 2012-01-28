@@ -1,7 +1,7 @@
 #ifndef TEST_CONTEXT_H__990C4E62_784E_40DD_ABE0_B11476549BDF
 #define TEST_CONTEXT_H__990C4E62_784E_40DD_ABE0_B11476549BDF
 //
-// $Id: test_context.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

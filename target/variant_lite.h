@@ -1,7 +1,7 @@
 #ifndef VARIANT_REG_H__D9DDDDF4_751C_4C95_80B1_8F8947398086
 #define VARIANT_REG_H__D9DDDDF4_751C_4C95_80B1_8F8947398086
 //
-// $Id: variant_lite.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

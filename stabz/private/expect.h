@@ -1,7 +1,7 @@
 #ifndef EXPECT_H__1149FECA_9C51_4377_9786_1F1F6E3DAF81
 #define EXPECT_H__1149FECA_9C51_4377_9786_1F1F6E3DAF81
 //
-// $Id: expect.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

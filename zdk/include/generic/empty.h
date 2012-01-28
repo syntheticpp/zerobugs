@@ -1,7 +1,7 @@
 #ifndef EMPTY_H__95CD1F63_8B22_4717_9F33_503F97634BBE
 #define EMPTY_H__95CD1F63_8B22_4717_9F33_503F97634BBE
 //
-// $Id: empty.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

@@ -1,7 +1,7 @@
 #ifndef ERROR_H__83F467C4_50AD_446A_8F6E_0F2509585A72
 #define ERROR_H__83F467C4_50AD_446A_8F6E_0F2509585A72
 //
-// $Id: error.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

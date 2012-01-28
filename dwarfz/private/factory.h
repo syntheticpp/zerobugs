@@ -1,7 +1,7 @@
 #ifndef FACTORY_H__ADD0D3B1_DB5A_4DDE_AFCA_4F6860E337A9
 #define FACTORY_H__ADD0D3B1_DB5A_4DDE_AFCA_4F6860E337A9
 //
-// $Id: factory.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

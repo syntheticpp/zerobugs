@@ -6,7 +6,7 @@
 // http://www.boost.org/LICENSE_1_0.txt)
 // -------------------------------------------------------------------------
 //
-// $Id: offset_symbol.cpp 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 #include "zdk/symbol_table.h"
 #include "private/offset_symbol.h"

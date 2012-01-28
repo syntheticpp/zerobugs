@@ -1,7 +1,7 @@
 #ifndef ZERO_H__82331446_EC88_46A0_9C85_8EEDD168EA79
 #define ZERO_H__82331446_EC88_46A0_9C85_8EEDD168EA79
 //
-// $Id: zero.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2004 - 2012 Cristian L. Vlasceanu

@@ -1,7 +1,7 @@
 #ifndef VALUE_H__9602A028_2B4C_4034_A6B8_6767C5C0A0E4
 #define VALUE_H__9602A028_2B4C_4034_A6B8_6767C5C0A0E4
 //
-// $Id: value.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

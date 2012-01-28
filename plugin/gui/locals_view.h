@@ -1,7 +1,7 @@
 #ifndef LOCALS_VIEW_H__BC855668_36A6_4624_A51F_C8960FD7694E
 #define LOCALS_VIEW_H__BC855668_36A6_4624_A51F_C8960FD7694E
 //
-// $Id: locals_view.h 720 2010-10-28 06:37:54Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

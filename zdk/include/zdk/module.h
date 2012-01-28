@@ -1,7 +1,7 @@
 #ifndef MODULE_H__E0C2031B_EF33_4FBD_BCA6_6A40C61A392C
 #define MODULE_H__E0C2031B_EF33_4FBD_BCA6_6A40C61A392C
 //
-// $Id: module.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

@@ -1,6 +1,6 @@
 //
 // -*- tab-width: 4; indent-tabs-mode: nil;  -*-
-// $Id: uuid.cpp 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

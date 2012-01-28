@@ -1,7 +1,7 @@
 #ifndef VAR_H__E45E60E8_679F_465E_9DAE_594175807950
 #define VAR_H__E45E60E8_679F_465E_9DAE_594175807950
 //
-// $Id: var.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

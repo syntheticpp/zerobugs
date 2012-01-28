@@ -1,7 +1,7 @@
 #ifndef DEBUGGER_ENGINE_H__0AEF18F9_E867_46BB_82FA_D62AD7682383
 #define DEBUGGER_ENGINE_H__0AEF18F9_E867_46BB_82FA_D62AD7682383
 //
-// $Id: debugger_engine.h 719 2010-10-22 03:59:11Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

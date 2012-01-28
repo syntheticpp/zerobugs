@@ -1,7 +1,7 @@
 #ifndef ACCELMAP_H__1A6B2C95_C6E3_45A3_A3ED_0382319BBA7E
 #define ACCELMAP_H__1A6B2C95_C6E3_45A3_A3ED_0382319BBA7E
 //
-// $Id: accelmap.h 716 2010-10-17 22:16:32Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

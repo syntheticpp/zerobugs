@@ -1,7 +1,7 @@
 #ifndef UNIX_EXEC_H__4BF4E70E_58FF_11DA_B82B_00C04F09BBCC
 #define UNIX_EXEC_H__4BF4E70E_58FF_11DA_B82B_00C04F09BBCC
 //
-// $Id: unix_exec.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

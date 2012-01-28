@@ -1,7 +1,7 @@
 #ifndef OBJECT_H__EAC97716_153B_4ADD_8F57_2112A9E0BE79
 #define OBJECT_H__EAC97716_153B_4ADD_8F57_2112A9E0BE79
 //
-// $Id: object.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

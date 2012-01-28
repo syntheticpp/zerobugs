@@ -2,7 +2,7 @@
 #define STRING_H__C44D3D70_AB7C_41C6_ADDC_ED6906897009
 //
 //
-// $Id: string.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

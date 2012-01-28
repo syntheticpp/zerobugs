@@ -1,7 +1,7 @@
 #ifndef SLOT_MACROS_H__590E78A1_562E_4E16_A40E_372A63EE4D8D
 #define SLOT_MACROS_H__590E78A1_562E_4E16_A40E_372A63EE4D8D
 //
-// $Id: slot_macros.h 720 2010-10-28 06:37:54Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

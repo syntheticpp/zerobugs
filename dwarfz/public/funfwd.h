@@ -1,7 +1,7 @@
 #ifndef FUNFWD_H__E83AA504_E791_424F_8D78_4EDF85AD2095
 #define FUNFWD_H__E83AA504_E791_424F_8D78_4EDF85AD2095
 //
-// $Id: funfwd.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

@@ -1,7 +1,7 @@
 #ifndef ON_CALL_RETURN_H__9C154A0D_66B8_4240_A472_6E9111C4681E
 #define ON_CALL_RETURN_H__9C154A0D_66B8_4240_A472_6E9111C4681E
 //
-// $Id: on_call_return.h 719 2010-10-22 03:59:11Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

@@ -1,7 +1,7 @@
 #ifndef CODE_VIEW_H__D71F3650_B6F7_42C8_8DF7_5380BA45795F
 #define CODE_VIEW_H__D71F3650_B6F7_42C8_8DF7_5380BA45795F
 //
-// $Id: code_view.h 720 2010-10-28 06:37:54Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

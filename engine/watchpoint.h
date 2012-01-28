@@ -1,7 +1,7 @@
 #ifndef WATCHPOINT_H__D15518E6_3185_4E66_A88B_3F3E5CF6CB71
 #define WATCHPOINT_H__D15518E6_3185_4E66_A88B_3F3E5CF6CB71
 //
-// $Id: watchpoint.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

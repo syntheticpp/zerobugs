@@ -1,7 +1,7 @@
 #ifndef ATOMIC_H__043C4CAF_6083_4150_9F1A_7038D205A2CA
 #define ATOMIC_H__043C4CAF_6083_4150_9F1A_7038D205A2CA
 //
-// $Id: atomic.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

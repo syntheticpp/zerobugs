@@ -7,7 +7,7 @@
 // http://www.boost.org/LICENSE_1_0.txt)
 // -------------------------------------------------------------------------
 //
-// $Id: test_ref_count.cpp 719 2010-10-22 03:59:11Z root $
+// $Id$
 //
 #include "test_common.h"
 #include <iostream>

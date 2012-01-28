@@ -1,7 +1,7 @@
 #ifndef RADIOBUTTON_H__1119D9B3_CA2A_4122_89BE_0F2013E060D8
 #define RADIOBUTTON_H__1119D9B3_CA2A_4122_89BE_0F2013E060D8
 //
-// $Id: radiobutton.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

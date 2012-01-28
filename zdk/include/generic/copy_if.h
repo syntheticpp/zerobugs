@@ -1,7 +1,7 @@
 #ifndef COPY_IF_H__1060470181
 #define COPY_IF_H__1060470181
 //
-// $Id: copy_if.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

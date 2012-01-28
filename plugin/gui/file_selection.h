@@ -1,7 +1,7 @@
 #ifndef FILESEL_H__DF40D424_8739_4A53_9F28_1EAC339E1FB6
 #define FILESEL_H__DF40D424_8739_4A53_9F28_1EAC339E1FB6
 //
-// $Id: file_selection.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

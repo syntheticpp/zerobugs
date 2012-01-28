@@ -1,7 +1,7 @@
 #ifndef HTML_VIEW_H__6A9919A5_D7F7_41B3_A1DD_935B91C1A26E
 #define HTML_VIEW_H__6A9919A5_D7F7_41B3_A1DD_935B91C1A26E
 //
-// $Id: html_view.h 720 2010-10-28 06:37:54Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

@@ -1,7 +1,7 @@
 #ifndef ACCESS_H__B5EAAF64_A60B_4DEC_9C2B_30D512E97939
 #define ACCESS_H__B5EAAF64_A60B_4DEC_9C2B_30D512E97939
 //
-// $Id: access.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

@@ -1,7 +1,7 @@
 #ifndef ACCELKEY_H__0ED478B2_8E42_40D1_AE3E_7C3DA1E22C81
 #define ACCELKEY_H__0ED478B2_8E42_40D1_AE3E_7C3DA1E22C81
 //
-// $Id: accelkey.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

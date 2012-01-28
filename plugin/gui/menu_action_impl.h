@@ -1,7 +1,7 @@
 #ifndef MENU_ACTION_IMPL_H__F6FDEA83_4BBF_4628_B006_3579249427D1
 #define MENU_ACTION_IMPL_H__F6FDEA83_4BBF_4628_B006_3579249427D1
 //
-// $Id: menu_action_impl.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

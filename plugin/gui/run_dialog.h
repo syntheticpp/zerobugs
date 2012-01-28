@@ -1,7 +1,7 @@
 #ifndef RUN_DIALOG_H__9E27F34E_8A58_4D3C_8354_DBA105568F0B
 #define RUN_DIALOG_H__9E27F34E_8A58_4D3C_8354_DBA105568F0B
 //
-// $Id: run_dialog.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

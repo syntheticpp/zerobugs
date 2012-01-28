@@ -6,7 +6,7 @@
 // http://www.boost.org/LICENSE_1_0.txt)
 // -------------------------------------------------------------------------
 //
-// $Id: environ.cpp 710 2010-10-16 07:09:15Z root $
+// $Id$
 //
 #include <assert.h>
 #include <stdlib.h>

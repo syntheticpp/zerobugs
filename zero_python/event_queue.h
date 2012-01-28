@@ -1,7 +1,7 @@
 #ifndef EVENT_QUEUE_H__51D45F3B_A2B6_407E_8444_954750A7C079
 #define EVENT_QUEUE_H__51D45F3B_A2B6_407E_8444_954750A7C079
 //
-// $Id: event_queue.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

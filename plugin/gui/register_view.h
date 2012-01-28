@@ -1,7 +1,7 @@
 #ifndef REGISTER_VIEW_H__2431B92F_0D0F_4F3A_B3D7_78A11C6B1422
 #define REGISTER_VIEW_H__2431B92F_0D0F_4F3A_B3D7_78A11C6B1422
 //
-// $Id: register_view.h 720 2010-10-28 06:37:54Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

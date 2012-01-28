@@ -1,5 +1,5 @@
 # vim: tabstop=4:softtabstop=4:expandtab:shiftwidth=4 
-# $Id: test_dso.sh 398 2008-03-12 07:05:17Z root $
+# $Id$
 #
 # Testing two things:
 # 1)expression evaluation of an object that is defined

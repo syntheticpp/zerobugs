@@ -1,7 +1,7 @@
 #ifndef ADAPT_PTR_H__FD143DB4_7C9D_42EF_9326_6F93B52DC372
 #define ADAPT_PTR_H__FD143DB4_7C9D_42EF_9326_6F93B52DC372
 //
-// $Id: adapt_ptr.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

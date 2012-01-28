@@ -1,7 +1,7 @@
 #ifndef TYPE_ATTR_H__F1DEA043_3B60_4161_82C7_33B9CC4011C1
 #define TYPE_ATTR_H__F1DEA043_3B60_4161_82C7_33B9CC4011C1
 //
-// $Id: type_attr.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

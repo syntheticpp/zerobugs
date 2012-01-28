@@ -1,7 +1,7 @@
 #ifndef TYPES_H__72652349_DF83_41B5_92F9_76BAA39A9737
 #define TYPES_H__72652349_DF83_41B5_92F9_76BAA39A9737
 //
-// $Id: types.h 719 2010-10-22 03:59:11Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

@@ -1,7 +1,7 @@
 #ifndef ENV_DIALOG_H__5E5A924C_8E4B_4EF1_A8AE_8A66D30A786F
 #define ENV_DIALOG_H__5E5A924C_8E4B_4EF1_A8AE_8A66D30A786F
 //
-// $Id: env_dialog.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

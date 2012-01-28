@@ -1,7 +1,7 @@
 #ifndef STATUSBAR_H__12161718_22D8_4625_A25C_2B8BE3E9BEEA
 #define STATUSBAR_H__12161718_22D8_4625_A25C_2B8BE3E9BEEA
 //
-// $Id: statusbar.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

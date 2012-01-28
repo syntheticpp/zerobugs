@@ -1,7 +1,7 @@
 #ifndef ICON_MAPPER_H__B7038034_F411_4821_86CA_20F2719B2A22
 #define ICON_MAPPER_H__B7038034_F411_4821_86CA_20F2719B2A22
 //
-// $Id: icon_mapper.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

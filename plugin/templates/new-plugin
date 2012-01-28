@@ -1,5 +1,5 @@
 #! /bin/bash
-# $Id: new-plugin 531 2008-06-25 16:17:34Z root $
+# $Id$
 #
 # Generate plugin skeleton. Copyright(c) 2004 Cristian Vlasceanu
 #

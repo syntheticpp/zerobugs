@@ -1,7 +1,7 @@
 #ifndef ALIGN_H__7C496F59_475F_41E4_B6A0_688601FB917B
 #define ALIGN_H__7C496F59_475F_41E4_B6A0_688601FB917B
 //
-// $Id: align.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

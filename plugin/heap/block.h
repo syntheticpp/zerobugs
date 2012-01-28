@@ -1,7 +1,7 @@
 #ifndef BLOCK_H__70A6672C_B682_4A81_AB84_ADBD2F3DE513
 #define BLOCK_H__70A6672C_B682_4A81_AB84_ADBD2F3DE513
 //
-// $Id: block.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

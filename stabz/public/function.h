@@ -1,7 +1,7 @@
 #ifndef FUNCTION_H__F9C6FCB4_5B79_4F58_9FD6_C35C15218D9F
 #define FUNCTION_H__F9C6FCB4_5B79_4F58_9FD6_C35C15218D9F
 //
-// $Id: function.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

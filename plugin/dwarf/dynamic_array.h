@@ -1,7 +1,7 @@
 #ifndef DYNAMIC_ARRAY_H__7D044097_7300_4A1C_B420_F6ED0B0BC643
 #define DYNAMIC_ARRAY_H__7D044097_7300_4A1C_B420_F6ED0B0BC643
 //
-// $Id: dynamic_array.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

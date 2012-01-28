@@ -2,7 +2,7 @@
 #define SUBRANGE_TYPE_H__39C876BA_A5A8_49F2_B188_664B101EF4A2
 //
 //
-// $Id: subrange_type.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

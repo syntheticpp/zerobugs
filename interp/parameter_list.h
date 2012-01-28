@@ -1,7 +1,7 @@
 #ifndef PARAMETER_LIST_H__23DA7E72_FBED_4C50_A9E5_9C04675E5618
 #define PARAMETER_LIST_H__23DA7E72_FBED_4C50_A9E5_9C04675E5618
 //
-// $Id: parameter_list.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

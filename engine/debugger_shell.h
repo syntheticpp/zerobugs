@@ -1,7 +1,7 @@
 #ifndef DEBUGGER_SHELL_H__1E4882EA_7E92_451D_A2D3_1BEB566FCE89
 #define DEBUGGER_SHELL_H__1E4882EA_7E92_451D_A2D3_1BEB566FCE89
 //
-// $Id: debugger_shell.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

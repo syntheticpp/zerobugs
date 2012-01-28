@@ -2,7 +2,7 @@
 #define DEBUG_SYMBOL_LIST_H__DF8B547C_AD47_4389_92FC_6199B6C8F7DC
 //
 //
-// $Id: debug_symbol_list.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

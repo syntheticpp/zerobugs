@@ -1,7 +1,7 @@
 #ifndef SYSCALL_UNIX_H__7E32D6FB_BB28_4A1B_91AB_2F6886DD2CC4
 #define SYSCALL_UNIX_H__7E32D6FB_BB28_4A1B_91AB_2F6886DD2CC4
 //
-// $Id: syscall_unix.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

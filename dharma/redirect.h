@@ -1,7 +1,7 @@
 #ifndef REDIRECT_H__4DD6FE82_ECB1_4A01_B8A2_B414BDBE75E3
 #define REDIRECT_H__4DD6FE82_ECB1_4A01_B8A2_B414BDBE75E3
 //
-// $Id: redirect.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

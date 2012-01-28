@@ -1,7 +1,7 @@
 #ifndef SOURCE_H__6D1ABB97_A1DC_45EA_8FFE_D64876D7DC36
 #define SOURCE_H__6D1ABB97_A1DC_45EA_8FFE_D64876D7DC36
 //
-// $Id: source.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

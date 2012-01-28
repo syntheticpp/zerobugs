@@ -1,7 +1,7 @@
 #ifndef CALL_H__285C101D_82AD_4FAA_BF92_7DF99A28413C
 #define CALL_H__285C101D_82AD_4FAA_BF92_7DF99A28413C
 //
-// $Id: call.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // Templates for calling into Python code
 //

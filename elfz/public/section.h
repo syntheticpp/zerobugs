@@ -1,7 +1,7 @@
 #ifndef SECTION_H__B4C7F7DA_7D51_477B_84D6_BE46064515DE
 #define SECTION_H__B4C7F7DA_7D51_477B_84D6_BE46064515DE
 //
-// $Id: section.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

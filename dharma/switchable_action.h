@@ -1,7 +1,7 @@
 #ifndef SWITCHABLE_ACTION_H__6B5C3CD7_16F0_41CC_80F2_E00C1EF48654
 #define SWITCHABLE_ACTION_H__6B5C3CD7_16F0_41CC_80F2_E00C1EF48654
 //
-// $Id: switchable_action.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

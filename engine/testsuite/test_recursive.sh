@@ -1,5 +1,5 @@
 # vim: tabstop=4:softtabstop=4:expandtab:shiftwidth=4 
-# $Id: test_recursive.sh 205 2007-11-22 03:52:59Z root $
+# $Id$
 # 
 # Test that the 'ret' command (which translates internally into
 # a Thread::step_until_current_func_returns call) works properly

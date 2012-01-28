@@ -1,7 +1,7 @@
 #ifndef FHEAP_H__3F1E994F_B86B_43F4_B99C_6B78C8F6B23B
 #define FHEAP_H__3F1E994F_B86B_43F4_B99C_6B78C8F6B23B
 //
-// $Id: fheap.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

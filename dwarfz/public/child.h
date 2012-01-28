@@ -1,7 +1,7 @@
 #ifndef CHILD_OF_H__B7B4BE4B_EC0B_45D8_9A8F_033BE936C1A0
 #define CHILD_OF_H__B7B4BE4B_EC0B_45D8_9A8F_033BE936C1A0
 //
-// $Id: child.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

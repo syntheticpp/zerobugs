@@ -1,7 +1,7 @@
 #ifndef BLOCK_H__322EDDB7_0AE5_4951_9E36_B15A92622BAF
 #define BLOCK_H__322EDDB7_0AE5_4951_9E36_B15A92622BAF
 //
-// $Id: block.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

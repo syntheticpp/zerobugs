@@ -1,7 +1,7 @@
 #ifndef EVENTLOG_H__5E85E497_C4D7_474D_8A58_0F7320BC43BD
 #define EVENTLOG_H__5E85E497_C4D7_474D_8A58_0F7320BC43BD
 //
-// $Id: eventlog.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

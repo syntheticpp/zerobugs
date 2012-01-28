@@ -1,7 +1,7 @@
 #ifndef REGISTER_H__60C77986_AA35_4B22_8C57_6B354C190804
 #define REGISTER_H__60C77986_AA35_4B22_8C57_6B354C190804
 //
-// $Id: register.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

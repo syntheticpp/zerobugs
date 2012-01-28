@@ -1,7 +1,7 @@
 #ifndef HISTORY_H__8373646B_BB66_44BE_9EC8_AF9D765D3EB8
 #define HISTORY_H__8373646B_BB66_44BE_9EC8_AF9D765D3EB8
 //
-// $Id: history.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

@@ -1,7 +1,7 @@
 #ifndef STREAM_H__8FEA9400_8835_40AA_B68D_AF9FBE93339F
 #define STREAM_H__8FEA9400_8835_40AA_B68D_AF9FBE93339F
 //
-// $Id: stream.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

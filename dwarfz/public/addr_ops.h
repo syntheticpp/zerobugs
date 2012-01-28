@@ -1,7 +1,7 @@
 #ifndef ADDR_OPS_H__1211D4CB_41F3_44AD_B5BD_BB967A252FD5
 #define ADDR_OPS_H__1211D4CB_41F3_44AD_B5BD_BB967A252FD5
 //
-// $Id: addr_ops.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

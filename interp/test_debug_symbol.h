@@ -1,7 +1,7 @@
 #ifndef TEST_DEBUG_SYMBOL_H__4D707A77_6057_4E9C_9C20_D42CD47FBF59
 #define TEST_DEBUG_SYMBOL_H__4D707A77_6057_4E9C_9C20_D42CD47FBF59
 //
-// $Id: test_debug_symbol.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

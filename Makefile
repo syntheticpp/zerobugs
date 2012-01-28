@@ -1,5 +1,5 @@
 # vim: noexpandtab: tabstop=4: shiftwidth=4
-# $Id: Makefile 658 2009-10-27 05:46:42Z root $
+# $Id$
 # -------------------------------------------------------------------------
 # This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu
 #

@@ -1,7 +1,7 @@
 #ifndef FRAME_REG_H__8541D364_65E1_427B_AC10_BE3FD9F103B0
 #define FRAME_REG_H__8541D364_65E1_427B_AC10_BE3FD9F103B0
 //
-// $Id: frame_reg.h 720 2010-10-28 06:37:54Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

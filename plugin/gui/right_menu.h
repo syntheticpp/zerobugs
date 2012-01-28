@@ -1,7 +1,7 @@
 #ifndef RIGHT_MENU_H__A3A70DFB_FC78_47A8_BA9A_1C26766271A4
 #define RIGHT_MENU_H__A3A70DFB_FC78_47A8_BA9A_1C26766271A4
 //
-// $Id: right_menu.h 720 2010-10-28 06:37:54Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

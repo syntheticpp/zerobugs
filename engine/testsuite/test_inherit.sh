@@ -1,5 +1,5 @@
 # vim: tabstop=4:softtabstop=4:expandtab:shiftwidth=4 
-# $Id: test_inherit.sh 432 2008-04-04 09:28:11Z root $
+# $Id$
 
 function test_inherit()
 {

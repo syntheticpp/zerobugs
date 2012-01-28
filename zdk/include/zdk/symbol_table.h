@@ -1,7 +1,7 @@
 #ifndef SYMBOL_TABLE_H__FE395759_310E_4DC4_B4A1_13B572B9BD8F
 #define SYMBOL_TABLE_H__FE395759_310E_4DC4_B4A1_13B572B9BD8F
 //
-// $Id: symbol_table.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

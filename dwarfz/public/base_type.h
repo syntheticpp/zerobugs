@@ -1,7 +1,7 @@
 #ifndef BASE_TYPE_H__A6694601_D86B_47DB_A798_067A5965ED0F
 #define BASE_TYPE_H__A6694601_D86B_47DB_A798_067A5965ED0F
 //
-// $Id: base_type.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu
 //

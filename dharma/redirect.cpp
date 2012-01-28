@@ -6,7 +6,7 @@
 // http://www.boost.org/LICENSE_1_0.txt)
 // -------------------------------------------------------------------------
 //
-// $Id: redirect.cpp 710 2010-10-16 07:09:15Z root $
+// $Id$
 //
 #include <pthread.h>
 #include <unistd.h>

@@ -1,7 +1,7 @@
 #ifndef EXPR_H__92614E0E_EE20_469C_955D_E71E291B88B6
 #define EXPR_H__92614E0E_EE20_469C_955D_E71E291B88B6
 //
-// $Id: expr.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

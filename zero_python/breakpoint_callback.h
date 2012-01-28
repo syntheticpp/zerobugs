@@ -1,7 +1,7 @@
 #ifndef BREAKPOINT_CALLBACK_H__72ED0D1D_EBC7_42AC_BECB_0B6545DF6D5B
 #define BREAKPOINT_CALLBACK_H__72ED0D1D_EBC7_42AC_BECB_0B6545DF6D5B
 //
-// $Id: breakpoint_callback.h 719 2010-10-22 03:59:11Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

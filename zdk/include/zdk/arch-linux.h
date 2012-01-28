@@ -1,7 +1,7 @@
 #ifndef ARCH_LINUX_H__58FF8B5F_44BB_4663_949D_BD23497973AC
 #define ARCH_LINUX_H__58FF8B5F_44BB_4663_949D_BD23497973AC
 //
-// $Id: arch-linux.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

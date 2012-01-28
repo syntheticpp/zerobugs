@@ -1,7 +1,7 @@
 #ifndef MARKER_H__3C741193_DF08_4FD5_ADC0_F534037906B6
 #define MARKER_H__3C741193_DF08_4FD5_ADC0_F534037906B6
 //
-// $Id: marker.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

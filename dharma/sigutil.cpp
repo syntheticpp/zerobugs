@@ -1,5 +1,5 @@
 //
-// $Id: sigutil.cpp 710 2010-10-16 07:09:15Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

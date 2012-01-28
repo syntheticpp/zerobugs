@@ -1,7 +1,7 @@
 #ifndef ENCODING_ATTR_H__FF1B8C87_F85F_4B93_8EB4_979141BADF61
 #define ENCODING_ATTR_H__FF1B8C87_F85F_4B93_8EB4_979141BADF61
 //
-// $Id: encoding_attr.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

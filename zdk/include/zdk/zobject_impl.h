@@ -1,7 +1,7 @@
 #ifndef ZOBJECT_IMPL_H__525D708D_534F_41CC_B2C8_E20A8A6B95B3
 #define ZOBJECT_IMPL_H__525D708D_534F_41CC_B2C8_E20A8A6B95B3
 //
-// $Id: zobject_impl.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

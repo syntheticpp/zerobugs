@@ -1,5 +1,5 @@
 //
-// $Id: linux_live_xevent.cpp 720 2010-10-28 06:37:54Z root $
+// $Id$
 //
 // Handle extended ptrace events.
 //

@@ -1,7 +1,7 @@
 #ifndef FONT_H__4BFBFFBA_A0C0_403C_84EF_BC1A9D9B02A1
 #define FONT_H__4BFBFFBA_A0C0_403C_84EF_BC1A9D9B02A1
 //
-// $Id: font.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

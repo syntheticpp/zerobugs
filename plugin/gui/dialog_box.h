@@ -1,7 +1,7 @@
 #ifndef DIALOG_BOX_H__D0148851_FDC9_4E16_9D0A_03A5FC7C3ED1
 #define DIALOG_BOX_H__D0148851_FDC9_4E16_9D0A_03A5FC7C3ED1
 //
-// $Id: dialog_box.h 720 2010-10-28 06:37:54Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

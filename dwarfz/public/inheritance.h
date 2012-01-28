@@ -1,7 +1,7 @@
 #ifndef INHERITANCE_H__50DC52A2_D35C_4644_B474_F8B6ED3CB59D
 #define INHERITANCE_H__50DC52A2_D35C_4644_B474_F8B6ED3CB59D
 //
-// $Id: inheritance.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

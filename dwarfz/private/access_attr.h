@@ -1,7 +1,7 @@
 #ifndef ACCESS_ATTR_H__EE4081F6_192F_43F6_84AB_98346264C350
 #define ACCESS_ATTR_H__EE4081F6_192F_43F6_84AB_98346264C350
 //
-// $Id: access_attr.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

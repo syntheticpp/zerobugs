@@ -1,7 +1,7 @@
 #ifndef TYPE_SYSTEM_IMPL_H__5E11E6D1_243C_4A9A_844B_C73987076345
 #define TYPE_SYSTEM_IMPL_H__5E11E6D1_243C_4A9A_844B_C73987076345
 //
-// $Id: native_type_system.h 719 2010-10-22 03:59:11Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

@@ -1,6 +1,6 @@
 /*
  * vim: tabstop=8:softtabstop=8:noexpandtab:shiftwidth=8 
- * $Id: scan.l 719 2010-10-22 03:59:11Z root $
+ * $Id$
  */
 /* -------------------------------------------------------------------------
  This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

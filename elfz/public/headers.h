@@ -1,7 +1,7 @@
 #ifndef HEADERS_H__48AF820C_8F74_453F_B098_F35A42BD9232
 #define HEADERS_H__48AF820C_8F74_453F_B098_F35A42BD9232
 //
-// $Id: headers.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

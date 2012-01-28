@@ -1,5 +1,5 @@
 # vim: tabstop=4:softtabstop=4:expandtab:shiftwidth=4 
-# $Id: test_vector.sh 418 2008-03-27 06:24:49Z root $
+# $Id$
 
 ################################################################
 #

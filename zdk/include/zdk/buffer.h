@@ -1,7 +1,7 @@
 #ifndef BUFFER_H__59054C96_E219_46F6_A7A5_5AB5078E9948
 #define BUFFER_H__59054C96_E219_46F6_A7A5_5AB5078E9948
 //
-// $Id: buffer.h 719 2010-10-22 03:59:11Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

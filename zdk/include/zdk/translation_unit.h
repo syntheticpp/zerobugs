@@ -1,7 +1,7 @@
 #ifndef UNIT_H__A7F13D4A_8183_455B_9739_BEB0D033A09F
 #define UNIT_H__A7F13D4A_8183_455B_9739_BEB0D033A09F
 //
-// $Id: translation_unit.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu
 //

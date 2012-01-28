@@ -1,7 +1,7 @@
 #ifndef LOGICAL_EXPR_H__576B885F_6E7D_4976_93BD_C61D95B59E46
 #define LOGICAL_EXPR_H__576B885F_6E7D_4976_93BD_C61D95B59E46
 //
-// $Id: logical_expr.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

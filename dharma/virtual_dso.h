@@ -1,7 +1,7 @@
 #ifndef VIRTUAL_DSO_H__DA3B9C74_CDA0_4DD4_8747_7B7A646A58DF
 #define VIRTUAL_DSO_H__DA3B9C74_CDA0_4DD4_8747_7B7A646A58DF
 //
-// $Id: virtual_dso.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

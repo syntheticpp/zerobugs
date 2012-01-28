@@ -1,7 +1,7 @@
 #ifndef WATCH_VIEW_H__4300E42D_4C13_4EF3_B019_B6FFC8E13659
 #define WATCH_VIEW_H__4300E42D_4C13_4EF3_B019_B6FFC8E13659
 //
-// $Id: watch_view.h 716 2010-10-17 22:16:32Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

@@ -1,7 +1,7 @@
 #ifndef CONST_VALUE_H__3408573E_89EA_4B64_A393_ED1B231DB8C8
 #define CONST_VALUE_H__3408573E_89EA_4B64_A393_ED1B231DB8C8
 //
-// $Id: const_value.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

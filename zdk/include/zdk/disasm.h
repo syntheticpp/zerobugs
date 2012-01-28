@@ -1,7 +1,7 @@
 #ifndef DISASM_H__83D587B3_47AE_4D79_885E_8114D8B372BD
 #define DISASM_H__83D587B3_47AE_4D79_885E_8114D8B372BD
 //
-// $Id: disasm.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

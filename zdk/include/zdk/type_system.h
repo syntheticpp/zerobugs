@@ -1,7 +1,7 @@
 #ifndef TYPE_SYSTEM_H__9A4BC9D9_B003_491B_8099_BF4F5441F7E5
 #define TYPE_SYSTEM_H__9A4BC9D9_B003_491B_8099_BF4F5441F7E5
 //
-// $Id: type_system.h 723 2010-10-28 07:40:45Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

@@ -1,7 +1,7 @@
 #ifndef WEAK_PTR_H__8488FF5C_3D34_48F8_B0B7_991665306287
 #define WEAK_PTR_H__8488FF5C_3D34_48F8_B0B7_991665306287
 //
-// $Id: weak_ptr.h 723 2010-10-28 07:40:45Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

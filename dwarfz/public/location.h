@@ -1,7 +1,7 @@
 #ifndef LOCATION_H__1891B6AA_E341_450D_98B9_EDB37ED73A33
 #define LOCATION_H__1891B6AA_E341_450D_98B9_EDB37ED73A33
 //
-// $Id: location.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

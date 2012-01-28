@@ -1,7 +1,7 @@
 #ifndef VARIABLE_H__435D5E8E_2749_44FF_B3C1_50D52C3D3FFC
 #define VARIABLE_H__435D5E8E_2749_44FF_B3C1_50D52C3D3FFC
 //
-// $Id: variable.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

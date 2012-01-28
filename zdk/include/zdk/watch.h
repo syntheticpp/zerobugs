@@ -1,7 +1,7 @@
 #ifndef WATCH_H__09A4AAA3_CC37_4C51_BD81_AAAD8CE523AA
 #define WATCH_H__09A4AAA3_CC37_4C51_BD81_AAAD8CE523AA
 //
-// $Id: watch.h 723 2010-10-28 07:40:45Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

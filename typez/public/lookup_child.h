@@ -1,7 +1,7 @@
 #ifndef LOOKUP_CHILD_H__E747C894_694C_44D9_BF3D_F806E415122F
 #define LOOKUP_CHILD_H__E747C894_694C_44D9_BF3D_F806E415122F
 //
-// $Id: lookup_child.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

@@ -1,7 +1,7 @@
 #ifndef BUFFER_IMPL_H__5335ABC3_23EA_4379_A599_A565C1573A3F
 #define BUFFER_IMPL_H__5335ABC3_23EA_4379_A599_A565C1573A3F
 //
-// $Id: buffer_impl.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

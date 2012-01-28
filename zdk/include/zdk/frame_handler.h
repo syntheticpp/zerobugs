@@ -1,7 +1,7 @@
 #ifndef FRAME_HANDLER_H__2DAA3AA7_BB39_4F5B_91D7_2E6947372B0D
 #define FRAME_HANDLER_H__2DAA3AA7_BB39_4F5B_91D7_2E6947372B0D
 //
-// $Id: frame_handler.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

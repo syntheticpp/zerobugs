@@ -1,7 +1,7 @@
 #ifndef OBSERVER_IMPL_H__09D783FD_69AF_43A6_863A_05A9E1D51714
 #define OBSERVER_IMPL_H__09D783FD_69AF_43A6_863A_05A9E1D51714
 //
-// $Id: observer_impl.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

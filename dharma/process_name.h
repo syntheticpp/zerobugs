@@ -1,7 +1,7 @@
 #ifndef PROCESS_NAME_H__1056609065
 #define PROCESS_NAME_H__1056609065
 //
-// $Id: process_name.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

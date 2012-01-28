@@ -1,7 +1,7 @@
 #ifndef PIPE_H__57ACA83E_192A_474F_82D6_5973976719E1
 #define PIPE_H__57ACA83E_192A_474F_82D6_5973976719E1
 //
-// $Id: pipe.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

@@ -1,5 +1,5 @@
 # vim: tabstop=4:softtabstop=4:expandtab:shiftwidth=4 
-# $Id: test_bits.sh 211 2007-11-25 21:42:51Z root $
+# $Id$
 
 ################################################################
 #

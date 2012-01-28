@@ -1,7 +1,7 @@
 #ifndef DECODER_H__7B3B1118_B516_411D_B449_95D7E5C32248
 #define DECODER_H__7B3B1118_B516_411D_B449_95D7E5C32248
 //
-// $Id: decoder.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // Decoder for C++ Itanium ABI (aka V3 ABI) mangled names.
 // -------------------------------------------------------------------------

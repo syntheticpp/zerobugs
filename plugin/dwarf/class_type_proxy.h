@@ -1,7 +1,7 @@
 #ifndef CLASS_TYPE_PROXY_H__43B677E5_AEF4_473B_B376_055EEBA787BE
 #define CLASS_TYPE_PROXY_H__43B677E5_AEF4_473B_B376_055EEBA787BE
 //
-// $Id: class_type_proxy.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

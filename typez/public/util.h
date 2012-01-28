@@ -1,7 +1,7 @@
 #ifndef UTIL_H__C0CB51FF_22C2_4B8B_8BE8_B8D24C88B2BA
 #define UTIL_H__C0CB51FF_22C2_4B8B_8BE8_B8D24C88B2BA
 //
-// $Id: util.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

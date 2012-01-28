@@ -1,7 +1,7 @@
 #ifndef ROW_HANDLE_H__84E0166B_E5B2_4A35_A94F_1AACA05A0A20
 #define ROW_HANDLE_H__84E0166B_E5B2_4A35_A94F_1AACA05A0A20
 //
-// $Id: row_handle.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

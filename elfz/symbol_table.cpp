@@ -1,5 +1,5 @@
 //
-// $Id: symbol_table.cpp 711 2010-10-16 07:09:23Z root $
+// $Id$
 //
 // Implementations for SymbolTable and SymbolTableList
 //

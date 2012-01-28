@@ -1,7 +1,7 @@
 #ifndef FLOCK_H__7A9A830B_C6A8_41FE_B7D5_E1A8D794E9D8
 #define FLOCK_H__7A9A830B_C6A8_41FE_B7D5_E1A8D794E9D8
 //
-// $Id: flock.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

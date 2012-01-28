@@ -1,7 +1,7 @@
 #ifndef COLOR_H__B62A01D1_7BE1_4210_85F1_3E17C01885CD
 #define COLOR_H__B62A01D1_7BE1_4210_85F1_3E17C01885CD
 //
-// $Id: color.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

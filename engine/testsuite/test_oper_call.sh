@@ -1,5 +1,5 @@
 # vim: tabstop=4:softtabstop=4:expandtab:shiftwidth=4 
-# $Id: test_oper_call.sh 205 2007-11-22 03:52:59Z root $
+# $Id$
 #
 ################################################################
 # Test calling overloaded operators in the debugged program

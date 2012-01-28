@@ -1,7 +1,7 @@
 #ifndef ALT_EVENTS_H__62D54395_D940_4CC3_A280_CB26B86BF0AC
 #define ALT_EVENTS_H__62D54395_D940_4CC3_A280_CB26B86BF0AC
 //
-// $Id: alt_events.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

@@ -1,7 +1,7 @@
 #ifndef CURSOR_H__4112F032_4CBD_4E97_B201_BFA120F3264B
 #define CURSOR_H__4112F032_4CBD_4E97_B201_BFA120F3264B
 //
-// $Id: cursor.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

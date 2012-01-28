@@ -1,7 +1,7 @@
 #ifndef DATATYPE_H__4D27E9C4_3B4A_40B9_A302_88262FC5AA44
 #define DATATYPE_H__4D27E9C4_3B4A_40B9_A302_88262FC5AA44
 //
-// $Id: data_type.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

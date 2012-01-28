@@ -1,5 +1,5 @@
 # vim: tabstop=4:softtabstop=4:expandtab:shiftwidth=4 
-# $Id: test_cast.sh 210 2007-11-25 13:29:19Z root $
+# $Id$
 #
 function test_cstyle_cast()
 {

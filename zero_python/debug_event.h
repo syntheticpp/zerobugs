@@ -1,7 +1,7 @@
 #ifndef DEBUG_EVENT_H__E6BC3229_3F6A_4785_8DA7_51DC663B3B92
 #define DEBUG_EVENT_H__E6BC3229_3F6A_4785_8DA7_51DC663B3B92
 //
-// $Id: debug_event.h 719 2010-10-22 03:59:11Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

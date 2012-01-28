@@ -1,7 +1,7 @@
 #ifndef SYMBOL_TABLE_EVENTS_H__7528196F_FF15_451A_8047_C6C5DD721B7D
 #define SYMBOL_TABLE_EVENTS_H__7528196F_FF15_451A_8047_C6C5DD721B7D
 //
-// $Id: symbol_table_events.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

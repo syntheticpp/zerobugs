@@ -1,7 +1,7 @@
 #ifndef EVAL_EVENTS_H__ADBCE634_3C71_4E3A_8C83_02AF0D176CB9
 #define EVAL_EVENTS_H__ADBCE634_3C71_4E3A_8C83_02AF0D176CB9
 //
-// $Id: eval_events.h 720 2010-10-28 06:37:54Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

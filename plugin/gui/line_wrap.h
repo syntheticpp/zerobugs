@@ -1,7 +1,7 @@
 #ifndef LINE_WRAP_H__BC751CF6_7048_4FB8_86A8_68E88A1EB7E4
 #define LINE_WRAP_H__BC751CF6_7048_4FB8_86A8_68E88A1EB7E4
 //
-// $Id: line_wrap.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 #include <string>
 

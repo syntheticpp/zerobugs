@@ -1,7 +1,7 @@
 #ifndef POSTFIX_EXPR_H__A14A3FA5_1071_4E2C_A5E5_D240AA766231
 #define POSTFIX_EXPR_H__A14A3FA5_1071_4E2C_A5E5_D240AA766231
 //
-// $Id: postfix_expr.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

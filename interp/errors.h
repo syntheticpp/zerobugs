@@ -1,7 +1,7 @@
 #ifndef ERRORS_H__A3C1DC60_AE00_402D_B0BE_E674A304B535
 #define ERRORS_H__A3C1DC60_AE00_402D_B0BE_E674A304B535
 //
-// $Id: errors.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

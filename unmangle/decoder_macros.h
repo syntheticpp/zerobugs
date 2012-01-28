@@ -1,7 +1,7 @@
 #ifndef DECODER_MACROS_H__0FCBF0C0_3E64_44C5_9B3E_D98E525B7E34
 #define DECODER_MACROS_H__0FCBF0C0_3E64_44C5_9B3E_D98E525B7E34
 //
-// $Id: decoder_macros.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

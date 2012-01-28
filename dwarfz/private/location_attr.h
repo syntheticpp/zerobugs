@@ -1,7 +1,7 @@
 #ifndef LOCATION_ATTR_H__249749DE_9D0F_407D_B63D_DCB011EBEE28
 #define LOCATION_ATTR_H__249749DE_9D0F_407D_B63D_DCB011EBEE28
 //
-// $Id: location_attr.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

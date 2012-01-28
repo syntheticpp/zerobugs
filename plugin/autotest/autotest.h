@@ -1,7 +1,7 @@
 #ifndef AutoTest_H__70E93067_9421_4550_8C81_B35381DC19F6
 #define AutoTest_H__70E93067_9421_4550_8C81_B35381DC19F6
 //
-// $Id: autotest.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

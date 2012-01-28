@@ -1,7 +1,7 @@
 #ifndef RPC_H__04E4E4EB_66F5_434A_A69C_81B8B8FE7247
 #define RPC_H__04E4E4EB_66F5_434A_A69C_81B8B8FE7247
 //
-// $Id: rpc.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

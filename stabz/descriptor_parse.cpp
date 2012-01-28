@@ -1,5 +1,5 @@
 //
-// $Id: descriptor_parse.cpp 729 2010-10-31 07:00:15Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

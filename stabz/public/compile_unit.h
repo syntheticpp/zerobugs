@@ -1,7 +1,7 @@
 #ifndef COMPILE_UNIT_H__6E5B99DA_572A_44B7_80A6_36B81526BFEF
 #define COMPILE_UNIT_H__6E5B99DA_572A_44B7_80A6_36B81526BFEF
 //
-// $Id: compile_unit.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

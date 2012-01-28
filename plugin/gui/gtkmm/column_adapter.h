@@ -1,7 +1,7 @@
 #ifndef COLUMN_ADAPTER_H__3CCD3AEA_A5F4_449A_9D94_1C93D766AF65
 #define COLUMN_ADAPTER_H__3CCD3AEA_A5F4_449A_9D94_1C93D766AF65
 //
-// $Id: column_adapter.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

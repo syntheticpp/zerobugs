@@ -1,7 +1,7 @@
 #ifndef LOOKUP_METHODS_H__3BF34476_C78C_4E32_ACE9_4994A6575B8E
 #define LOOKUP_METHODS_H__3BF34476_C78C_4E32_ACE9_4994A6575B8E
 //
-// $Id: lookup_methods.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

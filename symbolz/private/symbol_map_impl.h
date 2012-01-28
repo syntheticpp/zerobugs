@@ -1,7 +1,7 @@
 #ifndef SYMBOL_MAP_IMPL_H__138BC994_43A2_4A8A_99B6_36108BB1C36B
 #define SYMBOL_MAP_IMPL_H__138BC994_43A2_4A8A_99B6_36108BB1C36B
 //
-// $Id: symbol_map_impl.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

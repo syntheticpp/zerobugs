@@ -1,5 +1,5 @@
 //
-// $Id: main_window.cpp 729 2010-10-31 07:00:15Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu
@@ -2286,14 +2286,14 @@ void MainWindow::save_geometry()
 
     Properties& props = *CHKPTR(debugger().properties());
 
-    props.set_word("WINDOW_MAXIMIZED", maximized_);
+    props.set_word(WINDOW_MAXIMIZED, maximized_);
 
     if (!maximized_)
     {
-        props.set_word("WINDOW_X", x);
-        props.set_word("WINDOW_Y", y);
-        props.set_word("WINDOW_WIDTH",  Gtk_WIDTH(this));
-        props.set_word("WINDOW_HEIGHT", Gtk_HEIGHT(this));
+        props.set_word(WINDOW_X, x);
+        props.set_word(WINDOW_Y, y);
+        props.set_word(WINDOW_WIDTH,  Gtk_WIDTH(this));
+        props.set_word(WINDOW_HEIGHT, Gtk_HEIGHT(this));
 
         if (layoutStrategy_)
         {

@@ -2,7 +2,7 @@
 #define ASSIGN_H__5DAA968F_F839_4428_8039_51181314EDEA
 //
 //
-// $Id: assign.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

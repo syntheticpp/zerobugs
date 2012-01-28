@@ -1,5 +1,5 @@
 # vim: tabstop=4:softtabstop=4:expandtab:shiftwidth=4 
-# $Id: test_path_map.sh 416 2008-03-25 06:14:56Z root $
+# $Id$
 
 ################################################################
 #

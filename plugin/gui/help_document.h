@@ -1,7 +1,7 @@
 #ifndef HELP_DOCUMENT_H__E7C4D643_C1F0_400E_A44D_1545677B2A47
 #define HELP_DOCUMENT_H__E7C4D643_C1F0_400E_A44D_1545677B2A47
 //
-// $Id: help_document.h 720 2010-10-28 06:37:54Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

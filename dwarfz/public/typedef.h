@@ -2,7 +2,7 @@
 #define TYPEDEF_H__B87F1A37_AD0A_4D4D_8932_CEE22D21B346
 //
 //
-// $Id: typedef.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

@@ -1,7 +1,7 @@
 #ifndef PLUGIN_MANAGER_H__1059708842
 #define PLUGIN_MANAGER_H__1059708842
 //
-// $Id: plugin_manager.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

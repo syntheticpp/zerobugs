@@ -1,7 +1,7 @@
 #ifndef COREFWD_H__BB940A22_5874_11DA_A633_000C29CB02FA
 #define COREFWD_H__BB940A22_5874_11DA_A633_000C29CB02FA
 //
-// $Id: corefwd.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

@@ -1,7 +1,7 @@
 #ifndef MULTIPLICATIVE_EXPR_H__61EB9A8A_AB9A_4C96_BEBF_3BE0AA97770E
 #define MULTIPLICATIVE_EXPR_H__61EB9A8A_AB9A_4C96_BEBF_3BE0AA97770E
 //
-// $Id: multiplicative_expr.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

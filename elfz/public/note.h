@@ -1,7 +1,7 @@
 #ifndef NOTE_H__A294DB09_F457_4EE5_991D_81CAEDEE3D6E
 #define NOTE_H__A294DB09_F457_4EE5_991D_81CAEDEE3D6E
 //
-// $Id: note.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

@@ -1,7 +1,7 @@
 #ifndef GENERIC_ATTR_H__5D0B31B3_52AD_4337_81EF_6DCD2AA4ED7B
 #define GENERIC_ATTR_H__5D0B31B3_52AD_4337_81EF_6DCD2AA4ED7B
 //
-// $Id: generic_attr.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

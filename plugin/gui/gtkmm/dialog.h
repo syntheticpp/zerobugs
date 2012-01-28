@@ -1,7 +1,7 @@
 #ifndef DIALOG_H__237DBF08_7D47_46EC_B26D_16546A7D8449
 #define DIALOG_H__237DBF08_7D47_46EC_B26D_16546A7D8449
 //
-// $Id: dialog.h 716 2010-10-17 22:16:32Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

@@ -1,7 +1,7 @@
 #ifndef FIND_DIALOG_H__B436EF42_FE5B_4D49_AD6A_0A827BC9BC36
 #define FIND_DIALOG_H__B436EF42_FE5B_4D49_AD6A_0A827BC9BC36
 //
-// $Id: find_dialog.h 720 2010-10-28 06:37:54Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

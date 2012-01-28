@@ -1,7 +1,7 @@
 #ifndef STATIC_VECTOR_H__2DE30248_E257_498C_BF0B_694E6BC1015C
 #define STATIC_VECTOR_H__2DE30248_E257_498C_BF0B_694E6BC1015C
 //
-// $Id: static_vector.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

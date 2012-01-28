@@ -1,7 +1,7 @@
 #ifndef OFFSET_SYMBOL_H__AFF3AB67_3F71_4BE8_A1F5_218C6B1C6427
 #define OFFSET_SYMBOL_H__AFF3AB67_3F71_4BE8_A1F5_218C6B1C6427
 //
-// $Id: offset_symbol.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

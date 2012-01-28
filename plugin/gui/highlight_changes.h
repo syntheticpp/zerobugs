@@ -4,7 +4,7 @@
 // -*- tab-width: 4; indent-tabs-mode: nil;  -*-
 // vim: tabstop=4:softtabstop=4:expandtab:shiftwidth=4
 //
-// $Id: highlight_changes.h 378 2008-03-03 08:33:15Z root $
+// $Id$
 //
 #include <string>
 

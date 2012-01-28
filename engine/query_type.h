@@ -1,7 +1,7 @@
 #ifndef QUERY_TYPE_H__D7ACF7DD_6EAF_4A1E_B8AB_C91D7E88EABC
 #define QUERY_TYPE_H__D7ACF7DD_6EAF_4A1E_B8AB_C91D7E88EABC
 //
-// $Id: query_type.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

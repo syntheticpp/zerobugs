@@ -1,7 +1,7 @@
 #ifndef SYMBOL_ITERATOR_H__A34F9CC8_767B_4936_92D6_AFE81C2D6BFF
 #define SYMBOL_ITERATOR_H__A34F9CC8_767B_4936_92D6_AFE81C2D6BFF
 //
-// $Id: symbol_iterator.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

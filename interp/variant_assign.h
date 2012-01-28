@@ -1,7 +1,7 @@
 #ifndef VARIANT_ASSIGN_H__DB04AF40_003C_4EC1_B242_4D256C9DB42B
 #define VARIANT_ASSIGN_H__DB04AF40_003C_4EC1_B242_4D256C9DB42B
 //
-// $Id: variant_assign.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

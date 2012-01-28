@@ -1,7 +1,7 @@
 #ifndef AGGREGATION_H__B614DC88_EC26_4C6C_A981_7FF896D8D1A5
 #define AGGREGATION_H__B614DC88_EC26_4C6C_A981_7FF896D8D1A5
 //
-// $Id: aggregation.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

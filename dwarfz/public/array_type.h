@@ -1,7 +1,7 @@
 #ifndef ARRAY_TYPE_H__39611207_B312_45CB_96C9_B8F6AF991650
 #define ARRAY_TYPE_H__39611207_B312_45CB_96C9_B8F6AF991650
 //
-// $Id: array_type.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

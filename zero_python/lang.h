@@ -1,7 +1,7 @@
 #ifndef LANG_H__CCB06792_F4A5_46BF_A4BC_DDE07E20EF45
 #define LANG_H__CCB06792_F4A5_46BF_A4BC_DDE07E20EF45
 //
-// $Id: lang.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

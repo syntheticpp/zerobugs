@@ -1,7 +1,7 @@
 #ifndef UNWIND_H__CA29E1F9_2B23_4525_8FFB_7F6B94CC01D3
 #define UNWIND_H__CA29E1F9_2B23_4525_8FFB_7F6B94CC01D3
 //
-// $Id: unwind.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

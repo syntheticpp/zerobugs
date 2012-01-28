@@ -1,5 +1,5 @@
 # vim: tabstop=4:softtabstop=4:expandtab:shiftwidth=4 
-# $Id: test_brkpnt.sh 319 2008-01-28 09:44:09Z root $
+# $Id$
 
 ################################################################
 #

@@ -1,7 +1,7 @@
 #ifndef REF_PTR_ENFORCER_H__3D98F443_97DD_4F39_B738_F36A18E20A8E
 #define REF_PTR_ENFORCER_H__3D98F443_97DD_4F39_B738_F36A18E20A8E
 //
-// $Id: ref_ptr_enforcer.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

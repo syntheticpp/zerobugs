@@ -1,7 +1,7 @@
 #ifndef RUNNABLE_H__27C6EF27_3E43_4A44_A4B9_D491365542C3
 #define RUNNABLE_H__27C6EF27_3E43_4A44_A4B9_D491365542C3
 //
-// $Id: runnable.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

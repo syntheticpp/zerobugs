@@ -1,7 +1,7 @@
 #ifndef SIGNALS_DIALOG_H__8C256D3D_6B49_4B67_8AFD_D6E9CAE72919
 #define SIGNALS_DIALOG_H__8C256D3D_6B49_4B67_8AFD_D6E9CAE72919
 //
-// $Id: signals_dialog.h 720 2010-10-28 06:37:54Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

@@ -1,5 +1,5 @@
 //
-// $Id: thread.cpp 720 2010-10-28 06:37:54Z root $
+// $Id$
 //
 // Clasess: RunnableImpl, ThreadImpl
 //

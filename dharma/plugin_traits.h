@@ -1,7 +1,7 @@
 #ifndef PLUGIN_TRAITS_H__C0F17ED9_D743_460F_B135_03506DD21C64
 #define PLUGIN_TRAITS_H__C0F17ED9_D743_460F_B135_03506DD21C64
 //
-// $Id: plugin_traits.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

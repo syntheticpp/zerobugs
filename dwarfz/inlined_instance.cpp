@@ -6,7 +6,7 @@
 // http://www.boost.org/LICENSE_1_0.txt)
 // -------------------------------------------------------------------------
 //
-// $Id: inlined_instance.cpp 713 2010-10-16 07:10:27Z root $
+// $Id$
 //
 #include <iostream>
 #include "public/function.h"

@@ -1,7 +1,7 @@
 #ifndef FUNKEY_H__72334DC6_4827_4F04_B0BD_F454C21EC24C
 #define FUNKEY_H__72334DC6_4827_4F04_B0BD_F454C21EC24C
 //
-// $Id: funkey.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

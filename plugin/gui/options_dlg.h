@@ -1,7 +1,7 @@
 #ifndef OPTIONS_DLG_H__6F0F8021_30F7_44E2_B675_EB5B4E656E53
 #define OPTIONS_DLG_H__6F0F8021_30F7_44E2_B675_EB5B4E656E53
 //
-// $Id: options_dlg.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

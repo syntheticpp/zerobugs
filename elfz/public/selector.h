@@ -1,7 +1,7 @@
 #ifndef SELECTOR_H__F01EDCE8_4F08_4BCB_BE67_59F4871BE9DC
 #define SELECTOR_H__F01EDCE8_4F08_4BCB_BE67_59F4871BE9DC
 //
-// $Id: selector.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

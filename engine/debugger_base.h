@@ -1,7 +1,7 @@
 #ifndef DEBUGGER_BASE_H__F15DCC88_2448_4BAC_B777_91B645682570
 #define DEBUGGER_BASE_H__F15DCC88_2448_4BAC_B777_91B645682570
 //
-// $Id: debugger_base.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

@@ -1,7 +1,7 @@
 #ifndef THREAD_H__E08DF5DC_BE68_4089_AC18_2F3EB68753D4
 #define THREAD_H__E08DF5DC_BE68_4089_AC18_2F3EB68753D4
 //
-// $Id: thread.h 720 2010-10-28 06:37:54Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

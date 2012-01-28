@@ -1,7 +1,7 @@
 #ifndef TEST_H__3AE12423_C14E_44CC_8FF1_A5A5D8130EAB
 #define TEST_H__3AE12423_C14E_44CC_8FF1_A5A5D8130EAB
 //
-// $Id: command.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

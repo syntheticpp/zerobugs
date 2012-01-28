@@ -2,7 +2,7 @@
 #define MODULES_VIEW_H__3C0D1DA7_8D24_4637_81EB_0E1E557AEB3D
 //
 //
-// $Id: modules_view.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

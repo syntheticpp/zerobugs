@@ -1,7 +1,7 @@
 #ifndef _32_ON_64_H__851CB8B6_FCAF_4055_901A_E74F21C51485
 #define _32_ON_64_H__851CB8B6_FCAF_4055_901A_E74F21C51485
 //
-// $Id: 32_on_64.h 719 2010-10-22 03:59:11Z root $
+// $Id$
 //
 // Utilities for cross-debugging 32 bit apps on 64 bit hosts.
 //

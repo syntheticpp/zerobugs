@@ -1,7 +1,7 @@
 #ifndef SYSCALL_WRAP_H__B2950998_051F_47A9_8F02_31A055DBAB15
 #define SYSCALL_WRAP_H__B2950998_051F_47A9_8F02_31A055DBAB15
 //
-// $Id: syscall_wrap.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // Miscellaneous system call wrappers
 //

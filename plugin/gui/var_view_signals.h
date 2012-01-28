@@ -1,7 +1,7 @@
 #ifndef VAR_VIEW_SIGNALS_H__886B4B9F_D670_4BFB_9F0B_85722F643A63
 #define VAR_VIEW_SIGNALS_H__886B4B9F_D670_4BFB_9F0B_85722F643A63
 //
-// $Id: var_view_signals.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

@@ -1,7 +1,7 @@
 #ifndef HEAP_H__E3002450_D8F9_4D03_94BC_51C7CE037F77
 #define HEAP_H__E3002450_D8F9_4D03_94BC_51C7CE037F77
 //
-// $Id: heap.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

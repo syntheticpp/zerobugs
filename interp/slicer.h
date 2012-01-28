@@ -1,7 +1,7 @@
 #ifndef SLICER_H__567067D9_C0C9_416C_8B5F_5132ACDF82F9
 #define SLICER_H__567067D9_C0C9_416C_8B5F_5132ACDF82F9
 //
-// $Id: slicer.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

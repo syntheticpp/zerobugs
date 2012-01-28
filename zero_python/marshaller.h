@@ -1,7 +1,7 @@
 #ifndef MARSHALLER_H__7CDBA4E5_E190_447B_8754_EE2F90842BC8
 #define MARSHALLER_H__7CDBA4E5_E190_447B_8754_EE2F90842BC8
 //
-// $Id: marshaller.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

@@ -1,7 +1,7 @@
 #ifndef ZOBJECT_H__CBCA4021_2AED_4036_9026_114E590D4166
 #define ZOBJECT_H__CBCA4021_2AED_4036_9026_114E590D4166
 //
-// $Id: zobject.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

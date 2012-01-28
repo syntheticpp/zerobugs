@@ -1,7 +1,7 @@
 #ifndef ZOBJECT_ADAPT_H__900D8B3B_165F_4A70_9A42_FE95452CD8C7
 #define ZOBJECT_ADAPT_H__900D8B3B_165F_4A70_9A42_FE95452CD8C7
 //
-// $Id: zobject_adapt.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

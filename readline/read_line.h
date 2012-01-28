@@ -1,7 +1,7 @@
 #ifndef READ_LINE_H__648102C3_5100_414C_94D7_754D9904986D
 #define READ_LINE_H__648102C3_5100_414C_94D7_754D9904986D
 //
-// $Id: read_line.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

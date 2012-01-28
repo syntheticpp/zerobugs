@@ -1,7 +1,7 @@
 #ifndef ALL_VISIBLE_STRATEGY_H__0FB91FB4_82AF_4854_A399_B3F4F45E9BD8
 #define ALL_VISIBLE_STRATEGY_H__0FB91FB4_82AF_4854_A399_B3F4F45E9BD8
 //
-// $Id: all_visible_strategy.h 720 2010-10-28 06:37:54Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

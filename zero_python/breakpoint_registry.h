@@ -1,7 +1,7 @@
 #ifndef BREAKPOINT_REGISTRY_H__BBCA9C7E_3485_4525_96AB_94DE6B2EED2F
 #define BREAKPOINT_REGISTRY_H__BBCA9C7E_3485_4525_96AB_94DE6B2EED2F
 //
-// $Id: breakpoint_registry.h 730 2010-10-31 07:43:59Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

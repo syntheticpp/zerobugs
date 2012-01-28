@@ -1,7 +1,7 @@
 #ifndef BASE_H__F57F9207_F726_4348_ACBC_2C7A2AF84A12
 #define BASE_H__F57F9207_F726_4348_ACBC_2C7A2AF84A12
 //
-// $Id: base.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

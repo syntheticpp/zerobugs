@@ -6,7 +6,7 @@
 // http://www.boost.org/LICENSE_1_0.txt)
 // -------------------------------------------------------------------------
 //
-// $Id: rtti.cpp 719 2010-10-22 03:59:11Z root $
+// $Id$
 //
 #include <iostream>
 #include "dharma/environ.h"

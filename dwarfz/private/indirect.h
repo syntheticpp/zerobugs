@@ -1,7 +1,7 @@
 #ifndef INDIRECT_H__D9254AA9_A04D_413C_B271_2B63C6043D8F
 #define INDIRECT_H__D9254AA9_A04D_413C_B271_2B63C6043D8F
 //
-// $Id: indirect.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

@@ -1,7 +1,7 @@
 #ifndef MEMIO_H__BBE7DA66_57A3_11DA_B82B_00C04F09BBCC
 #define MEMIO_H__BBE7DA66_57A3_11DA_B82B_00C04F09BBCC
 //
-// $Id: memio.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

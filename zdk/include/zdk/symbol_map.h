@@ -1,7 +1,7 @@
 #ifndef SYMBOL_MAP_H__D71D455B_FEB3_49EB_A4F3_21D11DDFCA50
 #define SYMBOL_MAP_H__D71D455B_FEB3_49EB_A4F3_21D11DDFCA50
 //
-// $Id: symbol_map.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu
 //

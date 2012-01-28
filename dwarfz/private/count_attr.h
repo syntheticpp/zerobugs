@@ -1,7 +1,7 @@
 #ifndef COUNT_ATTR_H__74BB6FB6_81ED_4235_8671_184C32D4D1F7
 #define COUNT_ATTR_H__74BB6FB6_81ED_4235_8671_184C32D4D1F7
 //
-// $Id: count_attr.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

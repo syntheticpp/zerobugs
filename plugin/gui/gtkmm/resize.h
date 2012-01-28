@@ -1,7 +1,7 @@
 #ifndef RESIZE_H__73F9B6FC_5663_4CC6_93B7_FC78D6780B02
 #define RESIZE_H__73F9B6FC_5663_4CC6_93B7_FC78D6780B02
 //
-// $Id: resize.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

@@ -1,7 +1,7 @@
 #ifndef EXPR_EVAL_VIEW_H__59892F09_BB71_4831_972D_4D8B2D670B78
 #define EXPR_EVAL_VIEW_H__59892F09_BB71_4831_972D_4D8B2D670B78
 //
-// $Id: expr_eval_view.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

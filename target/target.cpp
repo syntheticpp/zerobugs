@@ -6,7 +6,7 @@
 // http://www.boost.org/LICENSE_1_0.txt)
 // -------------------------------------------------------------------------
 //
-// $Id: target.cpp 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 #include "zdk/check_ptr.h"
 #include "zdk/shared_string_impl.h"

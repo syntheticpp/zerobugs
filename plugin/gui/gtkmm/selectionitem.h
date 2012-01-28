@@ -1,7 +1,7 @@
 #ifndef SELECTIONITEM_H__A93EEF50_B062_4566_AFD4_00AD678BF96E
 #define SELECTIONITEM_H__A93EEF50_B062_4566_AFD4_00AD678BF96E
 //
-// $Id: selectionitem.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

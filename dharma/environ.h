@@ -1,7 +1,7 @@
 #ifndef ENVIRON_H__CF130F5D_67AD_4833_8187_548BD5425090
 #define ENVIRON_H__CF130F5D_67AD_4833_8187_548BD5425090
 //
-// $Id: environ.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu
 //

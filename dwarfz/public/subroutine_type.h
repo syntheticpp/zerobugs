@@ -2,7 +2,7 @@
 #define SUBROUTINE_TYPE_H__C2E581D7_2304_4334_8E4B_EC1791831FF5
 //
 //
-// $Id: subroutine_type.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

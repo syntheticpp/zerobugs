@@ -1,7 +1,7 @@
 #ifndef ENUM_TYPE_H__1701543E_D716_4856_AB55_0F0FA3149DD8
 #define ENUM_TYPE_H__1701543E_D716_4856_AB55_0F0FA3149DD8
 //
-// $Id: enum_type.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

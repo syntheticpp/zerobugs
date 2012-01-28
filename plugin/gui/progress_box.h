@@ -1,7 +1,7 @@
 #ifndef PROGRESS_BOX_H__92EA368F_E4D8_4CFB_BA83_788BBEA9802D
 #define PROGRESS_BOX_H__92EA368F_E4D8_4CFB_BA83_788BBEA9802D
 //
-// $Id: progress_box.h 720 2010-10-28 06:37:54Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

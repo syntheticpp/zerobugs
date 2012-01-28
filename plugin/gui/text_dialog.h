@@ -1,7 +1,7 @@
 #ifndef TEXT_DIALOG_H__1D846105_FB3F_451C_B6AE_90F4A96DDE8B
 #define TEXT_DIALOG_H__1D846105_FB3F_451C_B6AE_90F4A96DDE8B
 //
-// $Id: text_dialog.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

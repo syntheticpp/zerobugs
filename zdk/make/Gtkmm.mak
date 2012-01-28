@@ -1,5 +1,5 @@
 # vim: tabstop=4:softtabstop=4:noexpandtab:shiftwidth=4 
-# $Id: Gtkmm.mak 588 2008-08-06 04:50:35Z root $
+# $Id$
 # 
 LIBDIR=lib
 ifeq ($(ARCH),x86_64)

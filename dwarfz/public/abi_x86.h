@@ -1,7 +1,7 @@
 #ifndef ABI_X86_H__8EE3A891_5B3E_4F34_9EE9_34ECEDF5036F
 #define ABI_X86_H__8EE3A891_5B3E_4F34_9EE9_34ECEDF5036F
 //
-// $Id: abi_x86.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

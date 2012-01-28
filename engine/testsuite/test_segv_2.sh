@@ -1,5 +1,5 @@
 # vim: tabstop=4:softtabstop=4:expandtab:shiftwidth=4 
-# $Id: test_segv_2.sh 656 2009-10-26 03:42:56Z root $
+# $Id$
 #
 function test_segv_2()
 {

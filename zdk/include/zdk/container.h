@@ -1,7 +1,7 @@
 #ifndef CONTAINER_H__69F3C5AA_5B6F_435A_87F0_D8F24CADD063
 #define CONTAINER_H__69F3C5AA_5B6F_435A_87F0_D8F24CADD063
 //
-// $Id: container.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

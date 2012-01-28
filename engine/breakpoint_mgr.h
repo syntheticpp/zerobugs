@@ -1,7 +1,7 @@
 #ifndef BREAKPOINT_MGR_H__9A0FCE8C_CBCC_4709_A0EC_694971AF6575
 #define BREAKPOINT_MGR_H__9A0FCE8C_CBCC_4709_A0EC_694971AF6575
 //
-// $Id: breakpoint_mgr.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

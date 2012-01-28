@@ -1,7 +1,7 @@
 #ifndef HANDLE_ERROR_H__070083E0_1293_45F4_B324_202DFD496320
 #define HANDLE_ERROR_H__070083E0_1293_45F4_B324_202DFD496320
 //
-// $Id: handle_error.h 730 2010-10-31 07:43:59Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

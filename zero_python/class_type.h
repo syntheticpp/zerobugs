@@ -1,7 +1,7 @@
 #ifndef CLASS_TYPE_H__F56092E7_5085_422E_AD42_8DBC6E6403A2
 #define CLASS_TYPE_H__F56092E7_5085_422E_AD42_8DBC6E6403A2
 //
-// $Id: class_type.h 730 2010-10-31 07:43:59Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

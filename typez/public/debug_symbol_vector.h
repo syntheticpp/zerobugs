@@ -1,7 +1,7 @@
 #ifndef DEBUG_SYMBOL_VECTOR_H__261F4114_1D3E_4E23_B2F3_A7656E9AFB9B
 #define DEBUG_SYMBOL_VECTOR_H__261F4114_1D3E_4E23_B2F3_A7656E9AFB9B
 //
-// $Id: debug_symbol_vector.h 719 2010-10-22 03:59:11Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

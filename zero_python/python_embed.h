@@ -1,7 +1,7 @@
 #ifndef PYTHON_EMBED_H__EE3759A2_51F7_4673_A0BE_9154FE43FBE2
 #define PYTHON_EMBED_H__EE3759A2_51F7_4673_A0BE_9154FE43FBE2
 //
-// $Id: python_embed.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

@@ -1,7 +1,7 @@
 #ifndef UNIX_H__98485A77_58F1_11DA_B82B_00C04F09BBCC
 #define UNIX_H__98485A77_58F1_11DA_B82B_00C04F09BBCC
 //
-// $Id: unix.h 720 2010-10-28 06:37:54Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

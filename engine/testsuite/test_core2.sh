@@ -1,6 +1,6 @@
 #!/bin/sh
 # vim: tabstop=4:softtabstop=4:expandtab:shiftwidth=4 
-# $Id: test_core2.sh 482 2008-05-01 23:42:26Z root $
+# $Id$
 #
 
 function test_core2()

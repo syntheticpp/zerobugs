@@ -1,7 +1,7 @@
 #ifndef TRAMPOLINE_H__76B14953_7C6D_41B4_B455_9D6FE3554435
 #define TRAMPOLINE_H__76B14953_7C6D_41B4_B455_9D6FE3554435
 //
-// $Id: trampoline.h 720 2010-10-28 06:37:54Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

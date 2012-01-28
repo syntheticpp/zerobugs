@@ -1,7 +1,7 @@
 #ifndef UNWIND_STACK_FRAME_H__CEE4AF81_91D5_4046_9D7D_A06C86A64ED7
 #define UNWIND_STACK_FRAME_H__CEE4AF81_91D5_4046_9D7D_A06C86A64ED7
 //
-// $Id: unwind_stack_frame.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

@@ -1,7 +1,7 @@
 #ifndef PARAM_H__4CD0F6D3_DF69_41A9_9A2A_E4C4CE967B80
 #define PARAM_H__4CD0F6D3_DF69_41A9_9A2A_E4C4CE967B80
 //
-// $Id: parameter.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

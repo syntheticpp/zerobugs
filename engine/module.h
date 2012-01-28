@@ -1,7 +1,7 @@
 #ifndef MODULE_H__619CF040_4E05_4704_8021_6040BDB68378
 #define MODULE_H__619CF040_4E05_4704_8021_6040BDB68378
 //
-// $Id: module.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

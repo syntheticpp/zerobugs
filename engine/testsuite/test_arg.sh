@@ -1,5 +1,5 @@
 # vim: tabstop=4:softtabstop=4:expandtab:shiftwidth=4 
-# $Id: test_arg.sh 666 2009-11-09 06:06:18Z root $
+# $Id$
 #
 function test_arg()
 {

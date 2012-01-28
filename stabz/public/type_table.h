@@ -1,7 +1,7 @@
 #ifndef TYPE_TABLE_H__63227AA1_AC13_40AE_A76F_14142E9738E8
 #define TYPE_TABLE_H__63227AA1_AC13_40AE_A76F_14142E9738E8
 //
-// $Id: type_table.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

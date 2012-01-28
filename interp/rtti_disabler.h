@@ -1,7 +1,7 @@
 #ifndef RTTI_DISABLER_H__01463DD9_82F1_455E_9017_1CE2F58E0F34
 #define RTTI_DISABLER_H__01463DD9_82F1_455E_9017_1CE2F58E0F34
 //
-// $Id: rtti_disabler.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

@@ -1,7 +1,7 @@
 #ifndef PROGRAM_HEADER_H__8E5E2D3B_0EFF_4FEC_8B01_4940ED674C7C
 #define PROGRAM_HEADER_H__8E5E2D3B_0EFF_4FEC_8B01_4940ED674C7C
 //
-// $Id: program_header.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu
 //

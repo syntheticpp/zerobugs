@@ -2,7 +2,7 @@
 #define TEMPLATE_PARAM_H__F99E4F4F_ADFC_4966_B0FD_850B25F898C3
 //
 //
-// $Id: template_param.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

@@ -1,7 +1,7 @@
 #ifndef HASH_MAP_H__878BD04D_AAD2_4A03_8FF2_CB029D43209C
 #define HASH_MAP_H__878BD04D_AAD2_4A03_8FF2_CB029D43209C
 //
-// $Id: hash_map.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

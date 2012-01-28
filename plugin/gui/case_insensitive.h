@@ -1,7 +1,7 @@
 #ifndef CASE_INSENSITIVE_H__079B24C0_5145_4E99_8721_9EA338573AB4
 #define CASE_INSENSITIVE_H__079B24C0_5145_4E99_8721_9EA338573AB4
 //
-// $Id: case_insensitive.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

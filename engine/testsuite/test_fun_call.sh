@@ -1,5 +1,5 @@
 # vim: tabstop=4:softtabstop=4:expandtab:shiftwidth=4 
-# $Id: test_fun_call.sh 378 2008-03-03 08:33:15Z root $
+# $Id$
 
 ################################################################
 #

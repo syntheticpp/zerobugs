@@ -1,7 +1,7 @@
 #ifndef SINGLETON_H__1040499294
 #define SINGLETON_H__1040499294
 //
-// $Id: singleton.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

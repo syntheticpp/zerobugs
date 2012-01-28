@@ -1,7 +1,7 @@
 #ifndef ERROR_H__263AE63F_2CDA_49F2_807C_30A94D1E8350
 #define ERROR_H__263AE63F_2CDA_49F2_807C_30A94D1E8350
 //
-// $Id: error.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

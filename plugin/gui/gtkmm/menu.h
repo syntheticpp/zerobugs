@@ -1,7 +1,7 @@
 #ifndef MENU_H__6130136C_31B3_40A4_9452_EB7BF696B2A7
 #define MENU_H__6130136C_31B3_40A4_9452_EB7BF696B2A7
 //
-// $Id: menu.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

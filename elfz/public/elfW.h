@@ -1,7 +1,7 @@
 #ifndef ELF_W_H__1056A7E8_8F57_4F97_82CE_60466A0C393A
 #define ELF_W_H__1056A7E8_8F57_4F97_82CE_60466A0C393A
 //
-// $Id: elfW.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

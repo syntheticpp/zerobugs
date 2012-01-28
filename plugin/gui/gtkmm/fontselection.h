@@ -1,7 +1,7 @@
 #ifndef FONTSELECTION_H__CE3FC624_EB04_418F_B117_020D255E75C5
 #define FONTSELECTION_H__CE3FC624_EB04_418F_B117_020D255E75C5
 //
-// $Id: fontselection.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

@@ -1,7 +1,7 @@
 #ifndef BINARY_EXPR_H__3635E1B0_AE6D_4C0D_ABAF_7A9A3C06914D
 #define BINARY_EXPR_H__3635E1B0_AE6D_4C0D_ABAF_7A9A3C06914D
 //
-// $Id: binary_expr.h 719 2010-10-22 03:59:11Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

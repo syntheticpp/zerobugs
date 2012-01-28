@@ -1,7 +1,7 @@
 #ifndef PROGRAM_TOOLBAR_H__790628B2_CE8D_41DE_9E6A_A68960171988
 #define PROGRAM_TOOLBAR_H__790628B2_CE8D_41DE_9E6A_A68960171988
 //
-// $Id: program_toolbar.h 720 2010-10-28 06:37:54Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

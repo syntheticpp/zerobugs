@@ -1,5 +1,5 @@
 # vim: tabstop=4:softtabstop=4:expandtab:shiftwidth=4 
-# $Id: test_cond_break.sh 717 2010-10-20 06:17:11Z root $
+# $Id$
 
 ################################################################
 #

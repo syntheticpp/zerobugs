@@ -1,7 +1,7 @@
 #ifndef ENUMERATION_TYPE_H__73B0876C_5075_4539_9CE6_C7B326A95C1F
 #define ENUMERATION_TYPE_H__73B0876C_5075_4539_9CE6_C7B326A95C1F
 //
-// $Id: enum_type.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

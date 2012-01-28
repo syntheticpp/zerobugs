@@ -1,7 +1,7 @@
 #ifndef RELATIONAL_EXPR_H__FB8F917F_6C10_4637_85E9_5B8A99BB6DED
 #define RELATIONAL_EXPR_H__FB8F917F_6C10_4637_85E9_5B8A99BB6DED
 //
-// $Id: relational_expr.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

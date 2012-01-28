@@ -1,7 +1,7 @@
 #ifndef PythonGate_H__70E93067_9421_4550_8C81_B35381DC19F6
 #define PythonGate_H__70E93067_9421_4550_8C81_B35381DC19F6
 //
-// $Id: python_gate.h 716 2010-10-17 22:16:32Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

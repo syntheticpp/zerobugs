@@ -1,7 +1,7 @@
 #ifndef ENTRY_H__65C88402_4396_4ECB_8D8C_1E7E243F2CD8
 #define ENTRY_H__65C88402_4396_4ECB_8D8C_1E7E243F2CD8
 //
-// $Id: text_entry.h 720 2010-10-28 06:37:54Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

@@ -1,7 +1,7 @@
 #ifndef CHECK_LISTITEM_H__21880987_7871_49C6_96D5_56E76891A6D6
 #define CHECK_LISTITEM_H__21880987_7871_49C6_96D5_56E76891A6D6
 //
-// $Id: check_listitem.h 720 2010-10-28 06:37:54Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

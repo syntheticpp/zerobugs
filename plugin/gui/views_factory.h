@@ -1,7 +1,7 @@
 #ifndef VIEWS_FACTORY_H__9BB76B7C_ECE0_45E0_9940_49B40E22AFBF
 #define VIEWS_FACTORY_H__9BB76B7C_ECE0_45E0_9940_49B40E22AFBF
 //
-// $Id: views_factory.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

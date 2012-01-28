@@ -1,5 +1,5 @@
 # vim: noexpandtab: tabstop=4: shiftwidth=4
-# $Id: Makefile 705 2010-09-29 11:03:05Z root $
+# $Id$
 #
 ifeq ($(TOP),)
  TOP=../..

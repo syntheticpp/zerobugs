@@ -1,7 +1,7 @@
 #ifndef TYPE_SPEC_H__D9482620_EB68_4A13_B898_1D48781824FA
 #define TYPE_SPEC_H__D9482620_EB68_4A13_B898_1D48781824FA
 //
-// $Id: type_spec.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

@@ -1,7 +1,7 @@
 #ifndef JUMP_H__0E3E5AFA_E70D_40CB_BAA8_2536583E6219
 #define JUMP_H__0E3E5AFA_E70D_40CB_BAA8_2536583E6219
 //
-// $Id: jump.h 720 2010-10-28 06:37:54Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

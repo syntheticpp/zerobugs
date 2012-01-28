@@ -1,7 +1,7 @@
 #ifndef INTERP_H__69DA4C14_3B6A_4752_8B3E_22EA39E33A0F
 #define INTERP_H__69DA4C14_3B6A_4752_8B3E_22EA39E33A0F
 //
-// $Id: interp.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

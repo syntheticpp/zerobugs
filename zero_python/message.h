@@ -1,7 +1,7 @@
 #ifndef MESSAGE_H__543C7419_09E6_4504_9C76_4DB5D8A8E33F
 #define MESSAGE_H__543C7419_09E6_4504_9C76_4DB5D8A8E33F
 //
-// $Id: message.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

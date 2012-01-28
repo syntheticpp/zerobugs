@@ -1,7 +1,7 @@
 #ifndef REMOVE_QUAL_H__BF46AEA2_0FC2_46ED_B048_D2D2A54C8C2B
 #define REMOVE_QUAL_H__BF46AEA2_0FC2_46ED_B048_D2D2A54C8C2B
 //
-// $Id: remove_qual.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu
 //

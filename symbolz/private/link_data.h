@@ -1,7 +1,7 @@
 #ifndef LINK_DATA_H__3A891A11_032E_464C_8737_7B39E7640AD3
 #define LINK_DATA_H__3A891A11_032E_464C_8737_7B39E7640AD3
 //
-// $Id: link_data.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

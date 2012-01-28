@@ -1,7 +1,7 @@
 #ifndef SIGNAL_POLICY_H__228F9430_846A_4AD7_8D4A_43BC41DE1022
 #define SIGNAL_POLICY_H__228F9430_846A_4AD7_8D4A_43BC41DE1022
 //
-// $Id: signal_policy.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

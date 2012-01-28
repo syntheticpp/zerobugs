@@ -1,7 +1,7 @@
 #ifndef IMPORTED_DECL_H__15773532_B655_45F3_9112_A7BF901E6667
 #define IMPORTED_DECL_H__15773532_B655_45F3_9112_A7BF901E6667
 //
-// $Id: imported_decl.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

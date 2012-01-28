@@ -1,5 +1,5 @@
 //
-// $Id: python_gate.cpp 717 2010-10-20 06:17:11Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

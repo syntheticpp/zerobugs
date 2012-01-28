@@ -1,7 +1,7 @@
 #ifndef SHARED_STRING_H__1176202B_9D50_4388_9ECC_AF35BE648380
 #define SHARED_STRING_H__1176202B_9D50_4388_9ECC_AF35BE648380
 //
-// $Id: shared_string.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

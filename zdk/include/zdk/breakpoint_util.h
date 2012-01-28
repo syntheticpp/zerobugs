@@ -1,7 +1,7 @@
 #ifndef BREAKPOINT_UTIL_H__9675BF5E_0628_414F_A9DA_CD8BA7C48A43
 #define BREAKPOINT_UTIL_H__9675BF5E_0628_414F_A9DA_CD8BA7C48A43
 //
-// $Id: breakpoint_util.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

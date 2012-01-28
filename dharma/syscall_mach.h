@@ -1,7 +1,7 @@
 #ifndef SYSCALL_MACH_H__EE791FB9_9E3B_4371_AFF7_126B9DEB038E
 #define SYSCALL_MACH_H__EE791FB9_9E3B_4371_AFF7_126B9DEB038E
 //
-// $Id: syscall_mach.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

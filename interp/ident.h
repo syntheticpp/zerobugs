@@ -1,7 +1,7 @@
 #ifndef IDENT_H__58BDEE5A_7DF3_46D5_888E_F3DEBF15078E
 #define IDENT_H__58BDEE5A_7DF3_46D5_888E_F3DEBF15078E
 //
-// $Id: ident.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

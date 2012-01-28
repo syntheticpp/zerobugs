@@ -1,7 +1,7 @@
 #ifndef FRAME_SETUP_H__1A7510A4_4C1D_4AF9_ADD4_1D8F1BD67687
 #define FRAME_SETUP_H__1A7510A4_4C1D_4AF9_ADD4_1D8F1BD67687
 //
-// $Id: frame_setup.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

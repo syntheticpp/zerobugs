@@ -1,7 +1,7 @@
 #ifndef TOKEN_H__35E3A060_F084_4C0D_98A0_99620501BDD1
 #define TOKEN_H__35E3A060_F084_4C0D_98A0_99620501BDD1
 //
-// $Id: token.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

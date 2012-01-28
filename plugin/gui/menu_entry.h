@@ -1,7 +1,7 @@
 #ifndef MENU_ENTRY_H__4577C73D_A8F6_4DE9_9D2A_41A9A5A315B5
 #define MENU_ENTRY_H__4577C73D_A8F6_4DE9_9D2A_41A9A5A315B5
 //
-// $Id: menu_entry.h 720 2010-10-28 06:37:54Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

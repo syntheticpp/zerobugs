@@ -1,7 +1,7 @@
 #ifndef ENSURE_FONT_H__31689BC4_FD12_4730_AFA4_179837AA09EB
 #define ENSURE_FONT_H__31689BC4_FD12_4730_AFA4_179837AA09EB
 //
-// $Id: ensure_font.h 720 2010-10-28 06:37:54Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

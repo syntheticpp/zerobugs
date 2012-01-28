@@ -6,7 +6,7 @@
 // http://www.boost.org/LICENSE_1_0.txt)
 // -------------------------------------------------------------------------
 //
-// $Id: parameter_list.cpp 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 #include "errors.h"
 #include "parameter_list.h"

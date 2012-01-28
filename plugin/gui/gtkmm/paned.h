@@ -1,7 +1,7 @@
 #ifndef PANED_H__9B0CBE0C_8646_4AA7_BBCE_CBED7F9CFE87
 #define PANED_H__9B0CBE0C_8646_4AA7_BBCE_CBED7F9CFE87
 //
-// $Id: paned.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

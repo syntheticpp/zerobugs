@@ -1,5 +1,5 @@
 # vim: tabstop=4:softtabstop=4:expandtab:shiftwidth=4 
-# $Id: test_threads.sh 645 2009-08-13 07:35:55Z root $
+# $Id$
 #
 function test_threads()
 {

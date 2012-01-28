@@ -1,7 +1,7 @@
 #ifndef PARSE_STATE_H__7A701ADE_AFE3_408C_9CF7_4F298E129E64
 #define PARSE_STATE_H__7A701ADE_AFE3_408C_9CF7_4F298E129E64
 //
-// $Id: parse_state.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

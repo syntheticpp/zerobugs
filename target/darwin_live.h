@@ -1,7 +1,7 @@
 #ifndef DARWIN_LIVE_H__57A8E5B0_C454_45E0_B396_4F9991EA0D07
 #define DARWIN_LIVE_H__57A8E5B0_C454_45E0_B396_4F9991EA0D07
 //
-// $Id: darwin_live.h 720 2010-10-28 06:37:54Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

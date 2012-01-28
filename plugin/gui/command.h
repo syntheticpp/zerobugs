@@ -1,7 +1,7 @@
 #ifndef COMMAND_H__9267DAA0_D37B_4FDA_9C24_608B71C90724
 #define COMMAND_H__9267DAA0_D37B_4FDA_9C24_608B71C90724
 //
-// $Id: command.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

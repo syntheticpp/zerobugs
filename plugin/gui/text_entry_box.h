@@ -1,7 +1,7 @@
 #ifndef TEXT_ENTRY_BOX_H__135B4E7B_4545_455D_B5EB_708B3894840B
 #define TEXT_ENTRY_BOX_H__135B4E7B_4545_455D_B5EB_708B3894840B
 //
-// $Id: text_entry_box.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

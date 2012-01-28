@@ -1,7 +1,7 @@
 #ifndef ADDITIVE_EXPR_H__E7EE8C97_C9CD_42F5_A3D5_5DE313302995
 #define ADDITIVE_EXPR_H__E7EE8C97_C9CD_42F5_A3D5_5DE313302995
 //
-// $Id: additive_expr.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

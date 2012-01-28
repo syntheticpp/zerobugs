@@ -1,7 +1,7 @@
 #ifndef FIXED_FONT_H__B1D281F5_0DD9_44CF_AE98_93E7BE32E86D
 #define FIXED_FONT_H__B1D281F5_0DD9_44CF_AE98_93E7BE32E86D
 //
-// $Id: fixed_font.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 #include <string>
 

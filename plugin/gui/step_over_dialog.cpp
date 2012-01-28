@@ -8,7 +8,7 @@
 // -*- tab-width: 4; indent-tabs-mode: nil;  -*-
 // vim: tabstop=4:softtabstop=4:expandtab:shiftwidth=4
 //
-// $Id: step_over_dialog.cpp 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 #include <string>
 #include <vector>

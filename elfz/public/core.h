@@ -1,7 +1,7 @@
 #ifndef CORE_H__1A5E6C64_22A2_433F_9C1C_04E756EBF672
 #define CORE_H__1A5E6C64_22A2_433F_9C1C_04E756EBF672
 //
-// $Id: core.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

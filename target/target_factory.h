@@ -1,7 +1,7 @@
 #ifndef TARGET_FACTORY_H__C0C44E52_3838_45B8_AE48_49F4D97DB84F
 #define TARGET_FACTORY_H__C0C44E52_3838_45B8_AE48_49F4D97DB84F
 //
-// $Id: target_factory.h 720 2010-10-28 06:37:54Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

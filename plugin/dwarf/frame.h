@@ -1,7 +1,7 @@
 #ifndef FRAME_H__AF2067DC_E74E_46AA_AF31_6D1C60861FC7
 #define FRAME_H__AF2067DC_E74E_46AA_AF31_6D1C60861FC7
 //
-// $Id: frame.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

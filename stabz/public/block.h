@@ -1,7 +1,7 @@
 #ifndef BLOCK_H__F76096AD_417A_419A_AC35_21B1D50E97AE
 #define BLOCK_H__F76096AD_417A_419A_AC35_21B1D50E97AE
 //
-// $Id: block.h 720 2010-10-28 06:37:54Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

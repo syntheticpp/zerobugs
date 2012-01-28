@@ -1,7 +1,7 @@
 #ifndef SYMBOL_TABLE_IMPL_H__A52780F9_8B27_4126_A157_9A824FBF25FD
 #define SYMBOL_TABLE_IMPL_H__A52780F9_8B27_4126_A157_9A824FBF25FD
 //
-// $Id: symbol_table_impl.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

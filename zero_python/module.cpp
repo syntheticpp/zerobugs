@@ -8,7 +8,7 @@
 // -*- tab-width: 4; indent-tabs-mode: nil;  -*-
 // vim: tabstop=4:softtabstop=4:expandtab:shiftwidth=4
 //
-// $Id: module.cpp 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 #include <boost/python.hpp>
 #include "zdk/get_pointer.h"

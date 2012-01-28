@@ -1,5 +1,5 @@
 //
-// $Id: testfwd.cpp 715 2010-10-17 21:43:59Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

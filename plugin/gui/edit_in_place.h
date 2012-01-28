@@ -1,7 +1,7 @@
 #ifndef EDIT_IN_PLACE_H__26E266A5_392F_45E6_98A7_1E72516B3F45
 #define EDIT_IN_PLACE_H__26E266A5_392F_45E6_98A7_1E72516B3F45
 //
-// $Id: edit_in_place.h 720 2010-10-28 06:37:54Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

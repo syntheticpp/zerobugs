@@ -1,7 +1,7 @@
 #ifndef CONTEXT_H__11C568D0_E035_4E90_A987_9C28E4764789
 #define CONTEXT_H__11C568D0_E035_4E90_A987_9C28E4764789
 //
-// $Id: context.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

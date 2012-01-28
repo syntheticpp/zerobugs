@@ -1,7 +1,7 @@
 #ifndef DATA_FILTER_H__10CB4CAE_D998_4939_878A_6F46965A5CFC
 #define DATA_FILTER_H__10CB4CAE_D998_4939_878A_6F46965A5CFC
 //
-// $Id: data_filter.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

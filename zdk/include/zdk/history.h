@@ -1,7 +1,7 @@
 #ifndef HISTORY_H__8DA9AEF0_BBFD_4D0A_824C_40F4AD730821
 #define HISTORY_H__8DA9AEF0_BBFD_4D0A_824C_40F4AD730821
 //
-// $Id: history.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

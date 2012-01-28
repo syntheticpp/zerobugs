@@ -1,7 +1,7 @@
 #ifndef TEMPORARY_H__1059368586
 #define TEMPORARY_H__1059368586
 //
-// $Id: temporary.h 719 2010-10-22 03:59:11Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

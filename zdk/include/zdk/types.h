@@ -1,7 +1,7 @@
 #ifndef TYPES_H__C7F5152C_CDBF_47E7_8B68_AC30019A4911
 #define TYPES_H__C7F5152C_CDBF_47E7_8B68_AC30019A4911
 //
-// $Id: types.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

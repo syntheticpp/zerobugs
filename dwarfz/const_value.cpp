@@ -6,7 +6,7 @@
 // http://www.boost.org/LICENSE_1_0.txt)
 // -------------------------------------------------------------------------//
 //
-// $Id: const_value.cpp 713 2010-10-16 07:10:27Z root $
+// $Id$
 //
 #include <string.h>
 #include "const_value.h"

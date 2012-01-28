@@ -1,7 +1,7 @@
 #ifndef MAIN_H__352B08DD_884B_4644_AE48_43496678A9B2
 #define MAIN_H__352B08DD_884B_4644_AE48_43496678A9B2
 //
-// $Id: main.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

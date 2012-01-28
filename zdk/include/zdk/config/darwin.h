@@ -1,7 +1,7 @@
 #ifndef DARWIN_H__D1CB0AF8_4002_4993_9B09_9185F5F72691
 #define DARWIN_H__D1CB0AF8_4002_4993_9B09_9185F5F72691
 //
-// $Id: darwin.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

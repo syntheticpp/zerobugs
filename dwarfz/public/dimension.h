@@ -1,7 +1,7 @@
 #ifndef DIMENSION_H__438E6B8D_A459_4D94_AAD5_DD213653CE31
 #define DIMENSION_H__438E6B8D_A459_4D94_AAD5_DD213653CE31
 //
-// $Id: dimension.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

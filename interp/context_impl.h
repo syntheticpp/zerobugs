@@ -1,7 +1,7 @@
 #ifndef CONTEXT_IMPL_H__D6F37D1C_96B7_4B71_8A21_D03D83069253
 #define CONTEXT_IMPL_H__D6F37D1C_96B7_4B71_8A21_D03D83069253
 //
-// $Id: context_impl.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

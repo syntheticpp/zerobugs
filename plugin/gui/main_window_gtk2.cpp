@@ -6,7 +6,7 @@
 // http://www.boost.org/LICENSE_1_0.txt)
 // -------------------------------------------------------------------------
 //
-// $Id: main_window_gtk2.cpp 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 #include "gtkmm/accelmap.h"
 #include "main_window.h"

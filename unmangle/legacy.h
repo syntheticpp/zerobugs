@@ -1,7 +1,7 @@
 #ifndef LEGACY_H__0A821E67_C5BE_44C5_B0B4_EA56BF947779
 #define LEGACY_H__0A821E67_C5BE_44C5_B0B4_EA56BF947779
 //
-// $Id: legacy.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // Demangler for gcc 2.95 mangling scheme
 // -------------------------------------------------------------------------

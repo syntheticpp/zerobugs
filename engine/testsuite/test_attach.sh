@@ -1,5 +1,5 @@
 # vim: tabstop=4:softtabstop=4:expandtab:shiftwidth=4 
-# $Id: test_attach.sh 696 2010-09-19 22:04:48Z root $
+# $Id$
 #
 function test_attach()
 {

@@ -1,7 +1,7 @@
 #ifndef LINUX_CORE_H__05A17E5D_58A4_11DA_B82B_00C04F09BBCC
 #define LINUX_CORE_H__05A17E5D_58A4_11DA_B82B_00C04F09BBCC
 //
-// $Id: linux_core.h 720 2010-10-28 06:37:54Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

@@ -1,7 +1,7 @@
 #ifndef PLATFORM_H__4AB143C2_AE6A_4F26_95A6_FCFB88D162B4
 #define PLATFORM_H__4AB143C2_AE6A_4F26_95A6_FCFB88D162B4
 //
-// $Id: platform.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

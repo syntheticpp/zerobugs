@@ -1,7 +1,7 @@
 #ifndef AUTO_H__74E18692_0247_48DA_BF64_02F194B2F3D3
 #define AUTO_H__74E18692_0247_48DA_BF64_02F194B2F3D3
 //
-// $Id: auto.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

@@ -1,7 +1,7 @@
 #ifndef VERSION_INFO_IMPL_H__403A6E77_85FD_4E8D_BFBF_1889351F2FC5
 #define VERSION_INFO_IMPL_H__403A6E77_85FD_4E8D_BFBF_1889351F2FC5
 //
-// $Id: version_info_impl.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

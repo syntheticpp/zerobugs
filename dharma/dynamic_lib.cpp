@@ -1,5 +1,5 @@
 //
-// $Id: dynamic_lib.cpp 719 2010-10-22 03:59:11Z root $
+// $Id$
 //
 // Platform-independent part of the DynamicLib class implementation.
 //

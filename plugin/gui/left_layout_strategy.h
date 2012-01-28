@@ -1,7 +1,7 @@
 #ifndef LEFT_LAYOUT_STRATEGY_H__323AA594_F124_4D6F_AFBD_63AABF0BB5FC
 #define LEFT_LAYOUT_STRATEGY_H__323AA594_F124_4D6F_AFBD_63AABF0BB5FC
 //
-// $Id: left_layout_strategy.h 720 2010-10-28 06:37:54Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

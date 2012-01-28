@@ -1,7 +1,7 @@
 #ifndef WEAK_REF_H__0F9F3537_46C9_4C7C_89F4_4FAEFB8FEEC5
 #define WEAK_REF_H__0F9F3537_46C9_4C7C_89F4_4FAEFB8FEEC5
 //
-// $Id: weak_ref.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

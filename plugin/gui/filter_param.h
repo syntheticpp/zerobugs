@@ -1,7 +1,7 @@
 #ifndef FILTER_PARAM_H__48DC2B31_3F3A_433D_8EFC_1EDE3FDE0C09
 #define FILTER_PARAM_H__48DC2B31_3F3A_433D_8EFC_1EDE3FDE0C09
 //
-// $Id: filter_param.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

@@ -1,7 +1,7 @@
 #ifndef DEBUG_REG_H__D19E9BA1_1F3B_4E9D_A4C8_99EA866B2B2B
 #define DEBUG_REG_H__D19E9BA1_1F3B_4E9D_A4C8_99EA866B2B2B
 //
-// $Id: debug_reg.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

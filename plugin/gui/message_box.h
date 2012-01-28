@@ -1,7 +1,7 @@
 #ifndef MESSAGE_BOX_H__A2D4F116_8CCD_4535_8772_FD9B24BB2B2D
 #define MESSAGE_BOX_H__A2D4F116_8CCD_4535_8772_FD9B24BB2B2D
 //
-// $Id: message_box.h 720 2010-10-28 06:37:54Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

@@ -1,7 +1,7 @@
 #ifndef ENTRY_BOX_H__4D7D0391_1C85_4D5C_B5E1_6564CF8F5851
 #define ENTRY_BOX_H__4D7D0391_1C85_4D5C_B5E1_6564CF8F5851
 //
-// $Id: entry_dialog.h 720 2010-10-28 06:37:54Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

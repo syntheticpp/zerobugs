@@ -1,7 +1,7 @@
 #ifndef XTRACE_H__B91D3FF7_3B5C_435A_8177_0E3ABAB4F7AB
 #define XTRACE_H__B91D3FF7_3B5C_435A_8177_0E3ABAB4F7AB
 //
-// $Id: xtrace.h 723 2010-10-28 07:40:45Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

@@ -1,7 +1,7 @@
 #ifndef LINUX_X86_H__2D2CD4D8_7453_4D2E_BF38_AFA6ECEA22C5
 #define LINUX_X86_H__2D2CD4D8_7453_4D2E_BF38_AFA6ECEA22C5
 //
-// $Id: linux-x86.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // Definitions common to x86-32 and x86-64 systems
 //

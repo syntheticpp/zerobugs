@@ -1,7 +1,7 @@
 #ifndef ACCEL_H__40D14832_386D_47D8_B870_5BD6BA765AB0
 #define ACCEL_H__40D14832_386D_47D8_B870_5BD6BA765AB0
 //
-// $Id: accel.h 720 2010-10-28 06:37:54Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

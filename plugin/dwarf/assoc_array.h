@@ -1,7 +1,7 @@
 #ifndef ASSOC_ARRAY_H__B9D7C402_7760_4A9B_8690_C11F00FBA9E3
 #define ASSOC_ARRAY_H__B9D7C402_7760_4A9B_8690_C11F00FBA9E3
 //
-// $Id: assoc_array.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

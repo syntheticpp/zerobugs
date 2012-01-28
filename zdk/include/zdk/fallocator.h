@@ -1,7 +1,7 @@
 #ifndef FALLOCATOR_H__BBCCA53D_3651_4E70_AD19_C046CEEFE19D
 #define FALLOCATOR_H__BBCCA53D_3651_4E70_AD19_C046CEEFE19D
 //
-// $Id: fallocator.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // Adapt Falloc for use with STL containers
 //

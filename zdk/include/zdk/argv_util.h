@@ -1,7 +1,7 @@
 #ifndef ARGV_UTIL_H__DDC8C327_8663_44A8_8A46_3FCC9720FB83
 #define ARGV_UTIL_H__DDC8C327_8663_44A8_8A46_3FCC9720FB83
 //
-// $Id: argv_util.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

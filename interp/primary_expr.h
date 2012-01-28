@@ -1,7 +1,7 @@
 #ifndef PRIMARY_EXPR_H__8BAD13AD_04DE_441F_8F53_2B578C28448C
 #define PRIMARY_EXPR_H__8BAD13AD_04DE_441F_8F53_2B578C28448C
 //
-// $Id: primary_expr.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

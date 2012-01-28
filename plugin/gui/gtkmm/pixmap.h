@@ -1,7 +1,7 @@
 #ifndef PIXMAP_H__9E22D3F1_B8B2_4C52_9533_01C29B287C98
 #define PIXMAP_H__9E22D3F1_B8B2_4C52_9533_01C29B287C98
 //
-// $Id: pixmap.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

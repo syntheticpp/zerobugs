@@ -1,7 +1,7 @@
 #ifndef LISTITEM_H__DFB60CF9_933A_49C5_A405_F837E6B91BC7
 #define LISTITEM_H__DFB60CF9_933A_49C5_A405_F837E6B91BC7
 //
-// $Id: listitem.h 716 2010-10-17 22:16:32Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

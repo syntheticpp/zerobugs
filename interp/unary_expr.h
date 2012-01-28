@@ -1,7 +1,7 @@
 #ifndef UNARY_EXPR_H__A51C0872_D9A1_4361_8DC3_C5FFE4FD49FE
 #define UNARY_EXPR_H__A51C0872_D9A1_4361_8DC3_C5FFE4FD49FE
 //
-// $Id: unary_expr.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

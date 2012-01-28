@@ -1,7 +1,7 @@
 #ifndef DYNAMIC_LIB_H__92A66132_1FF8_44F3_8E1A_55BF6E14C33C
 #define DYNAMIC_LIB_H__92A66132_1FF8_44F3_8E1A_55BF6E14C33C
 //
-// $Id: dynamic_lib.h 719 2010-10-22 03:59:11Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

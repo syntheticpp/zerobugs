@@ -1,7 +1,7 @@
 #ifndef OPTIONS_H__ED4F9FCC_0F56_4924_85B6_6E93AC684298
 #define OPTIONS_H__ED4F9FCC_0F56_4924_85B6_6E93AC684298
 //
-// $Id: options.h 720 2010-10-28 06:37:54Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

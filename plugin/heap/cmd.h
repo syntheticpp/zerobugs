@@ -1,7 +1,7 @@
 #ifndef HEAP_COMMAND_H__77F34817_D375_4F42_96CD_8E2FEFFD3CB6
 #define HEAP_COMMAND_H__77F34817_D375_4F42_96CD_8E2FEFFD3CB6
 //
-// $Id: cmd.h 716 2010-10-17 22:16:32Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

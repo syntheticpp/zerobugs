@@ -1,7 +1,7 @@
 #ifndef VARIANT_H__47EB6E22_F451_499E_B32B_409B77A7683D
 #define VARIANT_H__47EB6E22_F451_499E_B32B_409B77A7683D
 //
-// $Id: variant.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

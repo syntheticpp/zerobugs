@@ -1,7 +1,7 @@
 #ifndef GUI_H__3A381A36_5089_474B_A1AD_F3A4ADCA433D
 #define GUI_H__3A381A36_5089_474B_A1AD_F3A4ADCA433D
 //
-// $Id: gui.h 720 2010-10-28 06:37:54Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

@@ -1,7 +1,7 @@
 #ifndef EDIT_WATCHPOINT_DLG_H__0B155C2C_326F_4379_B1BF_161E8958390C
 #define EDIT_WATCHPOINT_DLG_H__0B155C2C_326F_4379_B1BF_161E8958390C
 //
-// $Id: edit_watchpoint_dlg.h 720 2010-10-28 06:37:54Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

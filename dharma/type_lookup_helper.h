@@ -1,7 +1,7 @@
 #ifndef TYPE_LOOKUP_HELPER_H__D70D1BFC_5C2A_414D_8C0D_0796165BAE90
 #define TYPE_LOOKUP_HELPER_H__D70D1BFC_5C2A_414D_8C0D_0796165BAE90
 //
-// $Id: type_lookup_helper.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

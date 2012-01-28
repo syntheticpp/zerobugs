@@ -2,7 +2,7 @@
 #define VOLATILE_TYPE_H__7510242F_C481_4A67_9A60_1932C6408D8D
 //
 //
-// $Id: volatile_type.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

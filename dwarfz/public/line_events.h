@@ -1,7 +1,7 @@
 #ifndef LINE_EVENTS_H__9B72CBDC_0691_4679_A0C5_73EC4D37F12D
 #define LINE_EVENTS_H__9B72CBDC_0691_4679_A0C5_73EC4D37F12D
 //
-// $Id: line_events.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

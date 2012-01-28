@@ -2,7 +2,7 @@
 #define POPUP_LIST_H__3B0B0361_4F19_4C8B_9F1A_4E900D814F14
 //
 //
-// $Id: popup_list.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

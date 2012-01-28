@@ -1,7 +1,7 @@
 #ifndef BSD386_H__2FE79592_4E33_11DA_B332_00C04F09BBCC
 #define BSD386_H__2FE79592_4E33_11DA_B332_00C04F09BBCC
 //
-// $Id: bsd386.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

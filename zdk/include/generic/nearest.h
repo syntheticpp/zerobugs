@@ -1,7 +1,7 @@
 #ifndef NEAREST_H__17DE366F_9256_4F50_8B94_AEFD13C9F426
 #define NEAREST_H__17DE366F_9256_4F50_8B94_AEFD13C9F426
 //
-// $Id: nearest.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

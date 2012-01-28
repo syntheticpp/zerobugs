@@ -1,7 +1,7 @@
 #ifndef RIGHT_CLICK_CONTEXT_H__7FAFF24A_93AF_4900_8503_BDBFDF00DAD6
 #define RIGHT_CLICK_CONTEXT_H__7FAFF24A_93AF_4900_8503_BDBFDF00DAD6
 //
-// $Id: right_click_context.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

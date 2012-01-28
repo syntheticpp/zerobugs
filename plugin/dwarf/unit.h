@@ -1,7 +1,7 @@
 #ifndef UNIT_H__637B7F5C_A58A_46E8_AC58_EA42DA9E3398
 #define UNIT_H__637B7F5C_A58A_46E8_AC58_EA42DA9E3398
 //
-// $Id: unit.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

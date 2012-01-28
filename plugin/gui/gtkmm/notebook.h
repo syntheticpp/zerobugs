@@ -1,7 +1,7 @@
 #ifndef NOTEBOOK_H__F454C458_A066_455B_B6A5_92C531216DDC
 #define NOTEBOOK_H__F454C458_A066_455B_B6A5_92C531216DDC
 //
-// $Id: notebook.h 716 2010-10-17 22:16:32Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

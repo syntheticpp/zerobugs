@@ -1,7 +1,7 @@
 #ifndef DYN_LIB_LIST_H__94C6EDBA_0D56_46F1_A2A9_3A4BCB9F7F18
 #define DYN_LIB_LIST_H__94C6EDBA_0D56_46F1_A2A9_3A4BCB9F7F18
 //
-// $Id: dyn_lib_list.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

@@ -1,7 +1,7 @@
 #ifndef VISITOR_H__DF4B67ED_92E8_4AF3_A238_91FA1E3C6CC6
 #define VISITOR_H__DF4B67ED_92E8_4AF3_A238_91FA1E3C6CC6
 //
-// $Id: visitor.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

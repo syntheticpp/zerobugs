@@ -1,7 +1,7 @@
 #ifndef EDIT_BREAKPOINT_DLG_H__F02B1370_8144_4D1D_B985_48C07566A5F5
 #define EDIT_BREAKPOINT_DLG_H__F02B1370_8144_4D1D_B985_48C07566A5F5
 //
-// $Id: edit_breakpoint_dlg.h 720 2010-10-28 06:37:54Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

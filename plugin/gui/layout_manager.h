@@ -1,7 +1,7 @@
 #ifndef LAYOUT_MANAGER_H__134F15CA_944B_4730_940F_20B8C9E1AF85
 #define LAYOUT_MANAGER_H__134F15CA_944B_4730_940F_20B8C9E1AF85
 //
-// $Id: layout_manager.h 720 2010-10-28 06:37:54Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

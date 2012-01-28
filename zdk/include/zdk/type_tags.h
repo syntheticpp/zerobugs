@@ -1,7 +1,7 @@
 #ifndef TYPE_TAGS_H__64E17FF9_636A_4AD9_A2B6_EFDC821CBF1B
 #define TYPE_TAGS_H__64E17FF9_636A_4AD9_A2B6_EFDC821CBF1B
 //
-// $Id: type_tags.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

@@ -1,7 +1,7 @@
 #ifndef TEXT_H__6A4228B5_6E98_4B40_A53E_3F06B2F12682
 #define TEXT_H__6A4228B5_6E98_4B40_A53E_3F06B2F12682
 //
-// $Id: text.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

@@ -1,7 +1,7 @@
 #ifndef TYPEMAP_H__527252E2_95D0_459B_B422_BCA964CD2065
 #define TYPEMAP_H__527252E2_95D0_459B_B422_BCA964CD2065
 //
-// $Id: type_map.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

@@ -1,7 +1,7 @@
 #ifndef SETTINGS_H__07367374_99D3_4DC1_8CD4_FAF91176DFEE
 #define SETTINGS_H__07367374_99D3_4DC1_8CD4_FAF91176DFEE
 //
-// $Id: settings.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

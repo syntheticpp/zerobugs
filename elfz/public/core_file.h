@@ -1,7 +1,7 @@
 #ifndef CORE_H__07A8D5C6_DF54_4FBE_A8E0_98A9B5A76985
 #define CORE_H__07A8D5C6_DF54_4FBE_A8E0_98A9B5A76985
 //
-// $Id: core_file.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

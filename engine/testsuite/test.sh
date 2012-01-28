@@ -1,6 +1,6 @@
 #! /bin/bash
 # vim: tabstop=4:softtabstop=4:expandtab:shiftwidth=4 
-# $Id: test.sh 720 2010-10-28 06:37:54Z root $
+# $Id$
 # Automated tests for the debugger engine
 # Copyright (c) 2004, 2006 Cristian L. Vlasceanu
 #

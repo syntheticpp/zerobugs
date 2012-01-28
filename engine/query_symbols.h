@@ -1,7 +1,7 @@
 #ifndef QUERY_SYMBOLS_H__3705B467_12B3_421A_8F19_2001661E5EA6
 #define QUERY_SYMBOLS_H__3705B467_12B3_421A_8F19_2001661E5EA6
 //
-// $Id: query_symbols.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

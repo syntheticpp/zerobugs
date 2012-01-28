@@ -1,7 +1,7 @@
 #ifndef STACK_VIEW_H__2482D190_5622_4853_ABD5_568B99136E9A
 #define STACK_VIEW_H__2482D190_5622_4853_ABD5_568B99136E9A
 //
-// $Id: stack_view.h 720 2010-10-28 06:37:54Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

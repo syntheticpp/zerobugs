@@ -1,5 +1,5 @@
 //
-// $Id: core_file.cpp 711 2010-10-16 07:09:23Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

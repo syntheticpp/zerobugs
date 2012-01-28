@@ -1,7 +1,7 @@
 #ifndef INTERFACE_CAST_H__96D028A3_3959_4B41_967D_5D520D0A4965
 #define INTERFACE_CAST_H__96D028A3_3959_4B41_967D_5D520D0A4965
 //
-// $Id: interface_cast.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

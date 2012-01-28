@@ -1,7 +1,7 @@
 #ifndef CTREE_H__8FF213C1_C868_472D_BB63_62D8B6C724D4
 #define CTREE_H__8FF213C1_C868_472D_BB63_62D8B6C724D4
 //
-// $Id: ctree.h 716 2010-10-17 22:16:32Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

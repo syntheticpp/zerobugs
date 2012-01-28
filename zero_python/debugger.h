@@ -1,7 +1,7 @@
 #ifndef DEBUGGER_H__F8D44284_A0D0_4997_9E19_F32BBF301AF2
 #define DEBUGGER_H__F8D44284_A0D0_4997_9E19_F32BBF301AF2
 //
-// $Id: debugger.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 void export_debugger();
 

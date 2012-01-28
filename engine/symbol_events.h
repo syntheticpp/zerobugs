@@ -1,7 +1,7 @@
 #ifndef SYMBOL_EVENTS_H__3D013F3F_4A6C_45DC_8DBA_FE4281C241BB
 #define SYMBOL_EVENTS_H__3D013F3F_4A6C_45DC_8DBA_FE4281C241BB
 //
-// $Id: symbol_events.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

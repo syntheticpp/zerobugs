@@ -1,7 +1,7 @@
 #ifndef APP_SLOTS_H__35B9FEEE_F780_4C6C_864F_973252ECD90C
 #define APP_SLOTS_H__35B9FEEE_F780_4C6C_864F_973252ECD90C
 //
-// $Id: app_slots.h 720 2010-10-28 06:37:54Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

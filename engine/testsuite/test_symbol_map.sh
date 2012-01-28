@@ -1,5 +1,5 @@
 # vim: tabstop=4:softtabstop=4:expandtab:shiftwidth=4 
-# $Id: test_symbol_map.sh 414 2008-03-23 22:52:57Z root $
+# $Id$
 
 ubuntu_msg="
 *******************************************************************\n

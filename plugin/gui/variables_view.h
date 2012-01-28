@@ -1,7 +1,7 @@
 #ifndef VARIABLES_VIEW_H__1EBC4150_7B6D_445D_86D5_B259C7C18EA7
 #define VARIABLES_VIEW_H__1EBC4150_7B6D_445D_86D5_B259C7C18EA7
 //
-// $Id: variables_view.h 716 2010-10-17 22:16:32Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

@@ -1,5 +1,5 @@
 # vim: tabstop=4:softtabstop=4:expandtab:shiftwidth=4 
-# $Id: test_exec.sh 205 2007-11-22 03:52:59Z root $
+# $Id$
 
 ################################################################
 # Test executing a program from the command line, and passing

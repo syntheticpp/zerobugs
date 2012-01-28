@@ -1,7 +1,7 @@
 #ifndef ATTR_H__D5681F86_0F32_4A50_8F04_F051D733ACD3
 #define ATTR_H__D5681F86_0F32_4A50_8F04_F051D733ACD3
 //
-// $Id: attr.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

@@ -2,7 +2,7 @@
 #define TESTHDR_H__67E012B4_9292_408B_BA88_F24012B2094E
 //
 //
-// $Id: testhdr.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

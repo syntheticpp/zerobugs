@@ -1,7 +1,7 @@
 #ifndef FLAGS_H__E20317FB_A8E7_4D63_B44F_FD5171F3FEAE
 #define FLAGS_H__E20317FB_A8E7_4D63_B44F_FD5171F3FEAE
 //
-// $Id: flags.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

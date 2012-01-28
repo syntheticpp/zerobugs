@@ -1,7 +1,7 @@
 #ifndef ITERATOR_H__362A8C39_5418_43F5_913C_640FBCA561E6
 #define ITERATOR_H__362A8C39_5418_43F5_913C_640FBCA561E6
 //
-// $Id: iterator.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

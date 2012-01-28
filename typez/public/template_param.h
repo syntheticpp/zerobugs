@@ -1,7 +1,7 @@
 #ifndef TEMPLATE_PARAM_H__99AD8A38_25C3_4C7C_8A2D_FEA92C5F9735
 #define TEMPLATE_PARAM_H__99AD8A38_25C3_4C7C_8A2D_FEA92C5F9735
 //
-// $Id: template_param.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

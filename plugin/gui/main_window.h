@@ -1,7 +1,7 @@
 #ifndef MAIN_WINDOW_H__9CEB24F3_F2D9_4E9C_9353_C08697880309
 #define MAIN_WINDOW_H__9CEB24F3_F2D9_4E9C_9353_C08697880309
 //
-// $Id: main_window.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

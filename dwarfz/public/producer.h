@@ -2,7 +2,7 @@
 #define PRODUCER_H__81BC708E_A617_4016_A149_8150BE47F425
 //
 //
-// $Id: producer.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

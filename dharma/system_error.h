@@ -1,7 +1,7 @@
 #ifndef SYSTEM_ERROR_H__1056608775
 #define SYSTEM_ERROR_H__1056608775
 //
-// $Id: system_error.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

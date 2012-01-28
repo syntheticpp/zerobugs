@@ -1,7 +1,7 @@
 #ifndef INIT_EVENTS_H__0254E186_C1D9_4A11_ACD3_FF53FA103359
 #define INIT_EVENTS_H__0254E186_C1D9_4A11_ACD3_FF53FA103359
 //
-// $Id: init_events.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

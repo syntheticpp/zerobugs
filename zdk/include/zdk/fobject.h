@@ -1,7 +1,7 @@
 #ifndef FOBJECT_H__2322C2A2_9414_4CAE_9F92_F6538290ECE1
 #define FOBJECT_H__2322C2A2_9414_4CAE_9F92_F6538290ECE1
 //
-// $Id: fobject.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

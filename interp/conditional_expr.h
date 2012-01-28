@@ -1,7 +1,7 @@
 #ifndef CONDITIONAL_EXPR_H__557486FD_CA30_4631_AA40_8EFF80639491
 #define CONDITIONAL_EXPR_H__557486FD_CA30_4631_AA40_8EFF80639491
 //
-// $Id: conditional_expr.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

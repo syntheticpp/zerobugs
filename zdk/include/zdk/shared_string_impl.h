@@ -1,7 +1,7 @@
 #ifndef SHARED_STRING_IMPL_H__0AD27CA9_ABB2_46AF_A0FE_EB5077C0F6B1
 #define SHARED_STRING_IMPL_H__0AD27CA9_ABB2_46AF_A0FE_EB5077C0F6B1
 //
-// $Id: shared_string_impl.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

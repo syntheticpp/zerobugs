@@ -1,7 +1,7 @@
 #ifndef CODE_VIEW_COMMON_H__43F01FA0_A41D_464E_95DE_2E623C3F61EC
 #define CODE_VIEW_COMMON_H__43F01FA0_A41D_464E_95DE_2E623C3F61EC
 //
-// $Id: code_view_common.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

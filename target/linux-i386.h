@@ -1,7 +1,7 @@
 #ifndef LINUX_386_H__13695992_6C6A_487D_9A7D_9DE8BBDC593E
 #define LINUX_386_H__13695992_6C6A_487D_9A7D_9DE8BBDC593E
 //
-// $Id: linux-i386.h 720 2010-10-28 06:37:54Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

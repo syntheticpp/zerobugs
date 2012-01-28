@@ -6,7 +6,7 @@
 // http://www.boost.org/LICENSE_1_0.txt)
 // -------------------------------------------------------------------------
 //
-// $Id: primary_expr.cpp 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 #include "primary_expr.h"
 

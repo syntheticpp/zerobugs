@@ -1,7 +1,7 @@
 #ifndef VARIANT_UTIL_H__EEEF5E1E_9945_4C86_925A_B9E4999C5845
 #define VARIANT_UTIL_H__EEEF5E1E_9945_4C86_925A_B9E4999C5845
 //
-// $Id: variant_util.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

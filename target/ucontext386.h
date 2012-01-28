@@ -1,7 +1,7 @@
 #ifndef UCONTEXT386_H__968F684F_76F2_454B_B675_4A1EBADB05AE
 #define UCONTEXT386_H__968F684F_76F2_454B_B675_4A1EBADB05AE
 //
-// $Id: ucontext386.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

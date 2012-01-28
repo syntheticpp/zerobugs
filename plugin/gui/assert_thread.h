@@ -1,7 +1,7 @@
 #ifndef ASSERT_THREAD_H__0310EB6B_014F_4EF7_8045_3CE10D65259A
 #define ASSERT_THREAD_H__0310EB6B_014F_4EF7_8045_3CE10D65259A
 //
-// $Id: assert_thread.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

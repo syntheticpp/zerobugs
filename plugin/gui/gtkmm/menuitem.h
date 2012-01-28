@@ -1,7 +1,7 @@
 #ifndef MENUITEM_H__B430328A_4CE2_4A4B_A901_C27567F5C225
 #define MENUITEM_H__B430328A_4CE2_4A4B_A901_C27567F5C225
 //
-// $Id: menuitem.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

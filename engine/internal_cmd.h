@@ -1,7 +1,7 @@
 #ifndef INTERNAL_COMMAND_H__0B135951_4AC0_450A_9380_E7E10DD2A3FA
 #define INTERNAL_COMMAND_H__0B135951_4AC0_450A_9380_E7E10DD2A3FA
 //
-// $Id: internal_cmd.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

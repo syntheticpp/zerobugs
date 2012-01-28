@@ -1,7 +1,7 @@
 #ifndef SIGNAL_POLICY_H__C78CCA9A_B6CE_403A_B953_83E2FF4AAD66
 #define SIGNAL_POLICY_H__C78CCA9A_B6CE_403A_B953_83E2FF4AAD66
 //
-// $Id: signal_policy.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

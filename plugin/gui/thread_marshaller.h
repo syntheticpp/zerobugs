@@ -1,7 +1,7 @@
 #ifndef THREAD_MARSHALLER_H__B3684CE4_DF14_4E54_B3B9_405CA8EBF9E0
 #define THREAD_MARSHALLER_H__B3684CE4_DF14_4E54_B3B9_405CA8EBF9E0
 //
-// $Id: thread_marshaller.h 720 2010-10-28 06:37:54Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

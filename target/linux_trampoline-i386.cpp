@@ -1,5 +1,5 @@
 //
-// $Id: linux_trampoline-i386.cpp 720 2010-10-28 06:37:54Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

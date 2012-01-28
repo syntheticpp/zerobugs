@@ -1,7 +1,7 @@
 #ifndef WIDGET_H__2EB89E57_1D25_439D_9729_50FE6D764EE8
 #define WIDGET_H__2EB89E57_1D25_439D_9729_50FE6D764EE8
 //
-// $Id: widget.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

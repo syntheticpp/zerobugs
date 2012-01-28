@@ -1,7 +1,7 @@
 #ifndef QUALIFIER_LIST_H__2BE3521D_9068_45AB_A877_45339BAAFF2E
 #define QUALIFIER_LIST_H__2BE3521D_9068_45AB_A877_45339BAAFF2E
 //
-// $Id: qualifier_list.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

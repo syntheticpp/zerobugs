@@ -1,7 +1,7 @@
 #ifndef PROCESS_H__FD7E9CF0_D798_4AE2_84A5_32C518278D55
 #define PROCESS_H__FD7E9CF0_D798_4AE2_84A5_32C518278D55
 //
-// $Id: process.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

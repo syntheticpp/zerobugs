@@ -1,7 +1,7 @@
 #ifndef THREAD_DB_ERROR_H__E88D19A5_D0F4_4D05_A7C1_F32F48F5137D
 #define THREAD_DB_ERROR_H__E88D19A5_D0F4_4D05_A7C1_F32F48F5137D
 //
-// $Id: thread_db_error.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

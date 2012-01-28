@@ -1,7 +1,7 @@
 #ifndef MENU_CLICK_H__971B67C6_8D5A_46CA_83AA_7CB6F066622E
 #define MENU_CLICK_H__971B67C6_8D5A_46CA_83AA_7CB6F066622E
 //
-// $Id: menu_click.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

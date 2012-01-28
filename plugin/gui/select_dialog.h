@@ -2,7 +2,7 @@
 #define SELECT_DIALOG_H__CE947709_ED25_461E_9D3B_02360011C97D
 //
 //
-// $Id: select_dialog.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

@@ -1,7 +1,7 @@
 #ifndef LESS_H__1CAEC4C3_D4E5_4C13_8F65_CF8146EA72A2
 #define LESS_H__1CAEC4C3_D4E5_4C13_8F65_CF8146EA72A2
 //
-// $Id: less.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

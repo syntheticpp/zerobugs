@@ -1,7 +1,7 @@
 #ifndef SET_CURSOR_H__CBD91E0C_4EBF_4300_97DD_7BC1AFC6F5A5
 #define SET_CURSOR_H__CBD91E0C_4EBF_4300_97DD_7BC1AFC6F5A5
 //
-// $Id: set_cursor.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

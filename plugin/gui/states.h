@@ -1,7 +1,7 @@
 #ifndef STATES_H__FBE73FC3_8BEF_4C0C_A6AB_DDB0FCF96918
 #define STATES_H__FBE73FC3_8BEF_4C0C_A6AB_DDB0FCF96918
 //
-// $Id: states.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

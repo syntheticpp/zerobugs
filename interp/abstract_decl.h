@@ -1,7 +1,7 @@
 #ifndef ABSTRACT_DECL_H__8ECF433B_18D5_47D2_BB31_8FA36BA0D448
 #define ABSTRACT_DECL_H__8ECF433B_18D5_47D2_BB31_8FA36BA0D448
 //
-// $Id: abstract_decl.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

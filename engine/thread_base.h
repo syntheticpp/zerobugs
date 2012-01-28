@@ -1,7 +1,7 @@
 #ifndef THREAD_COMMON_H__D07EF7C0_EEC7_4571_AA3B_7B2D2073735F
 #define THREAD_COMMON_H__D07EF7C0_EEC7_4571_AA3B_7B2D2073735F
 //
-// $Id: thread_base.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

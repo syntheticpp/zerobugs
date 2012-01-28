@@ -1,7 +1,7 @@
 #ifndef GET_POINTER_H__21D6748B_FBA5_4D87_ACE6_54C15D964434
 #define GET_POINTER_H__21D6748B_FBA5_4D87_ACE6_54C15D964434
 //
-// $Id: get_pointer.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

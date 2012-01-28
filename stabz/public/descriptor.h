@@ -1,7 +1,7 @@
 #ifndef DESCRIPTOR_H__CA386345_851A_4ECC_8326_ED5400ED87FC
 #define DESCRIPTOR_H__CA386345_851A_4ECC_8326_ED5400ED87FC
 //
-// $Id: descriptor.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

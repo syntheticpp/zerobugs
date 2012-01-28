@@ -1,7 +1,7 @@
 #ifndef DEBUG_INFO_ENTRY_H__8E387EEA_1754_4AF5_A2F9_1F99E450F5F3
 #define DEBUG_INFO_ENTRY_H__8E387EEA_1754_4AF5_A2F9_1F99E450F5F3
 //
-// $Id: die.h 715 2010-10-17 21:43:59Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

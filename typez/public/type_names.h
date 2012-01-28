@@ -1,7 +1,7 @@
 #ifndef TYPE_NAMES_H__C7CD57B9_08C1_4EB8_AE4A_D91A482B057B
 #define TYPE_NAMES_H__C7CD57B9_08C1_4EB8_AE4A_D91A482B057B
 //
-// $Id: type_names.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

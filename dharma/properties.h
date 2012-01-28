@@ -1,7 +1,7 @@
 #ifndef PROPERTIES_H__8D476F2F_5AD8_4A8B_A075_3BDA6D0FF48F
 #define PROPERTIES_H__8D476F2F_5AD8_4A8B_A075_3BDA6D0FF48F
 //
-// $Id: properties.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

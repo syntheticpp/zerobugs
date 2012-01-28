@@ -1,7 +1,7 @@
 #ifndef MEMBER_H__E101AC53_A24E_41E9_A813_04E1A5DCA65D
 #define MEMBER_H__E101AC53_A24E_41E9_A813_04E1A5DCA65D
 //
-// $Id: member.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

@@ -1,7 +1,7 @@
 #ifndef ASSERT_H__30549794_7F62_470B_9B45_AD1D0075D381
 #define ASSERT_H__30549794_7F62_470B_9B45_AD1D0075D381
 //
-// $Id: assert.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

@@ -1,7 +1,7 @@
 #ifndef DBGOUT_H__B34AAE30_B5DC_472A_B5BD_CC1CA657D232
 #define DBGOUT_H__B34AAE30_B5DC_472A_B5BD_CC1CA657D232
 //
-// $Id: dbgout.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

@@ -1,7 +1,7 @@
 #ifndef MEMORY_REQ_H__2E4F52FA_40DE_4AFD_91DC_75A97A66C734
 #define MEMORY_REQ_H__2E4F52FA_40DE_4AFD_91DC_75A97A66C734
 //
-// $Id: memory_req.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

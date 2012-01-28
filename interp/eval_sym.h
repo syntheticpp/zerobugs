@@ -1,7 +1,7 @@
 #ifndef EVAL_SYM_H__E57D2DD2_0E6B_40C5_8E56_CA19EFF8423D
 #define EVAL_SYM_H__E57D2DD2_0E6B_40C5_8E56_CA19EFF8423D
 //
-// $Id: eval_sym.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

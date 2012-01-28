@@ -1,7 +1,7 @@
 #ifndef EXPR_H__BA0431C0_E88E_49D5_B643_54DE37EADD51
 #define EXPR_H__BA0431C0_E88E_49D5_B643_54DE37EADD51
 //
-// $Id: expr.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

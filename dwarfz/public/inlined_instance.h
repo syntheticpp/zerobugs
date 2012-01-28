@@ -1,7 +1,7 @@
 #ifndef INLINED_INSTANCE_H__9FD250AF_9081_47B1_B392_7C45CF2AF62C
 #define INLINED_INSTANCE_H__9FD250AF_9081_47B1_B392_7C45CF2AF62C
 //
-// $Id: inlined_instance.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

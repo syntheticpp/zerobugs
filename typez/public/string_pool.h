@@ -1,7 +1,7 @@
 #ifndef STRING_POOL_H__928F911B_7EB2_47DB_8131_67FE726360BF
 #define STRING_POOL_H__928F911B_7EB2_47DB_8131_67FE726360BF
 //
-// $Id: string_pool.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

@@ -1,7 +1,7 @@
 #ifndef DEBUG_SYMBOL_COLLECTION_H__2C8E8816_76E9_4E44_9B34_73B3FC927E11
 #define DEBUG_SYMBOL_COLLECTION_H__2C8E8816_76E9_4E44_9B34_73B3FC927E11
 //
-// $Id: debug_symbol_collection.h 719 2010-10-22 03:59:11Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

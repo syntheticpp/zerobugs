@@ -1,7 +1,7 @@
 #ifndef UUID_H__CF525794_EF1F_4928_8E57_A67FB48263A6
 #define UUID_H__CF525794_EF1F_4928_8E57_A67FB48263A6
 //
-// $Id: uuid.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

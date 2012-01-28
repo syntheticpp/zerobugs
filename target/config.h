@@ -1,7 +1,7 @@
 #ifndef CONFIG_H__443DB7AA_5C16_11DA_BBFB_00C04F09BBCC
 #define CONFIG_H__443DB7AA_5C16_11DA_BBFB_00C04F09BBCC
 //
-// $Id: config.h 720 2010-10-28 06:37:54Z root $
+// $Id$
 //
 ////////////////////////////////////////////////////////////////
 #if defined (__linux__)

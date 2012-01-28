@@ -1,5 +1,5 @@
 # vim: tabstop=4:softtabstop=4:expandtab:shiftwidth=4 
-# $Id: test_core_env.sh 482 2008-05-01 23:42:26Z root $
+# $Id$
 #
 # Test that the environment of a crashed process is read correctly
 # from core dumps

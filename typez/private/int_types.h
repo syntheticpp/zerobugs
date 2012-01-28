@@ -1,7 +1,7 @@
 #ifndef INT_TYPES_H__C195A481_D518_4632_A3DE_FD3492756542
 #define INT_TYPES_H__C195A481_D518_4632_A3DE_FD3492756542
 //
-// $Id: int_types.h 719 2010-10-22 03:59:11Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

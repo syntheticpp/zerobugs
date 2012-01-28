@@ -1,7 +1,7 @@
 #ifndef NAMESPACE_H__EC26FCA4_B34D_433A_9CA8_00D8C361AB8F
 #define NAMESPACE_H__EC26FCA4_B34D_433A_9CA8_00D8C361AB8F
 //
-// $Id: namespace.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

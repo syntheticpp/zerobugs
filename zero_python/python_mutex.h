@@ -1,7 +1,7 @@
 #ifndef PYTHON_MUTEX_H__8186FCE1_230B_4F9F_AAA6_3640A23F00DB
 #define PYTHON_MUTEX_H__8186FCE1_230B_4F9F_AAA6_3640A23F00DB
 //
-// $Id: python_mutex.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 #include "zdk/mutex.h"
 

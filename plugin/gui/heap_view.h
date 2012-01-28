@@ -1,7 +1,7 @@
 #ifndef HEAP_VIEW_H__482CAD1D_BD3A_4E42_B082_7FE33ACB7FEF
 #define HEAP_VIEW_H__482CAD1D_BD3A_4E42_B082_7FE33ACB7FEF
 //
-// $Id: heap_view.h 720 2010-10-28 06:37:54Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

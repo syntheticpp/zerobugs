@@ -1,7 +1,7 @@
 #ifndef LOG_H__EC55BE0B_3AB7_4013_A161_0CFD126C20C5
 #define LOG_H__EC55BE0B_3AB7_4013_A161_0CFD126C20C5
 //
-// $Id: log.h 715 2010-10-17 21:43:59Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

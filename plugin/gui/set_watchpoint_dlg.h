@@ -1,7 +1,7 @@
 #ifndef SET_WATCHPOINT_DLG_H__DE3C4157_AA85_4095_AF1E_96FC782560BA
 #define SET_WATCHPOINT_DLG_H__DE3C4157_AA85_4095_AF1E_96FC782560BA
 //
-// $Id: set_watchpoint_dlg.h 720 2010-10-28 06:37:54Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

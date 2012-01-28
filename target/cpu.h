@@ -1,7 +1,7 @@
 #ifndef CPU_H__8C16D105_4CD3_4FDB_B281_868AE7B6FDF1
 #define CPU_H__8C16D105_4CD3_4FDB_B281_868AE7B6FDF1
 //
-// $Id: cpu.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

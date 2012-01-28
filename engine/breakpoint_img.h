@@ -1,7 +1,7 @@
 #ifndef BREAKPOINT_IMG_H__A9069932_BEDD_4B6F_931D_58F653B10306
 #define BREAKPOINT_IMG_H__A9069932_BEDD_4B6F_931D_58F653B10306
 //
-// $Id: breakpoint_img.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

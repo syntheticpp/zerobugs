@@ -1,7 +1,7 @@
 #ifndef DEBUG_H__9C7F37DC_1245_4646_AF69_4AA4FBE14F09
 #define DEBUG_H__9C7F37DC_1245_4646_AF69_4AA4FBE14F09
 //
-// $Id: debug.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

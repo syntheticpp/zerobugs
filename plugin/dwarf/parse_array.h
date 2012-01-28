@@ -1,7 +1,7 @@
 #ifndef PARSE_ARRAY_H__FC1B2E1E_6E66_4E8F_AEAA_5C0906669DB1
 #define PARSE_ARRAY_H__FC1B2E1E_6E66_4E8F_AEAA_5C0906669DB1
 //
-// $Id: parse_array.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

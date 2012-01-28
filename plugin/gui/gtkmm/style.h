@@ -1,7 +1,7 @@
 #ifndef STYLE_H__091C36E1_5A7B_4CD9_AF2B_22062D933D99
 #define STYLE_H__091C36E1_5A7B_4CD9_AF2B_22062D933D99
 //
-// $Id: style.h 716 2010-10-17 22:16:32Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

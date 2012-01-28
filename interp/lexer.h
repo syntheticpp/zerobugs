@@ -1,7 +1,7 @@
 #ifndef LEXER_H__CCD2F69F_6111_4C6A_82CA_AEB2633DAAB0
 #define LEXER_H__CCD2F69F_6111_4C6A_82CA_AEB2633DAAB0
 //
-// $Id: lexer.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

@@ -1,7 +1,7 @@
 #ifndef DEBUG_REGS_386_H__8E539174_745B_4B64_BD9D_11579A29553D
 #define DEBUG_REGS_386_H__8E539174_745B_4B64_BD9D_11579A29553D
 //
-// $Id: debug_regs_386.h 720 2010-10-28 06:37:54Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

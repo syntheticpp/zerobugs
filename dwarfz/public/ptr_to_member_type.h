@@ -1,7 +1,7 @@
 #ifndef PTR_TO_MEMBER_TYPE_H__99DE0B4C_E985_4B6F_9677_D26F0A074BE4
 #define PTR_TO_MEMBER_TYPE_H__99DE0B4C_E985_4B6F_9677_D26F0A074BE4
 //
-// $Id: ptr_to_member_type.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

@@ -1,7 +1,7 @@
 #ifndef DECORATED_TYPE_H__21F79B87_9F9F_4E2E_82A4_4DC0B4CB175C
 #define DECORATED_TYPE_H__21F79B87_9F9F_4E2E_82A4_4DC0B4CB175C
 //
-// $Id: decorated_type.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

@@ -1,7 +1,7 @@
 #ifndef STOCK_H__0CB8B219_47B2_4E82_A189_3FDFBA323C3A
 #define STOCK_H__0CB8B219_47B2_4E82_A189_3FDFBA323C3A
 //
-// $Id: stock.h 716 2010-10-17 22:16:32Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

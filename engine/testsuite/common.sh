@@ -1,5 +1,5 @@
 # vim: tabstop=4:softtabstop=4:expandtab:shiftwidth=4 
-# $Id: common.sh 719 2010-10-22 03:59:11Z root $
+# $Id$
 #
 # Variables and functions shared accross test modules
 #

@@ -1,7 +1,7 @@
 #ifndef TARGET_H__F7939CAB_589A_11DA_B82B_00C04F09BBCC
 #define TARGET_H__F7939CAB_589A_11DA_B82B_00C04F09BBCC
 //
-// $Id: target.h 720 2010-10-28 06:37:54Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

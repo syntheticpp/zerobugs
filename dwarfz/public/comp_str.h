@@ -1,7 +1,7 @@
 #ifndef COMP_STR_H__73B6954C_67F7_45DA_B840_D5129E8E2B5A
 #define COMP_STR_H__73B6954C_67F7_45DA_B840_D5129E8E2B5A
 //
-// $Id: comp_str.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

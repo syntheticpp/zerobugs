@@ -1,7 +1,7 @@
 #ifndef SYMBOL_IMPL_H__3DB44694_18AB_4B8C_8163_955DEAA98BCC
 #define SYMBOL_IMPL_H__3DB44694_18AB_4B8C_8163_955DEAA98BCC
 //
-// $Id: symbol_impl.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

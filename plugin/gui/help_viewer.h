@@ -1,7 +1,7 @@
 #ifndef HELP_VIEWER_H__FFE6325B_093D_4255_8176_C5ECA45FA115
 #define HELP_VIEWER_H__FFE6325B_093D_4255_8176_C5ECA45FA115
 //
-// $Id: help_viewer.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

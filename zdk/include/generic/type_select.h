@@ -1,7 +1,7 @@
 #ifndef TYPE_SELECT_H__1039340132
 #define TYPE_SELECT_H__1039340132
 //
-// $Id: type_select.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // From Andrei Alexandrescu's Loki
 //

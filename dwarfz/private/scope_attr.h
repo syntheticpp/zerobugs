@@ -1,7 +1,7 @@
 #ifndef SCOPE_ATTR_H__E5D75FFE_E2C3_4F55_B757_ABA8D79CCD9D
 #define SCOPE_ATTR_H__E5D75FFE_E2C3_4F55_B757_ABA8D79CCD9D
 //
-// $Id: scope_attr.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

@@ -1,7 +1,7 @@
 #ifndef UTILITY_H__68029B6E_A466_4A6E_A8FE_5B1C4DD342DA
 #define UTILITY_H__68029B6E_A466_4A6E_A8FE_5B1C4DD342DA
 //
-// $Id: utility.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

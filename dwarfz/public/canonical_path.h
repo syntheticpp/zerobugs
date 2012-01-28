@@ -1,7 +1,7 @@
 #ifndef CANONICAL_PATH_H__38A9B2BE_CF13_4909_A2B4_42321474FAA3
 #define CANONICAL_PATH_H__38A9B2BE_CF13_4909_A2B4_42321474FAA3
 //
-// $Id: canonical_path.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

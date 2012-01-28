@@ -1,7 +1,7 @@
 #ifndef VARIANT_CONVERT_H__CFED1CE9_6589_4F24_B562_732BB95BE596
 #define VARIANT_CONVERT_H__CFED1CE9_6589_4F24_B562_732BB95BE596
 //
-// $Id: variant_convert.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

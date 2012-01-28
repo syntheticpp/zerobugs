@@ -1,5 +1,5 @@
 # vim: tabstop=4:softtabstop=4:noexpandtab:shiftwidth=4
-# $Id: Common.mak 574 2008-07-20 06:54:53Z root $
+# $Id$
 # -------------------------------------------------------------------------
 # This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu
 #

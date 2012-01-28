@@ -1,7 +1,7 @@
 #ifndef THREAD_AGENT_H__8892B9FE_7AAE_4BB9_9DCE_6543274269D5
 #define THREAD_AGENT_H__8892B9FE_7AAE_4BB9_9DCE_6543274269D5
 //
-// $Id: thread_agent.h 720 2010-10-28 06:37:54Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

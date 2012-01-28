@@ -1,7 +1,7 @@
 #ifndef RADIO_GROUP_H__A7D936B0_B30A_44B5_9ECF_25EBAC410A54
 #define RADIO_GROUP_H__A7D936B0_B30A_44B5_9ECF_25EBAC410A54
 //
-// $Id: radio_group.h 720 2010-10-28 06:37:54Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

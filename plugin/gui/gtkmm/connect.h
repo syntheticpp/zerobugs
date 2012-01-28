@@ -1,7 +1,7 @@
 #ifndef Gtk_CONNECT_H__F6AC4903_531B_4290_8B98_AD0F9FE72C5E
 #define Gtk_CONNECT_H__F6AC4903_531B_4290_8B98_AD0F9FE72C5E
 //
-// $Id: connect.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

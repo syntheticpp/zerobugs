@@ -1,7 +1,7 @@
 #ifndef ADDR_OPERATIONS_H__978E2FCA_6C8E_4695_9624_EF8BA36F4640
 #define ADDR_OPERATIONS_H__978E2FCA_6C8E_4695_9624_EF8BA36F4640
 //
-// $Id: addr_operations.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

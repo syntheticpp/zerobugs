@@ -2,7 +2,7 @@
 #define SYMBOL_H__64CC73C9_BC1E_48CD_8D35_FDB97E814270
 //
 //
-// $Id: symbol.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

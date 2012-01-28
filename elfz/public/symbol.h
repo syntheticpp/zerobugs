@@ -1,7 +1,7 @@
 #ifndef SYMBOL_H__D0A6A365_D66B_441A_AC0C_34F01D5E9BE4
 #define SYMBOL_H__D0A6A365_D66B_441A_AC0C_34F01D5E9BE4
 //
-// $Id: symbol.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

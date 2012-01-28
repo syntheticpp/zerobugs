@@ -1,7 +1,7 @@
 #ifndef LAYOUT_STRATEGY_H__92190B9D_2712_43E2_8235_72D4C7562F29
 #define LAYOUT_STRATEGY_H__92190B9D_2712_43E2_8235_72D4C7562F29
 //
-// $Id: layout_strategy.h 720 2010-10-28 06:37:54Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

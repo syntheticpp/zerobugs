@@ -1,7 +1,7 @@
 #ifndef SCOPE_HELPERS_H__53591A52_12D5_43D8_9382_0B7D01569E05
 #define SCOPE_HELPERS_H__53591A52_12D5_43D8_9382_0B7D01569E05
 //
-// $Id: scope_helpers.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

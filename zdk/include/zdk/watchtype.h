@@ -1,7 +1,7 @@
 #ifndef WATCHTYPE_H__11AEABB3_0B40_4B82_87BA_1E64DF789212
 #define WATCHTYPE_H__11AEABB3_0B40_4B82_87BA_1E64DF789212
 //
-// $Id: watchtype.h 723 2010-10-28 07:40:45Z root $
+// $Id$
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu
 //

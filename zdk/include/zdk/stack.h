@@ -1,7 +1,7 @@
 #ifndef STACK_H__03BCA316_0211_4596_BAE2_CB269B6607E0
 #define STACK_H__03BCA316_0211_4596_BAE2_CB269B6607E0
 //
-// $Id: stack.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

@@ -1,7 +1,7 @@
 #ifndef FBSD_CORE_H__D77AF1D5_5AE6_11DA_8F2D_00C04F09BBCC
 #define FBSD_CORE_H__D77AF1D5_5AE6_11DA_8F2D_00C04F09BBCC
 //
-// $Id: fbsd_core.h 720 2010-10-28 06:37:54Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

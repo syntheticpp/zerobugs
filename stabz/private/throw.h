@@ -1,7 +1,7 @@
 #ifndef THROW_H__800047D6_9653_4CC0_BDDD_70D343A03D40
 #define THROW_H__800047D6_9653_4CC0_BDDD_70D343A03D40
 //
-// $Id: throw.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

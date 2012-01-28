@@ -1,7 +1,7 @@
 #ifndef CODE_VIEW_SIGNALS_H__F8902B08_2E4A_4BE8_9834_5A72C042C110
 #define CODE_VIEW_SIGNALS_H__F8902B08_2E4A_4BE8_9834_5A72C042C110
 //
-// $Id: code_view_signals.h 720 2010-10-28 06:37:54Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

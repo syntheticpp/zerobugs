@@ -1,5 +1,5 @@
 # vim: tabstop=4:softtabstop=4:expandtab:shiftwidth=4 
-# $Id: test_fork.sh 512 2008-06-02 03:33:02Z root $
+# $Id$
 #
 function test_fork()
 {

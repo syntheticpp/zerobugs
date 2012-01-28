@@ -1,7 +1,7 @@
 #ifndef UNHANDLED_MAP_H__05A306DF_1F18_4C3A_8C5A_99C47F9C6B1C
 #define UNHANDLED_MAP_H__05A306DF_1F18_4C3A_8C5A_99C47F9C6B1C
 //
-// $Id: unhandled_map.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

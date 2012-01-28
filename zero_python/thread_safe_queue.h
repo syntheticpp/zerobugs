@@ -1,7 +1,7 @@
 #ifndef THREAD_SAFE_QUEUE_H__AC7D898B_C203_4DAD_B0DF_5C983BDE5B00
 #define THREAD_SAFE_QUEUE_H__AC7D898B_C203_4DAD_B0DF_5C983BDE5B00
 //
-// $Id: thread_safe_queue.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

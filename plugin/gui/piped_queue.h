@@ -1,7 +1,7 @@
 #ifndef PIPED_QUEUE_H__6EB2FC9E_50C1_4EB0_B725_6D277A5EAF97
 #define PIPED_QUEUE_H__6EB2FC9E_50C1_4EB0_B725_6D277A5EAF97
 //
-// $Id: piped_queue.h 720 2010-10-28 06:37:54Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

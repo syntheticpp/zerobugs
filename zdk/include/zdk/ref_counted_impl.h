@@ -1,7 +1,7 @@
 #ifndef REF_COUNTED_IMPL_H__DA555A9B_D545_4808_AC17_A7E51B4BFBC2
 #define REF_COUNTED_IMPL_H__DA555A9B_D545_4808_AC17_A7E51B4BFBC2
 //
-// $Id: ref_counted_impl.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

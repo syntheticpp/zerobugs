@@ -6,7 +6,7 @@
 // http://www.boost.org/LICENSE_1_0.txt)
 // -------------------------------------------------------------------------
 //
-// $Id: fixed_font.cpp 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 #include "dharma/environ.h"
 #include "fixed_font.h"

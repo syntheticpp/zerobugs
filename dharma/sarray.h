@@ -1,7 +1,7 @@
 #ifndef SARRAY_H__DFC32E30_214A_4518_B337_DB1D4FBF8FB8
 #define SARRAY_H__DFC32E30_214A_4518_B337_DB1D4FBF8FB8
 //
-// $Id: sarray.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

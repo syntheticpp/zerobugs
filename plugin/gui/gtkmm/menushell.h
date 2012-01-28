@@ -1,7 +1,7 @@
 #ifndef MENUSHELL_H__1B4933BC_ACDE_4AFB_A15A_A6BCF1848854
 #define MENUSHELL_H__1B4933BC_ACDE_4AFB_A15A_A6BCF1848854
 //
-// $Id: menushell.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 #ifdef GTKMM_2
  #include <gtkmm/menushell.h>

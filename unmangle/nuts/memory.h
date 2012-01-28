@@ -1,7 +1,7 @@
 #ifndef MEMORY_H__9C916E46_FA85_448B_B7A0_4BCB0CBA18C3
 #define MEMORY_H__9C916E46_FA85_448B_B7A0_4BCB0CBA18C3
 //
-// $Id: memory.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

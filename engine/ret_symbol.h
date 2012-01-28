@@ -1,7 +1,7 @@
 #ifndef RET_SYMBOL_H__EEF9E8FC_C213_4E6F_87E8_CC91A56A4289
 #define RET_SYMBOL_H__EEF9E8FC_C213_4E6F_87E8_CC91A56A4289
 //
-// $Id: ret_symbol.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

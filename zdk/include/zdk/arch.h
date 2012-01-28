@@ -1,7 +1,7 @@
 #ifndef ARCH_H__2A34433B_4B08_4F3D_83AB_AC85BCE3C9AC
 #define ARCH_H__2A34433B_4B08_4F3D_83AB_AC85BCE3C9AC
 //
-// $Id: arch.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

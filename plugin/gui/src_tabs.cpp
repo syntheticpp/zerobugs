@@ -8,7 +8,7 @@
 // -*- tab-width: 4; indent-tabs-mode: nil;  -*-
 // vim: tabstop=4:softtabstop=4:expandtab:shiftwidth=4
 //
-// $Id: src_tabs.cpp 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 #include "src_tabs.h"
 #include "zdk/shared_string_impl.h"

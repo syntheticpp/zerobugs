@@ -1,7 +1,7 @@
 #ifndef DEBUG_SYMBOL_IMPL_H__1B0A180A_9FBD_4967_B570_56C45ED36905
 #define DEBUG_SYMBOL_IMPL_H__1B0A180A_9FBD_4967_B570_56C45ED36905
 //
-// $Id: debug_symbol_impl.h 719 2010-10-22 03:59:11Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

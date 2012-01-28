@@ -1,7 +1,7 @@
 #ifndef THREAD_VIEW_H__AF353FD4_BA41_4D44_8FA1_02A7133F5B94
 #define THREAD_VIEW_H__AF353FD4_BA41_4D44_8FA1_02A7133F5B94
 //
-// $Id: thread_view.h 716 2010-10-17 22:16:32Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

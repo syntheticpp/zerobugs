@@ -1,7 +1,7 @@
 #ifndef ARCH_FBSD_H__5F9C65D4_FDF8_11DB_8EB2_00C04F09BBCC
 #define ARCH_FBSD_H__5F9C65D4_FDF8_11DB_8EB2_00C04F09BBCC
 //
-// $Id: arch-fbsd.h 719 2010-10-22 03:59:11Z root $
+// $Id$
 //
 // C++ Templetized versions of elf_prstatus and elf_prpsinfo
 //

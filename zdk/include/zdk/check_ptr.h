@@ -1,7 +1,7 @@
 #ifndef CHECK_PTR_H__CC3C0040_A150_46CA_BC94_58DA32DC7469
 #define CHECK_PTR_H__CC3C0040_A150_46CA_BC94_58DA32DC7469
 //
-// $Id: check_ptr.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

@@ -1,7 +1,7 @@
 #ifndef STRING_CACHE_H__69588154_EAEB_4AB6_9523_CA18625B890D
 #define STRING_CACHE_H__69588154_EAEB_4AB6_9523_CA18625B890D
 //
-// $Id: string_cache.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

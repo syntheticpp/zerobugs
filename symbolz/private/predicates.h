@@ -1,7 +1,7 @@
 #ifndef PREDICATES_H__7EECA098_4A6D_4420_8A2F_1098B58917A2
 #define PREDICATES_H__7EECA098_4A6D_4420_8A2F_1098B58917A2
 //
-// $Id: predicates.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

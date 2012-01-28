@@ -1,7 +1,7 @@
 #ifndef LIST_H__43298869_A527_497E_8FB2_454BCA7E13AE
 #define LIST_H__43298869_A527_497E_8FB2_454BCA7E13AE
 //
-// $Id: list.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

@@ -1,7 +1,7 @@
 #ifndef BREAKPOINT_H__9F2DD290_B8AF_4C66_BAFC_D9AC15A76050
 #define BREAKPOINT_H__9F2DD290_B8AF_4C66_BAFC_D9AC15A76050
 //
-// $Id: breakpoint.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu
 //

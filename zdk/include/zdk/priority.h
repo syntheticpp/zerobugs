@@ -1,7 +1,7 @@
 #ifndef PRIORITY_H__93C954DC_E728_4DDA_800D_0F1F62E6A15A
 #define PRIORITY_H__93C954DC_E728_4DDA_800D_0F1F62E6A15A
 //
-// $Id: priority.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

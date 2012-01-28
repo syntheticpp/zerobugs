@@ -1,7 +1,7 @@
 #ifndef CLIST_H__C1D9B5A5_0503_4C7D_9072_7B2D56C5172A
 #define CLIST_H__C1D9B5A5_0503_4C7D_9072_7B2D56C5172A
 //
-// $Id: clist.h 716 2010-10-17 22:16:32Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

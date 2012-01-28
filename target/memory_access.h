@@ -1,7 +1,7 @@
 #ifndef MEMORY_ACCESS_H__02E48702_AD27_4F24_9878_E9D81A27C682
 #define MEMORY_ACCESS_H__02E48702_AD27_4F24_9878_E9D81A27C682
 //
-// $Id: memory_access.h 720 2010-10-28 06:37:54Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

@@ -1,7 +1,7 @@
 #ifndef CLASS_TYPE_H__9BC55163_79C8_4C54_BB64_2003BE33D6CF
 #define CLASS_TYPE_H__9BC55163_79C8_4C54_BB64_2003BE33D6CF
 //
-// $Id: class_type.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

@@ -1,7 +1,7 @@
 #ifndef LINUX86_64_H__CE5900A5_B3AC_4971_8FBE_10EB400FDA54
 #define LINUX86_64_H__CE5900A5_B3AC_4971_8FBE_10EB400FDA54
 //
-// $Id: linux-x86_64.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

@@ -1,7 +1,7 @@
 #ifndef TO_STRING_H__2A39F103_A0CD_4CD5_B524_570072B87BF7
 #define TO_STRING_H__2A39F103_A0CD_4CD5_B524_570072B87BF7
 //
-// $Id: to_string.h 719 2010-10-22 03:59:11Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

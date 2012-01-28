@@ -1,7 +1,7 @@
 #ifndef STATE_SAVER_H__1059590469
 #define STATE_SAVER_H__1059590469
 //
-// $Id: state_saver.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

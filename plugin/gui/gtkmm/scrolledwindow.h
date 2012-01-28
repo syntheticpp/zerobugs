@@ -1,7 +1,7 @@
 #ifndef SCROLLEDWINDOW_H__3A0E50C9_61B9_4A7A_86E9_6A8A21DADC1F
 #define SCROLLEDWINDOW_H__3A0E50C9_61B9_4A7A_86E9_6A8A21DADC1F
 //
-// $Id: scrolledwindow.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

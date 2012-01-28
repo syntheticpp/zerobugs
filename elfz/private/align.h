@@ -1,7 +1,7 @@
 #ifndef ALIGN_H__DB32BEB6_62AC_4D73_B86A_2E071C43239A
 #define ALIGN_H__DB32BEB6_62AC_4D73_B86A_2E071C43239A
 //
-// $Id: align.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

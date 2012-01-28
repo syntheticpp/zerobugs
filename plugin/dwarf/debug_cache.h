@@ -1,7 +1,7 @@
 #ifndef HANDLE_CACHE_H__4C1F541B_356D_4C6D_82C3_1C09EA1293A4
 #define HANDLE_CACHE_H__4C1F541B_356D_4C6D_82C3_1C09EA1293A4
 //
-// $Id: debug_cache.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

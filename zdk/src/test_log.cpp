@@ -6,7 +6,7 @@
 // http://www.boost.org/LICENSE_1_0.txt)
 // -------------------------------------------------------------------------
 //
-// $Id: test_log.cpp 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 #define ALLOW_ENDL 1
 #include "zdk/eventlog.h"

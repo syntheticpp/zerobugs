@@ -1,7 +1,7 @@
 #ifndef UNKNOWN2_H__0AD0D453_3555_4A99_87E0_85D3452BCA12
 #define UNKNOWN2_H__0AD0D453_3555_4A99_87E0_85D3452BCA12
 //
-// $Id: unknown2.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

@@ -1,7 +1,7 @@
 #ifndef FBSD_LIVE_H__D2077863_5AE6_11DA_8F2D_00C04F09BBCC
 #define FBSD_LIVE_H__D2077863_5AE6_11DA_8F2D_00C04F09BBCC
 //
-// $Id: fbsd_live.h 720 2010-10-28 06:37:54Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

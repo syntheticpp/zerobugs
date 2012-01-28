@@ -1,7 +1,7 @@
 // -*- tab-width: 4; indent-tabs-mode: nil;  -*-
 // vim: tabstop=4:softtabstop=4:expandtab:shiftwidth=4 
 //
-// $Id: $
+// $Id$
 //
 // ZDK headers
 #include "zdk/argv_util.h"
@@ -125,6 +125,7 @@ void Flui::init_main_window()
     const word_t w = prop.get_word(WINDOW_W, default_window_width);
 
     window_ = new Fl_Window(x, y, w, h, WINDOW_TITLE);
+    window_->resizable(window_);
 }
 
 

@@ -1,6 +1,6 @@
 //
 //
-// $Id: log.cpp 713 2010-10-16 07:10:27Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

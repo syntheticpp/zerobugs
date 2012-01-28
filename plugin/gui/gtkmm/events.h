@@ -1,7 +1,7 @@
 #ifndef EVENTS_H__54AAADFE_0F64_431A_B5D6_87148AB58A65
 #define EVENTS_H__54AAADFE_0F64_431A_B5D6_87148AB58A65
 //
-// $Id: events.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

@@ -10,7 +10,7 @@
 // http://www.boost.org/LICENSE_1_0.txt)
 // -------------------------------------------------------------------------
 //
-// $Id: test_fstream.cpp 710 2010-10-16 07:09:15Z root $
+// $Id$
 //
 #include <assert.h>
 #include <math.h>

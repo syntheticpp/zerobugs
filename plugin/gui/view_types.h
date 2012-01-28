@@ -1,7 +1,7 @@
 #ifndef VIEW_TYPES_H__88F2BB87_CB29_4F77_85A6_0D6190F5A557
 #define VIEW_TYPES_H__88F2BB87_CB29_4F77_85A6_0D6190F5A557
 //
-// $Id: view_types.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

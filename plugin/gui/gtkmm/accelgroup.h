@@ -1,7 +1,7 @@
 #ifndef ACCELGROUP_H__0C5FA203_2FAE_4168_8DBB_8765E55A583E
 #define ACCELGROUP_H__0C5FA203_2FAE_4168_8DBB_8765E55A583E
 //
-// $Id: accelgroup.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

@@ -1,7 +1,7 @@
 #ifndef LOCK_PTR_H__525A4251_345E_403E_89B0_287427FE0F8B
 #define LOCK_PTR_H__525A4251_345E_403E_89B0_287427FE0F8B
 //
-// $Id: lock_ptr.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

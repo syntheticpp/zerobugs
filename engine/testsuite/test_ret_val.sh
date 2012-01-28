@@ -1,5 +1,5 @@
 # vim: tabstop=4:softtabstop=4:expandtab:shiftwidth=4 
-# $Id: test_ret_val.sh 356 2008-02-19 07:56:19Z root $
+# $Id$
 #
 # Test return values, walk up and down the stack
 ################################################################

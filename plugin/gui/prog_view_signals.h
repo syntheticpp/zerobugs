@@ -1,7 +1,7 @@
 #ifndef PROGVIEW_SIGNALS_H__7CB94167_8BAD_4EC9_A07E_4C91866CEB8E
 #define PROGVIEW_SIGNALS_H__7CB94167_8BAD_4EC9_A07E_4C91866CEB8E
 //
-// $Id: prog_view_signals.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

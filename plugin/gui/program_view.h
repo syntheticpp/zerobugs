@@ -1,7 +1,7 @@
 #ifndef PROGRAM_VIEW_H__A311440C_F695_447D_A8D3_4245ECD89D7E
 #define PROGRAM_VIEW_H__A311440C_F695_447D_A8D3_4245ECD89D7E
 //
-// $Id: program_view.h 720 2010-10-28 06:37:54Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

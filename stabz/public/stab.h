@@ -1,7 +1,7 @@
 #ifndef STAB_H__44B69FCC_B848_4C41_AFA7_759A54452CF6
 #define STAB_H__44B69FCC_B848_4C41_AFA7_759A54452CF6
 //
-// $Id: stab.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

@@ -2,7 +2,7 @@
 #define SETTINGS_H__1443F010_E215_4AC0_8495_98DE97F922BB
 //
 //
-// $Id: settings.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 #if GTKMM_2
  #include <gtkmm/settings.h>

@@ -1,7 +1,7 @@
 #ifndef TAB_LAYOUT_STRATEGY_H__323AA594_F124_4D6F_AFBD_63AABF0BB5FC
 #define TAB_LAYOUT_STRATEGY_H__323AA594_F124_4D6F_AFBD_63AABF0BB5FC
 //
-// $Id: tab_layout_strategy.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

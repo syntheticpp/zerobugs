@@ -1,7 +1,7 @@
 #ifndef TARGET_MANAGER_H__AA71A11A_F0F3_4207_891E_6085F8F77BA5
 #define TARGET_MANAGER_H__AA71A11A_F0F3_4207_891E_6085F8F77BA5
 //
-// $Id: target_manager.h 720 2010-10-28 06:37:54Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

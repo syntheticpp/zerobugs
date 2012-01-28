@@ -1,7 +1,7 @@
 #ifndef LOCKED_H__FC3FC8C3_4BB1_48FE_B720_EFDD0D441FE0
 #define LOCKED_H__FC3FC8C3_4BB1_48FE_B720_EFDD0D441FE0
 //
-// $Id: locked.h 719 2010-10-22 03:59:11Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

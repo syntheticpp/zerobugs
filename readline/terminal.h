@@ -1,7 +1,7 @@
 #ifndef TERMINAL_H__FE4219A4_E212_4681_B4C8_1FE035AD4ECF
 #define TERMINAL_H__FE4219A4_E212_4681_B4C8_1FE035AD4ECF
 //
-// $Id: terminal.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

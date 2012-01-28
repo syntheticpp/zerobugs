@@ -1,7 +1,7 @@
 #ifndef FRAME_STATE_H__F5B61287_9455_4DB6_91E2_CC2E17B6A870
 #define FRAME_STATE_H__F5B61287_9455_4DB6_91E2_CC2E17B6A870
 //
-// $Id: frame_state.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

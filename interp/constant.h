@@ -1,7 +1,7 @@
 #ifndef CONSTANT_H__2D02EAF4_DBA5_4E3C_AE10_B2BA0C600D87
 #define CONSTANT_H__2D02EAF4_DBA5_4E3C_AE10_B2BA0C600D87
 //
-// $Id: constant.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

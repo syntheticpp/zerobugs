@@ -1,5 +1,5 @@
 # vim: tabstop=4:softtabstop=4:expandtab:shiftwidth=4 
-# $Id: test_template.sh 365 2008-02-23 10:37:37Z root $
+# $Id$
 
 ################################################################
 #

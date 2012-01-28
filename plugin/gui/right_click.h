@@ -1,7 +1,7 @@
 #ifndef RIGHT_CLICK_H__83910AB7_2D53_4034_8AFC_AB7073ADBF48
 #define RIGHT_CLICK_H__83910AB7_2D53_4034_8AFC_AB7073ADBF48
 //
-// $Id: right_click.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

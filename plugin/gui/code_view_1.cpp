@@ -6,7 +6,7 @@
 // http://www.boost.org/LICENSE_1_0.txt)
 // -------------------------------------------------------------------------
 //
-// $Id: code_view_1.cpp 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 #if defined GTKMM_2
  #error This file contains Gtkmm-1.2 specific code

@@ -1,7 +1,7 @@
 #ifndef SWITCHABLE_H__3C72CC32_6B85_4270_84D5_D11F7998F730
 #define SWITCHABLE_H__3C72CC32_6B85_4270_84D5_D11F7998F730
 //
-// $Id: switchable.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

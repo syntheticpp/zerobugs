@@ -2,7 +2,7 @@
 #define TYPE_H__14EA6F92_C3E9_4113_A540_CD0368C029B2
 //
 //
-// $Id: type.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

@@ -1,5 +1,5 @@
 # vim: tabstop=4:softtabstop=4:expandtab:shiftwidth=4 
-# $Id: test_expr.sh 508 2008-05-24 21:32:12Z root $
+# $Id$
 #
 ################################################################
 # Test expression evaluation

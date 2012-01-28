@@ -1,7 +1,7 @@
 #ifndef COMPILE_UNIT_H__E577C0D2_1040_4528_A770_3B714CA837BC
 #define COMPILE_UNIT_H__E577C0D2_1040_4528_A770_3B714CA837BC
 //
-// $Id: compile_unit.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

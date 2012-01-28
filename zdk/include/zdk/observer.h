@@ -1,7 +1,7 @@
 #ifndef OBSERVER_H__503E2538_4E91_4EA3_9283_FA2932839CD8
 #define OBSERVER_H__503E2538_4E91_4EA3_9283_FA2932839CD8
 //
-// $Id: observer.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

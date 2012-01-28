@@ -1,7 +1,7 @@
 #ifndef QUICK_VIEW_DIALOG_H__5E5A924C_8E4B_4EF1_A8AE_8A66D30A786F
 #define QUICK_VIEW_DIALOG_H__5E5A924C_8E4B_4EF1_A8AE_8A66D30A786F
 //
-// $Id: expr_eval_dialog.h 720 2010-10-28 06:37:54Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

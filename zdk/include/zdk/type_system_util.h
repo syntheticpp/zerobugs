@@ -1,7 +1,7 @@
 #ifndef _TYPE_SYSTEM_UTIL_H_
 #define _TYPE_SYSTEM_UTIL_H_
 //
-// $Id: type_system_util.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // Convenience functions for working with the TypeSystem
 //

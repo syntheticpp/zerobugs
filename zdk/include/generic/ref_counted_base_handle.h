@@ -1,7 +1,7 @@
 #ifndef REF_COUNTED_BASE_HANDLE_H__1060467395
 #define REF_COUNTED_BASE_HANDLE_H__1060467395
 //
-// $Id: ref_counted_base_handle.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

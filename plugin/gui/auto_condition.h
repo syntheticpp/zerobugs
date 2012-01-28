@@ -1,7 +1,7 @@
 #ifndef AUTO_CONDITION_H__B5722D5A_0682_453F_BE11_30A1499AB051
 #define AUTO_CONDITION_H__B5722D5A_0682_453F_BE11_30A1499AB051
 //
-// $Id: auto_condition.h 720 2010-10-28 06:37:54Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

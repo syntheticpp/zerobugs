@@ -1,7 +1,7 @@
 #ifndef LINE_INFO_CACHE_H__E66E9648_7CBB_455C_9BDA_B9CD3A1D3EB0
 #define LINE_INFO_CACHE_H__E66E9648_7CBB_455C_9BDA_B9CD3A1D3EB0
 //
-// $Id: line_info_cache.h 715 2010-10-17 21:43:59Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

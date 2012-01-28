@@ -1,7 +1,7 @@
 #ifndef PARSE_EVENTS_H__F72A3528_EAD6_4E7E_8B9F_B3BBF17E7D5E
 #define PARSE_EVENTS_H__F72A3528_EAD6_4E7E_8B9F_B3BBF17E7D5E
 //
-// $Id: parse_events.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

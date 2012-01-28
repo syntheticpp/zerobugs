@@ -1,7 +1,7 @@
 #ifndef COMP_DIR_ATTR_H__7F001BC8_C274_446E_90BE_53221C18D5F1
 #define COMP_DIR_ATTR_H__7F001BC8_C274_446E_90BE_53221C18D5F1
 //
-// $Id: comp_dir_attr.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

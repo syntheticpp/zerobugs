@@ -1,7 +1,7 @@
 #ifndef OBJECT_MANAGER_H__65C4CA56_C697_4B84_B1D6_A731BC73A2AF
 #define OBJECT_MANAGER_H__65C4CA56_C697_4B84_B1D6_A731BC73A2AF
 //
-// $Id: object_manager.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

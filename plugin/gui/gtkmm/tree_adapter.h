@@ -1,7 +1,7 @@
 #ifndef TREE_ADAPTER_H__9FD10072_EC25_4107_93F8_C26947073E30
 #define TREE_ADAPTER_H__9FD10072_EC25_4107_93F8_C26947073E30
 //
-// $Id: tree_adapter.h 716 2010-10-17 22:16:32Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

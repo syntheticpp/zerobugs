@@ -1,7 +1,7 @@
 #ifndef FIXED_STACK_H__B30AF895_5099_43C2_8B75_E79B69655995
 #define FIXED_STACK_H__B30AF895_5099_43C2_8B75_E79B69655995
 //
-// $Id: fixed_stack.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

@@ -1,7 +1,7 @@
 #ifndef CONFIG_H__85602C72_C754_40BC_AFA1_348F0D8474A1
 #define CONFIG_H__85602C72_C754_40BC_AFA1_348F0D8474A1
 //
-// $Id: config.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

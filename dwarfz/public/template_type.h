@@ -2,7 +2,7 @@
 #define TEMPLATE_TYPE_H__2CEE9BE6_46F8_4B72_A43E_B4951665A78E
 //
 //
-// $Id: template_type.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

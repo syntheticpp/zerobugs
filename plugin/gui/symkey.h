@@ -1,7 +1,7 @@
 #ifndef SYMKEY_H__100EAC2E_16C4_414A_9A2F_9BAC40D91502
 #define SYMKEY_H__100EAC2E_16C4_414A_9A2F_9BAC40D91502
 //
-// $Id: symkey.h 720 2010-10-28 06:37:54Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

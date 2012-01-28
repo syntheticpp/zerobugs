@@ -1,7 +1,7 @@
 #ifndef POPUP_MENU_H__14444DA2_F1F8_4BFF_8E8F_B39CC0681FDD
 #define POPUP_MENU_H__14444DA2_F1F8_4BFF_8E8F_B39CC0681FDD
 //
-// $Id: popup_menu.h 720 2010-10-28 06:37:54Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

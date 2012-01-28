@@ -1,7 +1,7 @@
 #ifndef COLLECTOR_H__9DAA50B9_4129_41EA_8585_5B265FE238E2
 #define COLLECTOR_H__9DAA50B9_4129_41EA_8585_5B265FE238E2
 //
-// $Id: collector.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

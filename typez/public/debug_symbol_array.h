@@ -1,7 +1,7 @@
 #ifndef DEBUG_SYMBOL_ARRAY_H__6D7CC0E1_058E_4282_AAA9_9F54674A06E7
 #define DEBUG_SYMBOL_ARRAY_H__6D7CC0E1_058E_4282_AAA9_9F54674A06E7
 //
-// $Id: debug_symbol_array.h 719 2010-10-22 03:59:11Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

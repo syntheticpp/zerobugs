@@ -1,7 +1,7 @@
 #ifndef FWDTYPE_H__B166575C_DD7D_435E_8183_17F6824B3D33
 #define FWDTYPE_H__B166575C_DD7D_435E_8183_17F6824B3D33
 //
-// $Id: fwdtype.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

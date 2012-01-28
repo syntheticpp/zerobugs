@@ -1,5 +1,5 @@
 //
-// $Id: fstream.cpp 723 2010-10-28 07:40:45Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

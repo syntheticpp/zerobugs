@@ -1,7 +1,7 @@
 #ifndef EXPR_OBSERVER_H__EDCAB31C_927B_4D7A_8B30_97518B774B7B
 #define EXPR_OBSERVER_H__EDCAB31C_927B_4D7A_8B30_97518B774B7B
 //
-// $Id: expr_observer.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

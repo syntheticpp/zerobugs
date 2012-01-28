@@ -4,7 +4,7 @@
 // -*- tab-width: 4; indent-tabs-mode: nil;  -*-
 // vim: tabstop=4:softtabstop=4:expandtab:shiftwidth=4
 //
-// $Id: $
+// $Id$
 //
 #include "menu.h"
 #include <FL/Fl_Menu_Bar.H>
@@ -16,7 +16,6 @@ public:
     FlMenuBar(ui::Controller&, Fl_Window*);
     ~FlMenuBar() throw();
 
-    // virtual void add(RefPtr<ui::MenuItem>);
     virtual void add(RefPtr<ui::Menu>);
 
 private:

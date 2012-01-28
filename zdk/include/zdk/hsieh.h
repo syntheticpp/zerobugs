@@ -2,7 +2,7 @@
 #define HSIEH_H__E03A45DE_9AA0_44C3_AD64_F27067D7C148
 //
 //
-// $Id: hsieh.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // From:  http://www.azillionmonkeys.com/qed/hash.html
 #include <boost/cstdint.hpp>

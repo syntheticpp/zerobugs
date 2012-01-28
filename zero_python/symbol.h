@@ -1,5 +1,5 @@
 //
-// $Id: symbol.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 void export_symbol();
 // vim: tabstop=4:softtabstop=4:expandtab:shiftwidth=4

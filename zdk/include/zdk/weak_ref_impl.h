@@ -1,7 +1,7 @@
 #ifndef WEAK_REF_IMPL_H__C4178524_195B_47E8_8102_C31BEFA8ADD2
 #define WEAK_REF_IMPL_H__C4178524_195B_47E8_8102_C31BEFA8ADD2
 //
-// $Id: weak_ref_impl.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

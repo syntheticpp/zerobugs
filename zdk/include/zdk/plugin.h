@@ -1,7 +1,7 @@
 #ifndef PLUGIN_H__DA4D7589_0FA3_4306_9F15_BA373B488DB7
 #define PLUGIN_H__DA4D7589_0FA3_4306_9F15_BA373B488DB7
 //
-// $Id: plugin.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

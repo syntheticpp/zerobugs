@@ -1,7 +1,7 @@
 #ifndef EXEC_ARGS_H__91DB4983_A5BD_4F63_8F0B_4D33593D8C58
 #define EXEC_ARGS_H__91DB4983_A5BD_4F63_8F0B_4D33593D8C58
 //
-// $Id: exec_arg.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

@@ -1,7 +1,7 @@
 #ifndef READER_H__C229CF16_4EF0_4F92_A3E0_47F146A2F6EE
 #define READER_H__C229CF16_4EF0_4F92_A3E0_47F146A2F6EE
 //
-// $Id: reader.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

@@ -1,7 +1,7 @@
 #ifndef CORE_THREAD_H__B9B4E072_1D2B_4133_9B3F_91FA9410AC27
 #define CORE_THREAD_H__B9B4E072_1D2B_4133_9B3F_91FA9410AC27
 //
-// $Id: core_thread.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // Support for reading thread information from corefiles
 //

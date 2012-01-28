@@ -1,5 +1,5 @@
 # vim: tabstop=4:softtabstop=4:expandtab:shiftwidth=4 
-# $Id: test_static_const.sh 521 2008-06-13 01:51:19Z root $
+# $Id$
 
 ################################################################
 #

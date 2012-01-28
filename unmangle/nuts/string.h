@@ -1,7 +1,7 @@
 #ifndef BASIC_STRING_H__6E4205DA_542D_4149_9F1C_B27E7FA31192
 #define BASIC_STRING_H__6E4205DA_542D_4149_9F1C_B27E7FA31192
 //
-// $Id: string.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

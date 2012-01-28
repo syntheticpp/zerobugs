@@ -1,7 +1,7 @@
 #ifndef CALL_SETUP_H__185FAB1F_820D_4C1E_A8B4_A24C2E12F10D
 #define CALL_SETUP_H__185FAB1F_820D_4C1E_A8B4_A24C2E12F10D
 //
-// $Id: call_setup.h 719 2010-10-22 03:59:11Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

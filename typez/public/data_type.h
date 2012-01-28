@@ -1,7 +1,7 @@
 #ifndef DATA_TYPE_H__BD36B0F0_D1AE_4F2B_9E12_78D3E4C265F0
 #define DATA_TYPE_H__BD36B0F0_D1AE_4F2B_9E12_78D3E4C265F0
 //
-// $Id: data_type.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

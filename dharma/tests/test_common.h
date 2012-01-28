@@ -1,7 +1,7 @@
 #ifndef TEST_COMMON_H__
 #define TEST_COMMON_H__
 //
-// $Id: test_common.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

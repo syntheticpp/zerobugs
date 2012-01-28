@@ -1,7 +1,7 @@
 #ifndef MENU_BUILDER_IMPL_H__D7E4FBC8_ECA5_4CDF_B38C_D04D8A68BCC6
 #define MENU_BUILDER_IMPL_H__D7E4FBC8_ECA5_4CDF_B38C_D04D8A68BCC6
 //
-// $Id: menu_builder_impl.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

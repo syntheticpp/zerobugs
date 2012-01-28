@@ -1,7 +1,7 @@
 #ifndef CPROLOGUE_H__A9544D91_034D_46C8_B894_C6654BFB3C83
 #define CPROLOGUE_H__A9544D91_034D_46C8_B894_C6654BFB3C83
 //
-// $Id: cprologue.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // Prototype of helper functions used by the stack unwinder.
 //

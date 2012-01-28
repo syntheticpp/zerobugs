@@ -1,7 +1,7 @@
 #ifndef IS_CV_QUALIFIED_H__F0C603F7_E9C3_487E_8993_6BA8EAC5134D
 #define IS_CV_QUALIFIED_H__F0C603F7_E9C3_487E_8993_6BA8EAC5134D
 //
-// $Id: is_cv_qualified.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

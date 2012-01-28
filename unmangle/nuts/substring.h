@@ -1,7 +1,7 @@
 #ifndef SUBSTRING_H__32184D6B_690E_48E7_82B0_4206F59E8EE5
 #define SUBSTRING_H__32184D6B_690E_48E7_82B0_4206F59E8EE5
 //
-// $Id: substring.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

@@ -1,7 +1,7 @@
 #ifndef PATH_H__F7EEAD74_B0D2_48D6_85F2_6EA8F430F0DF
 #define PATH_H__F7EEAD74_B0D2_48D6_85F2_6EA8F430F0DF
 //
-// $Id: path.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

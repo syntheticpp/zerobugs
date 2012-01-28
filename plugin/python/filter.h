@@ -1,7 +1,7 @@
 #ifndef FILTER_H__077076B9_D870_4345_A200_E9AEF5F8972E
 #define FILTER_H__077076B9_D870_4345_A200_E9AEF5F8972E
 //
-// $Id: filter.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

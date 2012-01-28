@@ -1,7 +1,7 @@
 #ifndef UNMANGLE_H__B2F5CA16_A0C9_4B4D_87F2_694D2BE7D531
 #define UNMANGLE_H__B2F5CA16_A0C9_4B4D_87F2_694D2BE7D531
 /*
- * $Id: unmangle.h 719 2010-10-22 03:59:11Z root $
+ * $Id$
  */
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

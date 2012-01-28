@@ -1,7 +1,7 @@
 #ifndef DATA_TYPE_IMPL_H__72652349_DF83_41B5_92F9_76BAA39A9737
 #define DATA_TYPE_IMPL_H__72652349_DF83_41B5_92F9_76BAA39A9737
 //
-// $Id: data_type_impl.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

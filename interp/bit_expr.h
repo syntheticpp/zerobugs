@@ -1,7 +1,7 @@
 #ifndef BITWISE_EXPR_H__440B654B_BA9B_4F0A_95C4_26AE47501767
 #define BITWISE_EXPR_H__440B654B_BA9B_4F0A_95C4_26AE47501767
 //
-// $Id: bit_expr.h 719 2010-10-22 03:59:11Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

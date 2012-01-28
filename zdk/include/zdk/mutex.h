@@ -1,7 +1,7 @@
 #ifndef MUTEX_H__CA16EB19_D743_48A0_B58B_1C5AB614BBB6
 #define MUTEX_H__CA16EB19_D743_48A0_B58B_1C5AB614BBB6
 //
-// $Id: mutex.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

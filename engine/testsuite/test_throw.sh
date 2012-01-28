@@ -1,5 +1,5 @@
 # vim: tabstop=4:softtabstop=4:expandtab:shiftwidth=4 
-# $Id: test_throw.sh 676 2009-11-28 06:11:42Z root $
+# $Id$
 #
 # WARNING: fails with frame-handlers enabled!
 #

@@ -1,7 +1,7 @@
 #ifndef PROCESS_H__07BB282D_ACDB_430D_A3CA_5EE581304216
 #define PROCESS_H__07BB282D_ACDB_430D_A3CA_5EE581304216
 //
-// $Id: process.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

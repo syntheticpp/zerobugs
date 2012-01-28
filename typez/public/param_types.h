@@ -1,7 +1,7 @@
 #ifndef PARAM_TYPES_H__443E60D6_C23F_471A_AAD3_06819225D476
 #define PARAM_TYPES_H__443E60D6_C23F_471A_AAD3_06819225D476
 //
-// $Id: param_types.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

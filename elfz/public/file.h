@@ -1,7 +1,7 @@
 #ifndef FILE_H__712FDA52_8BB5_4DE2_B361_D064757B1F27
 #define FILE_H__712FDA52_8BB5_4DE2_B361_D064757B1F27
 //
-// $Id: file.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

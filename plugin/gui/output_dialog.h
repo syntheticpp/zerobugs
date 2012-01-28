@@ -1,7 +1,7 @@
 #ifndef OUTPUT_DIALOG_H__BC410F2B_2991_412C_88E3_834E3739111E
 #define OUTPUT_DIALOG_H__BC410F2B_2991_412C_88E3_834E3739111E
 //
-// $Id: output_dialog.h 720 2010-10-28 06:37:54Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

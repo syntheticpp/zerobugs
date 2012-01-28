@@ -1,7 +1,7 @@
 #ifndef PERSISTENT_H__0BD5C626_998F_4CFA_9F32_9499D0AE8440
 #define PERSISTENT_H__0BD5C626_998F_4CFA_9F32_9499D0AE8440
 //
-// $Id: persistent.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

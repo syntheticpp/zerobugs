@@ -1,7 +1,7 @@
 #ifndef BOOL_FILTER_PARAM_H__C70F008A_541C_4E74_9BE6_CB2502AA33C1
 #define BOOL_FILTER_PARAM_H__C70F008A_541C_4E74_9BE6_CB2502AA33C1
 //
-// $Id: bool_filter_param.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

@@ -1,7 +1,7 @@
 #ifndef CAST_EXPR_H__22A59525_924E_4ADD_A8A5_57C11F976140
 #define CAST_EXPR_H__22A59525_924E_4ADD_A8A5_57C11F976140
 //
-// $Id: cast_expr.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu

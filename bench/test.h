@@ -1,7 +1,7 @@
 #ifndef TEST_H__DA2BA38F_64CA_496D_877D_909A37E42C55
 #define TEST_H__DA2BA38F_64CA_496D_877D_909A37E42C55
 //
-// $Id: test.h 714 2010-10-17 10:03:52Z root $
+// $Id$
 //
 // -------------------------------------------------------------------------
 // This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu
