@@ -18,6 +18,7 @@
 #include "gtkmm/flags.h"
 #include "gtkmm/label.h"
 #include "gtkmm/main.h"
+#include "gtkmm/resize.h"
 #include "gtkmm/widget.h"
 #include "generic/temporary.h"
 #include "zdk/check_ptr.h"
@@ -68,6 +69,9 @@ RunDialog::RunDialog
     add_button_accelerator(*btn);
 
     get_label()->set_justify(Gtk_FLAG(JUSTIFY_LEFT));
+
+    // make the whole dialog resizable
+    Gtk_set_resizable(this, true);
 }
 
 
