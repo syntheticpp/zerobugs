@@ -3132,7 +3132,7 @@ void MainWindow::on_detached(RefPtr<Thread> thread)
         statTop_->set_text("No thread");
         set_title("zero: No Program");
 
-        dbgout(0) <<  __func__ << ": resetting breakpoint count\n";
+        dbgout(0) <<  __func__ << ": resetting breakpoint count" << endl;
         // todo:
         // revisit when per-thread breakpoints are supported in the UI
         //
@@ -3194,9 +3194,8 @@ MainWindow::on_progress(const char* what, double perc) volatile
     assert(THIS->progressBox_.get());
     if (THIS->progressBox_->cancelled())
     {
-    #ifdef DEBUG
-        clog << __func__ << ": cancelled\n";
-    #endif
+        dbgout(0) << __func__ << ": cancelled" << endl;
+
         return false;
     }
     if (THIS->progressBox_->done() && perc < 1.)
@@ -3316,7 +3315,7 @@ void MainWindow::display_code_and_status(EventType eventType)
     }
     else
     {
-        dbgout(0) << __func__ << ": No stack frame\n";
+        dbgout(0) << __func__ << ": No stack frame" << endl;
     }
 }
 

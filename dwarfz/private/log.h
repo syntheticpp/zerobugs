@@ -11,72 +11,14 @@
 // http://www.boost.org/LICENSE_1_0.txt)
 // -------------------------------------------------------------------------
 
+#include "zdk/log.h"
 #include <iostream>
 
-namespace Dwarf
-{
-    /**
-     * @return verbosity value, as set by the ZERO_DEBUG_DWARF
-     * environment variable.
-     */
-    int debug_verbosity();
+#define ALWAYS  -1
 
-    enum LogLevel
-    {
-        info = 1,
-        debug,
-        warn,
-        error,
-    };
-
-    template<LogLevel> struct LogLevelTraits
-    {
-        static const char* prefix() { return "info"; }
-    };
-    template<> struct LogLevelTraits<warn>
-    {
-        static const char* prefix() { return "warn"; }
-    };
-    template<> struct LogLevelTraits<error>
-    {
-        static const char* prefix() { return "error"; }
-    };
-
-
-    template<LogLevel L> struct log
-    {
-        log()
-        {
-            std::clog << "dwarfz-" << LogLevelTraits<L>::prefix() << ": ";
-        }
-        template<typename T> log& operator<<(T value)
-        {
-            std::clog << value;
-            return *this;
-        }
-    };
-
-    template<> class log<debug>
-    {
-        int verbosity_;
-
-    public:
-        explicit log(int verbosity = 0) : verbosity_(verbosity)
-        { }
-
-        template<typename T> log& operator<<(T value)
-        {
-        #ifdef DEBUG
-            if (verbosity_ < debug_verbosity())
-            {
-                std::clog << value;
-            }
-        #endif
-            return *this;
-        }
-    };
-
-} // namespace Dwarf
+#define LOG_WARN        dbgout(ALWAYS) << "Warning: "
+#define LOG_ERROR       dbgout(ALWAYS) << "Error: "
+#define LOG_DEBUG(n)    dbgout(n)
 
 
 #endif // LOG_H__EC55BE0B_3AB7_4013_A161_0CFD126C20C5

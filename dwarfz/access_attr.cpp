@@ -42,8 +42,9 @@ Dwarf_Unsigned AccessAttr::value() const
         break;
 
     default:
-        log<warn>() << "AccessAttr::value(): form 0x"
-                    << hex << form() << dec << " unhandled.\n";
+        LOG_WARN << "AccessAttr::value(): form 0x"
+                 << hex << form() << dec << " unhandled." 
+                 << endl;
         break;
     }
 

@@ -55,7 +55,6 @@ SRCS=\
 	inlined_instance.cpp \
 	location.cpp \
 	location_attr.cpp \
-	log.cpp \
 	member.cpp \
 	namespace.cpp \
 	pointer_type.cpp \

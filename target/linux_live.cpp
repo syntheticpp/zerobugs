@@ -622,8 +622,6 @@ void LinuxLiveTarget::detach_internal()
 ////////////////////////////////////////////////////////////////
 void LinuxLiveTarget::detach(bool no_throw)
 {
-    dbgout(0) << __func__ << endl;
-
     try
     {
         detach_internal();

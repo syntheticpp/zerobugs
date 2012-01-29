@@ -87,8 +87,8 @@ Factory::create(Dwarf_Debug dbg, Dwarf_Die die, Dwarf_Half tag, bool own) const
     }
     else
     {
-        log<warn>() << "no creator registered for DWARF_TAG=0x"
-                    << hex << tag << dec << "\n";
+        LOG_WARN << "no creator registered for DWARF_TAG=0x"
+                 << hex << tag << dec << endl;
 
         if (own)
         {

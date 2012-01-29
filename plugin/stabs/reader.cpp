@@ -1231,6 +1231,7 @@ void Reader::on_begin(SharedString& file, const char* sec, size_t nEntries)
     ostringstream msg;
     msg << "Reading: ";
     msg << file.c_str() << " (" << nEntries << " STABS entries)";
+
     debugger_->message(msg.str().c_str(), Debugger::MSG_STATUS);
 }
 

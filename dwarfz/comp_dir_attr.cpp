@@ -54,8 +54,8 @@ const char* CompDirAttr::value() const
             break;
 
         default:
-            log<error>() << "CompDirAttr::value(): unhandled form 0x"
-                         << hex << form() << dec << "\n";
+            LOG_ERROR << "CompDirAttr::value(): unhandled form 0x"
+                      << hex << form() << dec << endl;
 
             break;
         }

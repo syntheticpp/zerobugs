@@ -61,6 +61,8 @@ namespace Log
         }
 
         Level& operator<<(Manipulator manipulator);
+        
+        operator std::ostream& ();
 
     private:
         int n_; // log level 

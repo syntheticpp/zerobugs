@@ -529,11 +529,13 @@ bool GUI::on_progress(const char* what, double perc, word_t w)
 
 ////////////////////////////////////////////////////////////////
 bool GUI::on_message (
-    const char* what,
-    Debugger::MessageType type,
-    Thread* thread,
-    bool async)
+    const char*             what,
+    Debugger::MessageType   type,
+    Thread*                 thread,
+    bool                    async)
 {
+    bool handled = false;
+
     if (MainWindow* w = mainWindow_.get())
     {
         switch (type)
@@ -548,10 +550,12 @@ bool GUI::on_message (
                 w->set_debuggee_running(false);
                 w->error_message(what);
             }
-            return true;
+            handled = true;
+            break;
 
         case Debugger::MSG_STATUS:
             w->status_message(what);
+            handled = true;
             break;
 
         case Debugger::MSG_INFO:
@@ -563,21 +567,18 @@ bool GUI::on_message (
             {
                 w->info_message(what);
             }
+            handled = true;
             break;
 
         case Debugger::MSG_YESNO:
-            {
-                assert(!async);
+            assert(!async);
 
-                bool result = false;
-                w->question_message(what, &result);
-
-                return result;
-            }
+            w->question_message(what, &handled);
             break;
 
         case Debugger::MSG_HELP:
             w->help_search(what);
+            handled = true;
             break;
 
         case Debugger::MSG_UPDATE:
@@ -585,12 +586,12 @@ bool GUI::on_message (
             {
                 RefPtr<Thread> threadPtr(thread);
                 post_request(&MainWindow::on_attached, mainWindow_, threadPtr);
+                handled = true;
             }
-            // w->update(thread);
             break;
         }
     }
-    return false;
+    return handled;
 }
 
 

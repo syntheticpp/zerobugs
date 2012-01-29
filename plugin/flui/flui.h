@@ -32,6 +32,11 @@ public:
         INTERFACE_ENTRY(VersionInfo)
     END_INTERFACE_MAP()
 
+    int x() const;
+    int y() const;
+    int w() const;
+    int h() const;
+
     // --- DebuggerPlugin interface
     /**
      * Pass pointer to debugger and the command line params

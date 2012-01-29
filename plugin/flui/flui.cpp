@@ -8,6 +8,7 @@
 #include "zdk/check_ptr.h"
 
 #include "flmenu.h"
+#include "flpack_layout.h"
 #include "flui.h"
 
 // C++ headers
@@ -112,6 +113,29 @@ bool Flui::initialize(
 
 
 ////////////////////////////////////////////////////////////////
+int Flui::x() const
+{
+    return window_ ? window_->x() : 0;
+}
+
+////////////////////////////////////////////////////////////////
+int Flui::y() const
+{
+    return window_ ? window_->y() : 0;
+}
+////////////////////////////////////////////////////////////////
+int Flui::w() const
+{
+    return window_ ? window_->w() : 0;
+}
+
+////////////////////////////////////////////////////////////////
+int Flui::h() const
+{
+    return window_ ? window_->h() : 0;
+}
+
+////////////////////////////////////////////////////////////////
 void Flui::init_main_window()
 {
     assert(window_ == nullptr);
@@ -141,8 +165,11 @@ ui::CompositeMenu* Flui::init_menu()
 ////////////////////////////////////////////////////////////////
 ui::Layout* Flui::init_layout()
 {
-    auto layout = ui::Controller::init_layout();
+    assert(window_);
 
+    auto layout = new FlPackLayout(x(), y(), w(), h());
+
+    window_->add(layout);
     window_->end();
     window_->show();
 

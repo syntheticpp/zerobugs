@@ -816,8 +816,6 @@ void ThreadImpl::set_status_internal(int status)
         sender_ = target->get_signal_sender_pid(*this);
     }
 
-    dbgout(1) << "signal=" << signal() << endl;
-
     if (signal() == SIGSTOP)
     {
         if (is_stop_expected())
@@ -826,6 +824,7 @@ void ThreadImpl::set_status_internal(int status)
         }
 
         set_stop_expected(false);
+
         dbgout(1) << "reset stop expected" << endl;
     }
 }
@@ -1192,10 +1191,7 @@ void ThreadImpl::step_instruction()
     // memorize the most recently seen signal
     const int lastSignal = this->signal();
 
-    if (debugger()->verbose() > 1)
-    {
-        clog << "single-stepping thread: " << lwpid() << endl;
-    }
+    dbgout(2) << "single-stepping thread: " << lwpid() << endl;
 
     ptrace_wrapper(PTRACE_SINGLESTEP);
 

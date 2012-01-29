@@ -24,20 +24,15 @@
 #include "impl.h"
 #include "utils.h"
 
-#ifdef __func__
-#undef __func__
-#endif
 
 using namespace std;
 using namespace Dwarf;
 
 
-static bool tag_in_list
-(
+static bool tag_in_list (
     Dwarf_Half          tag,
     const Dwarf_Half*   tags,
-    size_t              ntags
-)
+    size_t              ntags)
 {
     assert(tags);
     for (size_t i = 0; i != ntags; ++i)
@@ -87,14 +82,12 @@ Dwarf_Die Utils::first_child
 }
 
 
-Dwarf_Die Utils::next_sibling
-(
+Dwarf_Die Utils::next_sibling (
     Dwarf_Debug         dbg,
     Dwarf_Die           die,
     const Dwarf_Half*   tags,
     size_t              ntags,
-    Dwarf_Half*         retTag
-)
+    Dwarf_Half*         retTag)
 {
     for (Dwarf_Die prev = die; prev;)
     {
@@ -339,7 +332,7 @@ void Utils::dump_attributes(const Dwarf::Die& die, ostream& outs)
         // indicates there are no attrs.  It is not an error.
         atcnt = 0;
     }
-    if (error)
+    if (err)
     {
         dwarf_dealloc(die.dbg(), err, DW_DLA_ERROR);
     }

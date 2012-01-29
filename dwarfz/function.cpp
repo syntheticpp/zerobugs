@@ -219,7 +219,8 @@ Dwarf::Function::high_pc() const
     if (highPC_ == 0)
     {
         highPC_ = Block::high_pc();
-        log<debug>(2) << __func__ << "=" << hex << highPC_ << dec << "\n";
+
+        LOG_DEBUG(2) << __func__ << "=" << hex << highPC_ << dec << endl;
     }
     return highPC_;
 }

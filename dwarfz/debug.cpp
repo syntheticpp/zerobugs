@@ -555,8 +555,8 @@ Debug::lookup_function(Dwarf_Addr addr, const char* linkage) const
     }
     else
     {
-        log<debug>() << __func__ << ": unit not found for addr: "
-                     << hex << addr << dec << "\n";
+        LOG_DEBUG(0) << __func__ << ": unit not found for addr: "
+                     << hex << addr << dec << endl;
     }
     if (!result)
     {
@@ -609,13 +609,12 @@ const Debug::UnitList& Debug::units() const
 
         if (units_from_unit_headers())
         {
-            log<debug>(0) << filename() << ": "
-                          << units_->size() << " compilation units\n";
+            LOG_DEBUG(0) << filename() << ": "
+                         << units_->size() << " compilation units"
+                         << endl;
         }
         else
         {
-            //assert(!unitsByRange_.get());
-            //unitsByRange_.reset(new UnitsByRange);
             List<CompileUnit> cuList(dbg_, 0);
             List<CompileUnit>::iterator i = cuList.begin();
             List<CompileUnit>::iterator end = cuList.end();
@@ -623,15 +622,16 @@ const Debug::UnitList& Debug::units() const
             for (; i != end; ++i)
             {
                 assert(i);
-                log<debug>(1)<< "=== " << i->name() << ": "
+                LOG_DEBUG(1) << i->name() << ": "
                              << hex << i->low_pc() << "-"
-                             << i->high_pc() << dec << "\n";
+                             << i->high_pc() << dec << endl;
 
                 units_->push_back(i);
 
             #if 0
                 // for now, assume that a compilation unit
                 // produces a contiguous address range
+
                 RangeEntry r(i->high_pc(), i);
                 unitsByRange_->insert(make_pair(i->low_pc(), r));
             #endif
@@ -708,10 +708,10 @@ Debug::lookup_unit_by_arange(Dwarf_Addr addr) const
 
         if (dwarf_get_arange_info(arange, &start, &len, &off, &err) == DW_DLV_OK)
         {
-            log<debug>(1) << __func__ << ": off="
-                          << hex << off << " start=" << start
-                          << " end=" << start + len << dec
-                          << " length=" << len << "\n";
+            LOG_DEBUG(1) << __func__ << ": off="
+                         << hex << off << " start=" << start
+                         << " end=" << start + len << dec
+                         << " length=" << len << endl;
 
             UnitMap::const_iterator i = unitMap_->find(off);
 
@@ -726,7 +726,7 @@ Debug::lookup_unit_by_arange(Dwarf_Addr addr) const
         }
         else
         {
-            log<error>() << Error::Message(dbg_, err, __FILE__, __LINE__) << "\n";
+            LOG_ERROR << Error::Message(dbg_, err) << endl;
         }
     }
     return unit;
@@ -1158,10 +1158,9 @@ boost::shared_ptr<Type> Debug::lookup_type(const char* name, int level) const
 
         if (type && !type->is_complete())
         {
-        #ifdef DEBUG
-             clog << "*** Incomplete type in ctor: " << name;
-             clog << ": " << type->name() << " ***\n";
-        #endif
+             LOG_DEBUG(0)<< "Incomplete type in ctor: " << name
+                         << ": " << type->name() << endl;
+
              type.reset();
         }
     }
@@ -1171,7 +1170,7 @@ boost::shared_ptr<Type> Debug::lookup_type(const char* name, int level) const
         type = lookup_type_in_units(units(), name);
         if (!type && (level > 1))
         {
-            log<debug>() << "looking up global funcs for type: " << name << "\n";
+            LOG_DEBUG(0) << "looking up global funcs for type: " << name << endl;
             type = Dwarf::lookup_type(global_funcs(), name);
         }
     }

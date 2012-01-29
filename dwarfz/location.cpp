@@ -24,10 +24,6 @@
 #include "public/unwind.h"
 #include "generic/lock.h"
 
-#ifdef __func__
- #undef __func__
-#endif
-#define DBG Dwarf::log<debug>(1)
 
 using namespace std;
 using namespace Dwarf;
@@ -45,13 +41,13 @@ namespace
         void push(Dwarf_Addr addr)
         {
             stack<Dwarf_Addr>::push(addr);
-            DBG << "PUSH " << hex << addr << dec << "\n";
+            LOG_DEBUG(2) << "PUSH " << hex << addr << dec << endl;
         }
 
         void pop()
         {
             stack<Dwarf_Addr>::pop();
-            DBG << "POP\n";
+            LOG_DEBUG(2) << "POP" << endl;
         }
     };
 }
@@ -60,7 +56,7 @@ static pthread_key_t addrOpsKey;
 
 static void delete_key(void*)
 {
-    clog << __func__ << endl;
+    LOG_DEBUG(0) << __func__ << endl;
     pthread_key_delete(addrOpsKey);
 }
 
@@ -159,7 +155,7 @@ Dwarf_Addr Location::eval(Dwarf_Addr frame,
                           Dwarf_Addr unitBase,
                           Dwarf_Addr pc) const
 {
-    DBG << __func__ << " unit base=" << hex << unitBase << dec << "\n";
+    LOG_DEBUG(2) << __func__ << " unit base=" << hex << unitBase << dec << endl;
 
     Dwarf_Addr result = 0;
     isValue_ = false;
@@ -181,14 +177,15 @@ Dwarf_Addr Location::eval(Dwarf_Addr frame,
                 hipc += moduleBase + unitBase;
             }
 
-            DBG << "loc[" << i << "]=" << hex << lopc /* loc->ld_lopc */
-                << "-" << hipc << " pc=" << pc << dec << "\n";
+            LOG_DEBUG(2) << "loc[" << i << "]=" << hex << lopc /* loc->ld_lopc */
+                         << "-" << hipc << " pc=" << pc << dec << endl;
 
             if ((pc >= lopc) && (pc < hipc))
             {
-                DBG << "evaluating loc[" << i << "]\n";
+                LOG_DEBUG(2) << "evaluating loc[" << i << "]" << endl;
                 result = eval(dbg_, pc, frame, moduleBase, loc, isValue_);
-                DBG << __func__ << "=" << hex << result << dec << "\n" ;
+
+                LOG_DEBUG(2) << __func__ << "=" << hex << result << dec << endl;
                 break;
             }
         }
@@ -199,7 +196,8 @@ Dwarf_Addr Location::eval(Dwarf_Addr frame,
 
 static void handle_empty_stack(const string& func)
 {
-    Dwarf::log<warn>() << func << ": stack empty" << "\n";
+    LOG_WARN << func << ": stack empty" << endl;
+
     if (getenv("ZERO_DWARF_ABORT_EMPTY_STACK"))
     {
         abort();
@@ -228,7 +226,7 @@ static void op_deref(Stack& stack)
         }
         else
         {
-            DBG << "deref: " << hex << stack.top() << dec << "\n";
+            LOG_DEBUG(2) << "deref: " << hex << stack.top() << dec << endl;
             Dwarf_Addr addr = addrOps->read_mem(stack.top());
 
             stack.pop();
@@ -251,7 +249,7 @@ static void op_plus_uconst(Stack& stack, Dwarf_Unsigned operand)
     else
     {
         Dwarf_Addr addr = stack.top();
-        DBG << hex << addr << "+=" << operand << dec << "\n";
+        LOG_DEBUG(2) << hex << addr << "+=" << operand << dec << endl;
 
         addr += operand;
 
@@ -270,7 +268,7 @@ static void op_minus(Stack& stack)
 {
     if (stack.size() < 2)
     {
-        Dwarf::log<error>() << __func__ << ": not enough operands\n";
+        LOG_ERROR << __func__ << ": not enough operands" << endl;
     }
     else
     {
@@ -282,7 +280,7 @@ static void op_minus(Stack& stack)
 
         const Dwarf_Addr res = op1 - op2;
 
-        DBG << hex << op1 << '-' << op2 << '=' << res << dec << "\n";
+        LOG_DEBUG(2) << hex << op1 << '-' << op2 << '=' << res << dec << endl;
         stack.push(res);
     }
 }
@@ -292,7 +290,7 @@ static void op_plus(Stack& stack)
 {
     if (stack.size() < 2)
     {
-        Dwarf::log<error>() << __func__ << ": not enough operands\n";
+        LOG_ERROR << __func__ << ": not enough operands" << endl;
     }
     else
     {
@@ -304,8 +302,9 @@ static void op_plus(Stack& stack)
 
         Dwarf_Addr result = op1 + op2;
 
-        DBG << hex << op1 << "+" << op2
-            << "=" << result << dec << "\n";
+        LOG_DEBUG(2) << hex << op1 << "+" << op2
+                     << "=" << result << dec << endl;
+
         stack.push(result);
     }
 }
@@ -330,10 +329,11 @@ Location::eval(Dwarf_Debug dbg,
     assert(desc);
     Stack stack;
 
-    DBG << "moduleBase=" << hex << moduleBase << dec << "\n";
+    LOG_DEBUG(2) << "moduleBase=" << hex << moduleBase << dec << endl;
     if (frameBase)
     {
-        DBG << "frameBase=" << hex << frameBase << dec << "\n";
+        LOG_DEBUG(2) << "frameBase=" << hex << frameBase << dec << endl;
+
         stack.push(frameBase);
     }
 
@@ -342,13 +342,13 @@ Location::eval(Dwarf_Debug dbg,
         const Dwarf_Loc& loc = desc->ld_s[i];
         const int atom = loc.lr_atom;
 
-        DBG << "opcode=0x" << hex << atom << dec << "\n";
+        LOG_DEBUG(2) << "opcode=0x" << hex << atom << dec << endl;
 
         switch (atom)
         {
         case DW_OP_addr:
-            DBG << "addr " << hex << loc.lr_number
-                << " + " << moduleBase << dec << "\n";
+            LOG_DEBUG(2) << "addr " << hex << loc.lr_number
+                         << " + " << moduleBase << dec << endl;
 
             // adjust the operand to the address where
             // the module is loaded in memory
@@ -388,7 +388,7 @@ Location::eval(Dwarf_Debug dbg,
         case DW_OP_lit29:
         case DW_OP_lit30:
         case DW_OP_lit31:
-            DBG << "literal: " << atom - DW_OP_lit0 << "\n";
+            LOG_DEBUG(2) << "literal: " << atom - DW_OP_lit0 << endl;
             //
             // note: assume that literals from 0 thru 31 are
             // defined in contiguous, increasing order
@@ -401,7 +401,7 @@ Location::eval(Dwarf_Debug dbg,
             break;
 
         case DW_OP_dup:
-            DBG << "dup\n";
+            LOG_DEBUG(2) << "dup" << endl;
             //
             // DW_OP_dup duplicates the value at the top of the stack
             //
@@ -450,11 +450,11 @@ Location::eval(Dwarf_Debug dbg,
             {
                 const size_t nreg = atom - DW_OP_reg0;
                 const int ureg = user_reg_index(nreg);
-                DBG << "read_cpu_reg " << nreg << " " << ureg
-                    << " (" << user_reg_name(nreg) << ")\n";
+                LOG_DEBUG(2) << "read_cpu_reg " << nreg << " " << ureg
+                             << " (" << user_reg_name(nreg) << ")" << endl;
 
                 const Dwarf_Addr addr = addrOps->read_cpu_reg(ureg);
-                DBG << "read_cpu_reg=" << hex << addr << dec << "\n";
+                LOG_DEBUG(2) << "read_cpu_reg=" << hex << addr << dec << endl;
                 stack.push(addr);
             }
             break;
@@ -463,7 +463,8 @@ Location::eval(Dwarf_Debug dbg,
             {
                 const int ureg = user_reg_index(loc.lr_number);
                 const Dwarf_Addr addr = addrOps->read_cpu_reg(ureg);
-                DBG << "read_cpu_regx=" << hex << addr << dec << "\n";
+
+                LOG_DEBUG(2) << "read_cpu_regx=" << hex << addr << dec << endl;
                 stack.push(addr);
             }
             break;
@@ -474,7 +475,7 @@ Location::eval(Dwarf_Debug dbg,
             // address specified by the location description in the
             // DW_AT_frame_base attribute of the current function.
             //
-            DBG << "DW_OP_fbreg: " << hex << loc.lr_number << dec << "\n";
+            LOG_DEBUG(2) << "DW_OP_fbreg: " << hex << loc.lr_number << dec << endl;
 
             stack.push(frameBase + loc.lr_number);
             break;
@@ -521,29 +522,30 @@ Location::eval(Dwarf_Debug dbg,
             {
                 const size_t nreg = atom - DW_OP_breg0;
                 const int ureg = user_reg_index(nreg);
-                DBG << "DW_OP_breg" << nreg << "\n";
-                DBG << "Read_cpu_reg " << nreg << " " << ureg
-                    << " (" << user_reg_name(nreg) << ")\n";
+                LOG_DEBUG(2) << "DW_OP_breg" << nreg << endl;
+                LOG_DEBUG(2) << "Read_cpu_reg " << nreg << " " << ureg
+                    << " (" << user_reg_name(nreg) << ")" << endl;
 
                 const Dwarf_Addr addr = addrOps->read_cpu_reg(ureg);
-                DBG << "Read_cpu_reg=" << hex << addr << dec << "\n";
+                LOG_DEBUG(2) << "Read_cpu_reg=" << hex << addr << dec << endl;
 
-                DBG << "loc.lr_num=" << hex<< loc.lr_number << dec << "\n";
+                LOG_DEBUG(2) << "loc.lr_num=" << hex<< loc.lr_number << dec << endl;
                 stack.push(addr + loc.lr_number);
             }
             break;
 
         case DW_OP_piece:
-            log<warn>() << __func__ << ": opcode=0x"
-                        << hex << (int)loc.lr_atom << dec
-                        << " operand=" << loc.lr_number << "\n";
+            LOG_WARN << __func__ << ": opcode=0x"
+                     << hex << (int)loc.lr_atom << dec
+                     << " operand=" << loc.lr_number << endl;
 
             // todo: figure out how to handle this correctly
             if (loc.lr_number < sizeof (Dwarf_Addr))
             {
                 assert(!stack.empty());
                 Dwarf_Addr v = stack.top();
-                clog << "stack_top=" << hex << v << dec << endl;
+
+                LOG_DEBUG(2) << "stack_top=" << hex << v << dec << endl;
             }
             break;
 
@@ -552,15 +554,16 @@ Location::eval(Dwarf_Debug dbg,
         case DW_OP_const4u:
         case DW_OP_const8u:
         case DW_OP_constu:
-            DBG << "const: " << hex << loc.lr_number << dec << "\n";
+            LOG_DEBUG(2) << "const: " << hex << loc.lr_number << dec << endl;
             stack.push(loc.lr_number);
             break;
+
         case DW_OP_const1s:
         case DW_OP_const2s:
         case DW_OP_const4s:
         case DW_OP_const8s:
         case DW_OP_consts:
-            DBG << "const: " << (Dwarf_Signed)loc.lr_number << "\n";
+            LOG_DEBUG(2) << "const: " << (Dwarf_Signed)loc.lr_number << endl;
             stack.push(loc.lr_number);
             break;
 
@@ -578,13 +581,13 @@ Location::eval(Dwarf_Debug dbg,
             break;
 
         default:
-            log<warn>() << __func__ << ": unhandled opcode=0x"
-                        << hex << (int)loc.lr_atom << dec << "\n";
+            LOG_WARN << __func__ << ": unhandled opcode=0x"
+                     << hex << (int)loc.lr_atom << dec << endl;
             break;
         }
     }
     const Dwarf_Addr res = stack.empty() ? 0 : stack.top();
-    DBG << __func__ << "=" << hex << res << dec << "\n";
+    LOG_DEBUG(2) << __func__ << "=" << hex << res << dec << endl;
     return res;
 }
 

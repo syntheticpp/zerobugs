@@ -110,10 +110,10 @@ namespace Dwarf
             case DW_FORM_string:
      */
             default:
-                log<warn>() << "GenericAttr<0x" << hex << A << ">\n"
-                            << typeid(*this).name()
-                            << ": unhandled form=0x"
-                            << hex << f << dec << "\n";
+                LOG_WARN << "GenericAttr<0x" << hex << A << ">\n"
+                         << typeid(*this).name()
+                         << ": unhandled form=0x"
+                         << hex << f << dec << endl;
             }
             return v;
         }
@@ -135,7 +135,7 @@ namespace Dwarf
                 break;
 
             default:
-                log<warn>() << "form=" << hex << this->form() << dec << "\n";
+                LOG_WARN << "form=" << hex << this->form() << dec << endl;
                 throw logic_error("str() invoked with incorrect attribute form");
             }
 

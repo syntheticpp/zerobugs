@@ -169,12 +169,6 @@ Log::Level::~Level()
     {
         log_mutex->leave();
     }
-#if 0
-    if (n_ < Log::verbosity())
-    {
-        assert(log_prefix);
-    }
-#endif
 }
 
 ////////////////////////////////////////////////////////////////
@@ -194,6 +188,16 @@ Log::Level& Log::Level::operator<<(Log::Manipulator manipulator)
     }
     return *this;
 }
+
+////////////////////////////////////////////////////////////////
+Log::Level::operator std::ostream& () 
+{
+    assert (n_ < Log::verbosity());
+    log_prefix = true;
+
+    return Log::stream();
+}
+
 
 ////////////////////////////////////////////////////////////////
 void Log::set_verbosity(int n)

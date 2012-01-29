@@ -261,12 +261,10 @@ namespace
                 {
                     expand_symbol(view_, peer, sym);
                 }
-            #ifdef DEBUG
                 else
                 {
-                    clog << "not found: " << sym->name() << endl;
+                    dbgout(0) << "not found: " << sym->name() << endl;
                 }
-            #endif
             }
             return true;
         }
@@ -517,7 +515,7 @@ void VariablesView::add_symbol(Gtk::CTree::Row row,
 {
     if (!value)
     {
-        dbgout(1) << __func__ << ": " << symbol->name() << ":nil\n";
+        dbgout(1) << __func__ << ": " << symbol->name() << ":nil" << endl;
     }
     else
     {

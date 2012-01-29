@@ -409,12 +409,6 @@ BEGIN_ARG_PARSE(argc, argv)
     }
 END_ARG_PARSE
 
-    // the ZERO_DEBUG_DWARF environmental variable
-    // controls debug output verbosity for the dwarfz
-    // library, let's keep it separate from the plugin
-
-    // env::set("ZERO_DEBUG_DWARF", db->verbose(), false);
-
     return true;
 }
 
@@ -497,7 +491,7 @@ Handle Reader::get_debug_handle(
     SharedString* fname,
     const RefPtr<Process>& process) const
 {
-    dbgout(2) << ": attached=" << attached_ << endl;
+    dbgout(2) << "attached=" << attached_ << endl;
     Handle handle;
 
     Lock<Mutex> lock(mutex_);
@@ -872,14 +866,13 @@ void EmitDebugSymbol::emit_symbol(
             {
                 sym->read(events_);
             }
-            dbgout(1) << sym->value() << endl;
+            dbgout(2) << __func__ << ": " << sym->value() << endl;
         }
     }
 }
 
 
 /**
-
  * emit symbol
  */
 void EmitDebugSymbol::operator()(const Dwarf::Datum& dat)

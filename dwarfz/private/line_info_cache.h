@@ -332,7 +332,7 @@ advertise_line(
         {
             result = events->on_srcline(fname, lineNum, addr);
         }
-        Dwarf::log<debug>(1) << " -- " << fname << ":" << lineNum << "\n";
+        LOG_DEBUG(1) << fname << ":" << lineNum << endl;
     }
     return result;
 }
@@ -467,16 +467,6 @@ CompileUnit::LineInfoCache::next_line(
             THROW_ERROR(dbg_, err);
         }
         assert(i->first == result);
-
-    /*
-        if (shared_ptr<Function> fun = unit_.lookup_function(addr))
-        {
-            if (result > fun->high_pc())
-            {
-                result = fun->high_pc();
-                i = map_.upper_bound(result);
-            }
-        } */
 
         Dwarf_Unsigned lineNum = 0;
         for (; i != map_.end(); ++i)

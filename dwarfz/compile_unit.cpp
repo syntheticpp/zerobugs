@@ -169,7 +169,7 @@ CompileUnit::next_unit(Dwarf_Debug dbg, Dwarf_Unsigned offs)
             }
             else
             {
-                log<debug>() << "next_unit: invalid dbg handle.\n";
+                LOG_DEBUG(0) << "next_unit: invalid dbg handle." << endl;
             }
         }
     }

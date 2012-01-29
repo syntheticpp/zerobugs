@@ -73,6 +73,12 @@ namespace ui
 
         virtual void run();
 
+        // main window position and dimensions
+        virtual int x() const = 0;
+        virtual int y() const = 0;
+        virtual int w() const = 0;
+        virtual int h() const = 0;
+
         // --- DebuggerPlugin interface
         /**
          * Pass pointer to debugger and the command line params

@@ -695,13 +695,6 @@ BreakPoint* BreakPointManagerImpl::set_watchpoint(
                 {
                     const addr_t scope = fun->addr() - fun->offset();
                     watchPoint->set_scope(scope);
-                   /*
-                    if (verbose())
-                    {
-                        clog << __func__ << ": on stack: ";
-                        print_symbol(clog, scope, fun);
-                        clog << endl;
-                    } */
                 }
             }
             watchPoints_.push_back(watchPoint);

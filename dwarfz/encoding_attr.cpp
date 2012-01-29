@@ -41,12 +41,12 @@ Dwarf_Unsigned EncodingAttr::value() const
         break;
 
     default:
-        log<warn>() << "EncodingAttr::value() form 0x"
-                    << hex << form() << dec << " unhandled.\n";
+        LOG_WARN << "EncodingAttr::value() form 0x" << hex
+                 << form() << dec << " unhandled." << endl;
         break;
     }
 
-    // log<debug>() << "encoding=" << hex << enc << dec << endl;
     return enc;
 }
 // vim: tabstop=4:softtabstop=4:expandtab:shiftwidth=4
+

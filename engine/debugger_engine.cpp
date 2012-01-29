@@ -377,7 +377,7 @@ DebuggerEngine::initialize(int argc, char* argv[], ExecArg& args)
 
     if (!use_hardware_breakpoints())
     {
-        clog << "Hardware breakpoints disabled\n";
+        clog << "Hardware breakpoints disabled" << endl;
     }
     argc_ = argc;
     argv_ = argv;
@@ -1085,6 +1085,7 @@ void DebuggerEngine::on_hardware_break(
     if (addr != pc)
     {
         assert(condition != DebugRegs::BREAK_ON_INSTRUCTION);
+
         // handle memory breakpoint:
         on_watchpoint(runnable, thread, addr, condition);
     }
@@ -1099,14 +1100,17 @@ void DebuggerEngine::on_hardware_break(
             ostringstream err;
             err << __func__ << ": get_breakpoint(addr=" << hex << addr;
             err << ", thread=" << dec << thread.lwpid() << ") failed!";
+
             throw logic_error(err.str());
         }
         assert(bptr->type() == BreakPoint::HARDWARE);
+
         if (verbose())
         {
-            // print breakpoint
-            interface_cast<BreakPointBase&>(*bptr).print(clog);
+            // log breakpoint
+            interface_cast<BreakPointBase&>(*bptr).print(dbgout(0));
         }
+
         set_event_description(thread, pc, "Hardware Breakpoint");
         schedule_actions(runnable, thread, *bptr);
     }
@@ -1290,7 +1294,7 @@ void DebuggerEngine::execute_actions(
         on_single_step_or_syscall(runnable, thread);
     }
 
-#ifdef DEBUG
+#if 0
     const BreakPoint::Type type = bpnt.type();
     if (verbose() > 2)
     {
@@ -1391,6 +1395,7 @@ bool DebuggerEngine::set_user_breakpoint(
         }
         return false;
     }
+
     // the breakpoint does not exist, create new user action
     RefPtr<BreakPoint::Action> act = interactive_action("USER");
     const BreakPoint::Type type =
@@ -1429,7 +1434,8 @@ BreakPoint* DebuggerEngine::set_temp_breakpoint (
     {
         BreakPoint::Type type = BreakPoint::HARDWARE;
         if ((options() & OPT_HARDWARE_BREAKPOINTS) == 0
-            || program_count(*thread) == addr  // hardware bkp at current PC may not be honored
+            // hardware bkp at current PC may not be honored
+            || program_count(*thread) == addr
          ) 
         {
             type = BreakPoint::EMULATED;
@@ -1476,11 +1482,8 @@ size_t DebuggerEngine::remove_breakpoint_action(
 
     if (breakPointMgr_)
     {
-        removedCount =
-            breakPointMgr_->remove_breakpoint_actions(procID,
-                                                      threadID,
-                                                      addr,
-                                                      actionName);
+        removedCount = breakPointMgr_->remove_breakpoint_actions(
+            procID, threadID, addr, actionName);
     }
     return removedCount;
 }
@@ -2377,12 +2380,8 @@ void GlobalsHelper::try_fully_qualified_name(DebugInfoReader& reader)
 
     string temp(name_, p);
 
-#ifdef DEBUG
-    if (thread_->debugger()->verbose())
-    {
-        clog << __func__ << ": " << temp << endl;
-    }
-#endif
+    dbgout(0) << __func__ << ": " << temp << endl;
+
     const addr_t addr = func_ ? func_->addr() : 0;
 
     RefPtr<DataType> type =
@@ -3121,15 +3120,18 @@ bool DebuggerEngine::message (
     bool result = false;
 
     PluginList tmp(plugins_);
-    PluginList::iterator i = tmp.begin(), end = tmp.end();
-    for (; i != end; ++i)
+
+    for (auto i = tmp.begin(); i != tmp.end(); ++i)
     {
         ActionScope scope(actionContextStack_, *i);
         result |= (*i)->on_message(msg, type, thread, async);
     }
-    if (!result)
+
+    if (!result) // no plugin has handled the message?
     {
-        cerr << "***** " << msg << " *****\n";
+        dbgout(0) << msg << endl;
+
+        clog << msg << endl;
     }
     return result;
 }
@@ -3234,7 +3236,7 @@ check_version(ImportPtr<T> p,
         if ((info->version(&pluginMinor) != major) || (pluginMinor > minor))
         {
             cout << basename(fname.c_str()) << " expects engine version ";
-            cout << major << ".[" << pluginMinor << " or higher]\n";
+            cout << major << ".[" << pluginMinor << " or higher]" << endl;
 
             return false;
         }
@@ -3364,7 +3366,7 @@ bool DebuggerEngine::on_interface(
     {
         if (!dataFilter_.is_null())
         {
-            clog << "*** Warning: another data filter is loaded\n";
+            clog << "*** Warning: another data filter is loaded" << endl;
             return false;
         }
         else

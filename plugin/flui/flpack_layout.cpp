@@ -5,4 +5,27 @@
 // $Id: $
 //
 #include "flpack_layout.h"
+#include <FL/Fl_Pack.H>
+
+
+FlPackLayout::FlPackLayout()
+{
+
+}
+
+
+FlPackLayout::~FlPackLayout()
+{
+}
+
+
+void FlPackLayout::add(ui::View&)
+{
+}
+
+
+void FlPackLayout::show(ui::View& view, bool show)
+{
+}
+
 
