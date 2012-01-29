@@ -151,7 +151,7 @@ const Dwarf::Debug& Dwarf::Die::owner() const
     Debug* owner = Debug::get_wrapper(dbg());
     if (!owner)
     {
-        // no die should survive (sic) the Debug
+        // no die should survive (snort) the Debug
         // wrapper that owns it
         throw logic_error("Null Dwarf::Die::owner");
     }

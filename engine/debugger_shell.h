@@ -189,9 +189,6 @@ private:
     std::auto_ptr<Redirect> outputRedirect_;
 };
 
-
-// Copyright (c) 2004, 2006 Cristian L. Vlasceanu
-
 #endif // DEBUGGER_SHELL_H__1E4882EA_7E92_451D_A2D3_1BEB566FCE89
 
 // vim: tabstop=4:softtabstop=4:expandtab:shiftwidth=4

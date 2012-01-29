@@ -180,7 +180,9 @@ int BreakPointBase::disable() volatile
 
 
 ////////////////////////////////////////////////////////////////
-void BreakPointBase::debug_enable(bool onOff, Thread* thread) volatile
+void BreakPointBase::debug_enable(
+    bool    onOff,
+    Thread* thread) volatile
 {
 #if DEBUG
     if (!thread)
@@ -196,15 +198,15 @@ void BreakPointBase::debug_enable(bool onOff, Thread* thread) volatile
     RefPtr<Symbol> sym(CHKPTR(symbols)->lookup_symbol(addr()));
 
     dbgout(1) << (onOff ? "enabling " : "disabling");
-    dbgout(1) << ' ' << type() << " breakpoint: pid=";
-    dbgout(1) << thread->lwpid() << " owner=";
-    dbgout(1) << this->thread()->lwpid() << " " << hex << addr() << dec << "\n";
+              << ' ' << type() << " breakpoint: pid=";
+              << thread->lwpid() << " owner=";
+              << this->thread()->lwpid() << " "
+              << hex << addr() << dec << endl;
 
     if (sym)
     {
-        dbgout(1) << ' ' << (void*)sym->addr() << ' ' << sym->name();
+        dbgout(1) << ' ' << (void*)sym->addr() << ' ' << sym->name() << endl;
     }
-    dbgout(1) << endl;
 
 #endif // DEBUG
 }

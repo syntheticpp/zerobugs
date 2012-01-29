@@ -32,21 +32,6 @@ boost::shared_ptr<Type> ArrayType::elem_type() const
 }
 
 
-/*
-char* ArrayType::name_impl() const
-{
-    std::string name;
-
-    boost::shared_ptr<Type> type = elem_type();
-    if (type)
-    {
-        name = string(type->name()) + "[]";
-    }
-    return strdup(name.c_str());
-}
-*/
-
-
 List<Dimension> ArrayType::dimensions() const
 {
     return List<Dimension>(dbg(), die());

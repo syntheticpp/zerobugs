@@ -14,7 +14,6 @@
 #include "impl.h"
 #include "const_type.h"
 
-//using namespace std;
 using namespace Dwarf;
 
 

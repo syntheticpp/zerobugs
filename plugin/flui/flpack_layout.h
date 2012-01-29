@@ -13,11 +13,16 @@
 class FlPackLayout : public ui::Layout
 {
 public:
-    FlPackLayout();
+    FlPackLayout(int x, int y, int w, int h);
     ~FlPackLayout();
 
-    Fl_Group* get_group() { return group_; }
+    Fl_Group* group() { return group_; }
 
+    // View intterface
+    virtual void accept(ui::Layout&);
+    virtual void update(const ui::State&);
+
+    // Layout interface
     virtual void add(ui::View&);
     virtual void show(ui::View&, bool);
 

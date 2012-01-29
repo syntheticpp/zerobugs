@@ -150,6 +150,8 @@ void Flui::init_main_window()
 
     window_ = new Fl_Window(x, y, w, h, WINDOW_TITLE);
     window_->resizable(window_);
+
+    window_->begin();
 }
 
 
@@ -157,7 +159,6 @@ void Flui::init_main_window()
 ui::CompositeMenu* Flui::init_menu()
 {
     assert(window_);
-
     return new FlMenuBar(*this, window_);
 }
 
@@ -169,8 +170,8 @@ ui::Layout* Flui::init_layout()
 
     auto layout = new FlPackLayout(x(), y(), w(), h());
 
-    window_->add(layout);
-    window_->end();
+    //window_->add(layout->group());
+    //window_->end();
     window_->show();
 
     return layout;

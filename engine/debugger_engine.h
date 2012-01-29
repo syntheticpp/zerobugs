@@ -45,10 +45,6 @@ class TypeSystemImpl;
  * mechanism for detecting the creation of new threads;
  * detects the dynamic loading and unloading of shared objects,
  * so that symbol tables can be updated.
- *
- * @note Starting with version 1.7.62 methods that do not
- *  work on corefiles have received an extra parameter,
- *  a reference to a Runnable
  */
 class DebuggerEngine : public DebuggerBase
                      , public CommandCenter

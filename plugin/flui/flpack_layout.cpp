@@ -6,11 +6,13 @@
 //
 #include "flpack_layout.h"
 #include <FL/Fl_Pack.H>
+#include <FL/Fl_Tile.H>
+
+#include <FL/Fl_Box.H>
 
 
-FlPackLayout::FlPackLayout()
+FlPackLayout::FlPackLayout(int x, int y, int w, int h)
 {
-
 }
 
 
@@ -18,6 +20,14 @@ FlPackLayout::~FlPackLayout()
 {
 }
 
+
+void FlPackLayout::update(const ui::State&)
+{
+}
+
+void FlPackLayout::accept(ui::Layout&)
+{
+}
 
 void FlPackLayout::add(ui::View&)
 {

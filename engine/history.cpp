@@ -10,8 +10,13 @@
 // -------------------------------------------------------------------------
 
 #include "zdk/config.h"
+#include "zdk/check_ptr.h"
 #include "zdk/export.h"
+#include "zdk/shared_string_impl.h"
+#include "zdk/zero.h"
+#include "zdk/zobject_scope.h"
 #include "zdk/log.h"
+
 #ifdef HAVE_UNISTD_H
  #include <unistd.h>
 #endif
@@ -19,10 +24,7 @@
 #include <sstream>
 #include <stdexcept>
 #include "generic/lock.h"
-#include "zdk/check_ptr.h"
-#include "zdk/shared_string_impl.h"
-#include "zdk/zero.h"
-#include "zdk/zobject_scope.h"
+#include "dharma/path.h"
 #include "dharma/environ.h"
 #include "dharma/syscall_wrap.h"
 #include "history.h"
@@ -128,9 +130,26 @@ namespace
 
 
 /**
+ * Make sure directory exists. If not, create it with specified mode.
+ */
+static void ensure_dir(const std::string& path, int mode)
+{
+    struct stat st = { 0 };
+    sys::stat(sys::dirname(path.c_str()), st);
+
+    sys::ImpersonationScope impersonate(st.st_uid);
+    sys::mkdir(path, mode);
+}
+
+
+/**
  * This ctor is used when reading from an input stream.
  */
-HistoryEntryImpl::HistoryEntryImpl(WeakPtr<ObjectFactory> factory, const char* name)
+HistoryEntryImpl::HistoryEntryImpl(
+
+    WeakPtr<ObjectFactory>  factory,
+    const char*             name
+    )
     : Persistent("HistoryEntry")
     , pid_(0)
     , lastDebugged_(0)
@@ -276,7 +295,7 @@ size_t HistoryEntryImpl::write(OutputStream* output) const
     {
         try
         {
-            sys::mkdir(path_, 0750);
+            ensure_dir(path_, 0750);
             env::write(path_ + "/environ", environ());
         }
         catch (const exception& e)
@@ -370,7 +389,7 @@ void HistoryEntryImpl::on_string(const char* name, const char* str)
         if (str)
         {
             path_.assign(str);
-            sys::mkdir(path_, 0750);
+            ensure_dir(path_, 0750);
         }
     }
     else if (strcmp(name, "target") == 0)
@@ -454,7 +473,7 @@ void HistoryEntryImpl::set_path(const std::string& path)
     dir << pid_;
     path_ = dir.str();
 
-    sys::mkdir(path_, 0750);
+    ensure_dir(path_, 0750);
 }
 
 

@@ -171,18 +171,6 @@ public:
     ////////////////////////////////////////////////////////////
     bool cancelled() const { return cancelled_; }
 
-  /*
-    RefPtr<SharedString> filename_by_index(size_t n) const
-    {
-        RefPtr<SharedString> fname;
-
-        if (n < fileTable_.size())
-        {
-            fname = fileTable_[n];
-        }
-        return fname;
-    } */
-
     ////////////////////////////////////////////////////////////
     bool matches(const char* filename) const
     {
