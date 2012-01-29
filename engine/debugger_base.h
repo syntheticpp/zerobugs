@@ -10,7 +10,10 @@
 // (See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt)
 // -------------------------------------------------------------------------
-
+#include "zdk/log.h"
+#include "zdk/mutex.h"
+#include "zdk/stream.h"
+#include "zdk/zero.h"
 #include <sys/types.h>  // pid_t
 #include <signal.h>
 #include <iosfwd>
@@ -19,10 +22,6 @@
 #include <string>
 #include <vector>
 #include <boost/shared_ptr.hpp>
-#include "zdk/mutex.h"
-#include "zdk/stream.h"
-#include "zdk/zero.h"
-#include "dbgout.h"
 #include "dharma/config.h"
 #include "dharma/hash_map.h"
 #include "dharma/sarray.h"
@@ -159,9 +158,9 @@ public:
      * displaying messages to the console. Such messages are
      * useful for debugging the debugger.
      */
-    int verbose() const { return verbose_; }
+    int verbose() const { return Log::verbosity(); }
 
-    void set_verbose(int v) { verbose_ = v; }
+    void set_verbose(int v) { Log::set_verbosity(v); }
 
     uint64_t options() const;
 
@@ -265,15 +264,13 @@ public:
 
     virtual bool map_path(const Process*, std::string&) const;
 
-    DebugChannel debug_channel(const char* fn) const
-    {
-        return DebugChannel(fn, verbose_);
-    }
-
     bool initial_thread_fork() const { return initialThreadFork_; }
     void set_initial_thread_fork(bool f) { initialThreadFork_ = f; }
 
     static TargetFactory& target_factory();
+
+    // @note: returned path always has a trailing path delimiter
+    static std::string get_config_path(/* out */ uid_t* owner = NULL);
 
 protected:
     void stop_all_threads(Thread* = NULL);
@@ -346,8 +343,6 @@ protected:
 
     void throw_signal_out_of_range(const char* func, int);
 
-    static std::string get_config_path();
-
     void set_signaled(bool f) { signaled_ = f; }
     bool signaled() const { return signaled_;  }
 
@@ -377,9 +372,6 @@ private:
     RefPtr<Settings>        settings_;
     std::string             settingsPath_;
     mutable Mutex           settingsMutex_;
-
-    // verbosity level for printing debug messages to console
-    mutable int             verbose_;
 
     // environment passed to debugged progs
     SArray                  env_;

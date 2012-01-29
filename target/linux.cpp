@@ -10,7 +10,6 @@
 // -------------------------------------------------------------------------
 //
 #include <unistd.h>
-#include "dbgout.h"
 #include "debugger_base.h"
 #include "target/linux.h"
 #include "zdk/shared_string_impl.h"
@@ -23,7 +22,6 @@
 #include "symbolz/private/symbol_table_impl.h"
 
 using namespace std;
-using namespace eventlog;
 
 
 bool get_sysinfo_ehdr(const AuxVect& v, addr_t& addr, size_t& sz)

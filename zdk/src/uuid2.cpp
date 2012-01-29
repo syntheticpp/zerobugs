@@ -19,4 +19,13 @@ std::ostream& operator<<(std::ostream& os, const ZDK_UUID& uuid)
 
     return os << &tmp[0];
 }
+
+
+std::ostream& operator<<(std::ostream& os, const uuidref_t& uuid)
+{
+    char tmp[37];
+    uuid_to_string(uuid, tmp);
+
+    return os << &tmp[0];
+}
 // vim: tabstop=4:softtabstop=4:expandtab:shiftwidth=4

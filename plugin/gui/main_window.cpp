@@ -928,7 +928,7 @@ bool MainWindow::on_window_state_event(GdkEventWindowState* event)
         }
     }
 
-    dbgout(0) << "maximized=" << maximized_ << endl;
+    dbgout(1) << "maximized=" << maximized_ << endl;
 
     return OnMapEventImpl<Gtk::Window>::on_window_state_event(event);
 }
@@ -2815,7 +2815,7 @@ void MainWindow::update_stack_view()
 void MainWindow::wait_and_process_responses() volatile
 {
     assert(pthread_self() == maintid);
-    dbgout(0) << __func__ << endl;
+    dbgout(1) << __func__ << endl;
 
     Temporary<bool> set_flag(const_cast<bool&>(waiting_), true);
 
@@ -2897,7 +2897,7 @@ bool MainWindow::on_debug_event(
             wait_and_process_responses();
         }
     }
-    dbgout(0) << __func__ << "=" << ownsUserInteraction_ << endl;
+
     return ownsUserInteraction_;
 }
 

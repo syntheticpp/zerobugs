@@ -49,7 +49,7 @@
 #include "thread.h"
 #include "unhandled_map.h"
 
-#define dbgstep() dbgout(0)
+#define dbgstep() dbgout(1)
 
 #if defined(__PPC__)
  #define RETURN_ADDR_FROM_STACK(thread) (thread).read_register(PT_LNK, false)
@@ -58,7 +58,6 @@
 #endif
 
 using namespace std;
-using namespace eventlog;
 
 
 /**
@@ -90,50 +89,6 @@ static inline addr_t step_return_addr(ThreadImpl& thread)
     }
 #endif
     return RETURN_ADDR_FROM_STACK(thread);
-}
-
-
-////////////////////////////////////////////////////////////////
-/**
- *  OVERRIDEN DEBUG CHANNEL
- */
-class ZDK_LOCAL ThreadImpl::DebugChannel : public Channel<DebugChannel>
-{
-    WeakPtr<Thread> tptr_;
-    string fn_;
-
-public:
-    DebugChannel(const Thread& thread, const char* fn)
-        : tptr_(&thread)
-        , fn_(fn)
-    { }
-
-    int level() const
-    {
-        if (RefPtr<Thread> tp = tptr_.ref_ptr())
-        {
-            if (Debugger* debugger = tp->debugger())
-            {
-                return debugger->verbose();
-            }
-        }
-        return 0;
-    }
-
-    void prefix(ostream& out) const
-    {
-        if (RefPtr<Thread> tp = tptr_.ref_ptr())
-        {
-            out << "#  " << tp->lwpid() << ' ';
-        }
-        out << fn_ << ": ";
-    }
-};
-
-
-ThreadImpl::DebugChannel ThreadImpl::debug_channel(const char* fun) const
-{
-    return ThreadImpl::DebugChannel(*this, fun);
 }
 
 

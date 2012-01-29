@@ -1,0 +1,11 @@
+This is a new, experimental project.
+
+I am trying to re-write the UI, with the following goals
+
+1) Lightweight, to minimize dependencies and thus make it easier to build
+   executables that work across several Linux distros. Right now gtkmm et. all
+   creates quite a DLL hell.
+
+2) Clean design. Right now there are potential dead-locks in the UI code
+   (which has evolved organically and it is bloated)
+

@@ -11,6 +11,7 @@
 
 #include "zdk/config.h"
 #include "zdk/export.h"
+#include "zdk/log.h"
 #ifdef HAVE_UNISTD_H
  #include <unistd.h>
 #endif
@@ -104,8 +105,7 @@ namespace
             }
             catch (const exception& e)
             {
-                clog << "Non-critical error in saving breakpoint: "
-                     << e.what() << endl;
+                clog << "Non-critical error in saving breakpoint: " << e.what() << endl;
             }
             // we might not know what symbol is associated
             // with the breakpoint, and thus the above block
@@ -246,9 +246,6 @@ size_t HistoryEntryImpl::write(OutputStream* output) const
         {
             nbytes += output->write_string("watch", i->c_str());
         }
-    #if DEBUG
-        // clog << count << " watches saved\n";
-    #endif
     }
     //
     // save settings for all modules in this entry
@@ -522,9 +519,8 @@ size_t HistoryImpl::write(OutputStream* output) const
 
         nbytes += tmp;
     }
-#ifdef DEBUG
-    clog << "history saved, " << nbytes << " bytes\n";
-#endif
+    dbgout(0) << "history saved, " << nbytes << " bytes" << endl;
+
     return nbytes;
 }
 
@@ -565,9 +561,9 @@ void HistoryImpl::add_entry(Process* process)
             {
                 (*i)->destroy();
             }
-        #if DEBUG
-            clog << __func__ << ": erasing entry " << entry->name() << endl;
-        #endif
+
+            dbgout(0) << __func__ << ": erasing entry " << entry->name() << endl;
+
             queue_.erase(i);
             break;
         }

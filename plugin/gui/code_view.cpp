@@ -1219,12 +1219,10 @@ bool CodeView::on_insert_breakpoint
     if (line)
     {
         result = breakpointMap_[line].insert(addr).second;
-
-        if (GUI::debug_level())
-        {
-            print_symbol(clog << __func__ << ' ', addr, sym);
-            clog << endl << __func__ << " result=" << result << endl;
-        }
+    #if DEBUG
+        print_symbol(clog << __func__ << ' ', addr, sym);
+        clog << endl << __func__ << " result=" << result << endl;
+    #endif             
         if (curLine_ != line)
         {
             hilite_line(line, false);

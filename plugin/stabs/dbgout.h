@@ -10,24 +10,8 @@
 // (See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt)
 // -------------------------------------------------------------------------
-
+#include "zdk/log.h"
 #include <iostream>
 
-#ifndef DBGOUT_H_
-#define DBGOUT_H_
-
-#ifdef dbgout
- #undef dbgout
-#endif
-
-#ifdef DEBUG
- #define dbgout(level) if (debugLevel_ <= level);\
-                       else clog << "Stab::" << __func__ << ": "
-#else
-// the compiler should optimize it out
- #define dbgout(level) while(0) clog
-#endif
-
-#endif// DBGOUT_H_
 #endif // DBGOUT_H__482064A4_E0C2_4628_B7B4_CED236F198F0
 // vim: tabstop=4:softtabstop=4:expandtab:shiftwidth=4

@@ -10,6 +10,11 @@
 // -------------------------------------------------------------------------
 
 #include "zdk/config.h"
+#include "zdk/check_ptr.h"
+#include "zdk/log.h"
+#include "zdk/thread_util.h"
+#include "zdk/fheap.h"
+#include "zdk/shared_string_impl.h"
 #include <assert.h>
 #include <errno.h>          // errno, ECHILD
 #ifdef HAVE_UNISTD_H
@@ -23,10 +28,6 @@
 #include <sstream>          // ostringstream
 #include "generic/lock.h"
 #include "generic/temporary.h"
-#include "zdk/check_ptr.h"
-#include "zdk/thread_util.h"
-#include "zdk/fheap.h"
-#include "zdk/shared_string_impl.h"
 #include "dharma/canonical_path.h"
 #include "dharma/config.h"
 #include "dharma/directory.h"
@@ -63,7 +64,6 @@
 #endif
 
 using namespace std;
-using namespace eventlog;
 
 
 static const word_t defaultOpts = 
@@ -81,8 +81,7 @@ TargetFactory& DebuggerBase::target_factory()
 
 ////////////////////////////////////////////////////////////////
 DebuggerBase::DebuggerBase()
-    : verbose_(0)
-    , haveNewProgram_(false)
+    : haveNewProgram_(false)
     , quit_(false)
     , signaled_(false)
     , initialThreadFork_(false)
@@ -100,6 +99,7 @@ DebuggerBase::DebuggerBase()
 DebuggerBase::~DebuggerBase() throw()
 {
     detach(nothrow);
+    Log::close();
 }
 
 
@@ -238,9 +238,9 @@ static void shell_expand_args(ExecArg& args)
             break;
         }
     }
-#if DEBUG
-    clog << __func__ << ": " << result << endl;
-#endif
+
+    dbgout(0) << __func__ << ": " << result << endl;
+
     ExecArg(result).swap(args);
 #endif // __unix__
 }
@@ -820,9 +820,8 @@ void DebuggerBase::quit()
 ////////////////////////////////////////////////////////////////
 void DebuggerBase::on_attach(Thread& thread)
 {
-#if DEBUG
-    clog << "attached: " << thread.name() << "\n";
-#endif
+    dbgout(0) << "attached: " << thread.name() << endl;
+
     thread_set_event_description(thread, "Attached");
 }
 
@@ -973,11 +972,9 @@ RefPtr<ThreadImpl> DebuggerBase::peek_event(bool remove)
 
         result->set_event_pending(false);
 
-        if (verbose())
-        {
-            clog << "########## " << " " << result->lwpid() << ": ";
-            clog << hex << result->status() << dec << " ##########\n";
-        }
+        dbgout(0) << __func__ << " pid=" << result->lwpid() 
+                  << ", status=" << hex << result->status()
+                  << dec << endl;
     }
     return result;
 }
@@ -1350,15 +1347,13 @@ static uid_t get_config_owner(const string& path)
         
     struct stat stat = { 0 };
     sys::stat(ownerPath, stat);
-#if DEBUG
-    clog << ownerPath << ": onwer=" << stat.st_uid << endl;
-#endif
+
     return stat.st_uid;
 }
 
 
 ////////////////////////////////////////////////////////////////
-string DebuggerBase::get_config_path()
+string DebuggerBase::get_config_path(uid_t* owner)
 {
     string cfgPath;
 
@@ -1392,7 +1387,14 @@ string DebuggerBase::get_config_path()
     }
 
     cfgPath += ".zero/";
-    sys::ImpersonationScope impersonate(get_config_owner(cfgPath));
+
+    const uid_t dirOwner = get_config_owner(cfgPath);
+    if (owner)
+    {
+        *owner = dirOwner;
+    }
+    // create path if does not exist
+    sys::ImpersonationScope impersonate(dirOwner);
     sys::mkdir(cfgPath, 0750);
 
     return cfgPath;
@@ -1803,7 +1805,7 @@ void DebuggerBase::set_options(uint64_t opts)
     {
         settings_->set_word("opts", opts);
         const word_t w = settings_->get_word("opts", 0);
-        dbgout(0) << __func__ << ": " << hex << w << dec << endl;
+        dbgout(1) << __func__ << ": " << hex << w << dec << endl;
     }
 }
 
@@ -1880,9 +1882,9 @@ static bool resolve_link(string& path)
     char link[4096] = { 0 };
     if (readlink(path.c_str(), link, sizeof link - 1) > 0)
     {
-    #if DEBUG
-        clog << path << " -> " << link << endl;
-    #endif
+
+        dbgout(0) << path << " -> " << link << endl;
+
         if (link[0] == '/')
         {
             path = link;
@@ -1964,3 +1966,4 @@ bool DebuggerBase::map_path(const Process* proc, string& path) const
 
 // Copyright (c) 2004 - 2012 Cristian L. Vlasceanu
 // vim: tabstop=4:softtabstop=4:expandtab:shiftwidth=4
+

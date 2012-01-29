@@ -13,11 +13,11 @@
 //
 // Handle ptrace extension events.
 //
+#include "zdk/check_ptr.h"
+#include "zdk/thread_util.h"
 #include <errno.h>
 #include <sys/wait.h>
 #include "generic/temporary.h"
-#include "zdk/check_ptr.h"
-#include "zdk/thread_util.h"
 #include "dharma/environ.h"
 #include "dharma/process_name.h"
 #include "dharma/syscall_wrap.h"
@@ -28,7 +28,6 @@
 #include "unix_exec.h"
 
 using namespace std;
-using namespace eventlog;
 
 
 static void attach_new_debugger_instance(pid_t pid)
@@ -170,9 +169,8 @@ bool LinuxLiveTarget::handle_extended_event(Thread& thread, int event)
         break;
 
     case PTRACE_EVENT_EXIT:
-      #ifdef DEBUG
-        clog << "*** Thread exiting: " << thread.lwpid() << " ***\n";
-      #endif
+        dbgout(0) << "Thread exiting: " << thread.lwpid() << endl;
+
         //do not cleanup the thread here, let the exit event
         //come in through waitpid()
         interface_cast<ThreadImpl&>(thread).set_exiting();

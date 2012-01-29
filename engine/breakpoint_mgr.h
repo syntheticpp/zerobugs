@@ -17,7 +17,6 @@
 #include "dharma/config.h"
 #include "dharma/hash_map.h"
 #include "breakpoint.h"
-#include "dbgout.h"
 
 class DebuggerEngine;
 class WatchPoint;
@@ -51,11 +50,6 @@ public:
     );
 
     virtual ~BreakPointManagerImpl() throw();
-
-    DebugChannel debug_channel(const char* fn) const
-    {
-        return DebugChannel(fn, verbose_);
-    }
 
     ///// Notifications that let the breakpoint manager know
     ///// when threads are created and when they exit; there
@@ -326,11 +320,6 @@ public:
     BreakPointManagerGroup(RefPtr<Process>, int, bool, Callback, Callback);
 
     virtual ~BreakPointManagerGroup() throw();
-
-    DebugChannel debug_channel(const char* fn) const
-    {
-        return DebugChannel(fn, verbose_);
-    }
 
     ///// Notifications that let the break pointmanager know
     ///// when threads are created and when they exit; there

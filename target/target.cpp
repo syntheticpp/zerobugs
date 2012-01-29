@@ -66,12 +66,6 @@ TargetPtr Target::new_live_target(debugger_type& dbg, const char* targetParam)
 }
 
 
-DebugChannel Target::debug_channel(const char* fn) const
-{
-    return DebugChannel(fn, debugger().verbose());
-}
-
-
 /**
  * Allow the user to specify where /proc is mounted. This will
  * come in handy when I do more FreeBSD porting: FBSD allows

@@ -75,8 +75,7 @@ Plugin* create_plugin(uuidref_t iid)
 
 
 Reader::Reader()
-    : debugLevel_(0)
-    , debugger_(0)
+    : debugger_(0)
     , percent_(0.0)
     , numEntries_(0)
     , lazy_(env::get_bool("ZERO_STABS_LAZY", true))
@@ -105,7 +104,6 @@ bool Reader::initialize(Debugger* debugger, int* ac, char*** av)
     debugger_ = debugger;
 
     BEGIN_ARG_PARSE(ac, av)
-        ON_ARG("--stabs-debug") { ++debugLevel_; }
         ON_ARG("--stabs-lazy")  { lazy_ = true; }
         ON_ARG("--stabs-now")   { lazy_ = false; }
         ON_ARG("--stabs-no-progress") { showProgress_ = false; }
@@ -140,7 +138,7 @@ void Reader::on_table_done(SymbolTable*)
 
 void Reader::on_attach(Thread* thread)
 {
-    dbgout(0) << "attached: " << thread->lwpid() << endl;
+    dbgout(1) << "attached: " << thread->lwpid() << endl;
     attached_ = true;
 }
 
@@ -156,7 +154,7 @@ void Reader::on_detach(Thread* thread)
         attached_ = false;
         descriptors_.clear();
         file_.reset();
-        dbgout(0) << "all descriptors discarded.\n";
+        dbgout(1) << "all descriptors discarded.\n";
     }
 }
 
@@ -442,7 +440,7 @@ size_t Reader::enum_locals (
     }
     SharedString* filename = CHKPTR(table->filename());
 
-    dbgout(0) << "enum_locals: frame base="
+    dbgout(1) << "enum_locals: frame base="
               << (void*)CHKPTR(frame)->frame_pointer()
               << ": " << funcSym->name()
               << " in " << filename << endl;
@@ -450,30 +448,30 @@ size_t Reader::enum_locals (
     RefPtr<Descriptor> desc(get_descriptor(filename, lazy_ ? NULL : thread));
     if (desc.is_null())
     {
-        dbgout(0) << "get_descriptor()=NULL\n";
+        dbgout(1) << "get_descriptor()=NULL\n";
         return 0;
     }
     RefPtr<CompileUnit> unit = desc->get_compile_unit(addr);
     if (unit.is_null())
     {
-        dbgout(0) << "unit not found\n";
+        dbgout(1) << "unit not found\n";
         return 0;
     }
-    dbgout(0) << unit->name().c_str() << endl;
+    dbgout(1) << unit->name().c_str() << endl;
 
     ensure_parsed(*thread, *unit);
 
     RefPtr<Function> func = unit->lookup_function(addr, false);
     if (func.is_null())
     {
-        dbgout(0) << "function not found\n";
+        dbgout(1) << "function not found\n";
         return 0;
     }
     size_t count = 0; // return count of enumerated vars
 
-    dbgout(0) << func->name().c_str() << endl;
-    dbgout(0) << func->variables().size() << " local var(s)\n";
-    dbgout(0) << func->blocks().size() << " lexical block(s)\n";
+    dbgout(1) << func->name().c_str() << endl;
+    dbgout(1) << func->variables().size() << " local var(s)\n";
+    dbgout(1) << func->blocks().size() << " lexical block(s)\n";
 
     if (!paramOnly) // okay to emit variables
     {
@@ -555,7 +553,7 @@ size_t Reader::enum_globals (
             {
                 continue;
             }
-            dbgout(0) << linkpath << endl;
+            dbgout(1) << linkpath << endl;
             result += enum_globals(*thread, name, *sym, events, *desc, enumFuncs);
         }
     }
@@ -565,7 +563,7 @@ size_t Reader::enum_globals (
         RefPtr<Descriptor> desc = get_descriptor(CHKPTR(filename), thread);
         if (desc.is_null())
         {
-            dbgout(0) << "null descriptor\n";
+            dbgout(1) << "null descriptor\n";
         }
         else if (scope == LOOKUP_MODULE)
         {
@@ -579,7 +577,7 @@ size_t Reader::enum_globals (
             RefPtr<CompileUnit> unit = desc->get_compile_unit(addr);
             if (unit.is_null())
             {
-                dbgout(0) << "NULL unit\n";
+                dbgout(1) << "NULL unit\n";
             }
             else
             {
@@ -755,15 +753,15 @@ size_t Reader::addr_to_line (
 
     if (desc.is_null())
     {
-        dbgout(0) << "NULL descriptor\n";
+        dbgout(1) << "NULL descriptor\n";
         return 0;
     }
-    dbgout(0) << symTable->filename() << endl;
+    dbgout(1) << symTable->filename() << endl;
 
     RefPtr<Stab::CompileUnit> unit = desc->get_compile_unit(addr);
     if (unit.is_null())
     {
-        dbgout(0) << "NULL unit 0x"
+        dbgout(1) << "NULL unit 0x"
                   << hex << addr + symTable->adjustment() << dec << endl;
         return 0;
     }
@@ -813,7 +811,7 @@ size_t Reader::line_to_addr (
 */
     RefPtr<Descriptor> desc = get_descriptor(moduleName, (TypeSystem*)0);
 
-    dbgout(0) << "desc=" << desc.get() << endl;
+    dbgout(1) << "desc=" << desc.get() << endl;
     if (!desc.is_null())
     {
         addrs = desc->line_to_addr(file, line);
@@ -911,7 +909,7 @@ DebugSymbol* Reader::get_return_symbol (
     RefPtr<Descriptor> desc = get_descriptor(file.get(), thread);
     if (desc.is_null())
     {
-        dbgout(0) << "descriptor not found.\n";
+        dbgout(1) << "descriptor not found.\n";
 
         // This is not a critical error, maybe the debug information
         // for the binary is not in STABS format
@@ -922,12 +920,12 @@ DebugSymbol* Reader::get_return_symbol (
     RefPtr<CompileUnit> unit = desc->get_compile_unit(symbol->addr());
     if (unit.is_null())
     {
-        dbgout(0) << "unit not found\n";
+        dbgout(1) << "unit not found\n";
         // This is not a critical error, maybe the debug information
         // for the compilation unit is not in STABS format
         return NULL;
     }
-    dbgout(0) << unit->name().c_str() << endl;
+    dbgout(1) << unit->name().c_str() << endl;
 
     ensure_parsed(*thread, *unit);
 
@@ -1062,7 +1060,7 @@ RefPtr<Descriptor> Reader::get_descriptor(SharedString* file) const
     }
     else
     {
-        dbgout(0) << "not found " << file << endl;
+        dbgout(1) << "not found " << file << endl;
     }
     return result;
 }
@@ -1094,7 +1092,7 @@ RefPtr<Descriptor> Reader::get_descriptor(SharedString* file, TypeSystem* types)
 
     if (attached_)
     {
-        dbgout(0) << file << endl;
+        dbgout(1) << file << endl;
 
         DescriptorMap::iterator i = descriptors_.find(file);
         if (i == descriptors_.end())

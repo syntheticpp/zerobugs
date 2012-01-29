@@ -68,12 +68,12 @@ class ThreadEventObserver : public ThreadAgentWrapper<T>
             else if (err)
             {
                 thread_db_error e(__FILE__, __LINE__, err);
-                dbgout(0) << thread->lwpid() << ": " << e.what() << endl;
-                // throw e;
+                dbgout(0) << thread->lwpid() << ": " << e.what() << std::endl;
+
                 break;
             }
             dbgout(0) << __func__ << ": " << thread->lwpid()
-                      << ": msg.event="   << msg.event << endl;
+                          << ": msg.event="   << msg.event << std::endl;
 
             td_thrinfo_t info = { 0 };
 
@@ -100,9 +100,9 @@ class ThreadEventObserver : public ThreadAgentWrapper<T>
                           << " info.ti_tid=" << info.ti_tid
                           << " (reported on thread " << thread->lwpid()
                     #ifdef __FreeBSD__
-                          << ") msg.data=" << msg.data << endl;
+                          << ") msg.data=" << msg.data << std::endl;
                     #else
-                          << ") msg.data=" << msg.msg.data << endl;
+                          << ") msg.data=" << msg.msg.data << std::endl;
                     #endif
               /*
                 My understanding is that the breakpoint should occur on
@@ -193,7 +193,7 @@ protected:
             catch (const std::exception& e)
             {
                 result = false;
-                dbgout(0) << __func__ << ": " << e.what() << endl;
+                dbgout(0) << __func__ << ": " << e.what() << std::endl;
             }
         }
 

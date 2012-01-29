@@ -15,6 +15,7 @@
 #include "zdk/debug_symbol_list.h"
 #include "zdk/expr.h"
 #include "zdk/mutex.h"
+#include "zdk/log.h"
 #include "zdk/weak_ptr.h"
 #include "dharma/config.h"
 #include "dharma/hash_map.h"

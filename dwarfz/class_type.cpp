@@ -152,12 +152,6 @@ Dwarf_Addr MemFun::vtable_offset(Dwarf_Addr frameBase,
     if (boost::shared_ptr<Location> loc =
         Utils::loc(dbg(), die(), DW_AT_vtable_elem_location))
     {
-    /*
-        dlog(L_DBG) << __func__ << ": module_base="
-                    << (void*)moduleBase << " unit_base="
-                    << (void*)unitBase << " pc="
-                    << (void*)programCount << std::endl; */
-
         result = loc->eval(frameBase, moduleBase, unitBase, programCount);
     }
     return result;

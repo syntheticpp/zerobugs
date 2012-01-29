@@ -12,14 +12,12 @@
 #include <iostream>
 #include "zdk/check_ptr.h"
 #include "zdk/thread_util.h"
-#include "dbgout.h"
 #include "debugger_engine.h"
 #include "watchpoint.h"
 #include "breakpoint_enabler.h"
 #include "breakpoint_mgr.h"
 
 using namespace std;
-using namespace eventlog;
 
 
 BreakPointManagerGroup::BreakPointManagerGroup
@@ -204,10 +202,8 @@ void BreakPointManagerGroup::on_exec(Thread& thread)
     {
         if ((*i)->pid() == mgr->pid())
         {
-        #if DEBUG
-            clog << "Replacing breakpoint manager for process: " 
-                 << process->pid() << endl;
-        #endif
+            dbgout(0) << "Replacing breakpoint manager for process: " 
+                      << process->pid() << endl;
 
             *i = mgr; // replace the old manager
             return;
@@ -409,12 +405,12 @@ size_t BreakPointManagerGroup::reset(pid_t pid)
         if ((*i)->pid() == pid)
         {
             group_.erase(i);
-            clog << "Reset breakpoints manager for pid: " << pid << endl;
+            dbgout(0) << "Reset breakpoints manager for: " << pid << endl;
 
             return 1;
         }
     }
-    clog << "breakpoints manager for pid: " << pid <<  " not found" << endl;
+    dbgout(0) << "breakpoints manager for: " << pid <<  " not found" << endl;
     return 0;
 }
 

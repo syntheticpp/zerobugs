@@ -9,27 +9,26 @@
 // http://www.boost.org/LICENSE_1_0.txt)
 // -------------------------------------------------------------------------
 
+#include "zdk/autocontext.h"
+#include "zdk/check_ptr.h"
+#include "zdk/log.h"
+#include "zdk/switchable.h"
+#include "zdk/thread_util.h"
 #include <cassert>
 #include <iostream>
 #include <iomanip>
 #include <stdexcept>
 #include <boost/utility.hpp>
-#include "zdk/autocontext.h"
-#include "zdk/check_ptr.h"
-#include "zdk/switchable.h"
-#include "zdk/thread_util.h"
 #include "dharma/environ.h"
 #include "dharma/symbol_util.h"
 #include "dharma/syscall_wrap.h"
 #include "generic/state_saver.h"
 #include "generic/temporary.h"
-#include "dbgout.h"
 #include "thread.h"
 #include "breakpoint.h"
 
 
 using namespace std;
-using namespace eventlog;
 
 
 ////////////////////////////////////////////////////////////////
@@ -97,9 +96,8 @@ void BreakPointBase::reparent(const RefPtr<Thread>& thread) volatile
     if ((thread.get() != this->thread()) && thread)
     {
         const_cast<RefPtr<Thread>&>(thread_) = thread;
-    #ifdef DEBUG
-        clog << __func__ << ": " << thread->lwpid() << endl;
-    #endif
+
+        dbgout(0) << __func__ << ": " << thread->lwpid() << endl;
     }
 }
 
@@ -193,25 +191,21 @@ void BreakPointBase::debug_enable(bool onOff, Thread* thread) volatile
     {
         return;
     }
-    if (Debugger* debugger = thread->debugger())
+
+    RefPtr<SymbolMap> symbols(thread->symbols());
+    RefPtr<Symbol> sym(CHKPTR(symbols)->lookup_symbol(addr()));
+
+    dbgout(1) << (onOff ? "enabling " : "disabling");
+    dbgout(1) << ' ' << type() << " breakpoint: pid=";
+    dbgout(1) << thread->lwpid() << " owner=";
+    dbgout(1) << this->thread()->lwpid() << " " << hex << addr() << dec << "\n";
+
+    if (sym)
     {
-        DebugChannel channel(__func__, debugger->verbose());
-        eventlog::Stream<DebugChannel> log(channel, 1);
-
-        RefPtr<SymbolMap> symbols(thread->symbols());
-        RefPtr<Symbol> sym(CHKPTR(symbols)->lookup_symbol(addr()));
-
-        log << (onOff ? "enabling " : "disabling");
-        log << ' ' << type() << " breakpoint: pid=";
-        log << thread->lwpid() << " owner=";
-        log << this->thread()->lwpid() << " " << hex << addr() << dec << endl;
-
-        if (sym)
-        {
-            log << ' ' << (void*)sym->addr() << ' ' << sym->name();
-        }
-        log << eventlog::endl;
+        dbgout(1) << ' ' << (void*)sym->addr() << ' ' << sym->name();
     }
+    dbgout(1) << endl;
+
 #endif // DEBUG
 }
 
@@ -576,16 +570,9 @@ SoftwareBreakPoint::~SoftwareBreakPoint() throw()
 
 
 ////////////////////////////////////////////////////////////////
-static void debug_clone(BreakPointBase& bpnt)
+static void inline debug_clone(BreakPointBase& bpnt)
 {
-#ifdef DEBUG
-    if (Debugger* debugger = bpnt.thread()->debugger())
-    {
-        DebugChannel channel(__func__, debugger->verbose());
-        eventlog::Stream<DebugChannel> log(channel, 0);
-        log << "Cloned: " << bpnt << endl;
-    }
-#endif
+    dbgout(1) << "Cloned breakpoint: " << bpnt << endl;
 }
 
 
@@ -655,9 +642,8 @@ namespace
                 //
                 if (!thread_finished(*thread))
                 {
-                #ifdef DEBUG
-                    clog << "resetting thread to " << thread->lwpid() << endl;
-                #endif
+                    dbgout(0) << "resetting thread to " << thread->lwpid() << endl;
+
                     thread_ = thread;
                 }
             }

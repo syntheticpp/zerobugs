@@ -69,7 +69,6 @@
 #include "version.h"
 
 using namespace std;
-using namespace eventlog;
 
 #if defined(USE_GNU_READLINE) && (RL_READLINE_VERSION < 0x0403)
   #define rl_compentry_func_t Function

@@ -85,7 +85,7 @@ static RefPtr<DataType> get_vtable_ptr_type(TypeSystem* types)
 static Dwarf_Addr
 evaluate(const Dwarf::Location& loc, addr_t base, Thread& thread)
 {
-    dbgout(0) << " ****** " << (void*)base << " *****" << endl;
+    dbgout(1) << " ****** " << (void*)base << " *****" << endl;
     addr_t moduleBase = 0;
     addr_t pc = thread.program_count();
 
@@ -231,8 +231,7 @@ static size_t
 adjust_bit_offs(const DataMember& part,
                 size_t bitOffs,
                 size_t structBitSize,
-                size_t bitSize,
-                int debugLevel_)
+                size_t bitSize )
 {
 #if (__BYTE_ORDER == __LITTLE_ENDIAN)
 
@@ -278,14 +277,13 @@ void Aggregator::operator()(const Dwarf::DataMember& part) const
 
     if (bitOffs || (bitSize < part.byte_size() * byte_size))
     {
-        dbgout(0) << "bitOffs=" << bitOffs << endl;
+        dbgout(1) << "bitOffs=" << bitOffs << endl;
         bitOffs = adjust_bit_offs(part,
                                   bitOffs,
                                   klass_->bit_size(),
-                                  bitSize,
-                                  debugLevel_);
+                                  bitSize);
 
-        dbgout(0) << "adjusted bitOffs=" << bitOffs << endl;
+        dbgout(1) << "adjusted bitOffs=" << bitOffs << endl;
     }
 
     RefPtr<DataType> adaptedType;
@@ -308,7 +306,7 @@ void Aggregator::operator()(const Dwarf::DataMember& part) const
             addr = evaluate(*loc, baseAddr_, *CHKPTR(thread_));
             bitOffs += (addr - baseAddr_) * byte_size;
 
-            dbgout(0) << "struct-based bit offs=" << bitOffs << endl;
+            dbgout(1) << "struct-based bit offs=" << bitOffs << endl;
 
             adapter.set_base_addr(addr);
         }
@@ -377,7 +375,7 @@ void Aggregator::operator()(const Inheritance& part) const
         addr = evaluate(*loc, baseAddr_, *CHKPTR(thread_));
         bitOffs = (addr - baseAddr_) * byte_size;
 
-        dbgout(0) << "loc->eval(" << hex << baseAddr_ << ")="
+        dbgout(1) << "loc->eval(" << hex << baseAddr_ << ")="
                   << addr << dec << " offset=" << addr - baseAddr_
                   << endl;
     }
@@ -912,7 +910,7 @@ static Dwarf_Addr get_method_addr(const KlassType& type,
                 ctorName += "::";
                 ctorName += CHKPTR(unqualifiedName)->c_str();
 
-                dbgout(0) << __func__ << ": " << ctorName << endl;
+                dbgout(1) << __func__ << ": " << ctorName << endl;
             }
             ctors = type.owner().lookup_global_funcs(ctorName.c_str());
         }
@@ -1371,7 +1369,7 @@ RefPtr<DataType> TypeAdapter::apply(boost::shared_ptr<Type> type)
         {
             const char* name = type->name();
             CHKPTR(name);
-            dbgout(0) << "type=" << name << endl;
+            dbgout(1) << "type=" << name << endl;
 
             boost::shared_ptr<Type> fullType;
             if (!decl && type->is_incomplete())

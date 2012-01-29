@@ -12,6 +12,10 @@
 // -------------------------------------------------------------------------
 
 #include "zdk/config.h"
+#include "zdk/check_ptr.h"
+#include "zdk/log.h"
+#include "zdk/shared_string_impl.h"
+#include "zdk/symbol_table.h"
 #include <errno.h>
 #include <netdb.h>
 #include <netinet/in.h>
@@ -37,14 +41,10 @@
 #include "target/memory_access.h"
 #include "rpc/rpc.h"
 #include "rpc/remote_ifstream.h"
-#include "zdk/check_ptr.h"
-#include "zdk/shared_string_impl.h"
-#include "zdk/symbol_table.h"
 #include "proxy-target.h"
 
 
 using namespace std;
-using namespace eventlog;
 
 
 /**

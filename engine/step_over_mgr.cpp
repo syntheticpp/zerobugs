@@ -21,7 +21,6 @@
 #include "debugger_base.h"
 #include "step_over_mgr.h"
 
-using namespace eventlog;
 using namespace std;
 
 
@@ -191,7 +190,7 @@ void StepOverManager::restore_from_properties()
     Temporary<bool> setFlag(readingProperties_, true);
 
     word_t count = properties()->get_word("step_over", 0);
-    dbgout(0) << __func__ << ": count=" << count << endl;
+    dbgout(1) << __func__ << ": count=" << count << endl;
 
     for (properties()->set_word("step_over", 0) ; count > 0; --count)
     {
@@ -201,7 +200,7 @@ void StepOverManager::restore_from_properties()
         const char* p = 0;
         const long n = strtol(val.c_str(), const_cast<char**>(&p), 0);
 
-        dbgout(0) << __func__ << ": " << p + 1 << " " << n << endl;
+        dbgout(1) << __func__ << ": " << p + 1 << " " << n << endl;
         if (*++p)
         {
             add_step_over(shared_string(p).get(), n);
@@ -214,12 +213,6 @@ void StepOverManager::restore_from_properties()
 Properties* StepOverManager::properties()
 {
     return CHKPTR(debugger_->properties());
-}
-
-
-DebugChannel StepOverManager::debug_channel(const char* fn) const
-{
-    return debugger_->debug_channel(fn);
 }
 
 

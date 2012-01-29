@@ -15,6 +15,7 @@
 // -------------------------------------------------------------------------
 //
 #include "zdk/zero.h"
+#include <boost/noncopyable.hpp>
 
 namespace
 {

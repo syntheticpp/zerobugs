@@ -23,7 +23,6 @@
 #include "target_factory.h"
 
 using namespace std;
-using namespace eventlog;
 
 namespace
 {

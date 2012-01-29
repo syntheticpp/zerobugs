@@ -11,24 +11,16 @@
 // http://www.boost.org/LICENSE_1_0.txt)
 // -------------------------------------------------------------------------
 //
+#include "zdk/command.h"
+#include "zdk/export.h"
+#include "zdk/log.h"
+#include "zdk/priority.h"
+#include "zdk/zero.h"
+#include "zdk/version_info_impl.h"
 #include <pthread.h>
 #include <boost/utility.hpp>
 #include <boost/shared_ptr.hpp>
 #include "assert_thread.h"
-#include "zdk/command.h"
-#include "zdk/export.h"
-#include "zdk/priority.h"
-#include "zdk/zero.h"
-#include "zdk/version_info_impl.h"
-#include "zdk/eventlog.h"
-
-
-#if DEBUG
- #define dbgout(x) if(GUI::debug_level() <= (x)); else std::clog
-#else
- using namespace eventlog;
- #define dbgout(level) while (0) eventlog::Null<>()
-#endif
 
 
 class MainWindow;
@@ -45,8 +37,6 @@ public:
     static GUI* instance();
 
     static pthread_t tid() { return tid_; }
-
-    static int debug_level() { return debugLevel_; }
 
     static void handle_exception() throw();
 
@@ -126,8 +116,6 @@ private:
     static GUI* theGUI_;    // global GUI instance
 
     static pthread_t tid_;  // thread id
-
-    static int debugLevel_;
 
     bool attached_;
 

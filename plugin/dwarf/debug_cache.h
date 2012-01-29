@@ -36,7 +36,6 @@ CLASS DebugCache
     typedef std::set<RefPtr<SharedString> > BlackList;
 
     std::vector<Entry> cache_;
-    int debugLevel_;
     mutable Mutex mutex_;
 
     BlackList blackList_;
@@ -53,7 +52,7 @@ public:
      * number of entries -- when exceeded, the entry with
      * the least usageCount is discarded and replaced.
      */
-    DebugCache(size_t maxSize, int debugLevel, Debugger*);
+    DebugCache(size_t maxSize, Debugger*);
 
     virtual ~DebugCache();
 

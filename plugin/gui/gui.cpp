@@ -9,6 +9,10 @@
 // http://www.boost.org/LICENSE_1_0.txt)
 // -------------------------------------------------------------------------
 //
+#include "config.h"
+#include "zdk/argv_util.h"
+#include "zdk/check_ptr.h"
+#include "zdk/symbol_table.h"
 #include <assert.h>
 #include <errno.h>
 #include <unistd.h>
@@ -22,9 +26,6 @@
 #include <gtk/gtk.h>
 #include "gtkmm/connect.h"
 #include "gtkmm/main.h"
-#include "zdk/argv_util.h"
-#include "zdk/check_ptr.h"
-#include "zdk/symbol_table.h"
 #include "dharma/canonical_path.h"
 #include "dharma/symbol_util.h"
 #include "command.h"
@@ -42,7 +43,6 @@ using namespace boost;
 
 
 GUI*        GUI::theGUI_    = 0;
-int         GUI::debugLevel_= 0;
 pthread_t   GUI::tid_       = 0;
 
 //static Mutex gdkMutex;
@@ -78,21 +78,6 @@ Plugin* create_plugin(uuidref_t iid)
 
 
 ////////////////////////////////////////////////////////////////
-/*
-static void enter_gdk_mutex()
-{
-    gdkMutex.enter();
-}
-
-
-static void leave_gdk_mutex()
-{
-    gdkMutex.leave(nothrow);
-}
-*/
-
-
-////////////////////////////////////////////////////////////////
 ZObject* GUI::new_drop_list(ObjectFactory*, const char* name)
 {
     ZObject* obj = NULL;
@@ -111,7 +96,7 @@ ZObject* GUI::new_drop_list(ObjectFactory*, const char* name)
 
 
 ////////////////////////////////////////////////////////////////
-    static ZObject* new_src_tabs(ObjectFactory*, const char* name)
+static ZObject* new_src_tabs(ObjectFactory*, const char* name)
 {
     return new SourceTabs(name);
 }
@@ -161,7 +146,7 @@ GUI::~GUI() throw()
 
     if (factory_)
     {
-        dbgout(0) << "Unregistering: " << DropList::_uuid() << endl;
+        dbgout(0) << "Unregistering " << DropList::_uuid() << endl;
         factory_->unregister_interface(DropList::_uuid());
     }
     if (tid_)
@@ -180,11 +165,6 @@ GUI::~GUI() throw()
 ////////////////////////////////////////////////////////////////
 void GUI::release()
 {
-    if (debug_level())
-    {
-        clog << "UI::release()" << endl;
-    }
-
     assert(pthread_self() != GUI::tid());
     delete theGUI_;
 }
@@ -239,9 +219,6 @@ bool GUI::initialize(Debugger* debugger, int* ac, char*** av)
     disabled_ = false;
 
 BEGIN_ARG_PARSE(ac, av)
-    ON_ARGV ("--ui-debug=", debugLevel_)
-        {
-        }
     ON_ARG ("--ui-disable")
         {
             disabled_ = true;
@@ -371,11 +348,8 @@ void GUI::on_attach (Thread* thread)
     }
     assert(mainWindow_);
 
-    if (debug_level())
-    {
-        const pid_t pid = thread->lwpid();
-        clog << "*** UI: attached, tid=" << pid << endl;
-    }
+    const pid_t pid = thread->lwpid();
+    dbgout(1) << "attached, tid=" << pid << endl;
 
     mainWindow_->set_debuggee_running(true);
     // If this is the first thread within the debuggee
@@ -411,15 +385,8 @@ void GUI::on_detach (Thread* thread)
         RefPtr<Thread> tptr(thread);
         post_request(&MainWindow::on_detached, mainWindow_, tptr);
     }
-    if (debug_level())
-    {
-        clog << "*** UI: detached ";
-        if (thread)
-        {
-            clog << thread->lwpid();
-        }
-        clog << endl;
-    }
+
+    dbgout(1) << "detached " << (thread ? thread->lwpid() : -1) << endl;
 }
 
 
@@ -679,7 +646,7 @@ void* GUI::run(void* p)
     {
         cerr << "Exception on UI thread: " << e.what() << endl;
     }
-    dbgout(0) << "UI loop finished.\n";
+    dbgout(0) << "UI loop finished." << endl;
 
     static_cast<GUI*>(p)->disabled_ = true;
     static_cast<GUI*>(p)->mainWindow_.reset();
@@ -738,9 +705,8 @@ void GUI::handle_exception() throw()
 ////////////////////////////////////////////////////////////////
 extern "C" void handle_ui_exception() throw()
 {
-#ifdef DEBUG
-    clog << __func__ << endl;
-#endif
+    dbgout(0) << __func__ << endl;
+
     GUI::handle_exception();
 }
 

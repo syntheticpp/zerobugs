@@ -10,6 +10,7 @@
 // -------------------------------------------------------------------------
 //
 #include "zdk/config.h"
+#include "zdk/log.h"
 #include <assert.h>
 #include <iostream>
 #include <sys/ptrace.h>
@@ -32,7 +33,6 @@
     return result;
 
 using namespace std;
-using namespace eventlog;
 
 
 long LinuxTarget::syscall_num(const Thread& thread) const

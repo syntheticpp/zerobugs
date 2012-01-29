@@ -9,12 +9,14 @@
 // http://www.boost.org/LICENSE_1_0.txt)
 // -------------------------------------------------------------------------
 
+#include "zdk/init.h"
+#include "zdk/log.h"
 #include <iostream>
 #include <sstream>
 #include "dharma/environ.h"
 #include "dharma/object_manager.h"
+#include "dharma/syscall_wrap.h"
 #include "dharma/system_error.h"
-#include "zdk/init.h"
 #include "debugger_shell.h"
 #include "target/init.h"
 #include <iostream>
@@ -31,8 +33,13 @@ static auto_ptr<DebuggerShell>& debugger()
 
 Debugger* debugger_init(int argc, char* argv[])
 {
-    // instantiate it while we are single-threaded
-    debugger();
+    uid_t owner = getuid();
+    string path = debugger()->get_config_path(&owner);
+    path += "log";
+    // initalize log file as owner, not as root if running under sudo
+    {   sys::ImpersonationScope impersonate(owner);
+        Log::init(path.c_str());
+    }
 
 #ifdef DEBUG_OBJECT_LEAKS
     ObjectManager::instance();

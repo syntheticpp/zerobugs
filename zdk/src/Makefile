@@ -15,6 +15,7 @@ CXXFLAGS+=-O2
 SRCS=\
 	breakpoint_util.cpp \
 	buffer.cpp 			\
+	log.cpp				\
 	mutex.cpp 			\
 	persistent.cpp		\
 	shared_string.cpp 	\

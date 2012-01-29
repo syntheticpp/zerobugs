@@ -14,7 +14,6 @@
 #include "zdk/thread_util.h"
 #include "typez/public/native_type_system.h"
 
-using namespace eventlog;
 
 
 UnixTarget::UnixTarget(DebuggerBase& dbg)
@@ -214,7 +213,8 @@ void UnixTarget::remove_thread(const RefPtr<Thread>& thread)
     if (iterCount_)
     {
         threadsToDelete_.push_back(thread);
-        dbgout(1) << __func__ << ": " << thread->lwpid() << " pending" << endl;
+        dbgout(1) << __func__ << ": " << thread->lwpid() 
+                     << " pending" << std::endl;
     }
     else
     {
@@ -233,7 +233,6 @@ UnixTarget::is_deletion_pending(const RefPtr<Thread>& thread) const
     {
         if (thread == *j)
         {
-            //dbgout(0) << __func__ << ": " << thread->lwpid() << endl;
             return true;
         }
     }
@@ -250,7 +249,7 @@ bool UnixTarget::is_deletion_pending(pid_t lwpid) const
     {
         if (lwpid == (*j)->lwpid())
         {
-            dbgout(0) << __func__ << ": " << lwpid << endl;
+            dbgout(0) << __func__ << ": " << lwpid << std::endl;
             return true;
         }
     }

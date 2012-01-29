@@ -27,7 +27,6 @@
 #include "breakpoint_mgr.h"
 
 using namespace std;
-using namespace eventlog;
 
 #define THREAD_SAFE Lock<Mutex> lock(mutex_)
 
@@ -686,8 +685,7 @@ BreakPoint* BreakPointManagerImpl::set_watchpoint(
         {
             dbgout(0) << __func__ << ": " << pid() << '/'<< thread->lwpid()
                       << " using hardware debug reg " << reg << endl;
-            dbgout(0) << __func__ << ": type=" << type
-                      << ", cond=" << cond << endl;
+            dbgout(0) << __func__ << ": type=" << type << ", cond=" << cond << endl;
 
             watchPoint = new WatchPoint(thread, type, addr, reg, global, cond);
 
@@ -697,13 +695,13 @@ BreakPoint* BreakPointManagerImpl::set_watchpoint(
                 {
                     const addr_t scope = fun->addr() - fun->offset();
                     watchPoint->set_scope(scope);
-
+                   /*
                     if (verbose())
                     {
                         clog << __func__ << ": on stack: ";
                         print_symbol(clog, scope, fun);
                         clog << endl;
-                    }
+                    } */
                 }
             }
             watchPoints_.push_back(watchPoint);

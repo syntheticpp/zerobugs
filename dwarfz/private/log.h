@@ -12,9 +12,7 @@
 // -------------------------------------------------------------------------
 
 #include <iostream>
-//
-// TODO: replace this with zdk/eventlog
-//
+
 namespace Dwarf
 {
     /**

@@ -86,7 +86,6 @@
 
 using namespace std;
 using namespace boost;
-using namespace eventlog;
 
 
 static const char copyrightText[] = "Copyright (C) 2004 - 2012 Cristian L. Vlasceanu.\n";
@@ -521,13 +520,6 @@ void DebuggerEngine::on_attach(Thread& thread)
     // fetch the thread ID, in case it has not
     // been initialized yet
     thread.thread_id();
-
-#ifdef DEBUG
-    if (verbose())
-    {
-        print_breakpoints(clog);
-    }
-#endif // DEBUG
 
     if (!breakPointMgr_)
     {
@@ -3301,7 +3293,7 @@ bool DebuggerEngine::on_interface(
 {
     if (uuid_equal(DebuggerPlugin::_uuid(), iid))
     {
-        dbgout(0) << " detected plugin: " << lib->filename() << endl;
+        dbgout(0) << "detected plugin: " << lib->filename() << endl;
 #if !defined(NDEBUG) || defined(DEBUG)
         const int count = lib->count();
 #endif

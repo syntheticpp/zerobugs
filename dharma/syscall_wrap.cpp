@@ -439,9 +439,7 @@ sys::ImpersonationScope::ImpersonationScope(uid_t uid)
     {
         throw SystemError("seteuid");
     }
-#if DEBUG
-    clog << "Effective user id=" << geteuid() << endl;
-#endif
+    // clog << "Effective user id=" << geteuid() << endl;
 }
 
 
@@ -449,9 +447,8 @@ sys::ImpersonationScope::~ImpersonationScope()
 {
     // restore to save effective uid
     seteuid(euid_);
-#if DEBUG
-    clog << "Restored effective user id=" << geteuid() << endl;
-#endif
+
+    // clog << "Restored effective user id=" << geteuid() << endl;
 }
 
 // vim: tabstop=4:softtabstop=4:expandtab:shiftwidth=4

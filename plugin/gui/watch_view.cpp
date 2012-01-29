@@ -182,9 +182,8 @@ void WatchView::save_config()
         {
             watchList->add(i->c_str());
         }
-    #if DEBUG
-        clog << watchSet_.size() << " watch(es) saved.\n";
-    #endif
+
+        dbgout(0) << watchSet_.size() << " watch(es) saved." << endl;
     }
 }
 

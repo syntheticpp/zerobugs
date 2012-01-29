@@ -9,9 +9,15 @@
 // http://www.boost.org/LICENSE_1_0.txt)
 // -------------------------------------------------------------------------
 //
-#include <string>
-#include <boost/utility.hpp>
+#include "gui.h"
 #include "app_slots.h"
+#include "zdk/debug_symbol_list.h"
+#include "zdk/check_ptr.h"
+#include "zdk/data_filter.h"
+#include "zdk/data_type.h"
+#include "zdk/zero.h"
+#include "zdk/zobject_scope.h"
+
 #include "auto_condition.h"
 #include "generic/lock.h"
 #include "gtkmm/flags.h"
@@ -20,18 +26,13 @@
 #include "dharma/symbol_util.h"
 #include "engine/query_symbols.h"
 #include "engine/query_type.h"
-#include "zdk/debug_symbol_list.h"
-#include "zdk/check_ptr.h"
-#include "zdk/data_filter.h"
-#include "zdk/data_type.h"
-#include "zdk/zero.h"
-#include "zdk/zobject_scope.h"
-#include "gui.h"
 #include "message_box.h"
 #include "popup_list.h" // for auto_complete
 #include "text_entry.h" // for auto_complete
 #include "slot_macros.h"
 
+#include <string>
+#include <boost/utility.hpp>
 
 using namespace std;
 using namespace boost;

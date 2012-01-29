@@ -69,6 +69,7 @@ bool inline operator==(const ZDK_UUID& lhs, const ZDK_UUID& rhs)
 }
 
 
+std::ostream& operator<<(std::ostream&, const uuidref_t& uuid);
 std::ostream& operator<<(std::ostream&, const ZDK_UUID& uuid);
 
 #endif // UUID_H__CF525794_EF1F_4928_8E57_A67FB48263A6

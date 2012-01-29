@@ -53,11 +53,10 @@ static void auto_enable_d_lang_support(Dwarf::Debug& debug)
 DebugCache::DebugCache
 (
     size_t maxSize,
-    int debugLevel,
     Debugger* dbg
-) : cache_(maxSize), debugLevel_(debugLevel), debugger_(dbg)
+) : cache_(maxSize), debugger_(dbg)
 {
-    dbgout(0) << "DebugCache size=" << maxSize << endl;
+    dbgout(1) << "DebugCache size=" << maxSize << endl;
 }
 
 
@@ -78,7 +77,7 @@ check_gnu_debuglink(DebugCache::Handle& handle,
         const string link = ELF::debug_link(binary);
         if (!link.empty())
         {
-            dbgout(0) << __func__ << ": " << link << endl;
+            dbgout(0) << __func__ << ": " << path->c_str() << " -> " << link << endl;
             handle.reset(new Dwarf::Debug(link.c_str()));
         }
     }

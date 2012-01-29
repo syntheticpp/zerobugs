@@ -17,7 +17,6 @@
 #include "typez/public/debug_symbol_impl.h"
 #include "typez/public/is_cv_qualified.h"
 #include "addr_operations.h"
-#include "dbgout.h"
 #include "reader.h"
 #include "type_adapter.h"
 #include "class_type_proxy.h"
@@ -330,7 +329,7 @@ void ClassTypeProxy::adapt_deep(Thread* thread, addr_t addr)  const
     {
         throw logic_error("could not get type by offset");
     }
-    dbgout(0) << __func__ << ": " << _name() << ": " << name() << endl;
+    dbgout(2) << __func__ << ": " << _name() << ": " << name() << endl;
 
     // Step 2: adapt it into a TypeSystem type
     AddrOperationsContext ctxt(thread);
@@ -351,7 +350,7 @@ void ClassTypeProxy::adapt_deep(Thread* thread, addr_t addr)  const
         cerr << __func__ << ": failed adapting class type\n";
         return;
     }
-    dbgout(0) << __func__ << ": " << _name() << ": " << name() << endl;
+    dbgout(2) << __func__ << ": " << _name() << ": " << name() << endl;
     if (addr)
     {
         shallow_ = false;

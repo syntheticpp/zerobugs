@@ -11,15 +11,15 @@
 // http://www.boost.org/LICENSE_1_0.txt)
 // -------------------------------------------------------------------------
 //
-#include "dbgout.h"
+#include "zdk/arch.h"
+#include "zdk/log.h"
+#include "zdk/thread_util.h"
 #include "elfz/public/binary.h"
 #include "elfz/public/link.h"
 #include "symbolz/private/link_data.h"
-#include "zdk/arch.h"
-#include "zdk/thread_util.h"
 
+#include <iostream>
 
-using namespace eventlog;
 
 /**
  * Intercept dynamic linker events in the debug target
@@ -90,7 +90,7 @@ private:
                 }
             }
         }
-        dbgout(2) << __func__ << ": addr=" << (void*)addr << endl;
+        dbgout(2) << __func__ << ": addr=" << (void*)addr << std::endl;
         return addr;
     }
 
@@ -101,7 +101,7 @@ private:
         if (!this->is_multithread()
           && this->is_multithread(initThreadAgent))
         {
-            std::cout << "Detected multithreaded target.\n";
+            std::cout << "Detected multithreaded target" << std::endl;
         }
     }
 
@@ -129,7 +129,7 @@ protected:
 
             if ((addr_ = ELF::get_linker_debug_struct_addr(bin)) == addr_t(-1))
             {
-                dbgout(0) << __func__ << ": static target" << endl;
+                dbgout(0) << __func__ << ": static target" << std::endl;
                 inited_ = true; // static binary
                 addr_ = 0;
                 detect_multithread_target();
@@ -161,13 +161,11 @@ protected:
                 {
                     inited_ = true;
 
-                #ifdef DEBUG
-                    std::clog << __func__ << " successful\n";
-                #endif
+                    dbgout(0) << __func__ << " successful" << std::endl;
                 }
                 else
                 {
-                    std::clog << __func__ << ": failed to set breakpoint" << std::endl;
+                    dbgout(0) << __func__ << ": failed to set breakpoint" << std::endl;
                 }
             }
         }
@@ -176,7 +174,8 @@ protected:
 public:
     bool has_linker_events() const 
     {
-        dbgout(1) << __func__ << ": " << T::process_name()->c_str() << "=" << inited_ << endl;
+        dbgout(1) << __func__ << ": " << T::process_name()->c_str() 
+                      << "=" << inited_ << std::endl;
         return inited_;
     }
 
@@ -219,7 +218,8 @@ public:
                 size_t nread = 0;
                 thread_read(thread, static_cast<addr_t>(m.l_name), buf, &nread);
                 assert(nread <= PATH_MAX);
-                dbgout(1) << __func__ << ": " << hex << m.l_addr << dec << ": " << buf << endl;
+                dbgout(1) << __func__ << ": " << std::hex << m.l_addr 
+                              << std::dec << ": " << buf << std::endl;
 
                 RefPtr<LinkDataImpl> ldata(new LinkDataImpl(m.l_addr, buf));
 
@@ -235,11 +235,11 @@ public:
             }
             else
             {
-                dbgout(0) << __func__ << "??? " << m.l_addr << endl;
+                dbgout(0) << __func__ << "??? " << m.l_addr << std::endl;
             }
             rd.r_map = m.l_next;
         }
-        dbgout(1) << "Updating symbol map..." << endl;
+        dbgout(1) << "Updating symbol map..." << std::endl;
         CHKPTR(this->symbols())->update(head.get());
 
         detect_multithread_target();

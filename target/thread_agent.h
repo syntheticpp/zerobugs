@@ -14,7 +14,7 @@
 // Wrapper for thread_db library calls for enumerating
 // threads in the target, initializing, etc.
 //
-#include "zdk/export.h"
+#include "zdk/log.h"
 #include "thread_db_error.h"
 #include <boost/shared_ptr.hpp>
 #include <boost/type_traits/remove_const.hpp>
@@ -50,7 +50,7 @@ class ZDK_LOCAL ThreadAgentWrapper : public T
             {
                 dbgout(0) << "td_init=" << res << " ("
                           << thread_db_error(__FILE__, __LINE__, res).what()
-                          << ")" << endl;
+                          << ")" << std::endl;
             }
         }
         return inited;
@@ -128,13 +128,11 @@ protected:
             {
                 dbgout(1) << "td_ta_new=" << res << " ("
                           << thread_db_error(__FILE__, __LINE__, res).what()
-                          << ")" << endl;
+                          << ")" << std::endl;
             }
             else
             {
-            #ifdef DEBUG
-                std::clog << __func__ << ": ok\n";
-            #endif
+                dbgout(0) << __func__ << ": ok\n";
 
                 assert(ta);
                 ta_ = boost::shared_ptr<td_thragent_t>(ta, AgentDeleter());
@@ -197,7 +195,7 @@ protected:
         }
         else
         {
-            dbgout(1) << __func__ << ": no thread agent" << endl;
+            dbgout(1) << __func__ << ": no thread agent" << std::endl;
         }
     }
 

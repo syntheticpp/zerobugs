@@ -253,7 +253,6 @@ private:
     Reader(const Reader&);
     Reader& operator=(const Reader&);
 
-    int             debugLevel_;
     Debugger*       debugger_;
     DescriptorMap   descriptors_;
 

@@ -9,19 +9,20 @@
 // http://www.boost.org/LICENSE_1_0.txt)
 // -------------------------------------------------------------------------
 //
-#include <assert.h>
-#include <algorithm>
-#include <sstream>
 #include "zdk/argv_util.h"
 #include "zdk/assert.h"
 #include "zdk/check_ptr.h"
 #include "zdk/export.h"
 #include "zdk/shared_string_impl.h"
 #include "zdk/stack.h"
+#include "zdk/stdexcept.h"
 #include "zdk/thread_util.h"
 #include "zdk/types.h"
 #include "zdk/type_system.h"
 #include "zdk/zobject_scope.h"
+#include <assert.h>
+#include <algorithm>
+#include <sstream>
 #include "generic/lock.h"
 #include "generic/temporary.h"
 #include "typez/public/debug_symbol.h"
@@ -75,8 +76,6 @@ static const char copyright_text[] =
   "libdwarf is available at: http://reality.sgiweb.org/davea/dwarf.html\n"
   "The complete copyright terms for libdwarf are described in the\n"
   "LIBDWARFCOPYRIGHT file, shipped with the ZeroBUGS software.";
-
-int Dwarf::debugLevel_ = 0;
 
 
 static bool inline_heuristics()
@@ -168,7 +167,7 @@ namespace
         {
             if (src && lineEvents_)
             {
-                dbgout(0) << src->c_str() << ':' << line << endl;
+                dbgout(1) << src->c_str() << ':' << line << endl;
 
                 assert(src->c_str()[0] == '/'); // expect abs path
                 lineEvents_->notify(src, line);
@@ -317,7 +316,7 @@ bool MacroEmitter::on_macro(const Dwarf_Macro_Details& detail)
 
 void MacroEmitter::emit(const string& name, const string& value)
 {
-    dbgout(0) << "name=" << name << endl;
+    dbgout(1) << "name=" << name << endl;
     emit_macro(thread_, events_, name, value);
 }
 
@@ -400,20 +399,22 @@ const char* Reader::copyright() const
 bool Reader::initialize(Debugger* db, int* argc, char*** argv)
 {
     debugger_ = db;
+
     Dwarf::init();
 
 BEGIN_ARG_PARSE(argc, argv)
-    ON_ARGV("--dwarf-debug=", debugLevel_)
-    {
-        dbgout(0) << "dwarf_debug_level=" << debugLevel_ << endl;
-    }
     ON_ARG("--dwarf-nofh")
     {
         fhandler_ = false; // disable frame handler
     }
 END_ARG_PARSE
 
-    env::set("ZERO_DEBUG_DWARF", debugLevel_, false);
+    // the ZERO_DEBUG_DWARF environmental variable
+    // controls debug output verbosity for the dwarfz
+    // library, let's keep it separate from the plugin
+
+    // env::set("ZERO_DEBUG_DWARF", db->verbose(), false);
+
     return true;
 }
 
@@ -488,7 +489,7 @@ void Reader::ensure_debug_cache_inited() const
             env::get("ZERO_DWARF_CACHE_SIZE",
             int(sysconf(_SC_OPEN_MAX) / 2));
 
-        handleCache_.reset(new DebugCache(size, debugLevel_, debugger_));
+        handleCache_.reset(new DebugCache(size, debugger_));
     }
 }
 
@@ -656,7 +657,7 @@ namespace Dwarf
                 if (frame_->program_count() != frame_->real_program_count())
                 {
                     //we're dealing with an inlined function, bye
-                    dbgout(0) << "inlined function? " << hex << base << dec << endl;
+                    dbgout(1) << "inlined function? " << hex << base << dec << endl;
                     return base;
                 }
             }
@@ -724,7 +725,7 @@ void EmitDebugSymbol::operator()(const Function& fun)
             return;
         }
     }
-    dbgout(0) << "----- " << fun.name() << " -----" << endl;
+    dbgout(1) << "----- " << fun.name() << " -----" << endl;
 
     const addr_t frameBase = CHKPTR(frame_)->frame_pointer();
 
@@ -732,7 +733,7 @@ void EmitDebugSymbol::operator()(const Function& fun)
 
     if (addr_t addr = fun.low_pc())
     {
-        dbgout(0) << fun.name() << ": " << hex <<addr << dec << endl;
+        dbgout(1) << fun.name() << ": " << hex <<addr << dec << endl;
 
         addr += moduleAdjust_;
         SymbolMap* smap = CHKPTR(thread_->symbols());
@@ -740,7 +741,7 @@ void EmitDebugSymbol::operator()(const Function& fun)
 
         if (sym.get())
         {
-            dbgout(0) << "sym=" << sym->name() << endl;
+            dbgout(1) << "sym=" << sym->name() << endl;
             if (!sym->name()->is_equal(name_))
             {
                 return;
@@ -801,9 +802,9 @@ void EmitDebugSymbol::emit_symbol(
 {
     assert(type);
 
-    dbgout(0) << dat.name() << ", Dwarf::Type=" << type->name()
+    dbgout(1) << dat.name() << ", Dwarf::Type=" << type->name()
               << (isRegister ? " (register) " : " ");
-    dbgout(0) << "val=0x" << hex << val << dec << endl;
+    dbgout(1) << "val=0x" << hex << val << dec << endl;
 
     // According to the DWARF standard: In the case
     // of locations used for structure members, the
@@ -828,7 +829,7 @@ void EmitDebugSymbol::emit_symbol(
 
     if (isRegister)
     {
-        dbgout(0) << dat.name() << "=" << val << endl;
+        dbgout(1) << dat.name() << "=" << val << endl;
         read_from_register(*adaptedType, val, *name);
 
         ++count_;
@@ -871,7 +872,7 @@ void EmitDebugSymbol::emit_symbol(
             {
                 sym->read(events_);
             }
-            dbgout(0) << sym->value() << endl;
+            dbgout(1) << sym->value() << endl;
         }
     }
 }
@@ -889,7 +890,7 @@ void EmitDebugSymbol::operator()(const Dwarf::Datum& dat)
     // skip unnamed objects
     if (dat.name() == 0 || *dat.name() == 0)
     {
-        dbgout(0) << "unnamed, filtered out" << endl;
+        dbgout(1) << "unnamed, filtered out" << endl;
         return;
     }
 
@@ -912,7 +913,7 @@ void EmitDebugSymbol::operator()(const Dwarf::Datum& dat)
             }
         }
     }
-    dbgout(0) << "----- " << dat.name() << " -----" << endl;
+    dbgout(1) << "----- " << dat.name() << " -----" << endl;
 
     if (Dwarf_Addr startScope = dat.start_scope())
     {
@@ -920,7 +921,7 @@ void EmitDebugSymbol::operator()(const Dwarf::Datum& dat)
         {
             if (fun->offset() < startScope)
             {
-                dbgout(0) << "out of scope" << endl;
+                dbgout(1) << "out of scope" << endl;
                 return;
             }
         }
@@ -939,13 +940,13 @@ void EmitDebugSymbol::operator()(const Dwarf::Datum& dat)
     bool isRegister = false;
     bool isValue = false;
 
-    dbgout(0) << "calculating frame_base" << endl;
+    dbgout(1) << "calculating frame_base" << endl;
     const addr_t frameBase = frame_base();
-    dbgout(0) << "frameBase=" << hex << frameBase << dec << endl;
+    dbgout(1) << "frameBase=" << hex << frameBase << dec << endl;
 
     if (boost::shared_ptr<Dwarf::Location> loc = dat.loc())
     {
-        dbgout(0) << "loc="<< loc << endl;
+        dbgout(1) << "loc="<< loc << endl;
         const addr_t programCount = CHKPTR(frame_)->program_count();
         val = loc->eval(frameBase, moduleAdjust_, unitBase_, programCount);
         isValue = loc->is_value();
@@ -958,11 +959,11 @@ void EmitDebugSymbol::operator()(const Dwarf::Datum& dat)
             size_t count = 0;
             thread_read(*thread_, val, val, &count);
         }
-        dbgout(0) << "Val=0x" << hex << val << dec << " is_reg=" << isRegister << endl;
+        dbgout(1) << "Val=0x" << hex << val << dec << " is_reg=" << isRegister << endl;
     }
     else // external variable?
     {
-        dbgout(0) << "external? off=" << dat.cu_offset() << endl;
+        dbgout(1) << "external? off=" << dat.cu_offset() << endl;
 
         SymbolMap* symbols = CHKPTR(thread_->symbols());
 
@@ -1274,16 +1275,16 @@ size_t Reader::enum_locals(
 
     if (boost::shared_ptr<Function> fun = find_function(*CHKPTR(sym)))
     {
-        dbgout(0) << sym->name() << ": fun=" << fun->name()
+        dbgout(1) << sym->name() << ": fun=" << fun->name()
                   << " addr=" << hex << sym->addr() << dec << endl;
 
         if (name && events && fun->unit())
         {
-            dbgout(0) << "enumerating macros..." << endl;
+            dbgout(1) << "enumerating macros..." << endl;
             MacroEmitter macro(*fun->unit(), *thread, *events, name, sym);
             if ((count = macro.enumerate()) != 0)
             {
-                dbgout(0) << count << " macro(s) found: " << name << endl;
+                dbgout(1) << count << " macro(s) found: " << name << endl;
                 return count;
             }
         }
@@ -1295,12 +1296,12 @@ size_t Reader::enum_locals(
                             fun->owner(), pc2InlinedOff_,
                             *CHKPTR(thread->stack_trace()), *frame))
         {
-            dbgout(0) << "emitting locals, frame=" << frame << endl;
+            dbgout(1) << "emitting locals, frame=" << frame << endl;
             emit_var(*this, emitter, *fun, paramOnly);
         }
 
         count = emitter.count();
-        dbgout(0) << "count=" << count << endl;
+        dbgout(1) << "count=" << count << endl;
     }
     return count;
 }
@@ -1329,7 +1330,7 @@ size_t Reader::enum_globals(
     }
     RefPtr<Process> process = table->process(&objectScope);
 
-    dbgout(0) << __func__ << ": scope=" << scope << endl;
+    dbgout(1) << __func__ << ": scope=" << scope << endl;
     Frame* stackFrame = thread_current_frame(CHKPTR(thread));
     if (!stackFrame)
     {
@@ -1347,7 +1348,7 @@ size_t Reader::enum_globals(
         RefPtr<SymbolMap::LinkData> link = symbols->file_list();
         for (; link; link = link->next())
         {
-            dbgout(0) << "enum_globals: " << link->filename() << endl;
+            dbgout(1) << "enum_globals: " << link->filename() << endl;
             if (Handle dbg = get_debug_handle(link->filename(), process))
             {
                 result += enum_globals(*thread,
@@ -1476,7 +1477,7 @@ size_t Reader::enum_unit_globals(
         if (!emit.count())
         {
             enum_ns_globals(unit->namespaces(), emit);
-            dbgout(0) << "enum_ns_globals=" << emit.count() << endl;
+            dbgout(1) << "enum_ns_globals=" << emit.count() << endl;
         }
 
         if (!emit.count() && name)
@@ -1580,7 +1581,7 @@ size_t Reader::enum_globals(
                                     events, dbg, frame,
                                     enumFuncs);
 
-        dbgout(0) << "enum_unit_globals=" << result << endl;
+        dbgout(1) << "enum_unit_globals=" << result << endl;
     }
 
     // to accomodate the expression interpreter, if a name was
@@ -1892,7 +1893,7 @@ DataType* Reader::lookup_type(
     }
     if (RefPtr<DataType> cachedType = typeMap_.find(name))
     {
-        dbgout(0) << "Found in typeMap: " << name << endl;
+        dbgout(1) << "Found in typeMap: " << name << endl;
         return cachedType.detach();
     }
 
@@ -2020,7 +2021,7 @@ size_t Reader::lookup_unit_by_name (
     }
     else
     {
-        dbgout(0) << __func__ << ": not found: " << moduleFileName->c_str() <<endl;
+        dbgout(1) << __func__ << ": not found: " << moduleFileName->c_str() <<endl;
     }
     return count;
 }
@@ -2122,7 +2123,7 @@ addr_t Reader::next_line_addr(
         return 0;
     }
     addr_t result = 0;
-    dbgout(0) << __func__ << " " << hex << addr << dec << endl;
+    dbgout(1) << __func__ << " " << hex << addr << dec << endl;
 
     ZObjectScope scope;
     RefPtr<SharedString> file = symtab->filename();
@@ -2161,12 +2162,12 @@ size_t Reader::line_to_addr (
                             sourceFile, line,
                             events, cancelled);
 
-        dbgout(0) << module->c_str() << ": " << sourceFile << ":"
+        dbgout(1) << module->c_str() << ": " << sourceFile << ":"
                   << line << " " << count << " matches" << endl;
     }
     else
     {
-        dbgout(0) << "handle not found: " << module << endl;
+        dbgout(1) << "handle not found: " << module << endl;
     }
     return count;
 }
@@ -2230,15 +2231,15 @@ Reader::find_function(const Symbol& sym, addr_t* retAddr) const
     }
     else
     {
-        dbgout(0) << "handle not found: " << fileName.get() << endl;
+        dbgout(1) << "handle not found: " << fileName.get() << endl;
     }
     if (fun)
     {
-        dbgout(0) << __func__ << '=' << fun->name() << endl;
+        dbgout(1) << __func__ << '=' << fun->name() << endl;
     }
     else
     {
-        dbgout(0) << __func__ << "=NULL addr=" << hex << addr << dec << endl;
+        dbgout(1) << __func__ << "=NULL addr=" << hex << addr << dec << endl;
     }
     if (!fun)
     {
@@ -2280,7 +2281,7 @@ void Reader::enum_var(EmitDebugSymbol& emit, const Block& block)
     // now enumerate the variables inside the
     // inner (nested) lexical blocks, try blocks, etc.
     List<Block> blks = block.blocks();
-    dbgout(0) << blks.size() << " block(s)" << endl;
+    dbgout(1) << blks.size() << " block(s)" << endl;
 
     List<Block>::const_iterator i = blks.begin(), end = blks.end();
     for (; i != end; ++i)
@@ -2300,7 +2301,7 @@ void Reader::enum_var(EmitDebugSymbol& emit, const Block& block)
             {
                 const loff_t adjust = table->adjustment();
 
-                dbgout(0) << __func__ << ": " << hex << pc
+                dbgout(1) << __func__ << ": " << hex << pc
                           << " (" << pc + adjust
                           << ") not in scope [" << i->low_pc()
                           << ", " << i->high_pc() << dec << ")"
@@ -2343,7 +2344,7 @@ size_t Reader::lookup_function (
     {
         symbols->enum_symbols(name, &funcs, SymbolTable::LKUP_DYNAMIC);
     }
-    dbgout(0) << name << ": " << funcs.size() << " match(es)" << endl;
+    dbgout(1) << name << ": " << funcs.size() << " match(es)" << endl;
     assert(funcs.size() || result == 0);
 
     TypeAdapter adapter(this, thread, frameBase, typeMap_);
@@ -2409,7 +2410,7 @@ bool Reader::emit_function (
             decl_file(&fun, fun).get(),
             fun.decl_line());
 
-        dbgout(0) << type->name() << endl;
+        dbgout(1) << type->name() << endl;
 
         events->notify(sym.get());
     }
@@ -2436,7 +2437,7 @@ bool Reader::unwind_step (
     Handle dbg = get_handle(*this, *thread, addr, adjust);
     if (!dbg)
     {
-        dbgout(0) << __func__ << ": .debug not found" << endl;
+        dbgout(1) << __func__ << ": .debug not found" << endl;
         return false;
     }
     //

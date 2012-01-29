@@ -18,7 +18,7 @@ LDFLAGS+=-Wl,--no-undefined
 ################################################################
 SRCS=	flui.cpp 			\
 		flmenu.cpp			\
-		pack_layout.cpp		\
+		flpack_layout.cpp	\
 		menu.cpp			\
 		user_interface.cpp	\
 		$(NULL)

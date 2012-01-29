@@ -10,6 +10,11 @@
 // -------------------------------------------------------------------------
 
 #include "zdk/config.h"
+#include "zdk/check_ptr.h"
+#include "zdk/signal_policy.h"
+#include "zdk/thread_util.h"
+#include "zdk/variant_util.h"
+#include "zdk/32_on_64.h"
 #include <errno.h>
 #include <fcntl.h>
 #include <unistd.h>
@@ -18,11 +23,6 @@
 #include <sstream>
 #include "generic/auto_file.h"
 #include "generic/temporary.h"
-#include "zdk/check_ptr.h"
-#include "zdk/signal_policy.h"
-#include "zdk/thread_util.h"
-#include "zdk/variant_util.h"
-#include "zdk/32_on_64.h"
 #include "dharma/canonical_path.h"
 #include "dharma/directory.h"
 #include "dharma/environ.h"
@@ -45,7 +45,6 @@
 #include "thread.h"
 
 using namespace std;
-using namespace eventlog;
 
 
 // Use the signfo_t struct to determine for sure
@@ -384,7 +383,7 @@ void LinuxLiveTarget::set_ptrace_options(pid_t pid)
 
         oldKernel_ = (major < 2) || (major == 2 && minor < 6);
 
-        dbgout(0) << __func__ << ": " << major << " " << minor
+        dbgout(0) << __func__ << ": " << major << '.' << minor
                   << " old_kernel=" << oldKernel_ << endl;
     }
 
