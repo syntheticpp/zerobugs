@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+
+# Work-around svn refusing to display diffs
+# if svn:mime-type is set to application/octet-stream
+
+bashtrap()
+{
+	echo
+	echo "*** CTRL-C detected. ***"
+
+	killall meld
+	killall svn
+}
+
+trap bashtrap INT
+
+changed=`svn diff $1 | grep Index | sed -e 's/Index: //g'`
+
+#echo $changed
+svn diff --diff-cmd=meld --force $changed &
+wait
+
