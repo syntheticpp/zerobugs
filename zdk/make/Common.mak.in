@@ -194,7 +194,7 @@ CXXFLAGS+=$(INCLUDE)
   ifeq ($(CXX_MAJOR),2)
 	CXXFLAGS+=-fno-default-inline 
   endif	
-  CXXFLAGS+=$(DEBUG_FORMAT) $(OPTIMIZE) -DHAVE_EXTRA_UI_FEATURES
+  CXXFLAGS+=$(DEBUG_FORMAT) $(OPTIMIZE)
  endif
 #endif
 

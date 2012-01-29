@@ -126,10 +126,13 @@ string PartialEncoder::encode_name(const Component& comp)
     const string& name = comp.name();
 
     assert(!name.empty());
+
     if (isdigit(name[0])) // numeric template param?
     {
         char* p = NULL;
-        /* long num = */ strtol(name.c_str(), &p, 0);
+        long num = strtol(name.c_str(), &p, 0);
+        num = num; // silence compiler warning
+
         if ((p != NULL) && (*p == '.'))
         {
             return "Ld" + name + "E";

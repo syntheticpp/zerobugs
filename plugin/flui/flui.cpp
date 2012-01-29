@@ -171,7 +171,7 @@ ui::Layout* Flui::init_layout()
     auto layout = new FlPackLayout(x(), y(), w(), h());
 
     //window_->add(layout->group());
-    //window_->end();
+    window_->end();
     window_->show();
 
     return layout;
