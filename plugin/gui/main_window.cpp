@@ -925,6 +925,9 @@ bool MainWindow::on_window_state_event(GdkEventWindowState* event)
         if (event->changed_mask & GDK_WINDOW_STATE_MAXIMIZED)
         {
             maximized_ = event->new_window_state & GDK_WINDOW_STATE_MAXIMIZED;
+    
+            Properties& props = *CHKPTR(debugger().properties());
+            props.set_word(WINDOW_MAXIMIZED, maximized_);
         }
     }
 

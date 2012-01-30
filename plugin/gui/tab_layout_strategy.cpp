@@ -9,6 +9,8 @@
 // http://www.boost.org/LICENSE_1_0.txt)
 // -------------------------------------------------------------------------
 //
+#include "zdk/log.h"
+#include "zdk/zero.h"
 #include "gtkmm/box.h"
 #include "gtkmm/connect.h"
 #include "gtkmm/flags.h"
@@ -18,9 +20,8 @@
 #include "gtkmm/resize.h"
 #include "gtkmm/widget.h"
 #include "zdk/properties.h"
-#include "zdk/zero.h"
 #include "tab_layout_strategy.h"
-
+#include <iostream>
 
 using namespace boost;
 using namespace Gtk;
@@ -89,6 +90,11 @@ TabLayoutStrategy::~TabLayoutStrategy()
 
 void TabLayoutStrategy::save_geometry() const
 {
+    if (dbg_.properties()->get_word("window.maximized", 0))
+    {
+        dbgout(0) << __func__ << ": is maximized, bailing out." << std::endl;
+        return;
+    }
     dbg_.properties()->set_word("code.width", hpaned_->get_position());
     dbg_.properties()->set_word("code.height", vpaned_->get_position());
 }

@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+file=$1
+
+svn add $file
+svn propset svn:keyworkd Id $file
+svn propset svn:mime-type text/plain $file
+

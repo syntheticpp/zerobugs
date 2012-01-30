@@ -486,6 +486,8 @@ void DebuggerEngine::shutdown()
             {
                 take_snapshot();
                 detach_targets();
+
+                Log::close();
                 _exit(0);
             }
             shutdown_plugins();
@@ -501,8 +503,11 @@ void DebuggerEngine::shutdown()
         catch (const std::exception& e)
         {
             cout << __func__ << ": " << e.what() << endl;
+
+            Log::close();
             _exit(1);
         }
+
         dbgout(0) << __func__ << ": complete" << endl;
     }
 }
@@ -3296,6 +3301,7 @@ bool DebuggerEngine::on_interface(
     if (uuid_equal(DebuggerPlugin::_uuid(), iid))
     {
         dbgout(0) << "detected plugin: " << lib->filename() << endl;
+        clog << "  " << lib->filename() << endl;
 #if !defined(NDEBUG) || defined(DEBUG)
         const int count = lib->count();
 #endif

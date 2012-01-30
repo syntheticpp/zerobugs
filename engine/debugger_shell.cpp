@@ -811,6 +811,7 @@ void DebuggerShell::handle_signal(int signum, siginfo_t* info, void*)
     }
     else
     {
+        Log::close();
         _exit(signum);
     }
 }
@@ -889,6 +890,7 @@ void DebuggerShell::handle_signal_impl(int signo)
             }
             else if (++interruptCount >= 3)
             {
+                Log::close();
                 _exit(1);
             }
             lastInterrupt = now;

@@ -63,7 +63,7 @@ Debugger* debugger_init(int argc, char* argv[])
         {
             debugger()->print_banner();
         }
-        cout << "Detecting plugins...\n";
+        clog << "Detecting plugins...\n";
         debugger()->scan_plugins("ZERO_PLUGIN_PATH");
 
         // save options: so that refreshing the properties
