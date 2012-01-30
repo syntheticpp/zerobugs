@@ -220,7 +220,8 @@ Dwarf::Function::high_pc() const
     {
         highPC_ = Block::high_pc();
 
-        LOG_DEBUG(2) << __func__ << "=" << hex << highPC_ << dec << endl;
+        //LOG_DEBUG(2) << __func__ << " " << name() << ": "
+        //             << hex << highPC_ << dec << endl;
     }
     return highPC_;
 }
@@ -234,6 +235,7 @@ Dwarf::Function::frame_base( Dwarf_Addr moduleBase,
 {
     const Dwarf_Addr base = unit() ? unit()->base_pc() : 0;
     Dwarf_Addr result = frameBase;
+
     if (boost::shared_ptr<Location> loc =
         Utils::loc(dbg(), die(), DW_AT_frame_base))
     {

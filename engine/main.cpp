@@ -439,6 +439,8 @@ and can call functions inside the debugged program.
 
 */
 #include "zdk/config.h"
+#include "zdk/log.h"
+#include "zdk/init.h"
 #include <iostream>
 #include <string>
 #include <signal.h>
@@ -454,7 +456,6 @@ and can call functions inside the debugged program.
 #include "dharma/system_error.h"
 #include "dharma/task_pool.h"
 #include "generic/singleton.h"
-#include "zdk/init.h"
 
 using namespace std;
 
@@ -538,7 +539,9 @@ int main(int argc, char* argv[])
     if (int err = pthread_atfork(acquire, release, release))
     {
         cerr << "pthread_atfork failed: " << strerror(err) << endl;
+        dbgout(0) << strerror(err) << endl;
     }
+
     try
     {
         sys::set_ptrace_error_handler(ptrace_error);
@@ -550,6 +553,8 @@ int main(int argc, char* argv[])
         if (detect_vmware())
         {
             clog << "VMware detected, turning off hardware breakpoints\n";
+            dbgout(-1) << "VMware detected" << endl;
+
             setenv("ZERO_HARDWARE_BREAKPOINTS", "0", 1);
         }
         set_plugin_path(argv[0]);

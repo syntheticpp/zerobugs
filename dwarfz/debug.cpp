@@ -1290,9 +1290,8 @@ Debug::unwind_step(Dwarf_Addr pc, AddrOps& funcs, RegTable& regs)
 {
     if (!unwind_)
     {
-    #ifdef DEBUG
-        log<debug>() << __func__ << ": " << filename() << "\n";
-    #endif
+        LOG_DEBUG(1) << __func__ << ": " << filename() << endl;
+
         unwind_.reset(new Unwind(dbg_));
     }
     Dwarf_Addr addr = unwind_->step(pc, funcs, regs);

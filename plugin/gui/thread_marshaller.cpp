@@ -107,7 +107,7 @@ BEGIN_SLOT(ThreadMarshaller::on_percent,(int fd, GdkInputCondition))
     vector<char> what(len);
     percentagePipe_.read(&what[0], len);
 
-    dbgout(0) << __func__ << ": showing progress box\n";
+    dbgout(0) << __func__ << ": showing progress box" << endl;
     show_progress_indicator(&what[0], perc);
 }
 END_SLOT()
@@ -272,7 +272,7 @@ bool ThreadMarshaller::process_responses() volatile
 
         if (is_service_call_pending())
         {
-            dbgout(1) << __func__ << ": service call complete\n";
+            dbgout(1) << __func__ << ": service call complete" << endl;
             set_service_call(false);
 
             // sync();

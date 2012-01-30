@@ -1547,7 +1547,7 @@ const HistoryEntry* DebuggerBase::get_most_recent_history_entry()
     }
     else
     {
-        dbgout(0) << __func__ << ": null settings object\n";
+        dbgout(0) << __func__ << ": null settings object" << endl;
     }
     return entry;
 }

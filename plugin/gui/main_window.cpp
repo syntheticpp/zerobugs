@@ -2717,7 +2717,7 @@ void MainWindow::message_box_signal()
         const int signum = thread->signal();
         if (signum == 0)
         {
-            dbgout(0) << thread->lwpid() << ": signal=0\n";
+            dbgout(0) << thread->lwpid() << ": signal=0" << endl;
         }
         else if ((signum != SIGTRAP)
                  && debugger().signal_policy(signum)->stop())
@@ -2785,7 +2785,7 @@ void MainWindow::set_active_thread(RefPtr<Thread> thread)
 
         if (!thread)
         {
-            dbgout(0) << __func__ << ": NULL thread\n";
+            dbgout(0) << __func__ << ": NULL thread" << endl;
         }
     }
 }

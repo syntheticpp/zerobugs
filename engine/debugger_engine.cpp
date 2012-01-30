@@ -280,8 +280,10 @@ DebuggerEngine::~DebuggerEngine() throw()
 
 
 ////////////////////////////////////////////////////////////////
-bool
-DebuggerEngine::initialize(int argc, char* argv[], ExecArg& args)
+bool DebuggerEngine::initialize(
+    int         argc,
+    char*       argv[],
+    ExecArg&    args)
 {
     int verbosity = 0, i = 1;
 
@@ -377,7 +379,7 @@ DebuggerEngine::initialize(int argc, char* argv[], ExecArg& args)
 
     if (!use_hardware_breakpoints())
     {
-        clog << "Hardware breakpoints disabled" << endl;
+        dbgout(-1) << "Hardware breakpoints disabled" << endl;
     }
     argc_ = argc;
     argv_ = argv;
@@ -2506,9 +2508,9 @@ size_t DebuggerEngine::enum_globals (
 
 ////////////////////////////////////////////////////////////////
 size_t DebuggerEngine::enum_funcs (
-    Thread& thread,
-    const char* name,
-    DebugSymbolEvents& events)
+    Thread&             thread,
+    const char*         name,
+    DebugSymbolEvents&  events)
 {
     SymbolEnum syms;
 

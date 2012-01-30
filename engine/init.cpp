@@ -30,12 +30,18 @@ static auto_ptr<DebuggerShell>& debugger()
     return dbgPtr;
 }
 
+string get_log_filename()
+{
+    return env::get("ZERO_LOG_NAME", "log");
+}
+
 
 Debugger* debugger_init(int argc, char* argv[])
 {
     uid_t owner = getuid();
     string path = debugger()->get_config_path(&owner);
-    path += "log";
+    path += get_log_filename();
+
     // initalize log file as owner, not as root if running under sudo
     {   sys::ImpersonationScope impersonate(owner);
         Log::init(path.c_str());

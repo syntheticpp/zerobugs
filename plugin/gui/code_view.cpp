@@ -361,7 +361,7 @@ void CodeView::set_elements_in_view
         }
         else
         {
-            dbgout(0) << __func__ << ": update_source=false\n";
+            dbgout(0) << __func__ << ": update_source=false" << endl;
             thread_ = thread;
         }
     }
@@ -437,7 +437,7 @@ CodeView::disasm_async(Thread& thread, Symbol& sym, bool hilite)
     const SymbolTable* symtab = sym.table(&scope);
     if (!symtab)
     {
-        dbgout(0) << __func__ << ": no symbol table\n";
+        dbgout(0) << __func__ << ": no symbol table" << endl;
         return false;
     }
     const addr_t addr = sym.addr();
@@ -475,11 +475,11 @@ CodeView::disasm_async(Thread& thread, Symbol& sym, bool hilite)
         }
         if (start.is_null())
         {
-            dbgout(0) << __func__ << ": lower_fun failed\n";
+            dbgout(0) << __func__ << ": lower_fun failed" << endl;
         }
         else if (start->addr() > addr)
         {
-            dbgout(0) << __func__ << ": lower_fun out of range\n";
+            dbgout(0) << __func__ << ": lower_fun out of range" << endl;
 
             start.reset();
         }
@@ -547,7 +547,7 @@ CodeView::disasm_async(Thread& thread, Symbol& sym, bool hilite)
         if (start.is_null())
         {
             dbgout(0) << __func__ << ": fallback to " << sym
-                      << " [" << hex << addr << "-" << end << ")\n";
+                      << " [" << hex << addr << "-" << end << ")" << endl;
             start = &sym;
             begin = addr; // symbol->addr();
             end = addr + ASM_PAGE_SIZE;
@@ -757,7 +757,7 @@ void CodeView::mark_line
 
     if (i == lineMap_.end())
     {
-        dbgout(0) << hex << lineNum << dec << " line not in map\n.";
+        dbgout(0) << hex << lineNum << dec << " line not in map" << endl;
 
         if (view_type() != VIEW_SOURCE)
         {
@@ -1079,7 +1079,7 @@ CodeView::get_src_addr(size_t pos, const RefPtr<Thread>& thr)
     }
     else
     {
-        dbgout(0) << __func__ << ": pos not found " << pos << "\n";
+        dbgout(0) << __func__ << ": pos not found " << pos << endl;
     }
 }
 
@@ -1169,7 +1169,7 @@ size_t CodeView::get_line(Symbol& sym) const
 {
     if (file_.is_null())
     {
-        dbgout(0) << __func__ << ": no file in view.\n";
+        dbgout(0) << __func__ << ": no file in view." << endl;
         return 0;
     }
     if (!sym.file())

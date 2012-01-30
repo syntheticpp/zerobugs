@@ -529,24 +529,28 @@ Location::eval(Dwarf_Debug dbg,
                 const Dwarf_Addr addr = addrOps->read_cpu_reg(ureg);
                 LOG_DEBUG(2) << "Read_cpu_reg=" << hex << addr << dec << endl;
 
-                LOG_DEBUG(2) << "loc.lr_num=" << hex<< loc.lr_number << dec << endl;
+                LOG_DEBUG(2) << "loc.lr_num=" << hex << loc.lr_number << dec << endl;
                 stack.push(addr + loc.lr_number);
             }
             break;
 
         case DW_OP_piece:
-            LOG_WARN << __func__ << ": opcode=0x"
-                     << hex << (int)loc.lr_atom << dec
-                     << " operand=" << loc.lr_number << endl;
+            // log it but don't do anything else
 
-            // todo: figure out how to handle this correctly
-            if (loc.lr_number < sizeof (Dwarf_Addr))
+            /*  DWARF 4 Standard: 2.6.1.2 Composite Location Descriptions
+                "Each piece is described by a composition operation, which 
+                "does not compute a value nor store any result on the DWARF stack"*/ 
+            LOG_DEBUG(0) << __func__ << ": opcode=0x"
+                         << hex << static_cast<int>(loc.lr_atom)
+                         << " operand=" << dec << loc.lr_number << endl;
+
+            /* if (loc.lr_number < sizeof (Dwarf_Addr))
             {
                 assert(!stack.empty());
                 Dwarf_Addr v = stack.top();
 
                 LOG_DEBUG(2) << "stack_top=" << hex << v << dec << endl;
-            }
+            } */
             break;
 
         case DW_OP_const1u:

@@ -11,11 +11,12 @@
 // http://www.boost.org/LICENSE_1_0.txt)
 // -------------------------------------------------------------------------
 
+#include "zdk/export.h"
+#include "zdk/stdexcept.h"
 #include <assert.h>
 #include <string.h>
 #include <string>
 #include <boost/lexical_cast.hpp>
-#include "zdk/export.h"
 
 /**
  * Shift arguments to the left, starting at index i
@@ -34,9 +35,11 @@ void inline ZDK_LOCAL argv_shift(int* argc, char** argv, int i)
 }
 
 
-bool inline
-ZDK_LOCAL
-argv_match(int* argc, char*** argv, int i, const char* s)
+bool inline ZDK_LOCAL argv_match(
+    int*            argc,
+    char***         argv,
+    int             i,
+    const char*     s)
 {
     assert(argc);
     assert(argv);
@@ -54,9 +57,12 @@ argv_match(int* argc, char*** argv, int i, const char* s)
 }
 
 
-bool inline
-ZDK_LOCAL
-argv_match(int* argc, char*** argv, int i, const char* s1, const char* s2)
+bool inline ZDK_LOCAL argv_match(
+    int*            argc,
+    char***         argv,
+    int             i,
+    const char*     s1,
+    const char*     s2)
 {
     assert(argc);
     assert(argv);
@@ -83,8 +89,7 @@ struct ZDK_LOCAL argv_traits
     }
 };
 
-template<>
-struct ZDK_LOCAL argv_traits<const char*>
+template<> struct ZDK_LOCAL argv_traits<const char*>
 {
     static inline void read(const char* arg, const char*& val)
     {
@@ -92,8 +97,7 @@ struct ZDK_LOCAL argv_traits<const char*>
     }
 };
 
-template<>
-struct ZDK_LOCAL argv_traits<std::string>
+template<> struct ZDK_LOCAL argv_traits<std::string>
 {
     static inline void read(const char* arg, std::string& val)
     {
@@ -104,9 +108,14 @@ struct ZDK_LOCAL argv_traits<std::string>
     }
 };
 
-template<typename T> bool inline
-ZDK_LOCAL
-argv_match(int* argc, char*** argv, int i, const char* s, size_t n, T& val)
+template<typename T> bool inline ZDK_LOCAL argv_match(
+
+    int*        argc,
+    char***     argv,
+    int         i,
+    const char* s,
+    size_t      n,
+    T&          val)
 {
     assert(argc);
     assert(argv);
@@ -145,6 +154,7 @@ argv_match(int* argc, char*** argv, int i, const char* s, size_t n, T& val)
     for (int i = 1; i < *_ac; ) { if (!i){} \
 
 #define ON_ARG(s) else if (argv_match(_ac, _av, i, (s)))
+
 #define ON_ARGV(s,v) \
     else if (argv_match(_ac, _av, i, (s), sizeof(s) - 1, v))
 

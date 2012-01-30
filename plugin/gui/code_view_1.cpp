@@ -227,7 +227,7 @@ CodeView::read_source_file(const RefPtr<SharedString>& fname, addr_t)
             }
             break;
         }
-        dbgout(1) << "  [" << pos << ", " << i << "]\n";
+        dbgout(1) << "  [" << pos << ", " << i << "]" << endl;
         lineMap_.insert(make_pair(i, pos));
         reverseLineMap_.insert(make_pair(pos, i));
 

@@ -76,8 +76,10 @@ void LinuxCoreTarget::read_memory
     const size_t nbytes = len * sizeof(word_t);
 
     size_t bytesRead = core_->readmem(addr, (char*)buf, nbytes);
+
     dbgout(0) << "LinuxCoreTarget::" << __func__ << "=" << bytesRead << endl;
     assert((bytesRead % sizeof (word_t)) == 0);
+
     if (wordsRead)
     {
         *wordsRead = bytesRead / sizeof (word_t);
@@ -383,7 +385,7 @@ VirtualDSO* LinuxCoreTarget::read_virtual_dso() const
                 addr &= 0xffffffff;
             }
           */
-            dbgout(0) << __func__ << ": addr=" << (void*)addr << "\n";
+            dbgout(0) << __func__ << ": addr=" << (void*)addr << endl;
 
             std::vector<char> buf(size);
 
@@ -394,7 +396,7 @@ VirtualDSO* LinuxCoreTarget::read_virtual_dso() const
             }
             else
             {
-                dbgout(0) << __func__ << ": readmem=" << nread << "\n";
+                dbgout(0) << __func__ << ": readmem=" << nread << endl;
             }
         }
     }
