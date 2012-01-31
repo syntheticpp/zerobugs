@@ -7,6 +7,7 @@
 #include "zdk/argv_util.h"
 #include "zdk/check_ptr.h"
 
+#include "flcode_view.h"
 #include "flmenu.h"
 #include "flpack_layout.h"
 #include "flui.h"
@@ -28,8 +29,9 @@ using namespace std;
 #define WINDOW_H        "flui.window.height"
 #define WINDOW_TITLE    "ZeroBUGS"
 
-static const int default_window_width = 800;
-static const int default_window_height = 700;
+static const int default_window_width   = 1200;
+static const int default_window_height  = 800;
+
 
 /**
  * Advertise the interfaces supported by this plugin
@@ -98,6 +100,8 @@ bool Flui::initialize(
         args_.push_back( (*argv)[0] );
     }
 
+    // can worry about cmd line params later...
+
     /*BEGIN_ARG_PARSE(argc, argv)
     ON_ARG("--foo")
         {
@@ -123,6 +127,7 @@ int Flui::y() const
 {
     return window_ ? window_->y() : 0;
 }
+
 ////////////////////////////////////////////////////////////////
 int Flui::w() const
 {
@@ -134,6 +139,28 @@ int Flui::h() const
 {
     return window_ ? window_->h() : 0;
 }
+
+
+////////////////////////////////////////////////////////////////
+ui::CodeView* Flui::init_code_view()
+{
+    return new FlCodeView(*this);
+}
+
+
+////////////////////////////////////////////////////////////////
+ui::Layout* Flui::init_layout()
+{
+    assert(window_);
+
+    auto layout = new FlPackLayout(x(), y(), w(), h());
+
+    window_->end();
+    window_->show();
+
+    return layout;
+}
+
 
 ////////////////////////////////////////////////////////////////
 void Flui::init_main_window()
@@ -160,21 +187,6 @@ ui::CompositeMenu* Flui::init_menu()
 {
     assert(window_);
     return new FlMenuBar(*this, window_);
-}
-
-
-////////////////////////////////////////////////////////////////
-ui::Layout* Flui::init_layout()
-{
-    assert(window_);
-
-    auto layout = new FlPackLayout(x(), y(), w(), h());
-
-    //window_->add(layout->group());
-    window_->end();
-    window_->show();
-
-    return layout;
 }
 
 

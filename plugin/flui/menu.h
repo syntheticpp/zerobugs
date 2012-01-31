@@ -48,13 +48,18 @@ namespace ui
     {
     public:
         //todo: shortcut?
-        explicit MenuItem(const std::string& name) : Menu(name)
+        explicit MenuItem(const std::string& name, Command* c = nullptr) 
+            : Menu(name)
+            , command_(c)
         { }
 
         ~MenuItem() throw()
         { }
 
-        virtual std::unique_ptr<Command> emit() const;
+        virtual void emit(std::unique_ptr<Command>&);
+
+    private:
+        std::unique_ptr<Command> command_;
     };
 
 

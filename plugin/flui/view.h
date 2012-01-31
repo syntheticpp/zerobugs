@@ -14,6 +14,7 @@ namespace ui
 {
     class Layout;
 
+
     /**
      * Models the current state of the debugger and UI.
      */
@@ -44,10 +45,8 @@ namespace ui
     public:
         virtual ~View() { }
 
+        virtual void add_to(Layout&) = 0;
         virtual void update(const State&) = 0;
-
-        // visitor pattern
-        virtual void accept(Layout&) = 0;
     };
 
     
@@ -57,7 +56,7 @@ namespace ui
     class Layout : public View
     {
     public:
-        virtual void add(View&) = 0;
+        // virtual void add(View&) = 0;
         virtual void show(View&, bool) = 0;
     };
 

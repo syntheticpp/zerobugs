@@ -16,7 +16,10 @@ LDLIBS+=-lfltk -lpthread
 LDFLAGS+=-Wl,--no-undefined
 
 ################################################################
-SRCS=	flui.cpp 			\
+SRCS=	code_view.cpp		\
+		flcode_view.cpp		\
+		flcode_table.cpp	\
+		flui.cpp 			\
 		flmenu.cpp			\
 		flpack_layout.cpp	\
 		menu.cpp			\

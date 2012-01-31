@@ -19,13 +19,11 @@ class Fl_Window;
 class Flui : public ui::Controller
     , VersionInfoImpl<ZERO_API_MAJOR, ZERO_API_MINOR>
 {
-protected:
-    virtual ~Flui();
-
 public:
     Flui();
 
-    virtual void release();
+protected:
+    virtual ~Flui();
 
     BEGIN_INTERFACE_MAP(Flui)
         INTERFACE_ENTRY(DebuggerPlugin)
@@ -36,6 +34,9 @@ public:
     int y() const;
     int w() const;
     int h() const;
+
+    // --- RefCounted
+    virtual void release();
 
     // --- DebuggerPlugin interface
     /**
@@ -49,11 +50,11 @@ public:
 
     const char* copyright() const;
 
-
 private:
+    virtual ui::CodeView*       init_code_view();
+    virtual ui::Layout*         init_layout();
     virtual void                init_main_window();
     virtual ui::CompositeMenu*  init_menu();
-    virtual ui::Layout*         init_layout();
 
     virtual void    lock();
     virtual void    unlock();

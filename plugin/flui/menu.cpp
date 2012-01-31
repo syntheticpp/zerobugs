@@ -7,8 +7,8 @@
 #include "menu.h"
 
 
-std::unique_ptr<ui::Command> ui::MenuItem::emit() const
+void ui::MenuItem::emit(std::unique_ptr<Command>& c)
 {
-    return nullptr;
+    command_.swap(c);
 }
 

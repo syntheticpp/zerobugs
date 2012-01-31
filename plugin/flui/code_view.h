@@ -10,11 +10,19 @@
 
 namespace ui
 {
+    class Controller;
+
+
     class CodeView : public View
     {
     public:
-    };
+        explicit CodeView(ui::Controller&);
+        ~CodeView();
 
+    private:
+        virtual void update(const State&);
+    };
+/*
     class SourceView : public CodeView
     {
     public:
@@ -24,7 +32,7 @@ namespace ui
     {
     public:
     };
-
+*/
     // composite
     class MultiCodeView : public CodeView
     {

@@ -6,7 +6,7 @@
 //
 // $Id: flpack_layout.h 67464 2012-01-28 04:14:52Z unknown $
 //
-#include "view.h"
+#include "code_view.h"
 #include <FL/Fl_Group.H>
 
 
@@ -16,18 +16,23 @@ public:
     FlPackLayout(int x, int y, int w, int h);
     ~FlPackLayout();
 
-    Fl_Group* group() { return group_; }
+    //Fl_Group* group() { return group_; }
 
-    // View intterface
-    virtual void accept(ui::Layout&);
+    // View interface
+    virtual void add_to(ui::Layout&);
     virtual void update(const ui::State&);
 
     // Layout interface
-    virtual void add(ui::View&);
     virtual void show(ui::View&, bool);
+
+    void add_code_view(Fl_Widget* w);
+
+protected:
+    int code_height() const;
 
 private:
     Fl_Group*   group_;
+    Fl_Group*   codeArea_;
 };
 
 

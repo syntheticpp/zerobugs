@@ -13,6 +13,7 @@
 
 namespace ui
 {
+    class CodeView;
     class CompositeMenu;
 
    
@@ -78,6 +79,9 @@ namespace ui
         virtual int y() const = 0;
         virtual int w() const = 0;
         virtual int h() const = 0;
+
+        // just experimenting some ideas...
+        std::unique_ptr<Command>& command() { return command_; }
 
         // --- DebuggerPlugin interface
         /**
@@ -160,13 +164,22 @@ namespace ui
     protected:
         Debugger* debugger() { assert(debugger_); return debugger_; }
 
+        void build();
+        void build_layout();
+        void build_menu();
+
         // create an object to hold state
         virtual State* init_state();
 
-        // these are called from the ui thread at the top of run()
-        virtual void            init_main_window();
+        // These are called from build(). The initXYZ are factory
+        // methods, and the actual widgets that correspond to menu,
+        // layout, etc. are "populated" by the buildXYZ methods.
+        virtual CodeView*       init_code_view();
         virtual CompositeMenu*  init_menu();
         virtual Layout*         init_layout();
+
+        // this creates the main "application window"
+        virtual void            init_main_window();
 
         virtual int wait_for_event() { return 0; }
 

@@ -4,6 +4,7 @@
 //
 // $Id$
 //
+#include "code_view.h"
 #include "menu.h"
 #include "user_interface.h"
 #include "dharma/system_error.h"
@@ -64,10 +65,9 @@ public:
 class ZDK_LOCAL NullLayout : public ui::Layout
 {
     // View interface
+    virtual void add_to(ui::Layout&) { }
     virtual void update(const ui::State&) { }
-    virtual void accept(ui::Layout&) { }
     // Layout interface
-    virtual void add(ui::View&) { }
     virtual void show(ui::View&, bool) { }
 };
 
@@ -106,6 +106,7 @@ ui::Controller::Controller()
 }
 
 
+////////////////////////////////////////////////////////////////
 ui::Controller::~Controller()
 {
 }
@@ -125,6 +126,13 @@ void ui::Controller::init_main_window()
 
 
 ////////////////////////////////////////////////////////////////
+ui::CodeView* ui::Controller::init_code_view()
+{
+    return nullptr;
+}
+
+
+////////////////////////////////////////////////////////////////
 ui::CompositeMenu* ui::Controller::init_menu()
 {
     return nullptr;
@@ -139,6 +147,60 @@ ui::Layout* ui::Controller::init_layout( )
 
 
 ////////////////////////////////////////////////////////////////
+void ui::Controller::build()
+{
+    init_main_window();
+
+    menu_ = init_menu();
+
+    if (menu_)
+    {
+        build_menu();
+    }
+
+    layout_.reset(init_layout());
+
+    if (layout_)
+    {
+        build_layout();
+    }
+}
+
+
+////////////////////////////////////////////////////////////////
+void ui::Controller::build_layout()
+{
+    assert(layout_);
+    
+    if (CodeView* v = init_code_view())
+    {
+        v->add_to(*layout_);
+    }
+}
+
+
+class Quit : public ui::Command
+{
+    Debugger* debugger_;
+
+    void exec_on_main_thread() { debugger_->quit(); }
+    void exec_on_ui_thread() { } 
+
+public:
+    explicit Quit(Debugger* debugger) : debugger_(debugger)
+    { }
+};
+
+////////////////////////////////////////////////////////////////
+void ui::Controller::build_menu()
+{
+    assert(menu_);
+
+    menu_->add(RefPtr<MenuItem>(new MenuItem("File/Quit")));
+}
+
+
+////////////////////////////////////////////////////////////////
 void ui::Controller::error_message(const std::string&) const
 {
 }
@@ -148,15 +210,7 @@ void ui::Controller::error_message(const std::string&) const
 void ui::Controller::run()
 {
     lock();
-
-    init_main_window();
-
-    menu_ = init_menu();
-    if (menu_)
-    {
-        menu_->add(RefPtr<MenuItem>(new MenuItem("File/Test")));
-    }
-    layout_.reset(init_layout());
+    build();
 
     while (wait_for_event() > 0)
     {
