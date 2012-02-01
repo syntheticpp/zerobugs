@@ -6,6 +6,7 @@
 //
 // $Id$
 //
+    #include "zdk/ref_counted_impl.h"
 #include "view.h"
 #include <cassert>
 #include <memory>
@@ -27,16 +28,25 @@ namespace ui
      * UI thread. 
      * @see Controller::on_event for how this class is used.
      */
-    class Command
+    class Command : public RefCountedImpl<>
     {
     public:
-        virtual ~Command() { }
+        virtual ~Command() throw() { }
 
         // request from ui to main thread
-        virtual void exec_on_main_thread() = 0;
+        virtual bool execute_on_main_thread()
+        {
+            return false;
+        }
 
         // response to ui thread
-        virtual void exec_on_ui_thread() = 0;
+        virtual void continue_on_ui_thread()
+        {
+        }
+
+        virtual void cancel()
+        {
+        }
     };
 
 
@@ -80,8 +90,8 @@ namespace ui
         virtual int w() const = 0;
         virtual int h() const = 0;
 
-        // just experimenting some ideas...
-        std::unique_ptr<Command>& command() { return command_; }
+        // asynchronous
+        void exec(RefPtr<Command>);
 
         // --- DebuggerPlugin interface
         /**
@@ -193,7 +203,7 @@ namespace ui
         RefPtr<CompositeMenu>       menu_;
 
         // mail box for passing requests between main and ui threads
-        std::unique_ptr<Command>    command_;    
+        RefPtr<Command>             command_;    
     };
 
 } // namespace 

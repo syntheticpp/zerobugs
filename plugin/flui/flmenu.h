@@ -19,7 +19,8 @@ public:
     virtual void add(RefPtr<ui::Menu>);
 
 private:
-    static void exec_menu_item(Fl_Widget*, void*);
+    void exec_command(const char* path);
+    static void exec_command(Fl_Widget*, void*);
 
     ui::Controller& controller_;
     Fl_Menu_Bar*    menu_;

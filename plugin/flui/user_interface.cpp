@@ -7,6 +7,7 @@
 #include "code_view.h"
 #include "menu.h"
 #include "user_interface.h"
+#include <FL/Enumerations.H>
 #include "dharma/system_error.h"
 #include <iostream>
 #include <string>
@@ -84,9 +85,9 @@ public:
         , error_(e)
     { }
 
-    void exec_on_main_thread() { }
+    virtual ~CommandError() throw() { }
 
-    void exec_on_ui_thread() 
+    void continue_on_ui_thread() 
     {
         controller_.error_message(error_);
     }
@@ -179,24 +180,16 @@ void ui::Controller::build_layout()
 }
 
 
-class Quit : public ui::Command
-{
-    Debugger* debugger_;
-
-    void exec_on_main_thread() { debugger_->quit(); }
-    void exec_on_ui_thread() { } 
-
-public:
-    explicit Quit(Debugger* debugger) : debugger_(debugger)
-    { }
-};
-
 ////////////////////////////////////////////////////////////////
 void ui::Controller::build_menu()
 {
     assert(menu_);
 
-    menu_->add(RefPtr<MenuItem>(new MenuItem("File/Quit")));
+    menu_->add(new SimpleCommandMenu<>("File/Quit", FL_ALT + 'q', [this]()->bool {
+            command_ = new Command();
+            debugger_->quit();
+            return true;
+        }));
 }
 
 
@@ -207,6 +200,9 @@ void ui::Controller::error_message(const std::string&) const
 
 
 ////////////////////////////////////////////////////////////////
+/**
+ * UI event loop
+ */
 void ui::Controller::run()
 {
     lock();
@@ -216,14 +212,12 @@ void ui::Controller::run()
     {
         if (command_) try
         {
-            command_->exec_on_ui_thread();
+            command_->continue_on_ui_thread();
         }
         catch (const std::exception& e)
         {
             error_message(e.what());
         }
-
-        command_.reset();
     }
 }
 
@@ -241,6 +235,31 @@ bool ui::Controller::initialize(
     return true;
 }
 
+// silly busy-wait for experimentation purposes
+class WaitCommand : public ui::Command
+{
+    bool cancelled_;
+
+    bool execute_on_main_thread()
+    {
+        std::clog << __func__ << ": enter\n";
+        while(!cancelled_)
+        {
+            usleep(10000);
+        }
+        std::clog << __func__ << ": leave\n";
+        return true;
+    }
+
+    void cancel() 
+    { 
+        std::clog << __func__ << std::endl;
+        cancelled_ = true; 
+    }
+
+public:
+    WaitCommand() : cancelled_(false) { }
+};
 
 ////////////////////////////////////////////////////////////////
 /**
@@ -252,22 +271,34 @@ bool ui::Controller::on_event(
     EventType   eventType )
 
 {
+    RefPtr<Command> c;
+
     {   LockedScope lock(*this);
-
         state_->update(thread, eventType);
-        
-        if (command_) try
-        {
-            command_->exec_on_main_thread();
-        }
-        catch (const std::exception& e)
-        {
-            command_.reset( new CommandError(*this, e.what()) );
-        }
-    }
-    notify_ui_thread();
 
-    return false;
+        if (!command_)
+        {
+            command_ = new WaitCommand();
+        }
+        c = command_;
+    }
+    bool result = true;
+    try
+    {
+        result = c->execute_on_main_thread();
+    }
+    catch (const std::exception& e)
+    {
+        c = new CommandError(*this, e.what());
+    }
+
+    // todo: do this only if target not resumed
+    {   LockedScope lock(*this);
+        state_->update(thread, eventType);
+    }
+
+    notify_ui_thread();
+    return result;
 }
 
 
@@ -388,5 +419,22 @@ bool ui::Controller::on_message (
     bool                    async)
 {
     return false;
+}
+
+
+////////////////////////////////////////////////////////////////
+void ui::Controller::exec(RefPtr<Command> c)
+{
+    std::clog << __func__ << ": " << c.get() << ", " << command_.get() << std::endl;
+
+    if (c)
+    {
+        if (command_)
+        {
+            command_->cancel();
+        }
+        
+        command_ = c;
+    }
 }
 

@@ -9,6 +9,7 @@
 #include "zdk/ref_counted_impl.h"
 #include "user_interface.h"
 
+#include <functional>
 #include <string>
 #include <vector>
 
@@ -22,77 +23,105 @@ namespace ui
     {
     public:
         Menu()
-        { }
+        {
+        }
 
-        explicit Menu(const std::string& name) : name_(name)
-        { }
+        explicit Menu(const std::string& name, int shortcut) 
+            : name_(name)
+            , shortcut_(shortcut)
+        {
+        }
 
         ~Menu() throw()
-        { }
+        {
+        }
 
         const std::string& name() const
         {
             return name_;
         }
 
+        int shortcut() const 
+        {
+            return shortcut_;
+        }
+
         virtual void update(const State& state)
-        { }
+        {
+        }
+        
+        virtual RefPtr<Command> emit_command() const;
 
     private:
-        std::string     name_;
+        std::string name_;
+        int         shortcut_;  // aka accelerator
     };
 
-
-
-    class MenuItem : public Menu
+    /**
+     * Execute a command on the main thread, no continuation
+     * on the UI thread.
+     */
+    template<typename Callable = std::function<bool ()> >
+    class SimpleCommandMenu : public Menu
     {
     public:
-        //todo: shortcut?
-        explicit MenuItem(const std::string& name, Command* c = nullptr) 
-            : Menu(name)
-            , command_(c)
-        { }
+        SimpleCommandMenu(const std::string& name, int shortcut, Callable c)
+            : Menu(name, shortcut)
+            , callable_(c)
+        {
+        }
 
-        ~MenuItem() throw()
-        { }
+        ~SimpleCommandMenu() throw()
+        {
+        }
+        
+        virtual RefPtr<Command> emit_command() const
+        {
+            struct SimpleCommand : public Command
+            {
+                Callable c_;
+                
+                SimpleCommand(Callable c) : c_(c) { }
+                ~SimpleCommand() throw() {}
 
-        virtual void emit(std::unique_ptr<Command>&);
+                bool execute_on_main_thread() 
+                {
+                    return c_();
+                }
+            };
+
+            return new SimpleCommand(callable_);
+        }
 
     private:
-        std::unique_ptr<Command> command_;
+        Callable callable_;
     };
-
 
 
     class CompositeMenu : public Menu
     {
     public:
-        explicit CompositeMenu(ui::Controller& c)
-            : controller_(c)
-        { }
+        CompositeMenu()
+        {
+        }
 
-        explicit CompositeMenu(
-            ui::Controller&     c,
-            const std::string&  name
-          ) : Menu(name)
-            , controller_(c)
-        { }
+        CompositeMenu(const std::string& name, int shortcut = 0) 
+            : Menu(name, shortcut)
+        {
+        }
 
         ~CompositeMenu() throw()
-        { }
-        /*
-        virtual void add(RefPtr<MenuItem> menu) 
         {
-            children_.push_back(menu);
-        } */
+        }
         
         virtual void add(RefPtr<Menu> menu) 
         {
             children_.push_back(menu);
         }
         
-
-    private:
+        //todo: add protected lookup method
+    //private:
+    protected:
         virtual void update(const State& state) 
         {
             for (auto i = children_.begin(); i != children_.end(); ++i)
@@ -101,7 +130,6 @@ namespace ui
             }
         }
 
-        ui::Controller&             controller_;
         std::vector<RefPtr<Menu> >  children_;
     };
 }

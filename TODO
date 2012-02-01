@@ -1,2 +1,6 @@
  - Support FreeBSD (as of now, the FBSD-related classes in target are just a sketch).
 
+ - Better build system.
+
+ - Remove throw() specifications
+

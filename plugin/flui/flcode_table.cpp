@@ -58,7 +58,14 @@ void FlCodeTable::draw_cell(TableContext context, int R, int C, int X, int Y, in
         fl_push_clip(X, Y, W, H);
         {
             // BG COLOR
-            fl_color( /*row_selected(R) ? selection_color() : */ FL_WHITE);
+            if (C == 0)
+            {
+                fl_color( /*row_selected(R) ? selection_color() : */ FL_LIGHT2);
+            }
+            else
+            {
+                fl_color( /*row_selected(R) ? selection_color() : */ FL_WHITE);
+            }
             fl_rectf(X, Y, W, H);
 
             // TEXT
@@ -66,8 +73,8 @@ void FlCodeTable::draw_cell(TableContext context, int R, int C, int X, int Y, in
             fl_draw(s, X, Y, W, H, FL_ALIGN_LEFT);
 
             // BORDER
-            fl_color(FL_LIGHT2); 
-            fl_rect(X, Y, W, H);
+            //fl_color(FL_LIGHT2); 
+            //fl_rect(X, Y, W, H);
         }
         fl_pop_clip();
         return;

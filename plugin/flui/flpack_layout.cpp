@@ -11,6 +11,7 @@
 
 #include <FL/Fl_Box.H>
 
+// todo: move these to a header file and include in flmenu.cpp
 static const int menubar_h  = 30;
 static const int statbar_h  = 30;
 
