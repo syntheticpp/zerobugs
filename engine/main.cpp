@@ -539,7 +539,6 @@ int main(int argc, char* argv[])
     if (int err = pthread_atfork(acquire, release, release))
     {
         cerr << "pthread_atfork failed: " << strerror(err) << endl;
-        dbgout(0) << strerror(err) << endl;
     }
 
     try
@@ -553,8 +552,6 @@ int main(int argc, char* argv[])
         if (detect_vmware())
         {
             clog << "VMware detected, turning off hardware breakpoints\n";
-            dbgout(-1) << "VMware detected" << endl;
-
             setenv("ZERO_HARDWARE_BREAKPOINTS", "0", 1);
         }
         set_plugin_path(argv[0]);

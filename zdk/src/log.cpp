@@ -18,9 +18,9 @@
 
 using namespace std;
 
-static Mutex*           log_mutex = nullptr;
+static Mutex*           log_mutex = NULL;
 static int              log_verbosity = 0;
-static ostream*         log_out = nullptr;
+static ostream*         log_out = NULL;
 static bool             log_prefix = true;
 
 ////////////////////////////////////////////////////////////////
@@ -104,7 +104,7 @@ void Log::init(const char* path)
     {
         auto msg = file_err(__func__, errno, "open", path);
         delete log_out;
-        log_out = nullptr;
+        log_out = NULL;
 
         throw runtime_error(msg);
     }
@@ -128,10 +128,10 @@ void Log::close()
     }
 
     delete log_out;
-    log_out = nullptr;
+    log_out = NULL;
 
     delete log_mutex;
-    log_mutex = nullptr;
+    log_mutex = NULL;
 }
 
 ////////////////////////////////////////////////////////////////
