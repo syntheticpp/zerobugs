@@ -119,9 +119,6 @@ namespace ui
             children_.push_back(menu);
         }
         
-        //todo: add protected lookup method
-    //private:
-    protected:
         virtual void update(const State& state) 
         {
             for (auto i = children_.begin(); i != children_.end(); ++i)
@@ -129,7 +126,8 @@ namespace ui
                 (*i)->update(state);
             }
         }
-
+        //todo: add protected lookup method
+    protected:
         std::vector<RefPtr<Menu> >  children_;
     };
 }

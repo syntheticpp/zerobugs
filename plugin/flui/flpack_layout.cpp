@@ -4,12 +4,16 @@
 //
 // $Id: $
 //
+#include "flcode_view.h"
+#include "flcode_table.h"
 #include "flpack_layout.h"
 #include <FL/Fl_Pack.H>
 #include <FL/Fl_Scroll.H>
 #include <FL/Fl_Tile.H>
 
 #include <FL/Fl_Box.H>
+#include <iostream>
+
 
 // todo: move these to a header file and include in flmenu.cpp
 static const int menubar_h  = 30;
@@ -44,7 +48,7 @@ FlPackLayout::FlPackLayout(int x, int y, int w, int h)
 }
 
 
-FlPackLayout::~FlPackLayout()
+FlPackLayout::~FlPackLayout() throw()
 {
 }
 
@@ -53,13 +57,25 @@ int FlPackLayout::code_height() const
     return 500;
 }
 
-void FlPackLayout::update(const ui::State&)
+void FlPackLayout::update(const ui::State& s)
+{
+    std::clog << __PRETTY_FUNCTION__ << std::endl;
+    ui::Layout::update(s);
+}
+
+
+void FlPackLayout::added_to(const ui::Layout&)
 {
 }
 
 
-void FlPackLayout::add_to(ui::Layout&)
+void FlPackLayout::add(ui::View& v)
 {
+    if (auto cv = dynamic_cast<FlCodeView*>(&v))
+    {
+        add_code_view(cv->widget());
+    }
+    ui::Layout::add(v);
 }
 
 

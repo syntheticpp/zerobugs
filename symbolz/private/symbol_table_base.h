@@ -53,7 +53,6 @@ END_INTERFACE_MAP()
     void set_upper(addr_t upper) { upper_ = upper; }
 
 protected:
-    typedef google::dense_hash_map<addr_t, RefPtr<Symbol> > SymHash;
     typedef std::multimap<addr_t, WeakPtr<BreakPoint> > DeferredMap;
 
     SymbolTableBase(SymbolTableEvents&, Process*, addr_t addr, addr_t upper);
@@ -64,9 +63,9 @@ protected:
     mutable addr_t              addr_;      // address where effectively loaded
     mutable addr_t              upper_;
     mutable loff_t              adjust_;
-    DeferredMap                 deferredBreakpoints_;
+    DeferredMap                 deferred_;
     mutable SymHash             symHash_;   // cache lookup results
-    mutable RefPtr<Module>      module_;
+    mutable RefPtr<Module>      module_;	// associated (exe or DSO) module
     mutable RefPtr<SymbolTable> next_;      // next table in file, if any
 };
 #endif // SYMBOL_TABLE_BASE_H__58D399C6_8B8D_43AE_BD79_8BEE2DE0CBC7

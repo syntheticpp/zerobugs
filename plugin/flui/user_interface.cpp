@@ -17,6 +17,7 @@
 ////////////////////////////////////////////////////////////////
 class ZDK_LOCAL StateImpl : public ui::State
 {
+    RefPtr<Symbol>      currentSymbol_;
     RefPtr<Thread>      currentThread_;
     EventType           currentEventType_;
     size_t              attachedThreadCount_;
@@ -35,6 +36,12 @@ public:
         currentEventType_ = eventType;
         
         isTargetStopped_ = true;
+
+        if (thread)
+        {
+            addr_t pc = thread->program_count();
+            currentSymbol_ = thread->symbols()->lookup_symbol(pc);
+        }
     }
    
     virtual void set_target_stopped(bool stopped)
@@ -52,6 +59,11 @@ public:
         return currentEventType_;
     }
 
+    virtual Symbol* current_symbol() const
+    {
+        return currentSymbol_.get();
+    }
+
     virtual Thread* current_thread() const
     {
         return currentThread_.get();
@@ -66,9 +78,10 @@ public:
 class ZDK_LOCAL NullLayout : public ui::Layout
 {
     // View interface
-    virtual void add_to(ui::Layout&) { }
+    virtual void added_to(const ui::Layout&) { }
     virtual void update(const ui::State&) { }
     // Layout interface
+    virtual void add(ui::View&) { }
     virtual void show(ui::View&, bool) { }
 };
 
@@ -102,7 +115,6 @@ ui::Controller::Controller()
     : debugger_(nullptr)
     , uiThreadId_(0)
     , state_(init_state())
-    , layout_(nullptr)
 {
 }
 
@@ -159,7 +171,7 @@ void ui::Controller::build()
         build_menu();
     }
 
-    layout_.reset(init_layout());
+    layout_ = init_layout();
 
     if (layout_)
     {
@@ -175,7 +187,7 @@ void ui::Controller::build_layout()
     
     if (CodeView* v = init_code_view())
     {
-        v->add_to(*layout_);
+        layout_->add(*v);
     }
 }
 
@@ -205,9 +217,6 @@ void ui::Controller::error_message(const std::string&) const
  */
 void ui::Controller::run()
 {
-    lock();
-    build();
-
     while (wait_for_event() > 0)
     {
         if (command_) try
@@ -276,6 +285,10 @@ bool ui::Controller::on_event(
     {   LockedScope lock(*this);
         state_->update(thread, eventType);
 
+        // pass updated state info to UI elements
+        layout_->update(*state_);
+        menu_->update(*state_);
+
         if (!command_)
         {
             command_ = new WaitCommand();
@@ -292,22 +305,20 @@ bool ui::Controller::on_event(
         c = new CommandError(*this, e.what());
     }
 
-    // todo: do this only if target not resumed
-    {   LockedScope lock(*this);
-        state_->update(thread, eventType);
-    }
-
     notify_ui_thread();
     return result;
 }
 
 
 ////////////////////////////////////////////////////////////////
-static void* ui_main(void* p)
+void* ui::Controller::run(void* p)
 {
     auto controller = reinterpret_cast<ui::Controller*>(p);
     try
-    {
+    {    
+        controller->lock();
+        controller->build();
+
         controller->run();
     }
     catch (const std::exception& e)
@@ -325,7 +336,7 @@ static void* ui_main(void* p)
 ////////////////////////////////////////////////////////////////
 void ui::Controller::start()
 {
-    int r = pthread_create(&uiThreadId_, nullptr, ui_main, this);
+    int r = pthread_create(&uiThreadId_, nullptr, run, this);
 
     if (r < 0)
     {

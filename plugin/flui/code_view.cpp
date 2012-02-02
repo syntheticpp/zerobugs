@@ -13,11 +13,13 @@ ui::CodeView::CodeView(ui::Controller&)
 }
 
 
-ui::CodeView::~CodeView()
+ui::CodeView::~CodeView() throw()
 {
 }
 
 
 void ui::CodeView::update(const ui::State&)
 {
+    
 }
+

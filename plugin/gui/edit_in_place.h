@@ -86,6 +86,8 @@ protected:
 
     Gtk::CList& get_list() { assert(list_); return *list_; }
 
+    void commit_edit();
+
 private:
     Gtk::CList* list_; /* this works because CTree inherits CList */
 

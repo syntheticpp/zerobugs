@@ -49,9 +49,6 @@ namespace Predicate
         bool is_less(const SharedString* lname,
                      const SharedString* rname) const
         {
-            //assert(lname);
-            //assert(rname);
-
             if ((lname == rname) || (lname->hash() == rname->hash()))
             {
                 return false;
@@ -62,8 +59,6 @@ namespace Predicate
         }
         bool is_less(const SharedString* lname, const char* rstr) const
         {
-            //assert(lname);
-
             const char* lstr = lname->c_str();
 
             if (IgnoreSpace)
@@ -74,7 +69,6 @@ namespace Predicate
         }
         bool is_less(const char* lstr, const SharedString* rname) const
         {
-            //assert(rname);
             const char* rstr = rname->c_str();
 
             if (IgnoreSpace)

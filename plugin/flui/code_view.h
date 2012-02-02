@@ -17,7 +17,9 @@ namespace ui
     {
     public:
         explicit CodeView(ui::Controller&);
-        ~CodeView();
+
+    protected:
+        ~CodeView() throw();
 
     private:
         virtual void update(const State&);

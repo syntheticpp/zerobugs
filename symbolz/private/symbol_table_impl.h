@@ -75,7 +75,6 @@ END_INTERFACE_MAP()
         }
     };
     typedef SymbolsByName<Predicate::CompareDemangled> SymbolsByDemangledName;
-    typedef google::dense_hash_map<addr_t, RefPtr<Symbol> > SymHash;
 
     static Ptr read_tables( Process*,
                             RefPtr<SharedString>,
@@ -181,11 +180,12 @@ private:
 private:
     typedef AsyncFun<SymbolTableImpl> Delegate;
 
-    mutable StringPtr name_;    // this table's name
-    StringPtr       filename_;
-    bool            dynamic_;
-    bool            virtual_;
-    int8_t          index_;
+    mutable StringPtr   name_;      // this table's name
+    StringPtr		    filename_;	// executable or DSO
+    bool                dynamic_;
+    bool                virtual_;
+    int8_t              index_;
+
     mutable SymAddrList symbols_;
 
     mutable StringPtr realname_;
@@ -198,6 +198,7 @@ private:
     mutable SymbolsByDemangledName symbolsByDemangledName_;
 
     // async delegates
+    // use the TaskPool to asynchronously sort symbols
     boost::shared_ptr<Delegate> sortByAddr_;
     boost::shared_ptr<Delegate> sortByName_;
     boost::shared_ptr<Delegate> sortByDemangledName_;

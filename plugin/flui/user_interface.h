@@ -90,6 +90,8 @@ namespace ui
         virtual int w() const = 0;
         virtual int h() const = 0;
 
+        static void* run(void*);
+
         // asynchronous
         void exec(RefPtr<Command>);
 
@@ -197,10 +199,9 @@ namespace ui
         Debugger*                   debugger_;
         pthread_t                   uiThreadId_;
 
-        std::unique_ptr<State>      state_;
-        std::unique_ptr<Layout>     layout_;
-
+        RefPtr<Layout>              layout_;
         RefPtr<CompositeMenu>       menu_;
+        std::unique_ptr<State>      state_;
 
         // mail box for passing requests between main and ui threads
         RefPtr<Command>             command_;    

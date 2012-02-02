@@ -24,6 +24,7 @@ SRCS=	code_view.cpp		\
 		flpack_layout.cpp	\
 		menu.cpp			\
 		user_interface.cpp	\
+		view.cpp			\
 		$(NULL)
 
 PLUGIN=$(PLUGIN_PATH)zflui.so

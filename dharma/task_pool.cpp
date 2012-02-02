@@ -13,6 +13,7 @@
 // -------------------------------------------------------------------------
 
 #include "zdk/config.h"
+#include "zdk/log.h"
 #include "generic/lock.h"
 #include "system_error.h"
 #include "task_pool.h"
@@ -108,6 +109,7 @@ void* TaskPool::execute_from_queue(void* p)
     catch (const std::exception& e)
     {
         std::cerr << __func__ << ": " << e.what() << std::endl;
+		dbgout(-1) << e.what() << std::endl;	// log it
     }
     return NULL;
 }

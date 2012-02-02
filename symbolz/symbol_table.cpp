@@ -87,6 +87,9 @@ Module* SymbolTableBase::module()
     if (module_changed(module_, addr_, upper_))
     {
         module_ = events_->get_module(*this);
+
+        // todo: module_->set_name(filename_)?
+        // or assert(filename_.get() == module.name().get())?
     }
     return module_.get();
 }
@@ -105,13 +108,13 @@ bool SymbolTableBase::set_deferred_breakpoint(
     const addr_t addr = sym.addr();
     IF_DEBUG(clog << __func__ << ": " << sym << endl);
 
-    DeferredMap::iterator i = deferredBreakpoints_.find(addr);
+    DeferredMap::iterator i = deferred_.find(addr);
 
-    if (i != deferredBreakpoints_.end())
+    if (i != deferred_.end())
     {
         for (; i->first == addr; ++i)
         {
-            if (i == deferredBreakpoints_.end())
+            if (i == deferred_.end())
             {
                 break;
             }
@@ -125,13 +128,13 @@ bool SymbolTableBase::set_deferred_breakpoint(
                 }
             }
         }
-        i = deferredBreakpoints_.end();
+        i = deferred_.end();
     }
 
     if (BreakPoint* bpnt =
         events_->set_deferred_breakpoint(runnable, type, sym, action))
     {
-        deferredBreakpoints_.insert(i, make_pair(addr, bpnt));
+        deferred_.insert(i, make_pair(addr, bpnt));
     }
     return true;
 }
@@ -141,13 +144,13 @@ size_t SymbolTableBase::enum_deferred_breakpoints (
     EnumCallback2<BreakPoint*, const SymbolTable*>* callback
     ) const
 {
-    if (!deferredBreakpoints_.empty())
+    if (!deferred_.empty())
     {
         ensure_loaded();
     }
 
-    DeferredMap::const_iterator i = deferredBreakpoints_.begin();
-    for (; i != deferredBreakpoints_.end(); ++i)
+    DeferredMap::const_iterator i = deferred_.begin();
+    for (; i != deferred_.end(); ++i)
     {
         if (callback)
         {
@@ -157,7 +160,7 @@ size_t SymbolTableBase::enum_deferred_breakpoints (
             }
         }
     }
-    size_t count = deferredBreakpoints_.size();
+    size_t count = deferred_.size();
 
     if (RefPtr<SymbolTable> nextTable = next())
     {
@@ -280,6 +283,7 @@ void SymbolTableImpl::read(const ELF::SymbolTable& tbl, bool notifyOnDone)
 {
     events_->on_init(*this);
     symbols_.reserve(tbl.size());
+
     ZObjectScope scope;
     // the TypeSystem manager also acts as a string pool;
     // we pass it to create_symbol() below
@@ -297,7 +301,7 @@ void SymbolTableImpl::read(const ELF::SymbolTable& tbl, bool notifyOnDone)
         {
             continue;
         }
-        // discard useless symbols
+        // hack: discard useless symbols
         if (*name == 'g' && strcmp(name, "gcc2_compiled.") == 0)
         {
             continue;
@@ -486,6 +490,7 @@ bool SymbolTableImpl::lazy_load(const char* func, bool warn) const
             return true;
         }
     }
+
     return false;
 }
 
@@ -666,8 +671,7 @@ void SymbolTableImpl::enum_all_symbols(EnumCallback<Symbol*>* cb) const
     assert(cb);
     if (cb)
     {
-        SymAddrList::const_iterator i = symbols_.begin();
-        for (; i != symbols_.end(); ++i)
+        for (auto i = symbols_.begin(); i != symbols_.end(); ++i)
         {
             cb->notify(i->get());
         }

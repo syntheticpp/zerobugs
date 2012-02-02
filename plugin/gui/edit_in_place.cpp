@@ -50,8 +50,7 @@ int EditInPlace::on_map_event(GdkEventAny* event)
 
     if (Window* w = get_list().get_toplevel())
     {
-        w->configure_event.connect(
-            slot(this, &EditInPlace::on_configure));
+        w->configure_event.connect(slot(this, &EditInPlace::on_configure));
     }
 
     return 0;
@@ -122,17 +121,7 @@ BEGIN_SLOT_(int, EditInPlace::on_key, (GdkEventKey* key))
     {
     case GDK_Return:
         // attempt to commit the change
-        {
-            assert(edit_);
-
-            string text = edit_->get_text();
-            string old = get_list().cell(nrow_, ncol_).get_text();
-
-            if (cell_edit(nrow_, ncol_, old, text))
-            {
-                get_list().cell(nrow_, ncol_).set_text(text);
-            }
-        }
+        commit_edit();
         // fallthrough
 
     case GDK_Escape:
@@ -143,9 +132,24 @@ BEGIN_SLOT_(int, EditInPlace::on_key, (GdkEventKey* key))
 END_SLOT_(0)
 
 
-/* Abort editing when user clicks outside edit (entry) widget */
+void EditInPlace::commit_edit()
+{
+    assert(edit_);
+
+    string text = edit_->get_text();
+    string old = get_list().cell(nrow_, ncol_).get_text();
+
+    if (cell_edit(nrow_, ncol_, old, text))
+    {
+        get_list().cell(nrow_, ncol_).set_text(text);
+    }
+}
+
+
+/* Finish editing when user clicks outside edit (entry) widget */
 int EditInPlace::on_mouse_click(GdkEventButton*)
 {
+    commit_edit();
     finish_edit();
     return 0;
 }
