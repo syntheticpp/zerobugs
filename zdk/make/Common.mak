@@ -14,8 +14,8 @@ INCLUDED_COMMON_MAK:=1
 
 SHELL:=/bin/bash
 
-#determine GCC version
-#CXXVER=$(shell $(CXX) --version 2>&1 | head -1 | cut -f3 -d' ')
+# CXXVER is expected to be set by the build script
+
 CXX_MAJOR=$(shell echo $(CXXVER) | cut -f1 -d'.')
 CXX_TARGET=$(shell g++ -v 2>&1  | grep Target | cut -f2 -d' ')
 ICC=icpc
@@ -81,11 +81,10 @@ endif
 ifeq ($(CXX),$(ICC))
  OPTIMIZE+=-O2 -ip -parallel
 else
- #OPTIMIZE+=-O2 -felide-constructors -fno-strict-aliasing
  OPTIMIZE+=-O3 -felide-constructors -fno-strict-aliasing
 endif
 
-CXXFLAGS=$(CFLAGS) $(PIC) -D_REENTRANT -D__STDC_CONSTANT_MACROS
+CXXFLAGS=$(CFLAGS) $(PIC) -D_REENTRANT -D__STDC_CONSTANT_MACROS -pipe
 
 include $(TOP)/zdk/make/glibpath.mak
 

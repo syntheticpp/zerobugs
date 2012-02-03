@@ -9,7 +9,7 @@ include $(TOP)/zdk/make/Common.mak
 
 TARGET=$(LIB_PATH)libzdk.a
 SHARED_LIBS=
-CXXFLAGS+=-O2
+#CXXFLAGS+=-O2
 
 ################################################################
 SRCS=\

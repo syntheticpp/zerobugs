@@ -64,20 +64,11 @@ modules=engine \
 
 modules:
 	for m in $(modules); do (cd $$m; $(MAKE); ) done
-	#$(foreach mod, $(modules), cd $(mod); $(MAKE);)
-	
-all: which_disasm $(runtime) modules $(demangle_d) dbginfo
+
+all: which_disasm modules $(demangle_d)
 
 which_disasm: .PHONY
 	@echo disassembler="$(DISASM)"
-
-# Build debug info for use on the web server-side for crash reports, see crash.sh
-dbginfo: .PHONY
-ifneq ($(ZERO_MAKE_DBGINFO),)
-	export LD_LIBRARY_PATH=/usr/local/$(LIBDIR) && cd tools && ./dbi.py $(TOP)
-endif	
-
-$(runtime): .PHONY
 
 $(demangle_d): .PHONY
 	cd demangle_d; $(MAKE)
