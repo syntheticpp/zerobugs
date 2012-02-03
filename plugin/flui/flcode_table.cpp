@@ -33,13 +33,15 @@ void FlCodeTable::draw_cell(TableContext context, int R, int C, int X, int Y, in
     switch (context)
     {
     case CONTEXT_STARTPAGE:
-        fl_font(FL_COURIER, 11);         // todo: configurable font
+        fl_font(FL_SCREEN, 11);         // todo: configurable font
         break;
 
     case CONTEXT_COL_HEADER:
         fl_push_clip(X, Y, W, H);
         {
-            fl_draw_box(FL_THIN_UP_BOX, X, Y, W, H, color());
+            fl_color(FL_LIGHT2);
+            fl_rectf(X, Y, W, H);
+            // fl_draw_box(FL_THIN_UP_BOX, X, Y, W, H, color());
             fl_color(FL_BLACK);
             if (C == 2)
             {

@@ -148,11 +148,6 @@ Stab::Descriptor::~Descriptor() throw()
 
 void Stab::Descriptor::init_hash_maps()
 {
-    RefPtr<SharedString> null;
-
-    headers_.set_empty_key(null);
-    fwdTypeMap_.set_empty_key(null);
-    typeMap_.set_empty_key(null);
 }
 
 

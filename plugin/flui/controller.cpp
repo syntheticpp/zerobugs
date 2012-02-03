@@ -4,9 +4,10 @@
 //
 // $Id$
 //
+#include "zdk/auto_condition.h"
 #include "code_view.h"
+#include "controller.h"
 #include "menu.h"
-#include "user_interface.h"
 #include <FL/Enumerations.H>
 #include "dharma/system_error.h"
 #include <iostream>
@@ -14,7 +15,7 @@
 #include <pthread.h>
 
 
-////////////////////////////////////////////////////////////////
+
 class ZDK_LOCAL StateImpl : public ui::State
 {
     RefPtr<Symbol>      currentSymbol_;
@@ -89,20 +90,17 @@ class ZDK_LOCAL NullLayout : public ui::Layout
 ////////////////////////////////////////////////////////////////
 class ZDK_LOCAL CommandError : public ui::Command
 {
-    ui::Controller& controller_;
-    std::string     error_;
+    std::string msg_;
 
 public:
-    CommandError( ui::Controller& c, const char* e)
-        : controller_(c)
-        , error_(e)
+    explicit CommandError(const char* m) : msg_(m)
     { }
 
     virtual ~CommandError() throw() { }
 
-    void continue_on_ui_thread() 
+    void continue_on_ui_thread(ui::Controller& controller) 
     {
-        controller_.error_message(error_);
+        controller.error_message(msg_);
     }
 };
 
@@ -115,6 +113,7 @@ ui::Controller::Controller()
     : debugger_(nullptr)
     , uiThreadId_(0)
     , state_(init_state())
+    , done_(false)
 {
 }
 
@@ -197,10 +196,8 @@ void ui::Controller::build_menu()
 {
     assert(menu_);
 
-    menu_->add(new SimpleCommandMenu<>("File/Quit", FL_ALT + 'q', [this]()->bool {
-            command_ = new Command();
+    menu_->add(new SimpleCommandMenu<>("File/Quit", FL_ALT + 'q', [this]() {
             debugger_->quit();
-            return true;
         }));
 }
 
@@ -221,11 +218,16 @@ void ui::Controller::run()
     {
         if (command_) try
         {
-            command_->continue_on_ui_thread();
+            command_->continue_on_ui_thread(*this);
         }
         catch (const std::exception& e)
         {
             error_message(e.what());
+        }
+
+        if (done_)
+        {
+            break;
         }
     }
 }
@@ -244,33 +246,65 @@ bool ui::Controller::initialize(
     return true;
 }
 
-// silly busy-wait for experimentation purposes
-class WaitCommand : public ui::Command
-{
-    bool cancelled_;
 
-    bool execute_on_main_thread()
+class ZDK_LOCAL WaitCommand : public ui::Command
+{
+    Mutex       mutex_;
+    Condition   cond_;
+    bool        cancelled_;
+
+    void execute_on_main_thread()
     {
-        std::clog << __func__ << ": enter\n";
-        while(!cancelled_)
+        Lock<Mutex> lock(mutex_);
+        while (!cancelled_) 
         {
-            usleep(10000);
+            cond_.wait(lock);
         }
-        std::clog << __func__ << ": leave\n";
-        return true;
     }
 
     void cancel() 
-    { 
-        std::clog << __func__ << std::endl;
-        cancelled_ = true; 
+    {
+        {   
+            Lock<Mutex> lock(mutex_);
+            cancelled_ = true;
+        }
+        cond_.broadcast();
     }
+
+protected:
+    ~WaitCommand() throw() { }
 
 public:
     WaitCommand() : cancelled_(false) { }
 };
 
+
 ////////////////////////////////////////////////////////////////
+RefPtr<ui::Command> ui::Controller::update(
+    Thread*     thread,
+    EventType   eventType )
+{
+    LockedScope lock(*this);
+    state_->update(thread, eventType);
+
+    // pass updated state info to UI elements
+    layout_->update(*state_);
+    menu_->update(*state_);
+
+    if (command_ && command_->is_done())
+    {
+        command_.reset();
+    }
+        
+    if (!command_)
+    {
+        command_ = new WaitCommand();
+    }
+
+    return command_;
+}
+
+
 /**
  * Called from the main debugger thread.
  */
@@ -280,33 +314,20 @@ bool ui::Controller::on_event(
     EventType   eventType )
 
 {
-    RefPtr<Command> c;
+    RefPtr<Command> c = update(thread, eventType);
 
-    {   LockedScope lock(*this);
-        state_->update(thread, eventType);
-
-        // pass updated state info to UI elements
-        layout_->update(*state_);
-        menu_->update(*state_);
-
-        if (!command_)
-        {
-            command_ = new WaitCommand();
-        }
-        c = command_;
-    }
-    bool result = true;
     try
     {
-        result = c->execute_on_main_thread();
+        c->execute_on_main_thread();
     }
     catch (const std::exception& e)
     {
-        c = new CommandError(*this, e.what());
+        c = new CommandError(e.what());
     }
 
     notify_ui_thread();
-    return result;
+
+    return true;    // event handled
 }
 
 
@@ -348,6 +369,9 @@ void ui::Controller::start()
 ////////////////////////////////////////////////////////////////
 void ui::Controller::shutdown()
 {
+    LockedScope lock(*this);
+
+    done_ = true;
 }
 
 
@@ -434,10 +458,8 @@ bool ui::Controller::on_message (
 
 
 ////////////////////////////////////////////////////////////////
-void ui::Controller::exec(RefPtr<Command> c)
+void ui::Controller::call_async_on_main_thread(RefPtr<Command> c)
 {
-    std::clog << __func__ << ": " << c.get() << ", " << command_.get() << std::endl;
-
     if (c)
     {
         if (command_)

@@ -11,7 +11,6 @@
 // http://www.boost.org/LICENSE_1_0.txt)
 // -------------------------------------------------------------------------
 
-#include <iostream>
 #include <gtkmm/treemodel.h>
 #include <gtkmm/treemodelsort.h>
 #include <gtkmm/treeview.h>
@@ -106,9 +105,6 @@ protected:
             set_sort_column(ncol, sortOrder);
         }
         set_search_column(ncol);
-    #if DEBUG
-        std::clog << __func__ << ": " << ncol << std::endl;
-    #endif
     }
 
     ColumnClickSignal columnClick_;
@@ -172,9 +168,6 @@ public:
         }
         else
         {
-    #ifdef DEBUG
-            std::clog << __func__ << " get_iter(): invalid iterator\n";
-    #endif
             return false;
         }
         return true;

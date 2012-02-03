@@ -18,7 +18,6 @@
 #include "textfwd.h"
 #include "zdk/export.h"
 #include <boost/utility.hpp>
-#include <iostream>
 
 #if !defined(GTKMM_2)
 // gtk-- 1.2

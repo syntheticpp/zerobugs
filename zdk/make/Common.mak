@@ -16,7 +16,6 @@ SHELL:=/bin/bash
 
 #determine GCC version
 #CXXVER=$(shell $(CXX) --version 2>&1 | head -1 | cut -f3 -d' ')
-CXXVER=$(shell cc $(TOP)/zdk/make/gcc_ver.c -o $(TOP)/gcc_ver && $(TOP)/gcc_ver)
 CXX_MAJOR=$(shell echo $(CXXVER) | cut -f1 -d'.')
 CXX_TARGET=$(shell g++ -v 2>&1  | grep Target | cut -f2 -d' ')
 ICC=icpc
@@ -194,7 +193,7 @@ CXXFLAGS+=$(INCLUDE)
   ifeq ($(CXX_MAJOR),2)
 	CXXFLAGS+=-fno-default-inline 
   endif	
-  CXXFLAGS+=$(DEBUG_FORMAT) $(OPTIMIZE) -DHAVE_EXTRA_UI_FEATURES
+  CXXFLAGS+=$(DEBUG_FORMAT) $(OPTIMIZE)
  endif
 #endif
 

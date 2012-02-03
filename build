@@ -16,6 +16,8 @@ export RELEASE=1
 export CFLAGS=-O3
 export CPPFLAGS=-O3
 
+export CXXVER=`cc zdk/make/gcc_ver.c -o gcc_ver && ./gcc_ver`
+
 # libdwarf version
 # For more info, see: http://reality.sgiweb.org/davea/dwarf.html
 

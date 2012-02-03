@@ -21,9 +21,8 @@
 #include "generic/temporary.h"
 #include "debugger_engine.h"
 #include "stack_trace.h"
-#if defined(_MSC_VER) && defined(min)
- #undef min // conflicts with std::numeric_limits<T>::min()
-#endif
+#include <iostream>
+
 
 using namespace std;
 

@@ -9,18 +9,20 @@
 // http://www.boost.org/LICENSE_1_0.txt)
 // -------------------------------------------------------------------------
 //
-#include <functional>
-#include "dharma/canonical_path.h"
 #include "zdk/check_ptr.h"
 #include "zdk/debug_sym.h"
 #include "zdk/export.h"
 #include "zdk/shared_string_impl.h"
 #include "zdk/zobject_scope.h"
 #include "debugger_engine.h"
+#include "dharma/canonical_path.h"
 #include "dharma/environ.h"
 #include "history.h"
 #include "module.h"
 #include "symbol_events.h"
+
+#include <functional>
+#include <iostream>
 
 using namespace std;
 

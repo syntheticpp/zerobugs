@@ -2,4 +2,7 @@
 
  - Better build system.
 
- - Remove throw() specifications
+ - Remove throw() specifications?
+
+ - use atomic<long> instead of libatomic 
+

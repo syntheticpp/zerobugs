@@ -21,8 +21,7 @@
 
 namespace Stab
 {
-typedef google::dense_hash_map<
-    RefPtr<SharedString>, RefPtr<Descriptor> > DescriptorMap;
+typedef ext::hash_map<RefPtr<SharedString>, RefPtr<Descriptor> > DescriptorMap;
 
 
 /**

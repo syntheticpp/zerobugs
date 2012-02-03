@@ -6,7 +6,7 @@
 //
 // $Id$
 //
-    #include "zdk/ref_counted_impl.h"
+#include "zdk/ref_counted_impl.h"
 #include "view.h"
 #include <cassert>
 #include <memory>
@@ -16,6 +16,7 @@ namespace ui
 {
     class CodeView;
     class CompositeMenu;
+    class Controller;
 
    
     /**
@@ -30,23 +31,18 @@ namespace ui
      */
     class Command : public RefCountedImpl<>
     {
-    public:
+    protected:
         virtual ~Command() throw() { }
-
+        
+    public:
         // request from ui to main thread
-        virtual bool execute_on_main_thread()
-        {
-            return false;
-        }
-
+        virtual void execute_on_main_thread() { }
         // response to ui thread
-        virtual void continue_on_ui_thread()
-        {
-        }
+        virtual void continue_on_ui_thread(Controller&) { }
 
-        virtual void cancel()
-        {
-        }
+        virtual void cancel() { }
+
+        virtual bool is_done() const { return true; }
     };
 
 
@@ -82,6 +78,7 @@ namespace ui
          */
         virtual void error_message(const std::string&) const;
 
+        // UI thread entry point
         virtual void run();
 
         // main window position and dimensions
@@ -92,8 +89,8 @@ namespace ui
 
         static void* run(void*);
 
-        // asynchronous
-        void exec(RefPtr<Command>);
+        // schedule command for execution on main thread
+        void call_async_on_main_thread(RefPtr<Command>);
 
         // --- DebuggerPlugin interface
         /**
@@ -193,7 +190,10 @@ namespace ui
         // this creates the main "application window"
         virtual void            init_main_window();
 
-        virtual int wait_for_event() { return 0; }
+        virtual int wait_for_event() = 0;
+
+    private:
+        RefPtr<Command> update(Thread*, EventType);
 
     private:
         Debugger*                   debugger_;
@@ -202,6 +202,8 @@ namespace ui
         RefPtr<Layout>              layout_;
         RefPtr<CompositeMenu>       menu_;
         std::unique_ptr<State>      state_;
+
+        bool                        done_;
 
         // mail box for passing requests between main and ui threads
         RefPtr<Command>             command_;    

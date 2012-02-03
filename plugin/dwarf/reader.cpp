@@ -375,7 +375,6 @@ Reader::Reader()
     , fhandler_(true)
     , inlinedAddr_(0)
 {
-    linkageMap_.set_empty_key(RefPtr<SharedString>());
 }
 
 

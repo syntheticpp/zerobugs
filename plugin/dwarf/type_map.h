@@ -48,19 +48,15 @@ namespace Dwarf
     CLASS TypeMap : boost::noncopyable
     {
         // types indexed by name
-        typedef google::dense_hash_map<RefPtr<SharedString>, WeakDataTypePtr> ByName;
+        typedef ext::hash_map<RefPtr<SharedString>, WeakDataTypePtr> ByName;
 
         // types indexed by the inode of the binary that contains
         // the debug info entry, and offset of the debug entry for
         // the type
-        typedef google::dense_hash_map<TypeOffset, WeakDataTypePtr> ByOffset;
+        typedef ext::hash_map<TypeOffset, WeakDataTypePtr> ByOffset;
 
     public:
-        TypeMap()
-        {
-            byName_.set_empty_key(RefPtr<SharedString>());
-            byOffset_.set_empty_key(TypeOffset());
-        }
+        TypeMap() { }
 
         ~TypeMap();
 

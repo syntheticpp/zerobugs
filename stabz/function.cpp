@@ -64,6 +64,7 @@ void Stab::Function::set_return_type(const RefPtr<DataType>& type)
 }
 
 
+#ifdef DEBUG
 static void dump_vars(ostream& outs, const Stab::Block::VarList& vars)
 {
     Stab::Block::VarList::const_iterator i = vars.begin();
@@ -72,6 +73,7 @@ static void dump_vars(ostream& outs, const Stab::Block::VarList& vars)
         outs << (*i)->name().c_str() << endl;
     }
 }
+#endif
 
 
 void Stab::Function::assign_variables(const VarList& vars)

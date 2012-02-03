@@ -82,7 +82,6 @@ Reader::Reader()
     , showProgress_(true)
     , attached_(false)
 {
-    descriptors_.set_empty_key(RefPtr<SharedString>());
 }
 
 
@@ -1108,7 +1107,7 @@ RefPtr<Descriptor> Reader::get_descriptor(SharedString* file, TypeSystem* types)
                 result->set_observer_events(this);
                 result->init_and_parse(*CHKPTR(types));
             }
-            descriptors_.insert(i, make_pair(file, result));
+            descriptors_.insert(make_pair(file, result));
         }
         else
         {

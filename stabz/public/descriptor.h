@@ -68,15 +68,15 @@ namespace Stab
         typedef ext::hash_map<word_t, HeaderMap> HeaderHash;
 
         /* Maintain one HeaderHash per section. */
-        typedef google::dense_hash_map<
+        typedef ext::hash_map<
             RefPtr<SharedString>, HeaderHash> HeadersBySection;
 
         /* index forward types by name */
-        typedef google::dense_hash_map<
+        typedef ext::hash_map<
             RefPtr<SharedString>, RefPtr<ForwardType> > FwdTypeMap;
 
         /* Index types by name */
-        typedef google::dense_hash_map<
+        typedef ext::hash_map<
             RefPtr<SharedString>, WeakDataTypePtr> TypeMap;
 
     public:

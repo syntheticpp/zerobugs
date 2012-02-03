@@ -17,13 +17,13 @@ LDFLAGS+=-Wl,--no-undefined
 
 ################################################################
 SRCS=	code_view.cpp		\
+		controller.cpp		\
 		flcode_view.cpp		\
 		flcode_table.cpp	\
 		flui.cpp 			\
 		flmenu.cpp			\
 		flpack_layout.cpp	\
 		menu.cpp			\
-		user_interface.cpp	\
 		view.cpp			\
 		$(NULL)
 

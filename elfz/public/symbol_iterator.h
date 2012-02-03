@@ -16,7 +16,7 @@
 #include "public/section.h"
 #include "public/symbol.h"
 
-#include <iostream>
+
 namespace ELF
 {
     class SymbolIteratorBase

@@ -52,7 +52,6 @@ Stab::CompileUnit::CompileUnit
 , endIndex_(0)
 , parsed_(false)
 {
-    methodMap_.set_empty_key(RefPtr<SharedString>());
     if (buildPath_.is_null())
     {
         buildPath_ = empty_string();

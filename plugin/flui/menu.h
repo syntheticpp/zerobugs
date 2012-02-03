@@ -7,7 +7,7 @@
 // $Id$
 //
 #include "zdk/ref_counted_impl.h"
-#include "user_interface.h"
+#include "controller.h"
 
 #include <functional>
 #include <string>
@@ -61,7 +61,7 @@ namespace ui
      * Execute a command on the main thread, no continuation
      * on the UI thread.
      */
-    template<typename Callable = std::function<bool ()> >
+    template<typename Callable = std::function<void ()> >
     class SimpleCommandMenu : public Menu
     {
     public:
@@ -77,16 +77,28 @@ namespace ui
         
         virtual RefPtr<Command> emit_command() const
         {
-            struct SimpleCommand : public Command
+            /**
+             * Simple commands execute on the main debugger thread
+             * asynchronously, and have no continuation in the UI.
+             */
+            class SimpleCommand : public Command
             {
                 Callable c_;
-                
-                SimpleCommand(Callable c) : c_(c) { }
+                bool done_;
+
+            public:                
+                SimpleCommand(Callable c) : c_(c), done_(false) { }
                 ~SimpleCommand() throw() {}
 
-                bool execute_on_main_thread() 
+                void execute_on_main_thread() 
                 {
-                    return c_();
+                    c_();
+                    done_ = true;
+                }
+
+                bool is_done() const
+                {
+                    return done_;
                 }
             };
 

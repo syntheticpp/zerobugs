@@ -8,7 +8,7 @@
 //
 #include "zdk/export.h"
 #include "zdk/mutex.h"
-#include <ostream>
+#include <iosfwd>
 
 #define dbgout(n) Log::Level(__FILE__, __LINE__, (n))
 

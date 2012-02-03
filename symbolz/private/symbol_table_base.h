@@ -53,6 +53,7 @@ END_INTERFACE_MAP()
     void set_upper(addr_t upper) { upper_ = upper; }
 
 protected:
+    typedef ext::hash_map<addr_t, RefPtr<Symbol> > SymHash;
     typedef std::multimap<addr_t, WeakPtr<BreakPoint> > DeferredMap;
 
     SymbolTableBase(SymbolTableEvents&, Process*, addr_t addr, addr_t upper);

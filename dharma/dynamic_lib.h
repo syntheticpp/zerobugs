@@ -17,7 +17,7 @@
 #if __USE_GNU
  #include <dlfcn.h>
 #endif
-#include <iostream>
+
 #include <string>
 #include <boost/type_traits/function_traits.hpp>
 #include <boost/type_traits.hpp>

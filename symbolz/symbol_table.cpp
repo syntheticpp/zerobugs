@@ -55,7 +55,6 @@ SymbolTableBase::SymbolTableBase
   , upper_(upper)
   , adjust_(0)
 {
-    symHash_.set_empty_key(0);
 }
 
 

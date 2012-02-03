@@ -305,8 +305,7 @@ namespace Dwarf
             ino_t dbg_ino_;
             Dwarf_Off off_;
         };
-        typedef google::dense_hash_map<
-            RefPtr<SharedString>, LinkageInfo> LinkageMap;
+        typedef ext::hash_map<RefPtr<SharedString>, LinkageInfo> LinkageMap;
 
         // map linkage names to Die offset information
         typedef std::vector<boost::shared_ptr<InlinedInstance> > InlineStack;

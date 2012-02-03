@@ -1,30 +1,11 @@
-#ifndef AUTO_CONDITION_H__B5722D5A_0682_453F_BE11_30A1499AB051
-#define AUTO_CONDITION_H__B5722D5A_0682_453F_BE11_30A1499AB051
+#ifndef AUTO_CONDITION_H__F61E19B2_1168_4D24_B643_9E3F2CDA9EA2
+#define AUTO_CONDITION_H__F61E19B2_1168_4D24_B643_9E3F2CDA9EA2
+//
+// -*- tab-width: 4; indent-tabs-mode: nil;  -*-
+// vim: tabstop=4:softtabstop=4:expandtab:shiftwidth=4
 //
 // $Id$
 //
-// -------------------------------------------------------------------------
-// This file is part of ZeroBugs, Copyright (c) 2010 Cristian L. Vlasceanu
-//
-// Distributed under the Boost Software License, Version 1.0.
-// (See accompanying file LICENSE_1_0.txt or copy at
-// http://www.boost.org/LICENSE_1_0.txt)
-// -------------------------------------------------------------------------
+#include "zdk/auto_condition.h"
 
-/**
- * Helper class, for automatically signaling
- * a condition when a scope is exited.
- */
-class AutoCondition
-{
-    AutoCondition(const AutoCondition&);
-    AutoCondition& operator=(const AutoCondition&);
-
-    Condition& cond_;
-
-public:
-    explicit AutoCondition(Condition& cond) : cond_(cond) {}
-    ~AutoCondition() { cond_.broadcast(); }
-};
-#endif // AUTO_CONDITION_H__B5722D5A_0682_453F_BE11_30A1499AB051
-// vim: tabstop=4:softtabstop=4:expandtab:shiftwidth=4
+#endif // AUTO_CONDITION_H__F61E19B2_1168_4D24_B643_9E3F2CDA9EA2

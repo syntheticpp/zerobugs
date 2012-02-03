@@ -59,9 +59,7 @@ namespace Stab
                 std::pair<RefPtr<SharedString>, size_t> > LineByAddr;
 
         /* map the mangled member function names to their classes */
-        //typedef std::map<RefPtr<SharedString>, RefPtr<MethodImpl> > MethodMap;
-        //typedef ext::hash_map<RefPtr<SharedString>, RefPtr<MethodImpl> > MethodMap;
-        typedef google::dense_hash_map<RefPtr<SharedString>, RefPtr<MethodImpl> > MethodMap;
+        typedef ext::hash_map<RefPtr<SharedString>, RefPtr<MethodImpl> > MethodMap;
 
     public:
         typedef std::set<RefPtr<SharedString> > SourceSet;
