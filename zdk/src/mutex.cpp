@@ -55,8 +55,12 @@ static void throw_mutex_error(const string& func, int err)
 }
 
 
-CLASS MutexAttr : boost::noncopyable
+
+CLASS MutexAttr
 {
+    MutexAttr(const MutexAttr&);
+    MutexAttr& operator=(const MutexAttr&);
+
     pthread_mutexattr_t attr_;
 
 public:

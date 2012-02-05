@@ -10,6 +10,7 @@
 # http://www.boost.org/LICENSE_1_0.txt)
 # -------------------------------------------------------------------------
 export ZERO_DEVENV=1
+export PARALLEL="-j 4"
 
 # comment these out to build DEBUG:
 export RELEASE=1
@@ -45,9 +46,9 @@ shell=0
 # eXecute flag
 #
 function ensure_exec () {
-	find . -name configure -exec chmod +x {} \;
-	find . -name "*.sh" -exec chmod +x {} \;
-	chmod +x zdk/make/mklibdep
+    find . -name configure -exec chmod +x {} \;
+    find . -name "*.sh" -exec chmod +x {} \;
+    chmod +x zdk/make/mklibdep
 }
 
 ################################################################
@@ -69,7 +70,7 @@ function build_third_party () {
     make clean
     if test $clean -eq 0 
         then 
-        if !(CFLAGS=${CFLAGS} ./configure --prefix=$PREFIX $@ && make ${inst}) then
+        if !(CFLAGS=${CFLAGS} CPPFLAGS=${CPPFLAGS} ./configure --prefix=$PREFIX $@ && make ${inst}) then
             echo "***** build_third_party: ${lib} failed *****"
             let result=1
         fi
@@ -84,19 +85,19 @@ function help () {
     echo
     echo "$prog: wrapper script for configuring / building / installing the ZeroBUGS debugger."
     echo -n "Copyright (c) 2010  Cristian Vlasceanu. "
-	echo "Distributed under the Boost Software License, Version 1.0."
-	echo "(See accompanying file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)"
-	echo
+    echo "Distributed under the Boost Software License, Version 1.0."
+    echo "(See accompanying file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)"
+    echo
     echo "Usage: $prog [flags]"
     echo "Flags:"
-    echo "  --no-config:       do not configure, just make"
-    echo "  --no-third-party:  do not build 3rd party libs"
-    echo "  --clean:           make clean"
-    echo "  --configure:       configure only, don't build"
-    echo "  --install:         install"
-    echo "  --gui-install:     install using Python gtk script"
-    echo "  --shell:           spawn a build environment shell"
-	echo "  --help:            display this help message"
+    echo "  --no-config:        do not configure, just make"
+    echo "  --no-third-party:   do not build 3rd party libs"
+    echo "  --clean:            make clean"
+    echo "  --configure:        configure only, don't build"
+    echo "  --install:          install"
+    echo "  --gui-install:      install using Python gtk script"
+    echo "  --shell:            spawn a build environment shell"
+    echo "  --help:             display this help message"
     echo
 }
 
@@ -126,7 +127,7 @@ do
         then cd engine/testsuite && make; exit;
     elif test ${arg} = "--help"
         then help; exit 0
-	else
+    else
         help; exit 0
     fi
     shift

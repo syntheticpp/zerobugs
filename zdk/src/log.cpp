@@ -190,6 +190,16 @@ Log::Level& Log::Level::operator<<(Log::Manipulator manipulator)
 }
 
 ////////////////////////////////////////////////////////////////
+Log::Level& Log::Level::operator<<(const char* s)
+{
+    if (n_ < Log::verbosity())
+    {
+        Log::stream() << s;
+    }
+    return *this;
+}
+
+////////////////////////////////////////////////////////////////
 Log::Level::operator std::ostream& () 
 {
     assert (n_ < Log::verbosity());

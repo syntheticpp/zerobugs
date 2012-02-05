@@ -15,7 +15,6 @@
 #include "zdk/unknown2.h"
 #include <cassert>
 #include <string>
-#include <exception>
 #include <typeinfo>
 #include <boost/type_traits.hpp>
 
@@ -55,8 +54,7 @@ inline ZDK_LOCAL void** void_cast(T* ptr)
 
 
 template<typename T>
-T
-inline ZDK_LOCAL interface_cast(Unknown2& u)
+T inline ZDK_LOCAL interface_cast(Unknown2& u)
 {
     typedef typename boost::remove_reference<T>::type V;
     V* ptr = 0;
@@ -71,8 +69,7 @@ inline ZDK_LOCAL interface_cast(Unknown2& u)
 
 
 template<typename T>
-T
-inline ZDK_LOCAL interface_cast(const Unknown2& u)
+T inline ZDK_LOCAL interface_cast(const Unknown2& u)
 {
     typedef typename boost::remove_reference<T>::type U;
     typedef typename boost::remove_const<U>::type V;
@@ -90,8 +87,7 @@ inline ZDK_LOCAL interface_cast(const Unknown2& u)
 
 
 template<typename T>
-T
-inline ZDK_LOCAL interface_cast(Unknown2* u)
+T inline ZDK_LOCAL interface_cast(Unknown2* u)
 {
     typedef typename boost::remove_pointer<T>::type V;
     T ptr = 0;
@@ -108,8 +104,7 @@ inline ZDK_LOCAL interface_cast(Unknown2* u)
 
 
 template<typename T>
-T
-inline ZDK_LOCAL interface_cast(const Unknown2* u)
+T inline ZDK_LOCAL interface_cast(const Unknown2* u)
 {
     typedef typename boost::remove_pointer<T>::type U;
     typedef typename boost::remove_const<U>::type V;

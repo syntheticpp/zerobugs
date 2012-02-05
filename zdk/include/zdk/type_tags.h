@@ -13,6 +13,7 @@
 //
 #include "zdk/config.h"
 #include "zdk/buffer.h"
+#include "zdk/interface_cast.h"
 #include "zdk/variant.h"
 #include <assert.h>
 #include <math.h>

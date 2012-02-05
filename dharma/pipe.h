@@ -72,3 +72,4 @@ private:
 };
 #endif // PIPE_H__57ACA83E_192A_474F_82D6_5973976719E1
 // vim: tabstop=4:softtabstop=4:expandtab:shiftwidth=4
+

@@ -10,11 +10,13 @@
 #include "zdk/mutex.h"
 #include <iosfwd>
 
-#define dbgout(n) Log::Level(__FILE__, __LINE__, (n))
+#define dbgout(n)   Log::Level(__FILE__, __LINE__, (n))
 
 
 namespace Log
 {
+    static const int ALWAYS = -1;
+
     // support std:: manipulators
     typedef std::ostream& (*Manipulator)(std::ostream&);
 
@@ -42,14 +44,7 @@ namespace Log
 
         ~Level();
 
-        inline Level& operator<<(const char* s)
-        {
-            if (n_ < Log::verbosity())
-            {
-                Log::stream() << s;
-            }
-            return *this;
-        }
+        Level& operator<<(const char* s);
 
         template<typename T> inline Level& operator<<(const T& arg)
         {

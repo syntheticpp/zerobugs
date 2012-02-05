@@ -1,3 +1,4 @@
+#include "zdk/zero.h"
 //
 // $Id$
 //
@@ -8,6 +9,13 @@
 // (See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt)
 // -------------------------------------------------------------------------
+#include "zdk/breakpoint_util.h"
+#include "zdk/check_ptr.h"
+#include "zdk/interface_cast.h"
+#include "zdk/shared_string_impl.h"
+#include "zdk/switchable.h"
+#include "zdk/thread_util.h"
+#include "zdk/zobject_scope.h"
 
 #include <assert.h>
 #include <errno.h>
@@ -15,12 +23,6 @@
 #include <iostream>
 #include "dharma/symbol_util.h"
 #include "dharma/system_error.h"
-#include "zdk/breakpoint_util.h"
-#include "zdk/check_ptr.h"
-#include "zdk/shared_string_impl.h"
-#include "zdk/switchable.h"
-#include "zdk/thread_util.h"
-#include "zdk/zobject_scope.h"
 #include "module.h"
 
 

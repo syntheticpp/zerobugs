@@ -18,7 +18,6 @@
  #include <iostream>
 #endif
 #include <boost/limits.hpp>
-#include <boost/utility.hpp>
 
 #if _MSC_VER && defined(max)
  #undef max // conflicts with std::numeric_limits<T>::max()
@@ -161,8 +160,12 @@ namespace Detail
  * Allocation / dealocation complexity is O(1)
  */
 template<size_t S, typename B = Malloc>
-class ZDK_LOCAL Falloc : public B, boost::noncopyable
+class ZDK_LOCAL Falloc : public B
 {
+    // non-copyable, non-assignable
+    Falloc(const Falloc&);
+    Falloc& operator=(const Falloc&);
+
     typedef Detail::Block<S> block_type;
 
     size_t      usedBlks_;

@@ -63,7 +63,7 @@ modules=engine \
 	$(auto)
 
 modules:
-	for m in $(modules); do (cd $$m; $(MAKE); ) done
+	for m in $(modules); do (cd $$m; $(MAKE) $(PARALLEL); ) done
 
 all: which_disasm modules $(demangle_d)
 
@@ -83,7 +83,7 @@ preclean:
 
 clean: preclean libclean
 	$(foreach mod, $(modules) engine/testsuite demangle_d, pushd $(mod); $(MAKE) clean; popd;)
-	rm gcc_ver
+	rm -f gcc_ver
 
 tidy: clean
 	find . -name "*.make" -exec rm {} \;

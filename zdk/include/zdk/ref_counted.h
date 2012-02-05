@@ -11,38 +11,11 @@
 // http://www.boost.org/LICENSE_1_0.txt)
 // -------------------------------------------------------------------------
 
-#include <assert.h>
+#include "zdk/atomic.h"
 #include "zdk/export.h"
 #include "zdk/unknown2.h"
 #include "zdk/weak_ref.h"
 
-#if defined( ZERO_DISABLE_THREADS )
-
- #define atomic_inc(x) ++*(x)
- #define atomic_dec(x) --*(x)
- #define atomic_read(x) *(x)
- #define atomic_set(x,v) *(x)=v
- #define atomic_dec_and_test(x) (--*(x) ? 0 : 1)
-
-typedef long atomic_t;
-
-template<typename T>
-static inline T
-ZDK_LOCAL
-interlocked_compare_exchange(volatile T& val, T oldval, T newval)
-{
-    if (val == oldval)
-    {
-        val = newval;
-        return oldval;
-    }
-    return val;
-}
-#else
-
- #include "zdk/atomic.h"
-
-#endif
 
 
 /**

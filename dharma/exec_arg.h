@@ -12,17 +12,12 @@
 // -------------------------------------------------------------------------
 
 #include "dharma/sarray.h"
-#include <boost/tokenizer.hpp>
 
 /**
  * Breaks down a command line into a vector of args.
  */
 class ZDK_LOCAL ExecArg : public SArray
 {
-    typedef boost::escaped_list_separator<char> Separator;
-
-    typedef boost::tokenizer<Separator> Tokenizer;
-
 public:
     ExecArg() { }
     ExecArg(const ExecArg& other) : SArray(other)

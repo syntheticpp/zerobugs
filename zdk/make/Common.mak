@@ -13,6 +13,7 @@ ifeq ($(INCLUDED_COMMON_MAK),)
 INCLUDED_COMMON_MAK:=1
 
 SHELL:=/bin/bash
+MAKEFLAGS:=
 
 # CXXVER is expected to be set by the build script
 

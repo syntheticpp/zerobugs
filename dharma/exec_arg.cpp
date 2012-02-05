@@ -9,6 +9,11 @@
 // $Id$
 //
 #include "exec_arg.h"
+#include <boost/tokenizer.hpp>
+
+typedef boost::escaped_list_separator<char> Separator;
+typedef boost::tokenizer<Separator> Tokenizer;
+
 
 ExecArg::ExecArg(const std::string& cmd) : cmd_(cmd)
 {

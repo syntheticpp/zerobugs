@@ -1,6 +1,4 @@
-// -*- tab-width: 4; indent-tabs-mode: nil;  -*-
-// vim: tabstop=4:softtabstop=4:expandtab:shiftwidth=4
-//
+#include "zdk/zero.h"
 // $Id$
 //
 // -------------------------------------------------------------------------
@@ -10,9 +8,8 @@
 // (See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt)
 // -------------------------------------------------------------------------
-
+#include "zdk/interface_cast.h"
 #include "update_impl.h"
-#include "zdk/zero.h"
 
 
 UpdateManager::UpdateManager(Debugger* debugger)
@@ -39,4 +36,7 @@ void UpdateManager::notify(DebuggerPlugin* plugin)
         count_ += updateable->check_for_updates(callback_);
     }
 }
+
+// -*- tab-width: 4; indent-tabs-mode: nil;  -*-
+// vim: tabstop=4:softtabstop=4:expandtab:shiftwidth=4
 

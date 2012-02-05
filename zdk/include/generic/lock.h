@@ -13,15 +13,20 @@
 
 #include "generic/auto.h"
 #include "generic/empty.h"
-
+#include <new>  // std::nothrow_t
 
 struct ZDK_LOCAL TryLock { };
 
 /// Generic lock, assumes that the locked object provides
 /// the enter() and leave() methods.
 template<typename T>
-class ZDK_LOCAL Lock : private boost::noncopyable
+class ZDK_LOCAL Lock
 {
+    // non-copyable
+    Lock(const Lock&);
+    // non-assignable
+    Lock& operator=(const Lock&);
+
     T& mx_;
     bool locked_;
 

@@ -1,3 +1,4 @@
+#include "zdk/zero.h"
 //
 // $Id$
 //
@@ -11,6 +12,7 @@
 
 #include "zdk/autocontext.h"
 #include "zdk/check_ptr.h"
+#include "zdk/interface_cast.h"
 #include "zdk/log.h"
 #include "zdk/switchable.h"
 #include "zdk/thread_util.h"
@@ -18,7 +20,6 @@
 #include <iostream>
 #include <iomanip>
 #include <stdexcept>
-#include <boost/utility.hpp>
 #include "dharma/environ.h"
 #include "dharma/symbol_util.h"
 #include "dharma/syscall_wrap.h"

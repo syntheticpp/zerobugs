@@ -10,6 +10,7 @@
 // -------------------------------------------------------------------------
 //
 #include "zdk/debug_sym.h"
+#include "zdk/interface_cast.h"
 #include "zdk/module.h"
 #include "zdk/shared_string_impl.h"
 #include "zdk/zobject_scope.h"

@@ -1,3 +1,4 @@
+#include "zdk/zero.h"
 //
 // $Id$
 //
@@ -11,7 +12,7 @@
 //
 #include "zdk/check_ptr.h"
 #include "zdk/debug_sym.h"
-#include "zdk/zero.h"
+#include "zdk/interface_cast.h"
 
 namespace
 {

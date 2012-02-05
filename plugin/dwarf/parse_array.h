@@ -14,9 +14,7 @@
 #include "zdk/type_tags.h"
 
 
-inline size_t
-ZDK_LOCAL
-parse_array(const char* str, Unknown2* unk, int wordSize)
+inline size_t ZDK_LOCAL parse_array(const char* str, Unknown2* unk, int wordSize)
 {
     char* ptr = 0;
     addr_t addr = 0;

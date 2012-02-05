@@ -1,3 +1,4 @@
+#include "zdk/zero.h"
 //
 // $Id$
 //
@@ -10,8 +11,8 @@
 // -------------------------------------------------------------------------
 //
 #include "zdk/check_ptr.h"
+#include "zdk/interface_cast.h"
 #include "zdk/switchable.h"
-#include "zdk/zero.h"
 #include "zdk/breakpoint_util.h"
 
 enum Operation

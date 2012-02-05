@@ -1,3 +1,4 @@
+#include "zdk/zero.h"
 //
 // $Id$
 //
@@ -9,12 +10,13 @@
 // http://www.boost.org/LICENSE_1_0.txt)
 // -------------------------------------------------------------------------
 
-#include <boost/limits.hpp>
-#include <boost/static_assert.hpp>
 #include "zdk/breakpoint_util.h"
 #include "zdk/check_ptr.h"
+#include "zdk/interface_cast.h"
 #include "zdk/shared_string_impl.h"
 #include "zdk/switchable.h"
+#include <boost/limits.hpp>
+#include <boost/static_assert.hpp>
 #include "breakpoint_img.h"
 
 using namespace std;

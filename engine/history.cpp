@@ -1,3 +1,4 @@
+#include "zdk/zero.h"
 //
 // $Id$
 //
@@ -9,11 +10,10 @@
 // http://www.boost.org/LICENSE_1_0.txt)
 // -------------------------------------------------------------------------
 
-#include "zdk/config.h"
 #include "zdk/check_ptr.h"
+#include "zdk/interface_cast.h"
 #include "zdk/export.h"
 #include "zdk/shared_string_impl.h"
-#include "zdk/zero.h"
 #include "zdk/zobject_scope.h"
 #include "zdk/log.h"
 

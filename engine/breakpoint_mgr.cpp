@@ -1,3 +1,4 @@
+#include "zdk/zero.h"
 //
 // $Id$
 //
@@ -62,7 +63,8 @@ bool BreakPointManagerBase::enable_software_breakpoint(
         }
         catch (const exception& e)
         {
-            clog << __func__ << ": " << e.what() << endl;
+           dbgout(Log::ALWAYS) << e.what() << endl;
+            cerr<< __func__ << ": " << e.what() << endl;
         }
     }
     // failed using the thread for reading?

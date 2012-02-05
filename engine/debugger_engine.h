@@ -1,5 +1,7 @@
 #ifndef DEBUGGER_ENGINE_H__0AEF18F9_E867_46BB_82FA_D62AD7682383
 #define DEBUGGER_ENGINE_H__0AEF18F9_E867_46BB_82FA_D62AD7682383
+
+#include "zdk/zero.h"
 //
 // $Id$
 //
@@ -10,6 +12,12 @@
 // (See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt)
 // -------------------------------------------------------------------------
+#include "zdk/command.h"
+#include "zdk/check_ptr.h"
+#include "zdk/data_filter.h"
+#include "zdk/frame_handler.h"
+#include "zdk/observer_impl.h"
+#include "zdk/update.h"
 
 #include <deque>
 #include <iosfwd>
@@ -21,12 +29,6 @@
 #include "dharma/exec_arg.h"
 #include "dharma/plugin_manager.h"
 #include "dharma/symbol_util.h"
-#include "zdk/command.h"
-#include "zdk/check_ptr.h"
-#include "zdk/data_filter.h"
-#include "zdk/frame_handler.h"
-#include "zdk/observer_impl.h"
-#include "zdk/update.h"
 
 
 struct Disassembler;

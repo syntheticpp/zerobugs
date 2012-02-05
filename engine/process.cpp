@@ -1,3 +1,4 @@
+#include "zdk/zero.h"
 //
 // $Id$
 //

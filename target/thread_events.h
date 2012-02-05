@@ -9,7 +9,6 @@
 // http://www.boost.org/LICENSE_1_0.txt)
 // -------------------------------------------------------------------------
 //
-#include <boost/utility.hpp> // for noncopyable
 #include "thread_agent.h"
 #include "thread.h"
 #include "debugger_base.h"
@@ -23,8 +22,11 @@ using Platform::addr_t;
  */
 template<typename T>
 class ThreadEventObserver : public ThreadAgentWrapper<T>
-                          , private boost::noncopyable
 {
+    // non-copyable, non-assignable
+    ThreadEventObserver(const ThreadEventObserver&);
+    ThreadEventObserver& operator=(const ThreadEventObserver&);
+
     ThreadEventObserver* self_; // hack around const
 
     class ZDK_LOCAL Action : public ZObjectImpl<BreakPointAction>

@@ -8,15 +8,14 @@
 // (See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt)
 // -------------------------------------------------------------------------
-
-#include <sstream>
-#include <stdexcept>
+#include "zdk/interface_cast.h"
 #include "zdk/types.h"
 #include "context.h"
 #include "eval_inc_dec.h"
 #include "errors.h"
 #include "variant_assign.h"
 #include "variant_impl.h"
+#include <sstream>
 
 using namespace std;
 

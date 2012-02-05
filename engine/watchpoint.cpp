@@ -1,3 +1,4 @@
+#include "zdk/zero.h"
 //
 // $Id$
 //
@@ -9,12 +10,12 @@
 // http://www.boost.org/LICENSE_1_0.txt)
 // -------------------------------------------------------------------------
 //
-#include <sstream>
 #include "zdk/check_ptr.h"
 #include "zdk/data_type.h"
 #include "zdk/thread_util.h"
 #include "debugger_engine.h"
 #include "watchpoint.h"
+#include <sstream>
 
 using namespace std;
 

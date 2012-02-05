@@ -12,6 +12,7 @@
 // -------------------------------------------------------------------------
 
 #include "zdk/data_type.h"
+#include "zdk/interface_cast.h"
 #include "zdk/debug_sym.h"
 #include "zdk/zero.h" // for DebuggerPlugin
 #include "dharma/object_manager.h"

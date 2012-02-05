@@ -13,6 +13,9 @@
 //
 // Implementations of Runnable and Thread interfaces
 //
+#include "zdk/config.h"
+#include "zdk/ref_ptr.h"
+
 #ifdef HAVE_SYS_PARAM_H
  #include <sys/param.h>
 #endif
@@ -23,8 +26,6 @@
 #include <iosfwd>               // std::ostream
 #include <memory>
 #include <boost/utility.hpp>    // noncopyable
-#include "zdk/config.h"
-#include "zdk/ref_ptr.h"
 #include "zdk/weak_ptr.h"
 #include "dharma/object_manager.h"
 #include "debug_regs_base.h"

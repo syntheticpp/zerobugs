@@ -8,7 +8,7 @@
 // (See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt)
 // -------------------------------------------------------------------------
-
+#include "zdk/interface_cast.h"
 #include "public/remove_qual.h"
 
 

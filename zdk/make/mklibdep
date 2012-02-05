@@ -30,4 +30,5 @@ echo "################################################################"
 echo "${lib}: \\"
 scan_dir $libsrcdir
 echo 
-echo "	cd $libsrcdir && \$(MAKE)"
+#echo "	cd $libsrcdir && \$(MAKE) \$(PARALLEL)"
+echo "	cd $libsrcdir && \$(MAKE) MAKEFLAGS= "

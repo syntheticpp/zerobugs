@@ -17,7 +17,11 @@
 #define ZDK_MAJOR ZERO_API_MAJOR
 #define ZDK_MINOR ZERO_API_MINOR
 
-#include <sys/types.h>
+#include "zdk/config.h"
+#if HAVE_SYS_TYPES_H
+ #include <sys/types.h>
+#endif
+#include "zdk/stdexcept.h"
 #include "zdk/assert.h"
 #include "zdk/debug_reg.h"
 #include "zdk/disasm.h"

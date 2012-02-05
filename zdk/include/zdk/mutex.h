@@ -17,7 +17,6 @@
 
 #include <pthread.h>
 #include <new> // nothrow_t
-#include <boost/utility.hpp>
 #include "zdk/atomic.h"
 #include "zdk/export.h"
 #include "generic/lock.h"
@@ -27,8 +26,12 @@ class Condition;
 /**
  * C++ wrapper for pthreads mutexes
  */
-class ZDK_LOCAL Mutex : boost::noncopyable
+class ZDK_LOCAL Mutex
 {
+    // non-copyable, non-assignable
+    Mutex(const Mutex&);
+    Mutex& operator=(const Mutex&);
+
 #if defined(__GNUC__) && (__GNUC__ < 4)
     //
     // HAVE_TEMPLATE_FRIEND_METHODS
@@ -106,8 +109,11 @@ private:
 };
 
 
-class ZDK_LOCAL Condition : boost::noncopyable
+class ZDK_LOCAL Condition
 {
+    Condition(const Condition&);
+    Condition& operator=(const Condition&);
+
     pthread_cond_t cond_;
 
     template<typename C> friend void Lock<Mutex>::wait(C&, long);

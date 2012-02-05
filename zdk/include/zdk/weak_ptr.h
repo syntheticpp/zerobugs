@@ -11,9 +11,10 @@
 // http://www.boost.org/LICENSE_1_0.txt)
 // -------------------------------------------------------------------------
 
-#include <algorithm>            // std::swap
+#include "zdk/interface_cast.h"
 #include "zdk/ref_ptr.h"
 #include "zdk/weak_ref_impl.h"
+#include <algorithm>            // std::swap
 
 
 template<typename T>

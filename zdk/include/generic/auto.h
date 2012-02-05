@@ -11,16 +11,23 @@
 // http://www.boost.org/LICENSE_1_0.txt)
 // -------------------------------------------------------------------------
 
-#include <boost/utility.hpp>
 #include "generic/export.h"
+#include <sys/types.h>
 
 
 /// A class that cannot be instantiated on the free store
-class ZDK_LOCAL Automatic : private boost::noncopyable
+class ZDK_LOCAL Automatic
 {
+    Automatic(const Automatic&);
+    Automatic& operator=(const Automatic&);
+
 protected:
+    Automatic() { } 
+
     void* operator new(size_t);
     void operator delete(void*) {}
 };
+
 #endif // AUTO_H__74E18692_0247_48DA_BF64_02F194B2F3D3
 // vim: tabstop=4:softtabstop=4:expandtab:shiftwidth=4
+

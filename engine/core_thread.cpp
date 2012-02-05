@@ -1,3 +1,4 @@
+#include "zdk/zero.h"
 //
 // $Id$
 //
@@ -18,7 +19,6 @@
  #include <sys/wait.h>  // W_STOPCODE
 #endif
 #include <iostream>
-#include <stdexcept>
 #include <sstream>
 #include "elfz/public/core_file.h"
 #include "zdk/zero.h"

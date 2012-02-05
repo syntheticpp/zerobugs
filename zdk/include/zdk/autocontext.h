@@ -15,7 +15,7 @@
 // -------------------------------------------------------------------------
 //
 #include "zdk/zero.h"
-#include <boost/noncopyable.hpp>
+
 
 namespace
 {
@@ -25,8 +25,12 @@ namespace
      *
      * @see BreakPointBase::execute_actions
      */
-    class ZDK_LOCAL AutoContext : boost::noncopyable
+    class ZDK_LOCAL AutoContext
     {
+        AutoContext(const AutoContext&);
+        AutoContext& operator=(const AutoContext&);
+
+
         Debugger* dbg_;
         ZObject*  ctxt_;
 

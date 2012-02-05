@@ -21,7 +21,6 @@
 #include <string>
 #include <boost/type_traits/function_traits.hpp>
 #include <boost/type_traits.hpp>
-#include <boost/utility.hpp>
 #include "generic/ref_counted_base_handle.h"
 #include "generic/type_select.h"
 #include "zdk/interface_cast.h"
@@ -74,8 +73,11 @@ typedef auto_handle<
  * A class for abstracting out the OS-specific
  * mechanisms for loading dynamic libraries
  */
-class DynamicLib : private ::boost::noncopyable
+class DynamicLib
 {
+    DynamicLib(const DynamicLib&);
+    DynamicLib& operator=(const DynamicLib&);
+
 public:
     /**
      * Ctor, takes the path to the module file

@@ -11,10 +11,10 @@
 // http://www.boost.org/LICENSE_1_0.txt)
 // -------------------------------------------------------------------------
 
+#include "zdk/export.h"
+
 #include <signal.h>
 #include <string>
-#include <boost/utility.hpp>
-#include "zdk/export.h"
 
 /**
  * Converts signal number to human-readble description
@@ -32,8 +32,11 @@ ZDK_LOCAL const char* const* sig_name_list();
  * Uses resource-acquisition-is-initialization for
  * ignoring a signal within a given scope
  */
-CLASS IgnoreSignalInScope : private ::boost::noncopyable
+CLASS IgnoreSignalInScope
 {
+    IgnoreSignalInScope(const IgnoreSignalInScope&);
+    IgnoreSignalInScope& operator=(const IgnoreSignalInScope&);
+
 public:
     explicit IgnoreSignalInScope(int sig);
 
@@ -49,8 +52,11 @@ private:
  * Uses resource-acquisition-is-initialization for
  * changing/auto-restoring the mask of blocked signals
  */
-CLASS BlockSignalsInScope : private ::boost::noncopyable
+CLASS BlockSignalsInScope
 {
+    BlockSignalsInScope(const BlockSignalsInScope&);
+    BlockSignalsInScope& operator=(const BlockSignalsInScope&);
+
 public:
     explicit BlockSignalsInScope(const sigset_t&);
     explicit BlockSignalsInScope(int);

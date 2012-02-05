@@ -1,3 +1,4 @@
+#include "zdk/zero.h"
 //
 // $Id$
 //
@@ -15,7 +16,9 @@
 #include "zdk/check_ptr.h"
 #include "zdk/debug_sym.h"
 #include "zdk/frame_handler.h"
+#include "zdk/log.h"
 #include "zdk/thread_util.h"
+
 #include "dharma/environ.h"
 #include "dharma/symbol_util.h"
 #include "generic/temporary.h"
@@ -351,7 +354,6 @@ void StackTraceImpl::copy_symbols(const StackTrace& other)
 
         if (Symbol* sym = f->function(no_symbol))
         {
-            //clog << " ##" << i << ": " << sym << endl;
             g->function(sym);
         }
     }
@@ -388,7 +390,8 @@ RefPtr<Frame> StackTraceImpl::unwind_frame_handlers(const Thread& thread, Frame&
     }
     catch (const exception& e)
     {
-        clog << __func__ << ": " << e.what() << endl;
+        dbgout(Log::ALWAYS) << e.what() << endl;
+        cerr << __func__ << ": " << e.what() << endl;
     }
     return result;
 }

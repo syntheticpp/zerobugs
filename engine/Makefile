@@ -112,15 +112,23 @@ LDLIBS+=$(LIBELF) $(READLINE_LIB) -lthread_db
 LDLIBS+=-lpthread
 
 
-################################################################
 all: $(TARGET)
+
+
+################################################################
+# Precompile header zero.h
+#
+PCH=$(TOP)/zdk/include/zdk/zero.h
+$(PCH).gch: $(PCH)
+	$(CXX) $(CXXFLAGS) $(PCH)
+
 
 ################################################################
 SRCS+=main.cpp
 
 debugger_shell.cpp: version.h sysid.h
 
-$(TARGET): $(BIN_PATH) $(LIB_FILES) $(OBJS)
+$(TARGET): $(PCH).gch $(BIN_PATH) $(LIB_FILES) $(OBJS)
 	$(LINK) $(OBJS) $(LDFLAGS) $(LDLIBS) -o $@
 
 #make sure that "make clean" removes version.h

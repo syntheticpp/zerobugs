@@ -769,7 +769,6 @@ aggregate_member_data(Aggregator& agg, const KlassType& klass)
 #if HAVE_LAMBDA_SUPPORT
         for_each(members.begin(), members.end(), 
             [&agg](const DataMember& m) {
-                //clog << "member: " << m.name() << endl;
                 agg(m);
             });
 #else
@@ -780,11 +779,7 @@ aggregate_member_data(Aggregator& agg, const KlassType& klass)
 
     // aggregate static members
     {   LOG_SCOPE(klass.name(), "visiting static members");
-        const KlassType::StaticMemData& staticMembers =
-            klass.static_members();
-
-        //clog << staticMembers.size() << " static member(s) in "
-        //     << klass.name() << endl;
+        const KlassType::StaticMemData& staticMembers = klass.static_members();
 
 #if HAVE_LAMBDA_SUPPORT
         for_each(staticMembers.begin(), staticMembers.end(), 
@@ -1361,7 +1356,6 @@ RefPtr<DataType> TypeAdapter::apply(boost::shared_ptr<Type> type)
         else if (type->is_declaration())
         {
             decl = true;
-            // clog << "decl: " << type->name() << endl;
         }
         type_ = typeMap_.find(*type);   // already adapted?
 
@@ -1598,3 +1592,4 @@ TypeSystem& TypeAdapter::type_system()
 }
 
 // vim: tabstop=4:softtabstop=4:expandtab:shiftwidth=4
+

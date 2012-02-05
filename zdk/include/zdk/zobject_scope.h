@@ -13,6 +13,7 @@
 // http://www.boost.org/LICENSE_1_0.txt)
 // -------------------------------------------------------------------------
 
+#include "zdk/ref_ptr.h"
 #include "zdk/zobject.h"
 #include <vector>
 

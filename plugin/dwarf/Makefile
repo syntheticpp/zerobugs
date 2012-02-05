@@ -24,7 +24,6 @@ SRCS=						\
 	addr_operations.cpp		\
 	assoc_array.cpp			\
 	class_type_proxy.cpp	\
-	const_value.cpp			\
 	debug_cache.cpp 		\
 	dynamic_array.cpp		\
 	frame.cpp				\

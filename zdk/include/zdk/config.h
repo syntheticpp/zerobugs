@@ -15,53 +15,6 @@
 #define _XDEBUG_32_ON_64    1
 
 /////////////////////////////////////////////////////////////////
-#if defined(WIN32) && defined(_MSC_VER)
-// EXPERIMENTAL
- #include <windows.h>
-
-// GetProcessId and GetThreadId return DWORD
- typedef DWORD pid_t;
- typedef DWORD lwpid_t;
-
- typedef DWORD64 loff_t;
-
- #ifdef _M_IX86
-  #define __WORDSIZE 32
- #elif defined(_M_X64)
-  #define __WORDSIZE 64
- #endif
-
- #define __func__ __FUNCTION__
- typedef int mode_t;
-
- inline pid_t getpid()
- {
-	 return GetCurrentProcessId();
- }
-
- inline pid_t getpid()
- {
-	 return GetCurrentProcessId();
- }
-
- inline int setenv(const char* envName, const char* envVal, int /* overwrite */)
- {
-	 try
-	 {
-		std::string envStr = envName;
-		envStr += "=";
-		envStr += envVal;
-		
-		return _putenv(envStr.c_str());
-	 }
-	 catch (const std::bad_alloc&)
-	 {
-		 return ENOMEM;
-	 }
- }
-
-#endif // WIN32
-/////////////////////////////////////////////////////////////////
 
 // on my x86-64 Linux, config.h messes up cstdlib if included before
 #include <cstdlib>
@@ -79,11 +32,6 @@
  #define BUILTIN_MEMCPY memcpy
 #endif
 
-/*
-#if (__GNUC__ >= 4) && !defined(__x86_64__) && !defined(__INTEL_COMPILER)
- #define USE_PRAGMA_VISIBILITY 1
-#endif
- */
 #ifdef HAVE_SYS_TYPES_H
  #include <sys/types.h>
 #endif
@@ -115,7 +63,6 @@
  typedef struct user_desc modify_ldt_t;
 #endif
 
-//typedef int int128_t __attribute__((__mode__ (__TI__)));
 
 #if !defined(HAVE_SETENV)
 

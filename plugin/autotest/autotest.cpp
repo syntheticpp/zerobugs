@@ -288,12 +288,8 @@ bool AutoTest::on_progress(const char*, double, word_t)
 static void
 parse_error(const string& filename, size_t line, const string& token)
 {
-    //ostringstream err;
-    //err << filename << ':' << line << ": unexpected `" << token << "'";
     cerr << filename << ':' << line << ": unexpected `" << token << "'" << endl;
     _exit(-1);
-
-    //throw runtime_error(err.str());
 }
 
 
@@ -307,14 +303,6 @@ parse_error(const string& filename, size_t line, const string& token)
     command->assign_to(var); \
     var.clear(); } while (0)
 
-/*
-#define SET_EXPECT() do { \
-    state = EXPECT_END; \
-    assert(command); \
-    if (!expect.empty() && expect[expect.size() - 1] == ' ') \
-        expect.erase(expect.size() - 1); \
-    command->set_expect(expect); } while(0)
-*/
 #define SET_EXPECT() set_expect(arch, state, command, expect)
 
 namespace
@@ -608,11 +596,6 @@ void AutoTest::read_script(const string& filename)
                     command->add_echo(echo);
                     echo.clear(); // echo arguments end at end of line
                     break;
-
-                //case CALL_BLOCK: if (!cmd.empty()) cmd += c; break;
-                //case EXPECT_BLOCK:
-                //    if (!expect.empty()) expect += c;
-                //    break;
 
                 default: // silence off compiler warning
                     break;

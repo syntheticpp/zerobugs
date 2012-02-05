@@ -1,5 +1,7 @@
 #ifndef THREAD_COMMON_H__D07EF7C0_EEC7_4571_AA3B_7B2D2073735F
 #define THREAD_COMMON_H__D07EF7C0_EEC7_4571_AA3B_7B2D2073735F
+
+#include "zdk/zero.h"
 //
 // $Id$
 //
@@ -11,6 +13,10 @@
 // http://www.boost.org/LICENSE_1_0.txt)
 // -------------------------------------------------------------------------
 //
+#include "zdk/config.h"
+#include "zdk/ref_counted_impl.h"
+#include "zdk/weak_ptr.h"
+
 #ifdef HAVE_SYS_PARAM_H
  #include <sys/param.h>
 #endif
@@ -18,10 +24,6 @@
  #include <sys/user.h>
 #endif
 #include <string>
-#include "zdk/config.h"
-#include "zdk/ref_counted_impl.h"
-#include "zdk/weak_ptr.h"
-#include "zdk/zero.h"
 #include "dharma/config.h"
 #include "dharma/hash_map.h"
 #include "target/syscall_pending.h"
