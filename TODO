@@ -8,3 +8,6 @@
 
  - use std::shared_ptr and std::make_shared instead of boost::shared_ptr
 
+ - replace ext::hash_map with std::unordered_map
+
+

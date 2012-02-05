@@ -50,9 +50,8 @@ void FlMenuBar::exec_command(Fl_Widget* w, void* p)
 
 void FlMenuBar::exec_command(const char* path)
 {
-    std::clog << __func__ << std::endl;
-
-    for (auto mi = children_.begin(); mi != children_.end(); ++mi)
+    // find the menu item that issued the command
+    for (auto mi = begin(children_); mi != end(children_); ++mi)
     {
         if (strcmp((*mi)->name().c_str(), path) == 0)
         {

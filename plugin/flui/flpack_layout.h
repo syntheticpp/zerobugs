@@ -8,6 +8,7 @@
 //
 #include "code_view.h"
 #include <FL/Fl_Group.H>
+#include <FL/Fl_Tabs.H>
 
 
 class FlPackLayout : public ui::Layout
@@ -15,12 +16,12 @@ class FlPackLayout : public ui::Layout
     ~FlPackLayout() throw();
 
 public:
-    FlPackLayout(int x, int y, int w, int h);
+    FlPackLayout(ui::Controller&, int x, int y, int w, int h);
 
     //Fl_Group* group() { return group_; }
 
     // View interface
-    virtual void added_to(const ui::Layout&);
+    virtual void added_to(const ui::View&);
     virtual void update(const ui::State&);
 
     // Layout interface
@@ -33,8 +34,10 @@ protected:
     int code_height() const;
 
 private:
-    Fl_Group*   group_;
+    Fl_Group*   group_; // this group
     Fl_Group*   codeArea_;
+    Fl_Tabs*    bottom_;
+    Fl_Tabs*    right_;
 };
 
 

@@ -18,7 +18,8 @@
 
 // fltk headers
 #include <FL/Fl.H>
-#include <FL/Fl_Window.H>
+#include <FL/Fl_Double_Window.H>
+//#include <FL/Fl_Window.H>
 
 using namespace std;
 
@@ -144,7 +145,7 @@ int Flui::h() const
 ////////////////////////////////////////////////////////////////
 ui::CodeView* Flui::init_code_view()
 {
-    return new FlCodeView(*this);
+    return new FlMultiCodeView(*this);
 }
 
 
@@ -153,7 +154,7 @@ ui::Layout* Flui::init_layout()
 {
     assert(window_);
 
-    auto layout = new FlPackLayout(x(), y(), w(), h());
+    auto layout = new FlPackLayout(*this, x(), y(), w(), h());
 
     window_->end();
     window_->show();
@@ -175,7 +176,8 @@ void Flui::init_main_window()
     const word_t h = prop.get_word(WINDOW_H, default_window_height);
     const word_t w = prop.get_word(WINDOW_W, default_window_width);
 
-    window_ = new Fl_Window(x, y, w, h, WINDOW_TITLE);
+    // window_ = new Fl_Window(x, y, w, h, WINDOW_TITLE);
+    window_ = new Fl_Double_Window(x, y, w, h, WINDOW_TITLE);
     window_->resizable(window_);
 
     window_->begin();

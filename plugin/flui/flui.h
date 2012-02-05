@@ -10,6 +10,7 @@
 #include "dharma/sarray.h"
 #include "menu.h"
 
+class Fl_Double_Window;
 class Fl_Window;
 
 
@@ -63,8 +64,8 @@ private:
     virtual int     wait_for_event();
 
 private:
-    SArray      args_;
-    Fl_Window*  window_;
+    SArray              args_;
+    Fl_Double_Window*   window_;
 };
 
 

@@ -6,6 +6,17 @@
 //
 #include "view.h"
 
+
+ui::View::View(ui::Controller& c) : c_(c)
+{
+}
+
+
+ui::Layout::Layout(ui::Controller& c) : View(c)
+{
+}
+
+
 void ui::Layout::add(ui::View& v)
 {
     views_.push_back(&v);
@@ -15,7 +26,7 @@ void ui::Layout::add(ui::View& v)
 
 void ui::Layout::update(const ui::State& s)
 {
-    for (auto v = views_.begin(); v != views_.end(); ++v)
+    for (auto v = begin(views_); v != end(views_); ++v)
     {
         (*v)->update(s);
     }

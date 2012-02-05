@@ -13,6 +13,7 @@
 
 namespace ui
 {
+    class Controller;
     class Layout;
 
 
@@ -44,15 +45,34 @@ namespace ui
     };
 
 
+    /**
+     * Base class for a view of the debug target.
+     * Derived classes implement source code views,
+     * CPU register views, call stack views, and so on.
+     * It is reference counted so that it can be used
+     * in a composite pattern.
+     */
     class View : public RefCountedImpl<>
     {
+    public:
+        explicit View (Controller&);
+
+        virtual void added_to(const View&) = 0;
+        virtual void update(const State&) = 0;
+
     protected:
         virtual ~View() throw() { }
 
-    public:
-        virtual void added_to(const Layout&) = 0;
-        virtual void update(const State&) = 0;
+        Controller& controller() const 
+        {
+            return c_;
+        }
+
+    private:
+        Controller& c_;
     };
+
+    typedef RefPtr<View> ViewPtr;
 
     
     /**
@@ -61,6 +81,8 @@ namespace ui
     class Layout : public View
     {
     public:
+        explicit Layout(Controller&);
+
         virtual void add(View&);
 
         virtual void show(View&, bool) = 0;
@@ -71,9 +93,9 @@ namespace ui
         virtual ~Layout() throw() { }
         
     private:
-        std::vector<RefPtr<View> > views_;
+        std::vector<ViewPtr> views_;
     };
-
-
 }
+
 #endif // VIEW_H__1C73A6F4_AE29_4B8D_A06E_24BD9FD30117
+

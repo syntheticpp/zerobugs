@@ -11,6 +11,7 @@
 // http://www.boost.org/LICENSE_1_0.txt)
 // -------------------------------------------------------------------------
 
+#include "zdk/hsieh.h"
 #include "zdk/ref_ptr.h"
 #include "zdk/zobject.h"
 #include <functional>       // binary_function
@@ -70,18 +71,21 @@ operator==(const char* lhs, const SharedString& rhs)
 
 
 
+typedef RefPtr<SharedString> SharedStringPtr;
+
+
 namespace std
 {
     /*  Do not want to override operator < and thus
         change how pointers are being compared, yet
-        I can change how RefPtr<SharedString> are ordered
+        I can change how SharedStringPtr are ordered
         in a std::set or std::map */
 
-    template<> struct less<RefPtr<SharedString> >
-        : public binary_function<RefPtr<SharedString>, RefPtr<SharedString>, bool>
+    template<> struct less<SharedStringPtr>
+        : public binary_function<SharedStringPtr, SharedStringPtr, bool>
     {
-        bool operator()(const RefPtr<SharedString>& lhs,
-                        const RefPtr<SharedString>& rhs) const
+        bool operator()(const SharedStringPtr& lhs,
+                        const SharedStringPtr& rhs) const
         {
             if ((&lhs == &rhs) || (lhs.get() == rhs.get()))
             {
@@ -92,14 +96,14 @@ namespace std
     };
 
 
-    /*  For use with hash_map of RefPtr<SharedString>,
+    /*  For use with hash_map of SharedStringPtr,
      *  similar to the less predicate above
      */
-    template<> struct equal_to<RefPtr<SharedString> >
-        : public binary_function< RefPtr<SharedString>, RefPtr<SharedString>, bool>
+    template<> struct equal_to<SharedStringPtr>
+        : public binary_function< SharedStringPtr, SharedStringPtr, bool>
     {
-        bool operator()(const RefPtr<SharedString>& lhs,
-                        const RefPtr<SharedString>& rhs) const
+        bool operator()(const SharedStringPtr& lhs,
+                        const SharedStringPtr& rhs) const
         {
             if (lhs.get() == rhs.get())
             {
@@ -110,6 +114,15 @@ namespace std
                 return lhs->is_equal2(rhs.get());
             }
             return rhs.is_null();
+        }
+    };
+    
+    
+    template<> struct hash<SharedStringPtr>
+    {
+        size_t operator()(const SharedStringPtr& ssp) const
+        {
+            return SuperFastHash(ssp->c_str(), ssp->length());
         }
     };
 }

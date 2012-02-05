@@ -14,6 +14,8 @@
 #include <string>
 #include <pthread.h>
 
+using namespace std;
+
 
 
 class ZDK_LOCAL StateImpl : public ui::State
@@ -41,6 +43,8 @@ public:
         if (thread)
         {
             addr_t pc = thread->program_count();
+            assert(thread->symbols());
+
             currentSymbol_ = thread->symbols()->lookup_symbol(pc);
         }
     }
@@ -78,8 +82,14 @@ public:
 //
 class ZDK_LOCAL NullLayout : public ui::Layout
 {
+public:
+    explicit NullLayout(ui::Controller& c) : ui::Layout(c)
+    {
+    }
+
+private:
     // View interface
-    virtual void added_to(const ui::Layout&) { }
+    virtual void added_to(const ui::View&) { }
     virtual void update(const ui::State&) { }
     // Layout interface
     virtual void add(ui::View&) { }
@@ -90,7 +100,7 @@ class ZDK_LOCAL NullLayout : public ui::Layout
 ////////////////////////////////////////////////////////////////
 class ZDK_LOCAL CommandError : public ui::Command
 {
-    std::string msg_;
+    string msg_;
 
 public:
     explicit CommandError(const char* m) : msg_(m)
@@ -154,7 +164,7 @@ ui::CompositeMenu* ui::Controller::init_menu()
 ////////////////////////////////////////////////////////////////
 ui::Layout* ui::Controller::init_layout( )
 {
-    return new NullLayout();
+    return new NullLayout(*this);
 }
 
 
@@ -196,14 +206,24 @@ void ui::Controller::build_menu()
 {
     assert(menu_);
 
-    menu_->add(new SimpleCommandMenu<>("File/Quit", FL_ALT + 'q', [this]() {
-            debugger_->quit();
-        }));
+    menu_->add(simple_command_menu("File/Quit", FL_ALT + 'q', [this]()
+    {
+        debugger_->quit();
+    }));
+    
+    menu_->add(simple_command_menu("Debug/Next", FL_F + 10, [this]()
+    {
+        if (auto t = state_->current_thread())
+        {
+            debugger_->step(t, Debugger::STEP_OVER_SOURCE_LINE);
+            debugger_->resume();
+        }
+    }));
 }
 
 
 ////////////////////////////////////////////////////////////////
-void ui::Controller::error_message(const std::string&) const
+void ui::Controller::error_message(const string&) const
 {
 }
 
@@ -220,7 +240,7 @@ void ui::Controller::run()
         {
             command_->continue_on_ui_thread(*this);
         }
-        catch (const std::exception& e)
+        catch (const exception& e)
         {
             error_message(e.what());
         }
@@ -281,6 +301,7 @@ public:
 
 ////////////////////////////////////////////////////////////////
 RefPtr<ui::Command> ui::Controller::update(
+
     Thread*     thread,
     EventType   eventType )
 {
@@ -320,7 +341,7 @@ bool ui::Controller::on_event(
     {
         c->execute_on_main_thread();
     }
-    catch (const std::exception& e)
+    catch (const exception& e)
     {
         c = new CommandError(e.what());
     }
@@ -342,9 +363,9 @@ void* ui::Controller::run(void* p)
 
         controller->run();
     }
-    catch (const std::exception& e)
+    catch (const exception& e)
     {
-        std::cerr << __func__ << ": " << e.what() << std::endl;
+        cerr << __func__ << ": " << e.what() << endl;
     }
     catch (...)
     {

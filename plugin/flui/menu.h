@@ -109,6 +109,17 @@ namespace ui
         Callable callable_;
     };
 
+   
+    template<typename T> inline
+    RefPtr<SimpleCommandMenu<T> > simple_command_menu(
+    
+        const std::string&  name,
+        int                 shortcut,
+        T                   callable )
+    {
+        return new SimpleCommandMenu<T>(name, shortcut, callable);
+    }
+
 
     class CompositeMenu : public Menu
     {

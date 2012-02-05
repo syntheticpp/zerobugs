@@ -4,6 +4,7 @@
 //
 // $Id: $
 //
+#include "zdk/stdexcept.h"
 #include "flcode_table.h"
 #include <FL/fl_draw.H>
 #include <FL/Enumerations.H>
@@ -13,82 +14,135 @@
 
 using namespace std;
 
+enum ColumnType
+{
+    COL_MARK,
+    COL_LINE,
+    COL_TEXT
+};
+
+
 FlCodeTable::FlCodeTable(int x, int y, int w, int h, const char* label)
     : Fl_Table(x, y, w, h, label)
+    , font_(FL_SCREEN)  // Terminal style font
+    , fontSize_(11)
+    , highlight_(0)
+    , digits_(0)
 {
     col_header(true);
 
     cols(3);// one column for markers, one for line numbers, third for text
-            // todo: use row headers for line numbers?
+
     col_width(0, 30);
     col_width(1, 50);
-    col_width(2, 1000);
+    col_width(2, 2000); // TODO: compute 
 }
 
 
-// hacked example from:
-// http://seriss.com/people/erco/Fl_Table/documentation/Fl_Table.html#draw_cell
-void FlCodeTable::draw_cell(TableContext context, int R, int C, int X, int Y, int W, int H)
+int FlCodeTable::line_digits() const
+{
+    if (digits_ == 0)
+    {
+        size_t n = lines_.size();
+        while (n)
+        {
+            n /= 10;
+            ++digits_;
+        }
+    }
+    return digits_;
+}
+
+
+void FlCodeTable::draw_header(int col, int x, int y, int w, int h)
+{
+    fl_push_clip(x, y, w, h);
+
+    fl_color(header_background());
+    fl_rectf(x, y, w, h);
+
+    if (col == COL_TEXT)
+    {
+        fl_color(text_color());
+        fl_draw(filename_.c_str(), x, y, w, h, FL_ALIGN_LEFT);
+    }
+
+    fl_pop_clip();
+}
+
+
+void FlCodeTable::draw_line_marks(int row, int x, int y)
+{
+    // draw pixmap marks if any
+    auto m = marks_.find(row + 1);
+    if (m != marks_.end())
+    {
+        for (auto mark : m->second)
+        {
+            auto p = pixmaps_.find(mark);
+            if (p != pixmaps_.end())
+            {
+                fl_draw_pixmap(p->second.cstrings(), x, y, FL_LIGHT2);
+            }
+        }
+    }
+}
+
+
+void FlCodeTable::draw_cell(
+    TableContext    context,
+    int             row,
+    int             col,
+    int             x,
+    int             y,
+    int             width,
+    int             height)
 {
     switch (context)
     {
     case CONTEXT_STARTPAGE:
-        fl_font(FL_SCREEN, 11);         // todo: configurable font
+        fl_font(font_, fontSize_);
         break;
 
     case CONTEXT_COL_HEADER:
-        fl_push_clip(X, Y, W, H);
-        {
-            fl_color(FL_LIGHT2);
-            fl_rectf(X, Y, W, H);
-            // fl_draw_box(FL_THIN_UP_BOX, X, Y, W, H, color());
-            fl_color(FL_BLACK);
-            if (C == 2)
-            {
-                fl_draw(filename_.c_str(), X, Y, W, H, FL_ALIGN_LEFT);
-            }
-        }
-        fl_pop_clip();
+        draw_header(col, x, y, width, height);
         break;
 
     case CONTEXT_CELL:
-        fl_push_clip(X, Y, W, H);
+        fl_push_clip(x, y, width, height);
         {
-            char s[16] = { 0 };
-
-            // BG COLOR
-            if (C == 0)
+            if (col == COL_MARK)
             {
                 fl_color(FL_LIGHT2);
             }
             else
             {
-                fl_color( /*row_selected(R) ? selection_color() : */ FL_WHITE);
+                fl_color(row + 1 == highlight_ ? highlight_background() : text_background());
             }
-            fl_rectf(X, Y, W, H);
+            fl_rectf(x, y, width, height);
 
-            // TEXT
+            if (col == COL_MARK)
+            {
+                draw_line_marks(row, x, y);
+            }
+            else if (col == COL_LINE)
+            {
+                char s[16] = { 0 };
 
-            if (C == 0)
-            {
-                //todo: draw markers
+                snprintf(s, sizeof(s - 1), "%*d", line_digits(), row + 1);
+
+                fl_color(text_color());
+                fl_draw(s, x, y, width, height, FL_ALIGN_LEFT);
             }
-            else if (C == 1)
+            else if (col == COL_TEXT)
             {
-                sprintf(s, "%05d", R + 1);
-                fl_color(FL_BLUE);
-                fl_draw(s, X, Y, W, H, FL_ALIGN_LEFT);
-            }
-            else if (C == 2)
-            {
-                fl_color(FL_BLACK);
-                fl_draw(lines_[R].c_str(), X, Y, W, H, FL_ALIGN_LEFT);
+                fl_color(text_color());
+                fl_draw(lines_[row].c_str(), x, y, width, height, FL_ALIGN_LEFT);
             }
         }
         fl_pop_clip();
         break;
 
-    case CONTEXT_ENDPAGE:
     default:
         break;
     }
@@ -97,7 +151,14 @@ void FlCodeTable::draw_cell(TableContext context, int R, int C, int X, int Y, in
 
 void FlCodeTable::read_file(const char* filename)
 {
-    // if source code lines exceed this size, though luck - truncate tehm
+    if (filename_ == filename)
+    {
+        return;
+    }
+    lines_.empty();
+    digits_ = 0;
+
+    // if source code lines exceed this size, though luck - truncate them
     vector<char> buf(2048);
 
     ifstream fin(filename);
@@ -112,5 +173,44 @@ void FlCodeTable::read_file(const char* filename)
 
         rows(lines_.size());
     }
+}
+
+
+void FlCodeTable::highlight_line(int line)
+{
+    highlight_ = line;
+    --line;
+
+    if (line < 0 || size_t(line) >= lines_.size())
+    {
+        throw out_of_range(__func__);
+    }
+    row_position(line);
+}
+
+
+void FlCodeTable::set_mark_at_line(
+
+    int                 line,
+    const std::string&  mark,
+    bool                setMark /* = true */)
+{
+    if (setMark)
+    {
+        marks_[line].insert(mark);
+    }
+    else
+    {
+        marks_[line].erase(mark);
+    }
+}
+
+
+void FlCodeTable::set_mark_pixmap(
+
+    const std::string&  mark,
+    const char* const*  data )
+{
+    pixmaps_.insert(make_pair(mark, data));
 }
 

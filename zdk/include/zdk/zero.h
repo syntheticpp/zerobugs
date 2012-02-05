@@ -544,8 +544,12 @@ DECLARE_ZDK_INTERFACE_(Debugger, Unknown2)
      * the given range of addresses; executions breaks in
      * debugger when the instruction pointer gets out of the
      * specified range.
+     *
+     * note: the engine may be able to deduce the range, for example
+     * when stepping over a source line, if from is not explicitly
+     * specified, the current program counter is used.
      */
-    virtual void step(Thread*, StepMode, addr_t from, addr_t to) = 0;
+    virtual void step(Thread*, StepMode, addr_t from = 0, addr_t to = 0) = 0;
 
     /**
      * Stops execution of all threads in the debugged program.

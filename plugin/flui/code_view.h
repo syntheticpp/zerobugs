@@ -7,6 +7,9 @@
 // $Id: $
 //
 #include "view.h"
+#include <string>
+#include <unordered_map>
+
 
 namespace ui
 {
@@ -16,15 +19,17 @@ namespace ui
     class CodeView : public View
     {
     public:
-        explicit CodeView(ui::Controller&);
+        explicit CodeView(Controller&);
+        
+        virtual void update(const State&);
 
     protected:
         ~CodeView() throw();
-
-    private:
-        virtual void update(const State&);
     };
-/*
+
+    typedef RefPtr<CodeView> CodeViewPtr;
+
+/* would such a further specialization be useful?
     class SourceView : public CodeView
     {
     public:
@@ -35,10 +40,27 @@ namespace ui
     public:
     };
 */
-    // composite
+
+    /**
+     * Composite code view.
+     */
     class MultiCodeView : public CodeView
     {
     public:
+        explicit MultiCodeView(Controller&);
+
+    protected:
+        ~MultiCodeView() throw();
+
+        virtual void update(const State&);
+
+        virtual CodeViewPtr make_view(const Symbol&) = 0;
+
+    private:
+        // map code views by file name
+        std::unordered_map<SharedStringPtr, CodeViewPtr> views_;
     };
 };
+
 #endif // CODE_VIEW_H__12269830_C69E_4A94_96F8_368E54F08F89
+
