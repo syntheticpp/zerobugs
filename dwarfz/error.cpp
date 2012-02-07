@@ -19,6 +19,7 @@
 
 using namespace Dwarf;
 
+
 class Error::Impl
 {
 public:
@@ -59,7 +60,7 @@ private:
 
 
 Error::Error(const char* str, Dwarf_Debug dbg, Dwarf_Error err)
-    : impl_(new Impl(str, dbg, err))
+    : impl_(std::make_shared<Impl>(str, dbg, err))
 {
 }
 

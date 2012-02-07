@@ -58,7 +58,7 @@ RefPtr<SharedString> DataMember::linkage_name() const
 
         if (!Utils::get_linkage_name(dbg(), die(), name))
         {
-            if (boost::shared_ptr<Die> tmp = check_indirect())
+            if (std::shared_ptr<Die> tmp = check_indirect())
             {
                 Utils::get_linkage_name(dbg(), tmp->die(), name);
             }
@@ -69,9 +69,9 @@ RefPtr<SharedString> DataMember::linkage_name() const
 }
 
 
-boost::shared_ptr<ConstValue> DataMember::const_value() const
+std::shared_ptr<ConstValue> DataMember::const_value() const
 {
-    boost::shared_ptr<ConstValue> val;
+    std::shared_ptr<ConstValue> val;
     if (Utils::has_attr(dbg(), die(), DW_AT_const_value))
     {
         GenericAttr<DW_AT_const_value, Dwarf_Unsigned> attr(dbg(), die());

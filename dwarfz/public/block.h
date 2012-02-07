@@ -30,7 +30,7 @@ namespace Dwarf
 
     class InlinedInstance;
 
-    typedef std::vector< boost::shared_ptr<InlinedInstance> > InlinedBlocks;
+    typedef std::vector< std::shared_ptr<InlinedInstance> > InlinedBlocks;
 
     /**
      * Base wrapper for:
@@ -42,9 +42,9 @@ namespace Dwarf
     CLASS Block : public Die, public Child<Block>
     {
     public:
-        friend class IterationTraits<LexicalBlock>;
-        friend class IterationTraits<TryBlock>;
-        friend class IterationTraits<CatchBlock>;
+        //friend class IterationTraits<LexicalBlock>;
+        //friend class IterationTraits<TryBlock>;
+        //friend class IterationTraits<CatchBlock>;
 
         virtual ~Block() throw() {}
 
@@ -92,14 +92,14 @@ namespace Dwarf
         Block(Dwarf_Debug, Dwarf_Die);
 
     private:
-        mutable std::auto_ptr<InlinedBlocks> inlinedBlocks_;
-        mutable std::auto_ptr<VarList> vars_;
+        mutable std::unique_ptr<InlinedBlocks> inlinedBlocks_;
+        mutable std::unique_ptr<VarList> vars_;
     };
 
 
     template<> struct IterationTraits<Block>
     {
-        typedef boost::shared_ptr<Block> ptr_type;
+        typedef std::shared_ptr<Block> ptr_type;
 
         /**
          * Obtain the first element in the list
@@ -119,10 +119,6 @@ namespace Dwarf
     public:
         enum { TAG = tag };
 
-        friend class IterationTraits<Block>;
-        friend class IterationTraits<BlockT>;
-
-    protected:
         BlockT(Dwarf_Debug dbg, Dwarf_Die die) : Block(dbg, die)
         { }
     };

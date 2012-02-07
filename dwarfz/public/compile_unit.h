@@ -11,8 +11,13 @@
 // http://www.boost.org/LICENSE_1_0.txt)
 // -------------------------------------------------------------------------
 
+#include "zdk/check_ptr.h"
+#include "zdk/stdexcept.h"
+#include "zdk/shared_string.h"
+#include "zdk/string_cache.h"
+#include "zdk/weak_ptr.h"
+#include <memory>
 #include <dwarf.h>
-#include <boost/enable_shared_from_this.hpp>
 #include "interface.h"
 #include "child.h"
 #include "comp_str.h"
@@ -23,10 +28,6 @@
 #include "variable.h"
 #include "dharma/config.h"
 #include "dharma/hash_map.h"
-#include "zdk/check_ptr.h"
-#include "zdk/shared_string.h"
-#include "zdk/string_cache.h"
-#include "zdk/weak_ptr.h"
 
 
 namespace Dwarf
@@ -40,8 +41,7 @@ namespace Dwarf
     /**
      * Function object interface for enumerating macro info
      */
-    struct MacroEvents
-        : public std::unary_function<Dwarf_Macro_Details*, bool>
+    struct MacroEvents : public std::unary_function<Dwarf_Macro_Details*, bool>
     {
         virtual ~MacroEvents() = 0;
 
@@ -58,34 +58,35 @@ namespace Dwarf
      */
     CLASS CompileUnit : public Die
                       , public Child<Debug>
-                      , public boost::enable_shared_from_this<CompileUnit>
+                      , public std::enable_shared_from_this<CompileUnit>
     {
         CompileUnit(const CompileUnit&); // non-copyable
         CompileUnit& operator=(const CompileUnit&); // non-assignable
 
     #if !defined(HAVE_HASH_MAP)
-    #error no hash_map!
         // map types by offset in the .debug section
         typedef std::map<Dwarf_Off,
-            boost::shared_ptr<Type> > TypeMapByOffset;
+            std::shared_ptr<Type> > TypeMapByOffset;
         typedef std::map<const char*,
-            boost::shared_ptr<Type>, StrLess> TypeMapByName;
+            std::shared_ptr<Type>, StrLess> TypeMapByName;
     #else
         typedef ext::hash_map<Dwarf_Off,
-            boost::shared_ptr<Type>,
+            std::shared_ptr<Type>,
             ext::identity<Dwarf_Off> > TypeMapByOffset;
 
         typedef ext::hash_map<const char*,
-            boost::shared_ptr<Type>,
+            std::shared_ptr<Type>,
             StrHash,
             StrEqual> TypeMapByName;
     #endif
+
     public:
         enum { TAG = DW_TAG_compile_unit };
 
-        friend class Debug;
+        //friend class Debug;
         friend class IterationTraits<CompileUnit>;
 
+        CompileUnit(Dwarf_Debug, Dwarf_Die, Dwarf_Unsigned, WeakPtr<StringCache>);
         ~CompileUnit() throw();
 
         List<Namespace> namespaces() const;
@@ -101,7 +102,7 @@ namespace Dwarf
          * Lookup a function by address, and optionally
          * by linkage name
          */
-        boost::shared_ptr<Function>
+        std::shared_ptr<Function>
             lookup_function(Dwarf_Addr, const char* linkage = NULL) const;
 
         /**
@@ -112,12 +113,12 @@ namespace Dwarf
         /**
          * Lookup a type definition by its forward decl
          */
-        boost::shared_ptr<Type> lookup_type(const Type& decl) const;
+        std::shared_ptr<Type> lookup_type(const Type& decl) const;
 
         /**
          * Lookup a type by name
          */
-        boost::shared_ptr<Type> lookup_type(const char* name) const;
+        std::shared_ptr<Type> lookup_type(const char* name) const;
 
         /**
          * Returns the concatenation of the compilation
@@ -196,19 +197,19 @@ namespace Dwarf
         RefPtr<StringCache> string_cache() const { return strCache_.lock(); }
         Dwarf_Unsigned next_unit() const { return next_; }
 
-        static boost::shared_ptr<CompileUnit>
+        static std::shared_ptr<CompileUnit>
             next_unit(Dwarf_Debug, Dwarf_Unsigned);
 
 
         CLASS TypeEnumeration
         {
-            boost::shared_ptr<CompileUnit> unit_;
+            std::shared_ptr<CompileUnit> unit_;
             TypeMapByOffset::const_iterator iterByOffs_;
             TypeMapByName::const_iterator iterByName_;
 
         public:
-            explicit TypeEnumeration(const boost::shared_ptr<CompileUnit>&);
-            boost::shared_ptr<Type> next();
+            explicit TypeEnumeration(const std::shared_ptr<CompileUnit>&);
+            std::shared_ptr<Type> next();
         }; // TypeEnumeration
 
         TypeEnumeration get_types()
@@ -218,8 +219,6 @@ namespace Dwarf
         }
 
     private:
-        CompileUnit(Dwarf_Debug, Dwarf_Die, Dwarf_Unsigned, WeakPtr<StringCache>);
-
         void get_range_from_funcs() const;
 
         /**
@@ -240,23 +239,24 @@ namespace Dwarf
         /**
          * Called by read_children
          */
-        boost::shared_ptr<Die> process_entry(
+        std::shared_ptr<Die> process_entry(
             Dwarf_Die,
             Dwarf_Half,
             const char* prefix,
             bool ignoreVars = false) const;
 
-        boost::shared_ptr<Die> add_struct(Dwarf_Die, const char* prefix) const;
+        std::shared_ptr<Die> add_struct(Dwarf_Die, const char* prefix) const;
 
         class LineInfoCache; // opaque
         const LineInfoCache& line_info_cache() const;
 
         ////////////////////////////////////////////////////////
         const Dwarf_Unsigned next_;
+
         mutable RefPtr<SharedString> fullpath_;
         mutable RefPtr<SharedString> buildpath_;
 
-        mutable LineInfoCache* lineInfoCache_;
+        mutable std::unique_ptr<LineInfoCache> lineInfoCache_;
         mutable FunList funcs_;
         mutable std::vector<Dwarf_Off> funcOffs_;
         mutable bool populated_;
@@ -282,7 +282,7 @@ namespace Dwarf
      */
     template<> struct IterationTraits<CompileUnit>
     {
-        typedef boost::shared_ptr<CompileUnit> ptr_type;
+        typedef std::shared_ptr<CompileUnit> ptr_type;
 
         /**
          * Obtain the first element in the list
@@ -300,7 +300,7 @@ namespace Dwarf
      * Lookup a type by name in the given unit
      * @todo: revisit debug.cpp
      */
-    boost::shared_ptr<Type> lookup_type(const CompileUnit& unit,
+    std::shared_ptr<Type> lookup_type(const CompileUnit& unit,
                                         const char* name,
                                         size_t nameLength);
 }

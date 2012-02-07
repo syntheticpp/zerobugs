@@ -31,7 +31,7 @@ namespace Dwarf
         /**
          * The type of an array element
          */
-        boost::shared_ptr<Type> elem_type() const;
+        std::shared_ptr<Type> elem_type() const;
 
         /**
          * The total size in bytes of an array
@@ -48,7 +48,7 @@ namespace Dwarf
 
     template<> struct IterationTraits<Dimension>
     {
-        typedef boost::shared_ptr<Dimension> ptr_type;
+        typedef std::shared_ptr<Dimension> ptr_type;
 
         /**
          * Obtain the first element in the list
@@ -75,7 +75,7 @@ namespace Dwarf
         /**
          * The type of an array element
          */
-        boost::shared_ptr<Type> elem_type() const;
+        std::shared_ptr<Type> elem_type() const;
 
     protected:
         DynArrayType(Dwarf_Debug, Dwarf_Die);
@@ -91,9 +91,9 @@ namespace Dwarf
     public:
         enum { TAG = 0x42 };
 
-        boost::shared_ptr<Type> elem_type() const;
+        std::shared_ptr<Type> elem_type() const;
 
-        boost::shared_ptr<Type> key_type() const;
+        std::shared_ptr<Type> key_type() const;
 
     protected:
         AssocArrayType(Dwarf_Debug, Dwarf_Die);

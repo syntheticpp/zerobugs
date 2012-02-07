@@ -28,7 +28,7 @@ List<Parameter> SubroutineType::params() const
 }
 
 
-boost::shared_ptr<Type> SubroutineType::ret_type() const
+std::shared_ptr<Type> SubroutineType::ret_type() const
 {
     return Utils::type(dbg(), die());
 }

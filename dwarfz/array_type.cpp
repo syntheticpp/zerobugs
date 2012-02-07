@@ -26,7 +26,7 @@ ArrayType::ArrayType(Dwarf_Debug dbg, Dwarf_Die die)
 }
 
 
-boost::shared_ptr<Type> ArrayType::elem_type() const
+std::shared_ptr<Type> ArrayType::elem_type() const
 {
     return Utils::type(this->dbg(), this->die());
 }
@@ -38,10 +38,10 @@ List<Dimension> ArrayType::dimensions() const
 }
 
 
-boost::shared_ptr<Dimension>
+std::shared_ptr<Dimension>
 IterationTraits<Dimension>::first(Dwarf_Debug dbg, Dwarf_Die die)
 {
-    boost::shared_ptr<Dimension> p =
+    std::shared_ptr<Dimension> p =
         IterationTraits<SubrangeType>::first(dbg, die);
     if (!p)
     {
@@ -55,12 +55,12 @@ IterationTraits<Dimension>::first(Dwarf_Debug dbg, Dwarf_Die die)
  * Get the sibling of same type for a given element
  */
 void
-IterationTraits<Dimension>::next(boost::shared_ptr<Dimension>& elem)
+IterationTraits<Dimension>::next(std::shared_ptr<Dimension>& elem)
 {
     assert(elem);
 
     // save elem value
-    boost::shared_ptr<Dimension> tmp = elem;
+    std::shared_ptr<Dimension> tmp = elem;
 
     IterationTraits<EnumType>::next(elem);
     if (!elem)
@@ -81,7 +81,7 @@ DynArrayType::DynArrayType(Dwarf_Debug dbg, Dwarf_Die die)
 }
 
 
-boost::shared_ptr<Type> DynArrayType::elem_type() const
+std::shared_ptr<Type> DynArrayType::elem_type() const
 {
     return Utils::type(this->dbg(), this->die());
 }
@@ -94,7 +94,7 @@ AssocArrayType::AssocArrayType(Dwarf_Debug dbg, Dwarf_Die die)
 }
 
 
-boost::shared_ptr<Type> AssocArrayType::elem_type() const
+std::shared_ptr<Type> AssocArrayType::elem_type() const
 {
     return Utils::type(this->dbg(), this->die());
 }
@@ -116,7 +116,7 @@ subject     Re: DWARF representation of D arrays
     debugger much good, but at least you can display the type correctly. Or,
     just hook the functions in aaA.d to retrieve the information.
  */
-boost::shared_ptr<Type> AssocArrayType::key_type() const
+std::shared_ptr<Type> AssocArrayType::key_type() const
 {
     return Utils::containing_type(this->dbg(), this->die());
 }

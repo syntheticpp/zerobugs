@@ -55,7 +55,7 @@ namespace Dwarf
 
         Dwarf_Off decl_offset() const;
 
-        boost::shared_ptr<Type> declaration() const;
+        std::shared_ptr<Type> declaration() const;
 
         bool is_declaration() const
         {
@@ -84,7 +84,7 @@ namespace Dwarf
 
     template<> struct IterationTraits<Type>
     {
-        typedef boost::shared_ptr<Type> ptr_type;
+        typedef std::shared_ptr<Type> ptr_type;
 
         /**
          * Obtain the first element in the list

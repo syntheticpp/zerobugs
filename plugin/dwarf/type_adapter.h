@@ -99,7 +99,7 @@ namespace Dwarf
          */
         RefPtr<DataType> type() const { return type_; }
 
-        RefPtr<DataType> apply(boost::shared_ptr<Dwarf::Type>);
+        RefPtr<DataType> apply(std::shared_ptr<Dwarf::Type>);
 
         /**
          * @return the ZDK DataType object that corresponds to
@@ -126,7 +126,7 @@ namespace Dwarf
          * true), attempt to locate the full definition.
          * @return the resolved type, or NULL
          */
-        boost::shared_ptr<Dwarf::Type> resolve(const Dwarf::Type&);
+        std::shared_ptr<Dwarf::Type> resolve(const Dwarf::Type&);
 
         /**
          * Force type name to given value.
@@ -141,19 +141,19 @@ namespace Dwarf
     private:
         RefPtr<DataType> get_fun_type(
             const Dwarf::Die&,
-            const boost::shared_ptr<Dwarf::Type>&,
+            const std::shared_ptr<Dwarf::Type>&,
             const Dwarf::List<Dwarf::Parameter>&,
             const Dwarf::KlassType* = NULL);
 
         RefPtr<DataType> get_fun_type(
             const Dwarf::Die&,
-            const boost::shared_ptr<Dwarf::Type>&,
+            const std::shared_ptr<Dwarf::Type>&,
             const Dwarf::Function::ParamList&,
             const Dwarf::KlassType* = NULL);
 
         void add_methods(const Dwarf::KlassType&, ClassTypeImpl&);
 
-        boost::shared_ptr<Type> lookup_type(const Dwarf::Type& type,
+        std::shared_ptr<Type> lookup_type(const Dwarf::Type& type,
                                             const RefPtr<SharedString>& module,
                                             bool byCtor = false) const;
 
@@ -163,7 +163,7 @@ namespace Dwarf
          * helper lookup, implemented here so that
          * the compiler may inline it if necessary
          */
-        boost::shared_ptr<Dwarf::Type>
+        std::shared_ptr<Dwarf::Type>
         lookup_type_in_all_modules( RefPtr<Process>,
                                     const Type& what,
                                     bool byCtor = false

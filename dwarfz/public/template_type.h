@@ -26,16 +26,14 @@ namespace Dwarf
     public:
 
         enum { TAG = DW_TAG_template_type_parameter };
-        friend class IterationTraits<TemplateType<T> >;
+        // friend class IterationTraits<TemplateType<T> >;
 
-        boost::shared_ptr<Type> type() const
+        std::shared_ptr<Type> type() const
         {
             return Utils::type(this->dbg(), this->die());
         }
 
-    protected:
-        TemplateType(Dwarf_Debug dbg, Dwarf_Die die)
-            : Die(dbg, die)
+        TemplateType(Dwarf_Debug dbg, Dwarf_Die die) : Die(dbg, die)
         { }
 
     };

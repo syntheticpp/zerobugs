@@ -11,7 +11,6 @@
 // http://www.boost.org/LICENSE_1_0.txt)
 // -------------------------------------------------------------------------
 
-#include <boost/shared_ptr.hpp>
 #include "zdk/translation_unit.h"
 #include "zdk/zobject_impl.h"
 
@@ -32,8 +31,8 @@ namespace Dwarf
         INTERFACE_ENTRY(TranslationUnit)
     END_INTERFACE_MAP()
 
-        Unit(const boost::shared_ptr<Debug>&,
-             const boost::shared_ptr<CompileUnit>&,
+        Unit(const std::shared_ptr<Debug>&,
+             const std::shared_ptr<CompileUnit>&,
              SharedString* moduleName);
 
         ~Unit() throw();
@@ -58,8 +57,8 @@ namespace Dwarf
         //size_t line_to_addr(size_t, EnumCallback<addr_t>*);
 
     private:
-        boost::shared_ptr<Debug> dbg_; // keep alive
-        boost::shared_ptr<CompileUnit> unit_;
+        std::shared_ptr<Debug> dbg_; // keep alive
+        std::shared_ptr<CompileUnit> unit_;
 
         RefPtr<SharedString> moduleName_;
     };

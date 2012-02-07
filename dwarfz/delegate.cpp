@@ -15,7 +15,6 @@
 #include "delegate.h"
 #include "utils.h"
 
-using namespace boost;
 using namespace Dwarf;
 
 
@@ -24,13 +23,13 @@ Delegate::Delegate(Dwarf_Debug dbg, Dwarf_Die die) : Type(dbg, die)
 }
 
 
-shared_ptr<Type> Delegate::function_type() const
+std::shared_ptr<Type> Delegate::function_type() const
 {
     return Utils::type(dbg(), die());
 }
 
 
-shared_ptr<Type> Delegate::this_type() const
+std::shared_ptr<Type> Delegate::this_type() const
 {
     return Utils::containing_type(dbg(), die());
 }

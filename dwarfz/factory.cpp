@@ -49,7 +49,7 @@ bool Factory::register_creator(Dwarf_Half tag, Creator* creator)
 }
 
 
-boost::shared_ptr<Die> 
+std::shared_ptr<Die> 
 Factory::create(
     Dwarf_Debug dbg,
     Dwarf_Die   die,
@@ -65,18 +65,18 @@ Factory::create(
         }
         return create(dbg, die, tag, own);
     }
-    return boost::shared_ptr<Die>();
+    return std::shared_ptr<Die>();
 }
 
 
-boost::shared_ptr<Die>
+std::shared_ptr<Die>
 Factory::create(Dwarf_Debug dbg, Dwarf_Die die, Dwarf_Half tag, bool own) const
 {
     if (!tag)
     {
         tag = Utils::tag(dbg, die);
     }
-    boost::shared_ptr<Die> instance;
+    std::shared_ptr<Die> instance;
 
     Lock<Mutex> lock(mutex_);
 

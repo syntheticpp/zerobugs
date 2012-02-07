@@ -32,14 +32,13 @@ namespace Dwarf
     public:
         enum { TAG = DW_TAG_subrange_type };
 
+        SubrangeType(Dwarf_Debug, Dwarf_Die);
+
         Dwarf_Unsigned size() const;
 
         Dwarf_Signed lower_bound() const;
         Dwarf_Signed upper_bound() const;
         Dwarf_Unsigned count() const;
-
-    protected:
-        SubrangeType(Dwarf_Debug, Dwarf_Die);
     };
 }
 

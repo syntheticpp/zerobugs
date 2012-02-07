@@ -27,7 +27,7 @@ template<typename T> CLASS Cache
 public:
     typedef WrapperTraits<T> traits;
     typedef Wrapper<T> value_type;
-    typedef boost::shared_ptr<value_type> pointer;
+    typedef std::shared_ptr<value_type> pointer;
 
     typedef std::multimap<const char*, pointer, StrLess> map_type;
 
@@ -52,7 +52,7 @@ public:
         {
             // The wrapper takes ownership of obj_[i],
             // and will deallocate it in its dtor.
-            pointer ptr(new value_type(dbg, obj_[i]));
+            pointer ptr(std::make_shared<value_type>(dbg, obj_[i]));
 
             map_.insert(make_pair(ptr->name(), ptr));
         }

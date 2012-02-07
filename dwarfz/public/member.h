@@ -32,7 +32,9 @@ namespace Dwarf
     public:
         enum { TAG = DW_TAG_member };
 
-        friend class IterationTraits<DataMember>;
+        // friend class IterationTraits<DataMember>;
+
+        DataMember(Dwarf_Debug, Dwarf_Die);
 
         Dwarf_Unsigned byte_size() const;
 
@@ -41,14 +43,13 @@ namespace Dwarf
         Dwarf_Off bit_offset() const;
         
         // for static member data
-        boost::shared_ptr<ConstValue> const_value() const;
+        std::shared_ptr<ConstValue> const_value() const;
         RefPtr<SharedString> linkage_name() const;
         // TODO
         // declaration
         // visibility
 
     protected:
-        DataMember(Dwarf_Debug, Dwarf_Die);
         mutable RefPtr<SharedString> linkageName_; // mangled symbol name
     };
 

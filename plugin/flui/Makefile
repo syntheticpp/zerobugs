@@ -24,6 +24,7 @@ SRCS=	code_view.cpp		\
 		flmenu.cpp			\
 		flpack_layout.cpp	\
 		menu.cpp			\
+		var_view.cpp		\
 		view.cpp			\
 		stack_view.cpp		\
 		$(NULL)

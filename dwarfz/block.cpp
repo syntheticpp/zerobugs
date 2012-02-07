@@ -94,10 +94,10 @@ List<Block> Block::blocks() const
 }
 
 
-boost::shared_ptr<Block>
+std::shared_ptr<Block>
 IterationTraits<Block>::first(Dwarf_Debug dbg, Dwarf_Die die)
 {
-    boost::shared_ptr<Block> p =
+    std::shared_ptr<Block> p =
         IterationTraits<LexicalBlock>::first(dbg, die);
 
     if (!p)
@@ -112,10 +112,10 @@ IterationTraits<Block>::first(Dwarf_Debug dbg, Dwarf_Die die)
  * Get the sibling of same type for a given element
  */
 void
-IterationTraits<Block>::next(boost::shared_ptr<Block>& elem)
+IterationTraits<Block>::next(std::shared_ptr<Block>& elem)
 {
     assert(elem);
-    boost::shared_ptr<Block> tmp(elem);
+    std::shared_ptr<Block> tmp(elem);
     IterationTraits<LexicalBlock>::next(elem);
     if (!elem)
     {

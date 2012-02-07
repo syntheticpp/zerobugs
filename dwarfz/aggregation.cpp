@@ -9,6 +9,7 @@
 // http://www.boost.org/LICENSE_1_0.txt)
 // -------------------------------------------------------------------------
 
+#include <assert.h>
 #include "access_attr.h"
 #include "utils.h"
 #include "impl.h"
@@ -47,13 +48,13 @@ Access Aggregation::access() const
 }
 
 
-boost::shared_ptr<Location> Aggregation::loc() const
+std::shared_ptr<Location> Aggregation::loc() const
 {
     return Utils::loc(dbg(), die(), DW_AT_data_member_location);
 }
 
 
-boost::shared_ptr<Type> Aggregation::type() const
+std::shared_ptr<Type> Aggregation::type() const
 {
     if (!type_)
     {

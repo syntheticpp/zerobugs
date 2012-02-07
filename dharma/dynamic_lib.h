@@ -18,6 +18,7 @@
  #include <dlfcn.h>
 #endif
 
+#include <memory>
 #include <string>
 #include <boost/type_traits/function_traits.hpp>
 #include <boost/type_traits.hpp>
@@ -184,12 +185,7 @@ private:
 };
 
 
-namespace boost
-{
-    template<typename t> class shared_ptr;
-}
-
-typedef ::boost::shared_ptr<DynamicLib> DynamicLibPtr;
+typedef ::std::shared_ptr<DynamicLib> DynamicLibPtr;
 
 
 namespace Impl

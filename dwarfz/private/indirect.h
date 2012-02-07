@@ -14,12 +14,12 @@
 #include "debug.h"
 
 template<Dwarf_Half A>
-boost::shared_ptr<Dwarf::Die> get_indirect(
+std::shared_ptr<Dwarf::Die> get_indirect(
     Dwarf_Debug         dbg,
     Dwarf_Die           die,
     const Dwarf::Debug* owner = NULL)
 {
-    boost::shared_ptr<Dwarf::Die> result;
+    std::shared_ptr<Dwarf::Die> result;
     Dwarf::GenericAttr<A, Dwarf_Off> attr(dbg, die);
 
     if (!attr.is_null())

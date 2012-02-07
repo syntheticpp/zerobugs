@@ -13,8 +13,6 @@
 
 #include <libelf.h>
 #include <libdwarf.h>
-#include <boost/shared_ptr.hpp>
-#include <boost/utility.hpp>
 #include "funfwd.h"
 #include "interface.h"
 
@@ -31,8 +29,11 @@ namespace Dwarf
 
     public:
         template<typename T, Dwarf_Unsigned Type>
-        CLASS AutoDealloc : private boost::noncopyable
+        CLASS AutoDealloc
         {
+            AutoDealloc(const AutoDealloc&);
+            AutoDealloc& operator=(const AutoDealloc&);
+
             Dwarf_Debug dbg_;
             T* ptr_;
 
@@ -55,17 +56,17 @@ namespace Dwarf
         /* Get the die describing the type of the given
            die; works for dice of type DW_TAG_member, DW_TAG_variable,
            DW_TAG_formal_parameter, DW_TAG_constant, etc */
-        static boost::shared_ptr<Type> type(Dwarf_Debug, Dwarf_Die);
+        static std::shared_ptr<Type> type(Dwarf_Debug, Dwarf_Die);
 
-        static boost::shared_ptr<Type> type(const Dwarf::Die&);
+        static std::shared_ptr<Type> type(const Dwarf::Die&);
 
-        static boost::shared_ptr<Type> containing_type(Dwarf_Debug, Dwarf_Die);
+        static std::shared_ptr<Type> containing_type(Dwarf_Debug, Dwarf_Die);
 
         /* Get the location, for a die that has a DW_AT_location
            attribute */
-        static boost::shared_ptr<Location> loc(Dwarf_Debug, Dwarf_Die);
+        static std::shared_ptr<Location> loc(Dwarf_Debug, Dwarf_Die);
 
-        static boost::shared_ptr<Location> loc(
+        static std::shared_ptr<Location> loc(
             Dwarf_Debug, Dwarf_Die, Dwarf_Half loc_attr);
 
         static bool has_attr(Dwarf_Debug, Dwarf_Die, Dwarf_Half);
@@ -101,7 +102,7 @@ namespace Dwarf
 
         static void dump_children(const Dwarf::Die&, std::ostream& outs);
 
-        static boost::shared_ptr<Function>
+        static std::shared_ptr<Function>
             lookup_function(const FunList& funcs,
                             Dwarf_Addr addr,
                             const char* linkage = NULL);

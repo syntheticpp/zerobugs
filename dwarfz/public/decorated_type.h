@@ -33,7 +33,7 @@ namespace Dwarf
          * @return the decorated type; attempts to deal with
          * incomplete types.
          */
-        virtual boost::shared_ptr<Type> type() const;
+        virtual std::shared_ptr<Type> type() const;
 
         virtual bool is_pointer_or_ref() const;
 
@@ -43,7 +43,7 @@ namespace Dwarf
     private:
         friend class Utils;
 
-        mutable boost::shared_ptr<Type> type_;
+        mutable std::shared_ptr<Type> type_;
     };
 }
 

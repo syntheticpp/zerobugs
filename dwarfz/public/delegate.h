@@ -25,8 +25,8 @@ namespace Dwarf
     public:
         enum { TAG = 0x43 }; // see http://www.digitalmars.com/d/2.0/abi.html
 
-        boost::shared_ptr<Type> function_type() const;
-        boost::shared_ptr<Type> this_type() const;
+        std::shared_ptr<Type> function_type() const;
+        std::shared_ptr<Type> this_type() const;
 
     protected:
         Delegate(Dwarf_Debug, Dwarf_Die);

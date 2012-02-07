@@ -31,6 +31,8 @@ namespace Dwarf
     public:
         enum { TAG = DW_TAG_enumeration_type };
 
+        EnumType(Dwarf_Debug, Dwarf_Die);
+
         Dwarf_Unsigned size() const;
 
         Dwarf_Signed lower_bound() const;
@@ -42,19 +44,14 @@ namespace Dwarf
         public:
             enum { TAG = DW_TAG_enumerator };
 
-            friend class IterationTraits<Enumerator>;
+            Enumerator(Dwarf_Debug, Dwarf_Die);
+            // friend class IterationTraits<Enumerator>;
 
             Dwarf_Signed value() const;
-
-        protected:
-            Enumerator(Dwarf_Debug, Dwarf_Die);
         };
 
 
         List<Enumerator> enums() const;
-
-    protected:
-        EnumType(Dwarf_Debug, Dwarf_Die);
     };
 
 

@@ -29,9 +29,8 @@ namespace Dwarf
     public:
         enum { TAG = DW_TAG_formal_parameter };
 
-        friend class IterationTraits<Parameter>;
+        // friend class IterationTraits<Parameter>;
 
-    protected:
         Parameter(Dwarf_Debug dbg, Dwarf_Die die) : Datum(dbg, die)
         { }
     };
@@ -45,11 +44,10 @@ namespace Dwarf
     CLASS ParameterT : public Child<T>, public Parameter
     {
     public:
-        friend class IterationTraits<ParameterT>;
+        // friend class IterationTraits<ParameterT>;
 
         virtual ~ParameterT() throw() { }
 
-    protected:
         ParameterT(Dwarf_Debug dbg, Dwarf_Die die)
             : Parameter(dbg, die) { }
     };

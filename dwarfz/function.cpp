@@ -26,7 +26,6 @@
 #include "function.h"
 
 using namespace std;
-using namespace boost;
 using namespace Dwarf;
 
 
@@ -55,7 +54,7 @@ Function::params() const
 }
 
 
-boost::shared_ptr<Type>
+std::shared_ptr<Type>
 Dwarf::Function::ret_type() const
 {
     return Utils::type(*this);
@@ -68,7 +67,7 @@ Dwarf::Function::name_impl() const
     char* name = Die::name_impl();
     if (!name)
     {
-        if (boost::shared_ptr<Die> indirect = check_indirect())
+        if (std::shared_ptr<Die> indirect = check_indirect())
         {
             name = strdup(indirect->name());
         }
@@ -131,7 +130,7 @@ Dwarf::Function::cache_params() const
                 //
                 isMemFun_ = true;
             }
-            if (boost::shared_ptr<Type> type = i->type())
+            if (std::shared_ptr<Type> type = i->type())
             {
                 paramTypes_->push_back(type);
                 params_->push_back(i);
@@ -236,7 +235,7 @@ Dwarf::Function::frame_base( Dwarf_Addr moduleBase,
     const Dwarf_Addr base = unit() ? unit()->base_pc() : 0;
     Dwarf_Addr result = frameBase;
 
-    if (boost::shared_ptr<Location> loc =
+    if (std::shared_ptr<Location> loc =
         Utils::loc(dbg(), die(), DW_AT_frame_base))
     {
         result = loc->eval(frameBase, moduleBase, base, pc);
@@ -256,9 +255,9 @@ Dwarf::Function::inline_not_inlined() const
             return true;
         }
     }
-    if (boost::shared_ptr<Die> tmp = check_indirect())
+    if (std::shared_ptr<Die> tmp = check_indirect())
     {
-        if (boost::shared_ptr<Function> fun = shared_dynamic_cast<Function>(tmp))
+        if (std::shared_ptr<Function> fun = std::dynamic_pointer_cast<Function>(tmp))
         {
             if (fun->inline_not_inlined())
             {

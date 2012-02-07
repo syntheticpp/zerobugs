@@ -13,7 +13,6 @@
 
 #include <libdwarf.h>               // for Dwarf_Off
 #include <vector>
-#include <boost/utility.hpp>
 #include "dharma/config.h"
 #include "dharma/hash_map.h"
 #include "zdk/shared_string.h"
@@ -45,7 +44,7 @@ namespace Dwarf
     /**
      * Caches types by name and by the index of the debug info entry
      */
-    CLASS TypeMap : boost::noncopyable
+    CLASS TypeMap
     {
         // types indexed by name
         typedef ext::hash_map<RefPtr<SharedString>, WeakDataTypePtr> ByName;

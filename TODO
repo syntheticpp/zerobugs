@@ -10,4 +10,7 @@
 
  - replace ext::hash_map with std::unordered_map
 
+ - replace auto_ptr uses with unique_ptr
+
+
 

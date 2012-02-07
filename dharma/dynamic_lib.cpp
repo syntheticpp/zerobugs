@@ -59,8 +59,6 @@ DynamicLib::DynamicLib(const char* fileName)
 ////////////////////////////////////////////////////////////////
 DynamicLib::~DynamicLib() throw()
 {
-    //clog << "~DynamicLib: " << filename();
-    //clog << " refCount=" << handle_.count() << endl;
 }
 
 ////////////////////////////////////////////////////////////////
@@ -133,3 +131,4 @@ DynamicLib::Counter& DynamicLib::Counter::operator--()
 }
 
 // vim: tabstop=4:softtabstop=4:expandtab:shiftwidth=4
+

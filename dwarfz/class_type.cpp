@@ -149,7 +149,7 @@ Dwarf_Addr MemFun::vtable_offset(Dwarf_Addr frameBase,
 {
     Dwarf_Addr result = 0;
 
-    if (boost::shared_ptr<Location> loc =
+    if (std::shared_ptr<Location> loc =
         Utils::loc(dbg(), die(), DW_AT_vtable_elem_location))
     {
         result = loc->eval(frameBase, moduleBase, unitBase, programCount);

@@ -30,7 +30,7 @@ namespace Dwarf
     CLASS StructTypeBase : public Type
     {
     public:
-        typedef std::vector<boost::shared_ptr<StaticMember> > StaticMemData;
+        typedef std::vector<std::shared_ptr<StaticMember> > StaticMemData;
 
         /**
          * @return the member data
@@ -54,7 +54,7 @@ namespace Dwarf
      */
     CLASS MemFun : public Function
     {
-        friend class IterationTraits<MemFun>;
+        // friend class IterationTraits<MemFun>;
 
     public:
         typedef KlassType parent_type;
@@ -69,7 +69,6 @@ namespace Dwarf
             Dwarf_Addr unitBase,
             Dwarf_Addr programCount) const;
 
-    protected:
         MemFun(Dwarf_Debug dbg, Dwarf_Die die) : Function(dbg, die)
         {
         }
@@ -88,7 +87,7 @@ namespace Dwarf
     public:
         enum { TAG = DW_TAG_structure_type };
 
-        typedef std::vector<boost::shared_ptr<Inheritance> > BaseList;
+        typedef std::vector<std::shared_ptr<Inheritance> > BaseList;
 
 
         virtual ~KlassType() throw() {}

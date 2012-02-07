@@ -8,7 +8,9 @@
 //
 // $Id$
 //
-#include <iostream>
+#if DEBUG
+ #include <iostream>
+#endif
 #include "public/function.h"
 #include "public/variable.h"
 #include "private/generic_attr.h"
@@ -16,7 +18,6 @@
 #include "utils.h"
 
 using namespace std;
-using namespace boost;
 using namespace Dwarf;
 
 
@@ -26,16 +27,14 @@ InlinedInstance::InlinedInstance(Dwarf_Debug dbg, Dwarf_Die die)
 }
 
 
-boost::shared_ptr<Dwarf::Function> InlinedInstance::function() const
+std::shared_ptr<Dwarf::Function> InlinedInstance::function() const
 {
     // use DW_AT_abstract origin to get the inlined function die
-    boost::shared_ptr<Dwarf::Function> fun(
-        shared_dynamic_cast<Function>(check_indirect(false)));
+    std::shared_ptr<Dwarf::Function> fun =
+        std::dynamic_pointer_cast<Function>(check_indirect(false));
+
     if (fun)
     {
-     /* clog << fun->name() << ": " << hex << fun->low_pc()
-             << "-" << fun->high_pc() << dec << endl; */
-
         if ((fun->low_pc() == 0) && (fun->high_pc() == 0))
         {
             fun->set_range(low_pc(), high_pc());
@@ -48,7 +47,7 @@ boost::shared_ptr<Dwarf::Function> InlinedInstance::function() const
 List<Parameter> InlinedInstance::params() const
 {
 #ifdef DEBUG
-    if (boost::shared_ptr<Function> fun = function())
+    if (std::shared_ptr<Function> fun = function())
     {
         clog << __func__ << ": " << fun->name() << endl;
     }
@@ -60,7 +59,7 @@ List<Parameter> InlinedInstance::params() const
 List<VariableT<InlinedInstance> > InlinedInstance::variables() const
 {
 #ifdef DEBUG
-    if (boost::shared_ptr<Function> fun = function())
+    if (std::shared_ptr<Function> fun = function())
     {
         clog << __func__ << ": " << fun->name() << endl;
     }

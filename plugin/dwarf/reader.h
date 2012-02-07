@@ -11,8 +11,6 @@
 // http://www.boost.org/LICENSE_1_0.txt)
 // -------------------------------------------------------------------------
 //
-#include <boost/shared_ptr.hpp>
-#include <boost/utility.hpp>
 #include "dwarfz/public/interface.h"
 #include "zdk/frame_handler.h"
 #include "zdk/zero.h"
@@ -46,7 +44,6 @@ namespace Dwarf
         , public FrameHandler
         , public UnitHeadersCallback
         , VersionInfoImpl<ZERO_API_MAJOR, ZERO_API_MINOR, 67>
-        , boost::noncopyable
     {
         // disable copy and assignment
         Reader(const Reader&);
@@ -194,13 +191,13 @@ namespace Dwarf
         /**
          * lookup type information in all modules
          */
-        boost::shared_ptr<Dwarf::Type> lookup_type_in_all_modules(
+        std::shared_ptr<Dwarf::Type> lookup_type_in_all_modules(
             RefPtr<Process>,
             SymbolMap*,
             const char* typeName,
             bool useExpensiveLookups);
 
-        boost::shared_ptr<Dwarf::Type> lookup_type(
+        std::shared_ptr<Dwarf::Type> lookup_type(
             SymbolMap* symbols,
             SymbolTable& table,
             const char* typeName,
@@ -237,7 +234,7 @@ namespace Dwarf
          * Dwarf::Function object, so that its params
          * and variables can be enumerated.
          */
-        boost::shared_ptr<Function> find_function(const Symbol&, addr_t* = 0) const;
+        std::shared_ptr<Function> find_function(const Symbol&, addr_t* = 0) const;
 
         void ensure_debug_cache_inited() const;
 
@@ -257,10 +254,10 @@ namespace Dwarf
             return get_debug_handle(file.get(), process);
         }
 
-        boost::shared_ptr<Function>
+        std::shared_ptr<Function>
             get_fun_by_linkage_name(RefPtr<Process>,
                                     const char*) const;
-        boost::shared_ptr<Function>
+        std::shared_ptr<Function>
             get_fun_by_linkage_name(RefPtr<Process>,
                                     const RefPtr<SharedString>&) const;
 
@@ -268,7 +265,7 @@ namespace Dwarf
 
         Debugger* debugger() const { return debugger_; }
 
-        boost::shared_ptr<Type> db_lookup_type(
+        std::shared_ptr<Type> db_lookup_type(
             const RefPtr<Process>&,
             const char* typeName) const;
 
@@ -308,7 +305,7 @@ namespace Dwarf
         typedef ext::hash_map<RefPtr<SharedString>, LinkageInfo> LinkageMap;
 
         // map linkage names to Die offset information
-        typedef std::vector<boost::shared_ptr<InlinedInstance> > InlineStack;
+        typedef std::vector<std::shared_ptr<InlinedInstance> > InlineStack;
 
         Debugger*                           debugger_;
         mutable std::auto_ptr<DebugCache>   handleCache_;

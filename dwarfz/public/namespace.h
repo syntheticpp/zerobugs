@@ -26,7 +26,7 @@ namespace Dwarf
     class ImportedDecl;
     class Namespace;
 
-    typedef std::vector<boost::shared_ptr<Namespace> > NamespaceList;
+    typedef std::vector<std::shared_ptr<Namespace> > NamespaceList;
 
 
     CLASS Namespace : public Die
@@ -71,8 +71,6 @@ namespace Dwarf
     public:
         typedef T parent_type;
 
-        //friend class IterationTraits<Namespace>;
-        //friend class IterationTraits<NamespaceT>;
     protected:
         NamespaceT (Dwarf_Debug dbg, Dwarf_Die die)
             : NamespaceT(dbg, die)

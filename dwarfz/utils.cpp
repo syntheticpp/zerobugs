@@ -188,12 +188,12 @@ Dwarf_Half Utils::tag(Dwarf_Debug dbg, Dwarf_Die die, std::nothrow_t) throw()
 }
 
 
-boost::shared_ptr<Location>
+std::shared_ptr<Location>
 Utils::loc(Dwarf_Debug dbg, Dwarf_Die die, Dwarf_Half attr_type)
 {
-    boost::shared_ptr<Location> loc;
-    boost::shared_ptr<LocationAttr> attr =
-        LocationAttr::create_instance(dbg, die, attr_type);
+    std::shared_ptr<Location> loc;
+
+    std::shared_ptr<LocationAttr> attr = LocationAttr::create_instance(dbg, die, attr_type);
 
     if (attr)
     {
@@ -203,21 +203,22 @@ Utils::loc(Dwarf_Debug dbg, Dwarf_Die die, Dwarf_Half attr_type)
 }
 
 
-boost::shared_ptr<Location> Utils::loc(Dwarf_Debug dbg, Dwarf_Die die)
+std::shared_ptr<Location> Utils::loc(Dwarf_Debug dbg, Dwarf_Die die)
 {
     return loc(dbg, die, DW_AT_location);
 }
 
 
-typedef boost::shared_ptr<Type> TypePtr; // short-hand
+typedef std::shared_ptr<Type> TypePtr; // short-hand
 
 
 TypePtr Utils::type(const Dwarf::Die& die)
 {
     TypePtr result = Utils::type(die.dbg(), die.die());
+
     if (!result)
     {
-        boost::shared_ptr<Dwarf::Die> indirect = die.check_indirect();
+        std::shared_ptr<Dwarf::Die> indirect = die.check_indirect();
         if (indirect)
         {
             result = Utils::type(*indirect);
@@ -388,12 +389,12 @@ void Utils::dump_children(const Dwarf::Die& die, ostream& outs)
 }
 
 
-boost::shared_ptr<Function>
+std::shared_ptr<Function>
 Utils::lookup_function(const FunList& funcs,
                        Dwarf_Addr addr,
                        const char* linkage)
 {
-    boost::shared_ptr<Function> result;
+    std::shared_ptr<Function> result;
 
     FunList::const_iterator i = funcs.begin();
     const FunList::const_iterator end = funcs.end();

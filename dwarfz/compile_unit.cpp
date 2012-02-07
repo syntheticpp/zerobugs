@@ -13,9 +13,10 @@
  #define _GNU_SOURCE // turn on ISOC99 features
 #endif
 
+#include "zdk/stdexcept.h"
+#include "zdk/check_ptr.h"
+#include "zdk/shared_string_impl.h"
 #include <cstdlib>
-#include <iostream>
-#include <stdexcept>
 #include <dwarf.h>
 #include "public/class_type.h"
 #include "public/debug.h"
@@ -34,12 +35,9 @@
 #include "impl.h"
 #include "public/compile_unit.h"
 #include "unmangle/unmangle.h"
-#include "zdk/check_ptr.h"
-#include "zdk/shared_string_impl.h"
 
 
 using namespace Dwarf;
-using namespace boost;
 using namespace std;
 
 #include "line_info_cache.h"
@@ -51,16 +49,16 @@ MacroEvents::~MacroEvents()
 
 
 CompileUnit::TypeEnumeration::TypeEnumeration(
-    const boost::shared_ptr<CompileUnit>& unit)
+    const std::shared_ptr<CompileUnit>& unit)
     : unit_(unit)
     , iterByOffs_(unit->tspecs_.begin())
     , iterByName_(unit->types_.begin())
 {
 }
 
-boost::shared_ptr<Type> CompileUnit::TypeEnumeration::next()
+std::shared_ptr<Type> CompileUnit::TypeEnumeration::next()
 {
-    boost::shared_ptr<Type> type;
+    std::shared_ptr<Type> type;
 
     if (iterByOffs_ != unit_->tspecs_.end())
     {
@@ -84,7 +82,7 @@ CompileUnit::CompileUnit (
     )
   : Die(dbg, entry)
   , next_(next)
-  , lineInfoCache_(0)
+  , lineInfoCache_()
   , populated_(false)
   , base_(Dwarf_Addr(-1))
   , lowPC_(Dwarf_Addr(-1))
@@ -97,10 +95,6 @@ CompileUnit::CompileUnit (
 
 CompileUnit::~CompileUnit() throw()
 {
-    if (lineInfoCache_)
-    {
-        delete lineInfoCache_;
-    }
 }
 
 
@@ -122,16 +116,16 @@ const CompileUnit::LineInfoCache& CompileUnit::line_info_cache() const
 {
     if (!lineInfoCache_)
     {
-        lineInfoCache_ = new LineInfoCache(*this, dbg(), die());
+        lineInfoCache_.reset( new LineInfoCache(*this, dbg(), die()) );
     }
     return *lineInfoCache_;
 }
 
 
-boost::shared_ptr<CompileUnit>
+std::shared_ptr<CompileUnit>
 CompileUnit::next_unit(Dwarf_Debug dbg, Dwarf_Unsigned offs)
 {
-    boost::shared_ptr<CompileUnit> result;
+    std::shared_ptr<CompileUnit> result;
     if (dbg)
     {
         Dwarf_Error err = 0;
@@ -345,7 +339,7 @@ bool CompileUnit::cache_srclines(SrcLineEvents* events)
 {
     if (!lineInfoCache_)
     {
-        lineInfoCache_ = new LineInfoCache(*this, dbg(), die());
+        lineInfoCache_.reset( new LineInfoCache(*this, dbg(), die()) );
     }
     bool result = lineInfoCache_->export_line_info(events);
     return result;
@@ -381,7 +375,7 @@ const FunList& CompileUnit::functions() const
             {
                 THROW_ERROR(dbg(), err);
             }
-            boost::shared_ptr<Function> f(new Function(dbg(), die));
+            std::shared_ptr<Function> f(std::make_shared<Function>(dbg(), die));
             f->unit_ = this;
 
             funcs_.push_back(f);
@@ -394,9 +388,9 @@ const FunList& CompileUnit::functions() const
 /**
  * lookup type by declaration
  */
-boost::shared_ptr<Type> CompileUnit::lookup_type(const Type& decl) const
+std::shared_ptr<Type> CompileUnit::lookup_type(const Type& decl) const
 {
-    boost::shared_ptr<Type> type;
+    std::shared_ptr<Type> type;
     if (!populated_)
     {
         read_children();
@@ -416,9 +410,9 @@ boost::shared_ptr<Type> CompileUnit::lookup_type(const Type& decl) const
 }
 
 
-boost::shared_ptr<Type> CompileUnit::lookup_type(const char* name) const
+std::shared_ptr<Type> CompileUnit::lookup_type(const char* name) const
 {
-    boost::shared_ptr<Type> type;
+    std::shared_ptr<Type> type;
     if (!populated_)
     {
         read_children();
@@ -543,14 +537,14 @@ const VarList& CompileUnit::variables() const
 }
 
 
-boost::shared_ptr<Function>
+std::shared_ptr<Function>
 CompileUnit::lookup_function(Dwarf_Addr addr, const char* linkage) const
 {
     return Utils::lookup_function(functions(), addr, linkage);
 }
 
 
-boost::shared_ptr<CompileUnit>
+std::shared_ptr<CompileUnit>
 IterationTraits<CompileUnit>::first(Dwarf_Debug dbg, Dwarf_Die)
 {
     return CompileUnit::next_unit(dbg, 0);
@@ -559,7 +553,7 @@ IterationTraits<CompileUnit>::first(Dwarf_Debug dbg, Dwarf_Die)
 
 void IterationTraits<CompileUnit>::next
 (
-    boost::shared_ptr<CompileUnit>& elem
+    std::shared_ptr<CompileUnit>& elem
 )
 {
     assert(elem);
@@ -619,7 +613,7 @@ void CompileUnit::read_children(Dwarf_Die die,
 
     for (Dwarf_Die trash = 0; child;)
     {
-        boost::shared_ptr<Die> ptr = process_entry(child, tag, prefix, ignoreVars);
+        std::shared_ptr<Die> ptr = process_entry(child, tag, prefix, ignoreVars);
         if (!ptr)
         {
             trash = child;
@@ -637,7 +631,7 @@ void CompileUnit::read_children(Dwarf_Die die,
 }
 
 
-boost::shared_ptr<Die>
+std::shared_ptr<Die>
 CompileUnit::process_entry( Dwarf_Die die,
                             Dwarf_Half tag,
                             const char* prefix,
@@ -645,7 +639,7 @@ CompileUnit::process_entry( Dwarf_Die die,
 {
     assert(die);
     assert(tag);
-    boost::shared_ptr<Die> child;
+    std::shared_ptr<Die> child;
 
     switch (tag)
     {
@@ -679,7 +673,7 @@ CompileUnit::process_entry( Dwarf_Die die,
 
     case DW_TAG_namespace:
         {
-            boost::shared_ptr<Namespace> ns(new Namespace(dbg(), die));
+            std::shared_ptr<Namespace> ns(std::make_shared<Namespace>(dbg(), die));
 
             child = ns;
             string name;
@@ -708,7 +702,7 @@ CompileUnit::process_entry( Dwarf_Die die,
     case DW_TAG_variable:
         if (!ignoreVars)
         {
-            boost::shared_ptr<Variable> v(new Variable(dbg(), die));
+            std::shared_ptr<Variable> v(std::make_shared<Variable>(dbg(), die));
             child = v;
             vars_.push_back(v);
         }
@@ -729,8 +723,8 @@ CompileUnit::process_entry( Dwarf_Die die,
             name += "::";
             read_children(die, name.c_str(), ignoreVars);
         /*
-            if (boost::shared_ptr<KlassType> klass =
-                shared_dynamic_cast<KlassType>(child))
+            if (std::shared_ptr<KlassType> klass =
+                std::dynamic_pointer_cast<KlassType>(child))
             {
                 const MethodList& memFun = klass->methods();
                 funcs_.insert(funcs_.end(), memFun.begin(), memFun.end());
@@ -747,12 +741,12 @@ CompileUnit::process_entry( Dwarf_Die die,
 
     case DW_TAG_imported_declaration:
         child = Factory::instance().create(dbg(), die, tag, false);
-        if (boost::shared_ptr<ImportedDecl> decl =
-            shared_dynamic_cast<ImportedDecl>(child))
+        if (std::shared_ptr<ImportedDecl> decl =
+            std::dynamic_pointer_cast<ImportedDecl>(child))
         {
             cout << __func__ << ": " << decl->name() << endl;
-            if (boost::shared_ptr<Type> import =
-                shared_dynamic_cast<Type>(decl->get_import()))
+            if (std::shared_ptr<Type> import =
+                std::dynamic_pointer_cast<Type>(decl->get_import()))
             {
                 if (prefix)
                 {
@@ -778,14 +772,14 @@ CompileUnit::process_entry( Dwarf_Die die,
         {
             child = Factory::instance().create(dbg(), die, tag, false);
 
-            if (boost::shared_ptr<Type> type = shared_dynamic_cast<Type>(child))
+            if (std::shared_ptr<Type> type = std::dynamic_pointer_cast<Type>(child))
             {
                 Dwarf_Off offset = type->decl_offset();
                 assert(offset);
                 tspecs_.insert(make_pair(offset, type));
             }
-            else if (boost::shared_ptr<KlassType> klass =
-                shared_dynamic_cast<KlassType>(child))
+            else if (std::shared_ptr<KlassType> klass =
+                std::dynamic_pointer_cast<KlassType>(child))
             {
                 types_.insert(make_pair(klass->name(), klass));
             }
@@ -796,21 +790,21 @@ CompileUnit::process_entry( Dwarf_Die die,
 }
 
 
-boost::shared_ptr<Dwarf::Die>
+std::shared_ptr<Dwarf::Die>
 CompileUnit::add_struct(Dwarf_Die die, const char* prefix) const
 {
     // First choice that may come to mind here is:
     // static const Dwarf_Half tag = DW_TAG_structure_type;
-    // boost::shared_ptr<Die> child =
+    // std::shared_ptr<Die> child =
     //     Factory::instance().create(dbg(), die, tag, false);
     //
     // Don't do the above because: get_object uses a cache internally;
     // DW_AT_specification objects will be linked to type
     // (whose name may be modified here to include a namespace prefix)
     Dwarf_Off off = Die::offset(dbg(), die);
-    boost::shared_ptr<Die> child(owner().get_object(off));
+    std::shared_ptr<Die> child(owner().get_object(off));
 
-    if (boost::shared_ptr<Type> type = shared_dynamic_cast<Type>(child))
+    if (std::shared_ptr<Type> type = std::dynamic_pointer_cast<Type>(child))
     {
         if (prefix)
         {

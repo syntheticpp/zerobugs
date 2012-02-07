@@ -12,6 +12,7 @@
 // -------------------------------------------------------------------------
 
 #include <iterator>
+#include <memory>
 #include "utils.h"
 #include "interface.h"
 
@@ -21,7 +22,7 @@ namespace Dwarf
     template<typename T>
     struct IterationTraits
     {
-        typedef boost::shared_ptr<T> ptr_type;
+        typedef std::shared_ptr<T> ptr_type;
 
         /**
          * Obtain the first element in the list
@@ -32,7 +33,7 @@ namespace Dwarf
 
             if (Dwarf_Die child = Utils::first_child(dbg, die, T::TAG))
             {
-                p.reset(new T(dbg, child));
+                p = std::make_shared<T>(dbg, child);
             }
             return p;
         }
@@ -41,25 +42,33 @@ namespace Dwarf
          * Get the sibling of same type for a given element
          */
         template<typename U>
-        static void next(boost::shared_ptr<U>& elem)
+        static void next(std::shared_ptr<U>& elem)
         {
             assert(elem);
 
             Dwarf_Debug dbg = elem->dbg();
             Dwarf_Die sibl = Utils::next_sibling(dbg, elem->die(), T::TAG);
-            elem.reset( sibl ? new T(dbg, sibl) : 0 );
+
+            if (sibl)
+            {
+                elem = std::make_shared<T>(dbg, sibl);
+            }
+            else
+            {
+                elem.reset();
+            }
         }
     };
 
 
     template<typename T, typename Ptr, typename Ref>
-    CLASS Iterator : public boost::shared_ptr<T>
+    CLASS Iterator : public std::shared_ptr<T>
     {
     public:
-        typedef boost::shared_ptr<T> base_type;
+        typedef std::shared_ptr<T> base_type;
 
         typedef std::forward_iterator_tag iterator_category;
-        typedef ptrdiff_t difference_type;
+        typedef std::ptrdiff_t difference_type;
 
         typedef T value_type;
         typedef Ref reference;
@@ -71,13 +80,13 @@ namespace Dwarf
          * this function needs to be used to make an iterator
          * from a shared_ptr, and not the protected ctor below.
          */
-        static Iterator create(const boost::shared_ptr<T>& ptr)
+        static Iterator create(const std::shared_ptr<T>& ptr)
         {
             return Iterator(ptr);
         }
 
     protected:
-        explicit Iterator(const boost::shared_ptr<T>& ptr)
+        explicit Iterator(const std::shared_ptr<T>& ptr)
             : base_type(ptr)
         {}
 

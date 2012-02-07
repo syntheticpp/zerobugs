@@ -16,7 +16,7 @@
 void Dwarf::register_creator
 (
     Dwarf_Half dwarf_tag,
-    boost::shared_ptr<Die>(*fn)(Dwarf_Debug, Dwarf_Die)
+    std::shared_ptr<Die>(*fn)(Dwarf_Debug, Dwarf_Die)
 )
 {
     Dwarf::Factory::instance().register_creator(dwarf_tag, fn);

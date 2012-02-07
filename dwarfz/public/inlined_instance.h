@@ -35,11 +35,11 @@ namespace Dwarf
         typedef List<Parameter> ParamList;
         typedef List<Var> VarList;
 
-        friend class IterationTraits<InlinedInstance>;
+        InlinedInstance(Dwarf_Debug, Dwarf_Die);
 
         virtual ~InlinedInstance() throw() {}
 
-        boost::shared_ptr<Function> function() const;
+        std::shared_ptr<Function> function() const;
 
         List<Parameter> params() const;
 
@@ -56,9 +56,6 @@ namespace Dwarf
          * @return the source line number of the call site.
          */
         size_t call_line() const;
-
-    protected:
-        InlinedInstance(Dwarf_Debug, Dwarf_Die);
     };
 }
 

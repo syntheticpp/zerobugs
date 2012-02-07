@@ -25,42 +25,42 @@ LocationAttr::LocationAttr(Dwarf_Debug dbg, Dwarf_Die die, Dwarf_Half attr)
 
 LocationAttr::loc_ptr_type LocationAttr::value() const
 {
-    return loc_ptr_type(new Location(this->dbg(), this->attr()));
+    return std::make_shared<Location>(this->dbg(), this->attr());
 }
 
 
-boost::shared_ptr<LocationAttr>
+std::shared_ptr<LocationAttr>
 LocationAttr::create_instance(Dwarf_Debug dbg, Dwarf_Die die, Dwarf_Half attr)
 {
-    boost::shared_ptr<LocationAttr> loc_attr;
+    std::shared_ptr<LocationAttr> loc_attr;
 
 /* todo: use a recursive template here instead of the switch? */
     switch (attr)
     {
     case DW_AT_location:
-        loc_attr.reset(new LocationAttrT<DW_AT_location>(dbg, die));
+        loc_attr = std::make_shared<LocationAttrT<DW_AT_location> >(dbg, die);
         break;
 
     case DW_AT_frame_base:
-        loc_attr.reset(new LocationAttrT<DW_AT_frame_base>(dbg, die));
+        loc_attr = std::make_shared<LocationAttrT<DW_AT_frame_base> >(dbg, die);
         break;
 
     case DW_AT_data_member_location:
-        loc_attr.reset(
-            new LocationAttrT<DW_AT_data_member_location>(dbg, die));
+        loc_attr = std::make_shared<LocationAttrT<DW_AT_data_member_location> >(dbg, die);
         break;
 
     case DW_AT_data_location:
-        loc_attr.reset(new LocationAttrT<DW_AT_data_location>(dbg, die));
+        loc_attr = std::make_shared<LocationAttrT<DW_AT_data_location> >(dbg, die);
         break;
 
     case DW_AT_vtable_elem_location:
-        loc_attr.reset(new LocationAttrT<DW_AT_vtable_elem_location>(dbg, die));
+        loc_attr = std::make_shared<LocationAttrT<DW_AT_vtable_elem_location> >(dbg, die);
         break;
 
     case DW_AT_use_location:
         assert(Utils::tag(dbg, die) == DW_TAG_ptr_to_member_type);
-        loc_attr.reset(new LocationAttrT<DW_AT_use_location>(dbg, die));
+
+        loc_attr = std::make_shared<LocationAttrT<DW_AT_use_location> >(dbg, die);
         break;
 
     default: assert(false);
@@ -74,3 +74,4 @@ LocationAttr::create_instance(Dwarf_Debug dbg, Dwarf_Die die, Dwarf_Half attr)
 }
 
 // vim: tabstop=4:softtabstop=4:expandtab:shiftwidth=4
+

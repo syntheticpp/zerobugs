@@ -19,7 +19,6 @@
 #include "zdk/shared_string_impl.h"
 
 
-using namespace boost;
 using namespace Dwarf;
 using namespace std;
 
@@ -52,7 +51,7 @@ BEGIN_TEST(test_unit_lookup_type, (const char* self))
     assert(type);
     assert(type->is_complete());
 
-    type = dbg.lookup_type("Fred::Foobar");
+    type = dbg.lookup_type("Fred::Foobar", 1);
     assert(type);
     assert(type->is_complete());
 }
@@ -74,8 +73,7 @@ BEGIN_TEST(test_namespace, (const char* self))
             //cout << "  namespace " << i->name() << endl;
             if (strcmp(i->name(), "Fred") == 0)
             {
-                shared_ptr<Type> type =
-                    ((*u)->lookup_type("Fred::Foobar"));
+                shared_ptr<Type> type = ((*u)->lookup_type("Fred::Foobar"));
                 assert(type);
                 // assert(type->is_complete());
             }
@@ -88,7 +86,7 @@ END_TEST()
 BEGIN_TEST(test_namespace2, (const char* self))
 {
     Debug dbg(self);
-    shared_ptr<Type> type = dbg.lookup_type("Fred::Foobar");
+    shared_ptr<Type> type = dbg.lookup_type("Fred::Foobar", 1);
     assert(type);
     assert(type->is_complete());
 }
@@ -98,7 +96,7 @@ END_TEST()
 BEGIN_TEST(test_nested_namespace, (const char* self))
 {
     Debug dbg(self);
-    shared_ptr<Type> type = dbg.lookup_type("Fred::Barney::Foo");
+    shared_ptr<Type> type = dbg.lookup_type("Fred::Barney::Foo", 1);
     assert(type);
     assert(type->is_complete());
 /* todo

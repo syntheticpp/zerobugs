@@ -13,7 +13,7 @@
 
 #include "zdk/export.h"
 #include "zdk/stdexcept.h"
-#include <boost/shared_ptr.hpp>
+#include <memory>
 #include <libelf.h>
 #include <libdwarf.h>
 #include "interface.h"
@@ -64,7 +64,7 @@ namespace Dwarf
     private:
         class Impl;
 
-        boost::shared_ptr<Impl> impl_;
+        std::shared_ptr<Impl> impl_;
     };
 }
 #endif // ERROR_H__83F467C4_50AD_446A_8F6E_0F2509585A72

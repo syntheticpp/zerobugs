@@ -43,7 +43,7 @@ char* Type::name_impl() const
     char* name = Die::name_impl();
     if (!name)
     {
-        boost::shared_ptr<Die> indir = check_indirect();
+        std::shared_ptr<Die> indir = check_indirect();
         if (indir)
         {
             name = strdup(indir->name());

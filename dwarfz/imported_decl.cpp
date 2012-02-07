@@ -24,13 +24,13 @@ ImportedDecl::ImportedDecl(Dwarf_Debug dbg, Dwarf_Die die) : Die(dbg, die)
 }
 
 
-boost::shared_ptr<Die> ImportedDecl::get_import()
+std::shared_ptr<Die> ImportedDecl::get_import()
 {
-    boost::shared_ptr<Die> result;
+    std::shared_ptr<Die> result;
     if (Utils::has_attr(dbg(), die(), DW_AT_import))
     {
         Dwarf::GenericAttr<DW_AT_import, Dwarf_Off> attr(dbg(), die());
-        //result = owner().get_object(attr.value(), false);
+
         result = owner().get_object(attr.value(), true);
     }
     return result;

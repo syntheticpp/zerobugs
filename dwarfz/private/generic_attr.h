@@ -154,6 +154,7 @@ namespace Dwarf
             Dwarf_Block* blkp = NULL;
             Dwarf_Error err = 0;
             vector<char> data;
+
             switch (this->form())
             {
             case DW_FORM_block:

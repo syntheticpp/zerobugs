@@ -65,7 +65,7 @@ using namespace std;
 using namespace boost;
 using namespace Dwarf;
 
-typedef boost::shared_ptr<InlinedInstance> InlinePtr;
+typedef std::shared_ptr<InlinedInstance> InlinePtr;
 
 
 static const char copyright_text[] =
@@ -613,7 +613,7 @@ namespace Dwarf
 
         ~EmitDebugSymbol() { }
 
-        void operator()(const boost::shared_ptr<Datum>& dat)
+        void operator()(const std::shared_ptr<Datum>& dat)
         {
             if (dat)
             {
@@ -681,7 +681,7 @@ namespace Dwarf
 
         void emit_symbol (
             const Dwarf::Datum&,
-            boost::shared_ptr<Dwarf::Type>,
+            std::shared_ptr<Dwarf::Type>,
             addr_t, /* address or value */
             addr_t, /* frame base       */
             bool    /* isRegister       */,
@@ -787,7 +787,7 @@ static bool name_equals(const Dwarf::Datum& dat, const char* str)
 void EmitDebugSymbol::emit_symbol(
 
     const Dwarf::Datum&             dat,
-    boost::shared_ptr<Dwarf::Type>  type,
+    std::shared_ptr<Dwarf::Type>  type,
     addr_t                          val,
     addr_t                          frameBase,
     bool                            isRegister,
@@ -896,12 +896,12 @@ void EmitDebugSymbol::operator()(const Dwarf::Datum& dat)
     }
     if (!dat.loc())
     {
-        if (boost::shared_ptr<Die> die = dat.check_indirect(false))
+        if (std::shared_ptr<Die> die = dat.check_indirect(false))
         {
             // should never happen, but never say never ;)
             if (die->offset() != dat.offset())
             {
-                return (*this)(shared_dynamic_cast<Datum>(die));
+                return (*this)(dynamic_pointer_cast<Datum>(die));
             }
         }
     }
@@ -922,7 +922,7 @@ void EmitDebugSymbol::operator()(const Dwarf::Datum& dat)
     {
         return;
     }
-    boost::shared_ptr<Dwarf::Type> type = dat.type();
+    std::shared_ptr<Dwarf::Type> type = dat.type();
     if (!type)
     {
         cerr << "*** Warning: " << "datum with null type: " << dat.name() << endl;
@@ -936,7 +936,7 @@ void EmitDebugSymbol::operator()(const Dwarf::Datum& dat)
     const addr_t frameBase = frame_base();
     dbgout(1) << "frameBase=" << hex << frameBase << dec << endl;
 
-    if (boost::shared_ptr<Dwarf::Location> loc = dat.loc())
+    if (std::shared_ptr<Dwarf::Location> loc = dat.loc())
     {
         dbgout(1) << "loc="<< loc << endl;
         const addr_t programCount = CHKPTR(frame_)->program_count();
@@ -1070,15 +1070,15 @@ typedef ext::hash_map<addr_t, Dwarf_Off> Pc2Off;
  */
 /* experimental work in progress
 
-static boost::shared_ptr<InlinedInstance>
+static std::shared_ptr<InlinedInstance>
 frame_to_inlined(Debug& dbg, const Pc2Off& pc2Off, addr_t addr)
 {
-    boost::shared_ptr<InlinedInstance> inl;
+    std::shared_ptr<InlinedInstance> inl;
     Pc2Off::const_iterator i = pc2Off.find(addr);
     if (i != pc2Off.end())
     {
-        boost::shared_ptr<Die> die = dbg.get_object(i->second, false, false);
-        inl = shared_dynamic_cast<InlinedInstance>(die);
+        std::shared_ptr<Die> die = dbg.get_object(i->second, false, false);
+        inl = dynamic_pointer_cast<InlinedInstance>(die);
         assert(inl);
     }
     return inl;
@@ -1104,7 +1104,7 @@ namespace
     {
         typedef T value_type;
 
-        static inline const T& deref(boost::shared_ptr<T> iter)
+        static inline const T& deref(std::shared_ptr<T> iter)
         {
             return *iter;
         }
@@ -1129,10 +1129,11 @@ static inline addr_t frame_size(const T& func, addr_t unitBase, addr_t pc)
     {
         const typename IterTraits<ParamIter>::value_type& val =
             IterTraits<ParamIter>::deref(i);
-        if (boost::shared_ptr<Location> loc = val.loc(true))
+        if (std::shared_ptr<Location> loc = val.loc(true))
         {
             addr_t a = loc->eval(0, 0, unitBase, pc);
-            clog << __func__ << ": " << val.name() << "=" << (void*)a << endl;
+
+            // clog << __func__ << ": " << val.name() << "=" << (void*)a << endl;
         }
     }
 
@@ -1144,10 +1145,11 @@ static inline addr_t frame_size(const T& func, addr_t unitBase, addr_t pc)
         const typename IterTraits<VarIter>::value_type& val =
             IterTraits<VarIter>::deref(i);
 
-        if (boost::shared_ptr<Location> loc = val.loc(true))
+        if (std::shared_ptr<Location> loc = val.loc(true))
         {
             addr_t a = loc->eval(0, 0, unitBase, pc);
-            clog << __func__ << ": " << val.name() << "=" << (void*)a << endl;
+
+            //clog << __func__ << ": " << val.name() << "=" << (void*)a << endl;
         }
     }
 
@@ -1190,7 +1192,7 @@ static size_t frame_size(
         // real frame?
         if (frame->real_program_count() == frame->program_count())
         {
-            boost::shared_ptr<Function> fun = dbg.lookup_function(addr);
+            std::shared_ptr<Function> fun = dbg.lookup_function(addr);
             if (fun)
             {
                 clog << "=== " << fun->name() << " ===\n";
@@ -1200,7 +1202,7 @@ static size_t frame_size(
         else // it's a fake frame that corresponds to inlined function
         {
 
-            if (boost::shared_ptr<InlinedInstance> inl =
+            if (std::shared_ptr<InlinedInstance> inl =
                 frame_to_inlined(dbg, pc2Off, addr))
             {
                 clog << "--- " << inl->function()->name() << " ---\n";
@@ -1231,9 +1233,9 @@ static bool emit_inlined(
         Pc2Off::const_iterator i = pc2Off.find(frame.program_count());
         if (i != pc2Off.end())
         {
-            boost::shared_ptr<Die> die = dbg.get_object(i->second, false, false);
+            std::shared_ptr<Die> die = dbg.get_object(i->second, false, false);
 
-            if (boost::shared_ptr<InlinedInstance> inl = shared_dynamic_cast<InlinedInstance>(die))
+            if (std::shared_ptr<InlinedInstance> inl = dynamic_pointer_cast<InlinedInstance>(die))
             {
             /*
                 TODO: is it possible to compute locations reliably here?
@@ -1265,7 +1267,7 @@ size_t Reader::enum_locals(
     AddrOperationsContext addrCtxt(thread);
     size_t count = 0;
 
-    if (boost::shared_ptr<Function> fun = find_function(*CHKPTR(sym)))
+    if (std::shared_ptr<Function> fun = find_function(*CHKPTR(sym)))
     {
         dbgout(1) << sym->name() << ": fun=" << fun->name()
                   << " addr=" << hex << sym->addr() << dec << endl;
@@ -1443,7 +1445,7 @@ size_t Reader::enum_unit_globals(
 {
     size_t count = 0;
 
-    if (boost::shared_ptr<CompileUnit> unit =
+    if (std::shared_ptr<CompileUnit> unit =
         dbg.lookup_unit(stackFrame.program_count()))
     {
         EmitDebugSymbol emit(   *this,
@@ -1460,7 +1462,7 @@ size_t Reader::enum_unit_globals(
 
         for_each<Iter, EmitDebugSymbol&>(vars.begin(), vars.end(), emit);
     #else
-        for_each(vars.begin(), vars.end(), [&emit](const boost::shared_ptr<Dwarf::Variable>& v) {
+        for_each(vars.begin(), vars.end(), [&emit](const std::shared_ptr<Dwarf::Variable>& v) {
             emit(v);
             });
     #endif
@@ -1698,7 +1700,7 @@ bool Reader::get_fun_range(
 
     // context for DWARF location calculations
     AddrOperationsContext addrCtxt(thread);
-    boost::shared_ptr<Function> fun(dbg->lookup_function(addr));
+    std::shared_ptr<Function> fun(dbg->lookup_function(addr));
     if (fun.get())
     {
         if (low)
@@ -1728,7 +1730,7 @@ DebugSymbol* Reader::get_return_symbol(
     AddrOperationsContext addrCtxt(thread);
 
     addr_t addr = 0;
-    boost::shared_ptr<Function> fun = find_function(*symbol, &addr);
+    std::shared_ptr<Function> fun = find_function(*symbol, &addr);
 
     // If function not found, just return a NULL symbol; it is not
     // a serious error, maybe the debug info is not in DWARF format?
@@ -1741,7 +1743,7 @@ DebugSymbol* Reader::get_return_symbol(
     //
     RefPtr<DataType> retType;
 
-    if (boost::shared_ptr<Type> type = fun->ret_type())
+    if (std::shared_ptr<Type> type = fun->ret_type())
     {
         TypeAdapter adapter(this, thread, addr, typeMap_);
         retType = adapter.apply(type);
@@ -1778,13 +1780,13 @@ DebugSymbol* Reader::get_return_symbol(
 
 
 
-boost::shared_ptr<Dwarf::Type> Reader::lookup_type_in_all_modules(
+std::shared_ptr<Dwarf::Type> Reader::lookup_type_in_all_modules(
     RefPtr<Process> process,
     SymbolMap* symbols,
     const char* name,
     bool expensiveLookups)
 {
-    boost::shared_ptr<Type> type;
+    std::shared_ptr<Type> type;
 
     RefPtr<SymbolMap::LinkData> link = symbols->file_list();
     for (; link && !type; link = link->next())
@@ -1806,14 +1808,14 @@ boost::shared_ptr<Dwarf::Type> Reader::lookup_type_in_all_modules(
 
 
 
-boost::shared_ptr<Dwarf::Type> Reader::lookup_type(
+std::shared_ptr<Dwarf::Type> Reader::lookup_type(
     SymbolMap*      symbols,
     SymbolTable&    table,
     const char*     name,
     addr_t          addr,
     LookupScope     scope)
 {
-    boost::shared_ptr<Dwarf::Type> type;
+    std::shared_ptr<Dwarf::Type> type;
     const size_t thorough = expensive_type_lookup_level();
 
     if (name)
@@ -1844,7 +1846,7 @@ boost::shared_ptr<Dwarf::Type> Reader::lookup_type(
                 pc -= table.adjustment();
             }
 
-            boost::shared_ptr<CompileUnit> unit(dbg->lookup_unit(pc));
+            std::shared_ptr<CompileUnit> unit(dbg->lookup_unit(pc));
             if (unit)
             {
                 type = Dwarf::lookup_type(unit->functions(), name);
@@ -1903,7 +1905,7 @@ DataType* Reader::lookup_type(
             addr = frame->program_count();
         }
     }
-    boost::shared_ptr<Dwarf::Type> type;
+    std::shared_ptr<Dwarf::Type> type;
     if (table)
     {
         SymbolMap* symbols = CHKPTR(thread->symbols());
@@ -1946,7 +1948,7 @@ TranslationUnit* Reader::lookup_unit_by_addr(Process* proc, SharedString* fname,
     }
     if (dbg)
     {
-        if (boost::shared_ptr<CompileUnit> unit = dbg->lookup_unit(addr))
+        if (std::shared_ptr<CompileUnit> unit = dbg->lookup_unit(addr))
         {
             return new Unit(dbg, unit, fname);
         }
@@ -1955,7 +1957,7 @@ TranslationUnit* Reader::lookup_unit_by_addr(Process* proc, SharedString* fname,
 }
 
 
-static bool unit_matches(boost::shared_ptr<CompileUnit> unit, const char* filename)
+static bool unit_matches(std::shared_ptr<CompileUnit> unit, const char* filename)
 {
     assert(filename);
     RefPtr<SharedString> path = abspath(unit->full_path());
@@ -2021,7 +2023,7 @@ size_t Reader::lookup_unit_by_name (
 
 
 static size_t addr_to_line(
-    const boost::shared_ptr<CompileUnit>& unit,
+    const std::shared_ptr<CompileUnit>& unit,
     addr_t addr,
     addr_t* nearest,
     LineCallbackAdapter& lcba)
@@ -2079,7 +2081,7 @@ size_t Reader::addr_to_line (
         //
         // lookup the compilation unit for the given address
         //
-        if (boost::shared_ptr<CompileUnit> unit = dbg->lookup_unit(addr))
+        if (std::shared_ptr<CompileUnit> unit = dbg->lookup_unit(addr))
         {
             LineCallbackAdapter lcba(adj, events, 0);
 
@@ -2194,13 +2196,13 @@ size_t Reader::line_to_addr (
  * Match a Symbol table entry with the corresponding DWARF
  * function (DW_TAG_subprogram) entry
  */
-boost::shared_ptr<Dwarf::Function>
+std::shared_ptr<Dwarf::Function>
 Reader::find_function(const Symbol& sym, addr_t* retAddr) const
 {
     assert(get_addr_operations());
 
     ZObjectScope scope;
-    boost::shared_ptr<Dwarf::Function> fun;
+    std::shared_ptr<Dwarf::Function> fun;
 
     const SymbolTable* table = sym.table(&scope);
     if (!table)
@@ -2346,7 +2348,7 @@ size_t Reader::lookup_function (
     FunctionEnum::const_iterator i = funcs.begin();
     for (; i != funcs.end(); ++i)
     {
-        boost::shared_ptr<Function> fun = find_function(**i);
+        std::shared_ptr<Function> fun = find_function(**i);
 
         if (!fun)
         {
@@ -2515,7 +2517,7 @@ bool Reader::get_inlined_blocks(Debug& debug, addr_t addr) const
     if (inlinedBlocks_.empty() || inlinedAddr_ != addr)
     {
         inlinedBlocks_.clear();
-        if (boost::shared_ptr<Function> fun = debug.lookup_function(addr))
+        if (std::shared_ptr<Function> fun = debug.lookup_function(addr))
         {
             if (!find_inlined_instance(*fun, addr))
             {
@@ -2558,7 +2560,7 @@ RefPtr<Frame> Reader::fake_frame(
         // supplied as an attribute of DW_TAG_inlined_subroutine)
         if (size_t fileIndex = inlinedBlock->call_file())
         {
-            if (boost::shared_ptr<CompileUnit> unit = dbg.lookup_unit(addr))
+            if (std::shared_ptr<CompileUnit> unit = dbg.lookup_unit(addr))
             {
                 --fileIndex;
 
@@ -2599,7 +2601,7 @@ void Reader::add_fun_to_linkage_map(TypeSystem&, const Function& fun)
 }
 
 
-boost::shared_ptr<Function>
+std::shared_ptr<Function>
 Reader::get_fun_by_linkage_name(RefPtr<Process> proc, const char* name) const
 {
     assert(name);
@@ -2611,13 +2613,13 @@ Reader::get_fun_by_linkage_name(RefPtr<Process> proc, const char* name) const
 }
 
 
-boost::shared_ptr<Function> Reader::get_fun_by_linkage_name(
+std::shared_ptr<Function> Reader::get_fun_by_linkage_name(
     RefPtr<Process> process,
     const RefPtr<SharedString>& name
     ) const
 {
     assert(name);
-    boost::shared_ptr<Function> fun;
+    std::shared_ptr<Function> fun;
 
     LinkageMap::const_iterator i = linkageMap_.find(name);
     if (i != linkageMap_.end())
@@ -2625,7 +2627,7 @@ boost::shared_ptr<Function> Reader::get_fun_by_linkage_name(
         if (Handle dbg = get_debug_handle(i->second.dbg_ino_, process))
         {
             Dwarf_Off off = i->second.off_;
-            fun = shared_dynamic_cast<Function>(dbg->get_object(off));
+            fun = dynamic_pointer_cast<Function>(dbg->get_object(off));
         }
     }
     return fun;

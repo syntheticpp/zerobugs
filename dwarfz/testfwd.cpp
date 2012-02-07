@@ -19,7 +19,8 @@ BEGIN_TEST(test_forward, (const char* self, Forward* fptr))
 {
     Dwarf::Debug dbg(self);
     assert(fptr);
-    boost::shared_ptr<Dwarf::Type> type = dbg.lookup_type("Forward", 0);
+    std::shared_ptr<Dwarf::Type> type = dbg.lookup_type("Forward", 1);
+
     assert(type);
     assert(type->is_complete());
 }

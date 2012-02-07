@@ -10,8 +10,7 @@
 // (See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt)
 // -------------------------------------------------------------------------
-
-#include <boost/shared_ptr.hpp>
+#include <memory>
 #include "attr.h"
 #include "interface.h"
 #include "location.h"
@@ -26,8 +25,9 @@ namespace Dwarf
     CLASS LocationAttr : public Attribute
     {
     public:
-        typedef boost::shared_ptr<Location> loc_ptr_type;
-        friend class Utils;
+        typedef std::shared_ptr<Location> loc_ptr_type;
+        
+        LocationAttr(Dwarf_Debug, Dwarf_Die, Dwarf_Half);
 
         virtual loc_ptr_type value() const;
 
@@ -35,11 +35,8 @@ namespace Dwarf
 
         virtual ~LocationAttr() throw (){}
 
-    protected:
-        LocationAttr(Dwarf_Debug, Dwarf_Die, Dwarf_Half);
-
-        static boost::shared_ptr<LocationAttr>
-            create_instance(Dwarf_Debug, Dwarf_Die, Dwarf_Half);
+        static std::shared_ptr<LocationAttr>
+        create_instance(Dwarf_Debug, Dwarf_Die, Dwarf_Half);
     };
 
 
@@ -53,13 +50,12 @@ namespace Dwarf
     template<Dwarf_Half AT>
     CLASS LocationAttrT : public LocationAttr
     {
-        friend class LocationAttr;
-
-    protected:
+    public:
         LocationAttrT(Dwarf_Debug dbg, Dwarf_Die die)
             : LocationAttr(dbg, die, AT)
         {}
 
+    protected:
         int kind() const { return AT; }
     };
 
@@ -68,21 +64,21 @@ namespace Dwarf
     CLASS LocationAttrT<DW_AT_vtable_elem_location>
         : public LocationAttr
     {
-        friend class LocationAttr;
-
-    protected:
+    public:
         LocationAttrT(Dwarf_Debug dbg, Dwarf_Die die)
             : LocationAttr(dbg, die, DW_AT_vtable_elem_location)
         {}
 
+    protected:
         int kind() const { return DW_AT_vtable_elem_location; }
 
         virtual loc_ptr_type value() const
         {
-            return loc_ptr_type(new VTableElemLocation(this->dbg(), this->attr()));
+            return std::make_shared<VTableElemLocation>(this->dbg(), this->attr());
         }
     };
 } // namespace Dwarf
 
 #endif // LOCATION_ATTR_H__249749DE_9D0F_407D_B63D_DCB011EBEE28
 // vim: tabstop=4:softtabstop=4:expandtab:shiftwidth=4
+

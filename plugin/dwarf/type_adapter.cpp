@@ -166,7 +166,7 @@ namespace
         void operator()(const Dwarf::Inheritance& part) const;
 
         /// aggregate a static member
-        void operator()(const boost::shared_ptr<Dwarf::StaticMember>&);
+        void operator()(const std::shared_ptr<Dwarf::StaticMember>&);
 
         void operator()(const Dwarf::TemplateType<Type>& templ) const;
 
@@ -174,7 +174,7 @@ namespace
         template<typename T>
         void add_static_member(const T& part) const
         {
-            boost::shared_ptr<Type> type = part.type();
+            std::shared_ptr<Type> type = part.type();
             if (!type)
             {
                 clog << "unknown type: " << part.name() << endl;
@@ -288,7 +288,7 @@ void Aggregator::operator()(const Dwarf::DataMember& part) const
 
     RefPtr<DataType> adaptedType;
 
-    if (boost::shared_ptr<Dwarf::Type> type = part.type())
+    if (std::shared_ptr<Dwarf::Type> type = part.type())
     {
         Dwarf_Addr addr = baseAddr_;
         TypeAdapter adapter(reader_, thread_, addr, typeMap_);
@@ -301,7 +301,7 @@ void Aggregator::operator()(const Dwarf::DataMember& part) const
 
         // get the offset relative to the beginning of
         // the owner class or struct
-        if (boost::shared_ptr<Location> loc = part.loc())
+        if (std::shared_ptr<Location> loc = part.loc())
         {
             addr = evaluate(*loc, baseAddr_, *CHKPTR(thread_));
             bitOffs += (addr - baseAddr_) * byte_size;
@@ -370,7 +370,7 @@ void Aggregator::operator()(const Inheritance& part) const
 
     // get the offset relative to the beginning of
     // the final (derived) class or struct
-    if (boost::shared_ptr<Location> loc = part.loc())
+    if (std::shared_ptr<Location> loc = part.loc())
     {
         addr = evaluate(*loc, baseAddr_, *CHKPTR(thread_));
         bitOffs = (addr - baseAddr_) * byte_size;
@@ -413,7 +413,7 @@ void Aggregator::operator()(const Inheritance& part) const
 
 ////////////////////////////////////////////////////////////////
 void
-Aggregator::operator()(const boost::shared_ptr<StaticMember>& part)
+Aggregator::operator()(const std::shared_ptr<StaticMember>& part)
 {
     assert(part);
 
@@ -520,7 +520,7 @@ void TypeAdapter::visit(const Dwarf::ArrayType& array)
     RefPtr<DataType> elemType = adapt_elem(adapter, array, array.elem_type());
 
     // get array dimensions
-    typedef vector<boost::shared_ptr<Dimension> > vect_type;
+    typedef vector<std::shared_ptr<Dimension> > vect_type;
     vect_type v;
 
     List<Dimension> dim = array.dimensions();
@@ -783,7 +783,7 @@ aggregate_member_data(Aggregator& agg, const KlassType& klass)
 
 #if HAVE_LAMBDA_SUPPORT
         for_each(staticMembers.begin(), staticMembers.end(), 
-            [&agg](const boost::shared_ptr<StaticMember>& m) {
+            [&agg](const std::shared_ptr<StaticMember>& m) {
                 agg(m);
             });
 #else
@@ -938,7 +938,7 @@ void TypeAdapter::add_methods
     MethodList::const_iterator m = methods.begin();
     const MethodList::const_iterator end = methods.end();
 
-    boost::shared_ptr<CompileUnit> unit = type.owner().lookup_unit(pc_);
+    std::shared_ptr<CompileUnit> unit = type.owner().lookup_unit(pc_);
     addr_t unitBase = unit ? unit->base_pc() : 0;
 
     for (; m != end; ++m)
@@ -986,7 +986,7 @@ void TypeAdapter::visit(const Dwarf::ConstType& type)
 {
     assert(!typeMap_.find(type));
 
-    boost::shared_ptr<Type> constType = type.type();
+    std::shared_ptr<Type> constType = type.type();
 
     if (constType)
     {
@@ -1008,7 +1008,7 @@ void TypeAdapter::visit(const Dwarf::ConstType& type)
 void TypeAdapter::visit(const Dwarf::VolatileType& type)
 {
     assert(!typeMap_.find(type));
-    boost::shared_ptr<Type> volatileType(type.type());
+    std::shared_ptr<Type> volatileType(type.type());
 
     if (volatileType)
     {
@@ -1077,7 +1077,7 @@ TypeAdapter::get_type(const Dwarf::Function& fun,
 RefPtr<DataType>
 TypeAdapter::get_fun_type (
     const Dwarf::Die& die,
-    const boost::shared_ptr<Dwarf::Type>& retType,
+    const std::shared_ptr<Dwarf::Type>& retType,
     const List<Parameter>& params,
     const Dwarf::KlassType* klass)
 {
@@ -1097,7 +1097,7 @@ TypeAdapter::get_fun_type (
 RefPtr<DataType>
 TypeAdapter::get_fun_type (
     const Dwarf::Die& die,
-    const boost::shared_ptr<Dwarf::Type>& retType,
+    const std::shared_ptr<Dwarf::Type>& retType,
     const Function::ParamList& params,
     const Dwarf::KlassType* // klass
     )
@@ -1165,7 +1165,7 @@ void TypeAdapter::visit(const Dwarf::PointerType& type)
     TypeAdapter adapter(reader_, thread_, baseAddr_, typeMap_);
     adapter.set_depth(depth_);
 
-    boost::shared_ptr<Type> pointedType(type.type());
+    std::shared_ptr<Type> pointedType(type.type());
 
     if (pointedType) // pointedType may be NULL for type void
     {
@@ -1215,7 +1215,7 @@ void TypeAdapter::visit(const Dwarf::PtrToMemberType& type)
     TypeAdapter adapter(reader_, thread_, baseAddr_, typeMap_);
     adapter.set_depth(depth_);
 
-    if (boost::shared_ptr<Type> pointedType = type.type())
+    if (std::shared_ptr<Type> pointedType = type.type())
     {
         adapter.apply(pointedType);
     }
@@ -1224,7 +1224,7 @@ void TypeAdapter::visit(const Dwarf::PtrToMemberType& type)
     {
         memberType = type_system().get_void_type();
     }
-    if (boost::shared_ptr<Type> baseType = type.containing_type())
+    if (std::shared_ptr<Type> baseType = type.containing_type())
     {
         if (adapter.apply(baseType))
         {
@@ -1275,7 +1275,7 @@ void TypeAdapter::visit(const Dwarf::UnionType& type)
 ////////////////////////////////////////////////////////////////
 void TypeAdapter::visit(const Dwarf::Typedef& typeDef)
 {
-    if (boost::shared_ptr<Type> type = typeDef.type())
+    if (std::shared_ptr<Type> type = typeDef.type())
     {
         assert(type->name());
         assert(type->name()[0]);
@@ -1327,11 +1327,11 @@ namespace
 
 
 ////////////////////////////////////////////////////////////////
-static bool resolve_decl(boost::shared_ptr<Type>& type)
+static bool resolve_decl(std::shared_ptr<Type>& type)
 {
     if (type->is_declaration())
     {
-        if (boost::shared_ptr<Type> spec = type->owner().lookup_type_by_decl(*type))
+        if (std::shared_ptr<Type> spec = type->owner().lookup_type_by_decl(*type))
         {
             type = spec;
             return true;
@@ -1342,7 +1342,7 @@ static bool resolve_decl(boost::shared_ptr<Type>& type)
 
 
 ////////////////////////////////////////////////////////////////
-RefPtr<DataType> TypeAdapter::apply(boost::shared_ptr<Type> type)
+RefPtr<DataType> TypeAdapter::apply(std::shared_ptr<Type> type)
 {
     type_.reset();
 
@@ -1365,7 +1365,7 @@ RefPtr<DataType> TypeAdapter::apply(boost::shared_ptr<Type> type)
             CHKPTR(name);
             dbgout(1) << "type=" << name << endl;
 
-            boost::shared_ptr<Type> fullType;
+            std::shared_ptr<Type> fullType;
             if (!decl && type->is_incomplete())
             {
                 fullType = resolve(*type);
@@ -1406,13 +1406,13 @@ RefPtr<DataType> TypeAdapter::apply(boost::shared_ptr<Type> type)
 
 
 ////////////////////////////////////////////////////////////////
-boost::shared_ptr<Type>
+std::shared_ptr<Type>
 TypeAdapter::lookup_type(const Type& type,
                          const RefPtr<SharedString>& module,
                          bool byCtor
                         )const
 {
-    boost::shared_ptr<Type> result;
+    std::shared_ptr<Type> result;
 
     if (thread_)
     {
@@ -1441,10 +1441,10 @@ TypeAdapter::lookup_type(const Type& type,
 
 
 ////////////////////////////////////////////////////////////////
-boost::shared_ptr<Type> TypeAdapter::resolve(const Type& type)
+std::shared_ptr<Type> TypeAdapter::resolve(const Type& type)
 {
     assert(type.is_incomplete());
-    boost::shared_ptr<Type> fullType;
+    std::shared_ptr<Type> fullType;
 
     // FIXME: if a base is declared (the type is incomplete) and
     // we do not do a deep search, the auto-runtime-type-info
@@ -1531,13 +1531,13 @@ boost::shared_ptr<Type> TypeAdapter::resolve(const Type& type)
 
 
 ////////////////////////////////////////////////////////////////
-boost::shared_ptr<Dwarf::Type>
+std::shared_ptr<Dwarf::Type>
 TypeAdapter::lookup_type_in_all_modules(RefPtr<Process> process,
                                         const Type& what,
                                         bool byCtor
                                        ) const
 {
-    boost::shared_ptr<Dwarf::Type> type;
+    std::shared_ptr<Dwarf::Type> type;
     if (!thread_ || !reader_)
     {
         return type;

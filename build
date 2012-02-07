@@ -10,7 +10,6 @@
 # http://www.boost.org/LICENSE_1_0.txt)
 # -------------------------------------------------------------------------
 export ZERO_DEVENV=1
-export PARALLEL="-j 4"
 
 # comment these out to build DEBUG:
 export RELEASE=1
@@ -19,9 +18,13 @@ export CPPFLAGS=-O3
 
 export CXXVER=`cc zdk/make/gcc_ver.c -o gcc_ver && ./gcc_ver`
 
+cpu_count=`cat /proc/cpuinfo  | grep processor | wc -l`
+make_jobs=`expr \( $cpu_count \* 3 + 1 \) / 2`
+export PARALLEL="-j $make_jobs"
+
+
 # libdwarf version
 # For more info, see: http://reality.sgiweb.org/davea/dwarf.html
-
 DWARF=dwarf-20111214/libdwarf
 
 TOP=`pwd`

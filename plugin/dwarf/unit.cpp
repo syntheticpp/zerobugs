@@ -19,8 +19,8 @@ using namespace Dwarf;
 
 Unit::Unit
 (
-    const boost::shared_ptr<Debug>& dbg,
-    const boost::shared_ptr<CompileUnit>& unit,
+    const std::shared_ptr<Debug>& dbg,
+    const std::shared_ptr<CompileUnit>& unit,
     SharedString* moduleName
 )
 : dbg_(dbg), unit_(unit), moduleName_(moduleName)

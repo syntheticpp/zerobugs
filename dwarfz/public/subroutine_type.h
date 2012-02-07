@@ -32,7 +32,7 @@ namespace Dwarf
         enum { TAG = DW_TAG_subroutine_type };
 
         /* the subroutine' s return type */
-        boost::shared_ptr<Type> ret_type() const;
+        std::shared_ptr<Type> ret_type() const;
 
         List<Parameter> params() const;
 

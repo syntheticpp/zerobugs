@@ -18,7 +18,7 @@ namespace Dwarf
 {
     void register_creator(
         Dwarf_Half,
-        boost::shared_ptr<Die> (*)(Dwarf_Debug, Dwarf_Die));
+        std::shared_ptr<Die> (*)(Dwarf_Debug, Dwarf_Die));
 
     /**
      * Helper template for registering objects
@@ -39,14 +39,12 @@ namespace Dwarf
 
         virtual ~Producer() throw() {}
 
-    protected:
         Producer(Dwarf_Debug dbg, Dwarf_Die die) : T(dbg, die)
         { }
 
-        static boost::shared_ptr<Die>
-            create_instance(Dwarf_Debug dbg, Dwarf_Die die)
+        static std::shared_ptr<Die> create_instance(Dwarf_Debug dbg, Dwarf_Die die)
         {
-            boost::shared_ptr<Die> ptr(new Producer(dbg, die));
+            std::shared_ptr<Die> ptr = std::make_shared<Producer>(dbg, die);
             return ptr;
         }
     };

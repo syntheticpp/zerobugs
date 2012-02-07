@@ -11,9 +11,8 @@
 // http://www.boost.org/LICENSE_1_0.txt)
 // -------------------------------------------------------------------------
 
+#include <memory>
 #include <string>
-#include <boost/shared_ptr.hpp>
-#include <boost/utility.hpp>
 #include <libdwarf.h>
 #include "access.h"
 #include "interface.h"
@@ -27,11 +26,14 @@ namespace Dwarf
     /**
      * C++ wrapper for Dwarf_Die
      */
-    CLASS Die : boost::noncopyable
+    CLASS Die
     {
         template<typename T> friend class Wrapper;
 
         friend class Utils;
+
+        Die(const Die&);    // non-copyable
+        const Die& operator=(const Die&);
 
     public:
         virtual ~Die() throw();
@@ -54,12 +56,12 @@ namespace Dwarf
         Debug& owner();
 
         /// @todo document
-        boost::shared_ptr<Die> check_indirect(bool spec = true) const;
+        std::shared_ptr<Die> check_indirect(bool spec = true) const;
 
         /**
          * @return the die referenced by ithe DW_AT_import attribute
          */
-        boost::shared_ptr<Die> import() const;
+        std::shared_ptr<Die> import() const;
 
         /**
          * @return the Dwarf_Debug handle
@@ -105,7 +107,7 @@ namespace Dwarf
         mutable char*   name_;
 
         // abstract_origin or specification
-        mutable boost::shared_ptr<Die> indirect_;
+        mutable std::shared_ptr<Die> indirect_;
     };
 };
 

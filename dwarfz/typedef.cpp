@@ -21,9 +21,9 @@ Typedef::Typedef(Dwarf_Debug dbg, Dwarf_Die die)
 }
 
 
-boost::shared_ptr<Type> Typedef::type() const
+std::shared_ptr<Type> Typedef::type() const
 {
-    boost::shared_ptr<Type> tp = DecoratedType::type();
+    std::shared_ptr<Type> tp = DecoratedType::type();
     if (tp)
     {
         const char* name = tp->name();

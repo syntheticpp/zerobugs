@@ -25,8 +25,6 @@ namespace Dwarf
 	 */
 	CLASS Location : boost::noncopyable
 	{
-		friend class LocationAttr;
-
 	public:
 		static Dwarf_Addr eval(Dwarf_Debug handle,
                                Dwarf_Addr pc, // program count
@@ -34,6 +32,9 @@ namespace Dwarf
 							   Dwarf_Addr moduleBase,
 							   const Dwarf_Locdesc*,
 							   bool& isValue);
+
+		Location(Dwarf_Debug dbg, Dwarf_Attribute);
+
 		virtual ~Location();
 
 		/**
@@ -61,9 +62,6 @@ namespace Dwarf
 		 * actual value of the object, rather than its location.
 		 */
 		bool is_value() const { return isValue_; }
-
-	protected:
-		Location(Dwarf_Debug dbg, Dwarf_Attribute);
 
 	private:
 		Dwarf_Debug dbg_;

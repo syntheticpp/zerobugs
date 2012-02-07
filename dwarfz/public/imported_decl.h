@@ -28,7 +28,7 @@ namespace Dwarf
 
         virtual ~ImportedDecl() throw () { }
 
-        boost::shared_ptr<Die> get_import();
+        std::shared_ptr<Die> get_import();
     };
 }
 

@@ -23,7 +23,6 @@ using std::endl;
 using std::dec;
 using std::hex;
 
-using namespace boost;
 using namespace Dwarf;
 
 
@@ -33,9 +32,9 @@ TypeAttr::TypeAttr(Dwarf_Debug dbg, Dwarf_Die die, Dwarf_Half attr)
 }
 
 
-shared_ptr<Type> TypeAttr::value() const
+std::shared_ptr<Type> TypeAttr::value() const
 {
-    shared_ptr<Type> type;
+    std::shared_ptr<Type> type;
 
     Dwarf_Off   off = 0;
     Dwarf_Error err = 0;
@@ -61,7 +60,7 @@ shared_ptr<Type> TypeAttr::value() const
         }
         if (die)
         {
-            type = shared_dynamic_cast<Type>(Factory::instance().create(dbg(), die));
+            type = std::dynamic_pointer_cast<Type>(Factory::instance().create(dbg(), die));
         }
         break;
 
@@ -76,7 +75,7 @@ shared_ptr<Type> TypeAttr::value() const
         }
         if (die)
         {
-            type = shared_dynamic_cast<Type>(Factory::instance().create(dbg(), die));
+            type = std::dynamic_pointer_cast<Type>(Factory::instance().create(dbg(), die));
         }
         break;
 

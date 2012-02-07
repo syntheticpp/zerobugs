@@ -31,7 +31,7 @@ namespace Dwarf
     public:
         enum { TAG = DW_TAG_typedef };
 
-        virtual boost::shared_ptr<Type> type() const;
+        virtual std::shared_ptr<Type> type() const;
 
     protected:
         Typedef(Dwarf_Debug, Dwarf_Die);

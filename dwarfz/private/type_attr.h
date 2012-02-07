@@ -11,7 +11,7 @@
 // http://www.boost.org/LICENSE_1_0.txt)
 // -------------------------------------------------------------------------
 
-#include <boost/shared_ptr.hpp>
+#include <memory>
 #include "attr.h"
 #include "interface.h"
 
@@ -28,7 +28,7 @@ namespace Dwarf
     public:
         friend class Utils;
 
-        boost::shared_ptr<Type> value() const;
+        std::shared_ptr<Type> value() const;
 
     protected:
         TypeAttr(Dwarf_Debug, Dwarf_Die, Dwarf_Half = DW_AT_type);

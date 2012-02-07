@@ -12,7 +12,6 @@
 // -------------------------------------------------------------------------
 //
 #include <vector>
-#include <boost/shared_ptr.hpp>
 #include <dwarf.h>
 #include "child.h"
 #include "datum.h"
@@ -30,7 +29,7 @@ namespace Dwarf
     public:
         enum { TAG = DW_TAG_variable };
 
-        friend class IterationTraits<Variable>;
+        // friend class IterationTraits<Variable>;
 
         virtual ~Variable() throw();
 
@@ -41,17 +40,17 @@ namespace Dwarf
     template<typename T>
     CLASS VariableT : public Variable, public Child<T>
     {
-        friend class IterationTraits<Variable>;
-        friend class IterationTraits<VariableT>;
+       // friend class IterationTraits<Variable>;
+       // friend class IterationTraits<VariableT>;
 
+    public:
         VariableT (Dwarf_Debug dbg, Dwarf_Die die) : Variable(dbg, die)
         { }
 
-    public:
         ~VariableT() throw() { }
     };
 
-    typedef std::vector<boost::shared_ptr<Variable> > VarList;
+    typedef std::vector<std::shared_ptr<Variable> > VarList;
 }
 #endif // VARIABLE_H__E546BD4D_24E0_48B4_826B_805F65342146
 // vim: tabstop=4:softtabstop=4:expandtab:shiftwidth=4

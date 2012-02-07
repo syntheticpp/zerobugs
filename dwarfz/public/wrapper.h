@@ -86,7 +86,7 @@ public:
 
 
     /* get the Dwarf_Die */
-    /* boost::shared_ptr<Die> get_die() const
+    /* std::shared_ptr<Die> get_die() const
     {
         Dwarf_Error err = 0;
         Dwarf_Off   off = 0;

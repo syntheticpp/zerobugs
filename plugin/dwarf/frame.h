@@ -11,7 +11,6 @@
 // http://www.boost.org/LICENSE_1_0.txt)
 // -------------------------------------------------------------------------
 
-#include <boost/shared_ptr.hpp>
 #include "zdk/stack.h"
 #include "zdk/zobject_impl.h"
 

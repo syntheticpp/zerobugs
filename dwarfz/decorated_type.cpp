@@ -23,7 +23,7 @@ DecoratedType::DecoratedType(Dwarf_Debug dbg, Dwarf_Die die)
 }
 
 
-boost::shared_ptr<Type> DecoratedType::type() const
+std::shared_ptr<Type> DecoratedType::type() const
 {
     if (!type_)
     {

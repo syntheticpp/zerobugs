@@ -22,7 +22,7 @@ namespace Dwarf
 {
     CLASS Handle
     {
-        typedef boost::shared_ptr<Debug> DebugPtr;
+        typedef std::shared_ptr<Debug> DebugPtr;
 
     public:
         typedef LockedPtr<Debug, Debug, DebugPtr> pointer;
@@ -69,7 +69,7 @@ namespace Dwarf
         }
 
     private:
-        boost::shared_ptr<pointer> pptr_;
+        std::shared_ptr<pointer> pptr_;
     };
 }
 

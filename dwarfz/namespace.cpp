@@ -17,7 +17,7 @@
 #include "public/type.h"
 
 using namespace Dwarf;
-using namespace boost;
+using namespace std;
 
 namespace
 {
@@ -146,10 +146,9 @@ IterationTraits<NSType>::first(Dwarf_Debug dbg, Dwarf_Die die)
     {
         shared_ptr<Die> tmp = Factory::instance().create(dbg, child, tag, false);
 
-        if (shared_ptr<Type> type = shared_dynamic_cast<Type>(tmp))
+        if (shared_ptr<Type> type = dynamic_pointer_cast<Type>(tmp))
         {
-            p = shared_static_cast<NSType>(type);
-            // std::clog << p->name() << std::endl;
+            p = static_pointer_cast<NSType>(type);
         }
     }
     return p;
@@ -176,11 +175,10 @@ IterationTraits<NSType>::next(shared_ptr<NSType>& elem)
 
         if (child)
         {
-            if (shared_ptr<Type> type = shared_dynamic_cast<Type>(
+            if (shared_ptr<Type> type = dynamic_pointer_cast<Type>(
                 Factory::instance().create(dbg, child, tag, false)))
             {
-                nextElem = shared_static_cast<NSType>(type);
-                // std::clog <<nextElem->name() << std::endl;
+                nextElem = static_pointer_cast<NSType>(type);
             }
         }
         elem = nextElem;
@@ -222,9 +220,6 @@ const VarList& Namespace::variables() const
 
         for (NSVarList::iterator i = vars.begin(); i != vars.end(); ++i)
         {
-            //std::string name = this->name();
-            //set_name(*i, (name + "::" + i->name()).c_str());
-
             vars_->push_back(i);
         }
     }

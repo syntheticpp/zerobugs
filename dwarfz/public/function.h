@@ -42,10 +42,16 @@ namespace Dwarf
 
         typedef CompileUnit parent_type;
 
-        typedef std::vector<boost::shared_ptr<Parameter> > ParamList;
+        typedef std::vector<std::shared_ptr<Parameter> > ParamList;
 
         friend class IterationTraits<Function>;
         friend class CompileUnit;
+
+        Function(
+            Dwarf_Debug,
+            Dwarf_Die,
+            Dwarf_Addr lowPC = 0,
+            Dwarf_Addr highPC = 0);
 
         ~Function() throw() {}
 
@@ -56,7 +62,7 @@ namespace Dwarf
          */
         const ParamList& params() const;
 
-        boost::shared_ptr<Type> ret_type() const;
+        std::shared_ptr<Type> ret_type() const;
 
         const TypeList& param_types() const;
 
@@ -94,12 +100,6 @@ namespace Dwarf
         CallingConvention calling_convention() const;
 
     protected:
-        Function(
-            Dwarf_Debug,
-            Dwarf_Die,
-            Dwarf_Addr lowPC = 0,
-            Dwarf_Addr highPC = 0);
-
         virtual char* name_impl() const;
 
     private:
@@ -120,3 +120,4 @@ namespace Dwarf
 
 #endif // FUNCTION_H__71E651D5_A44A_4F71_B085_6CA7695873DF
 // vim: tabstop=4:softtabstop=4:expandtab:shiftwidth=4
+

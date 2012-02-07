@@ -30,8 +30,8 @@ namespace Dwarf
         {
         }
 
-        boost::shared_ptr<Type> type() const;
-        boost::shared_ptr<Type> containing_type() const;
+        std::shared_ptr<Type> type() const;
+        std::shared_ptr<Type> containing_type() const;
 
         bool is_pointer_or_ref() const { return true; }
 
@@ -41,8 +41,8 @@ namespace Dwarf
         }
 
     private:
-        mutable boost::shared_ptr<Type> type_;
-        mutable boost::shared_ptr<Type> containingType_;
+        mutable std::shared_ptr<Type> type_;
+        mutable std::shared_ptr<Type> containingType_;
     };
 };
 #endif // PTR_TO_MEMBER_TYPE_H__99DE0B4C_E985_4B6F_9677_D26F0A074BE4

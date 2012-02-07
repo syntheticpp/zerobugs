@@ -13,7 +13,6 @@
 #include <algorithm>
 #include <cstdlib>
 #include <iostream>
-#include <boost/shared_ptr.hpp>
 #include <boost/tokenizer.hpp>
 #include "directory.h"
 #include "plugin_manager.h"
@@ -44,7 +43,8 @@ namespace
 
         void operator()(const string& filename)
         {
-            currentLib_.reset(new DynamicLib(filename.c_str()));
+            currentLib_ = make_shared<DynamicLib>(filename.c_str());
+
             bool isCompatibleVersion = true;
 
             ImportPtr<int32_t (int32_t*)> query_version;

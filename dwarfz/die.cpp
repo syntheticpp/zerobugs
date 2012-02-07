@@ -172,7 +172,7 @@ Dwarf::Debug& Dwarf::Die::owner()
 
 
 
-boost::shared_ptr<Dwarf::Die>
+std::shared_ptr<Dwarf::Die>
 Dwarf::Die::check_indirect(bool useSpec) const
 {
 #if 1
@@ -186,7 +186,7 @@ Dwarf::Die::check_indirect(bool useSpec) const
     }
     return indirect_;
 #else
-    boost::shared_ptr<Die> indirect = get_indirect<DW_AT_abstract_origin>(dbg(), die());
+    std::shared_ptr<Die> indirect = get_indirect<DW_AT_abstract_origin>(dbg(), die());
     if (!indirect && useSpec)
     {
         indirect = get_indirect<DW_AT_specification>(dbg(), die());
@@ -196,12 +196,12 @@ Dwarf::Die::check_indirect(bool useSpec) const
 }
 
 
-boost::shared_ptr<Dwarf::Die> Dwarf::Die::import() const
+std::shared_ptr<Dwarf::Die> Dwarf::Die::import() const
 {
-    boost::shared_ptr<Die> imp(get_indirect<DW_AT_import>(dbg(), die()));
+    std::shared_ptr<Die> imp(get_indirect<DW_AT_import>(dbg(), die()));
     if (!imp)
     {
-        if (boost::shared_ptr<Die> indirect = check_indirect())
+        if (std::shared_ptr<Die> indirect = check_indirect())
         {
             imp = get_indirect<DW_AT_import>(dbg(), indirect->die());
         }

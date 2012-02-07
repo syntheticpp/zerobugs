@@ -69,7 +69,7 @@ class TypeVisitor
 
     void visit(const Dwarf::ConstType& type)
     {
-        boost::shared_ptr<Dwarf::Type> pt = type.type();
+        std::shared_ptr<Dwarf::Type> pt = type.type();
         if (pt)
         {
             cout << "const ";
@@ -79,7 +79,7 @@ class TypeVisitor
 
     void visit(const Dwarf::VolatileType& type)
     {
-        boost::shared_ptr<Dwarf::Type> pt = type.type();
+        std::shared_ptr<Dwarf::Type> pt = type.type();
         if (pt)
         {
             cout << "volatile ";
@@ -123,7 +123,7 @@ class TypeVisitor
 
     void visit(const Dwarf::PointerType& type)
     {
-        boost::shared_ptr<Dwarf::Type> pt = type.type();
+        std::shared_ptr<Dwarf::Type> pt = type.type();
         if (pt)
         {
             cout << "pointer to ";
@@ -167,7 +167,7 @@ struct PrintDatum
         cout << "type=";
         TypeVisitor v;
 
-        boost::shared_ptr<Dwarf::Type> type(datum.type());
+        std::shared_ptr<Dwarf::Type> type(datum.type());
         if (type)
         {
             type->accept(&v);
@@ -241,7 +241,7 @@ void print_func(const Dwarf::Function& func)
         cout << "    frame_base=0x"
              << hex << func.frame_base() << dec << endl;
 
-        if (boost::shared_ptr<Location> loc = func.loc())
+        if (std::shared_ptr<Location> loc = func.loc())
         {
             //cout << "    addr=0x"
             //     << hex << loc->eval(0) << dec << endl;

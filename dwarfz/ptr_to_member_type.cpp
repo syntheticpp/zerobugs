@@ -14,7 +14,7 @@
 
 using namespace Dwarf;
 
-boost::shared_ptr<Type> PtrToMemberType::type() const
+std::shared_ptr<Type> PtrToMemberType::type() const
 {
     if (!type_)
     {
@@ -24,7 +24,7 @@ boost::shared_ptr<Type> PtrToMemberType::type() const
 }
 
 
-boost::shared_ptr<Type> PtrToMemberType::containing_type() const
+std::shared_ptr<Type> PtrToMemberType::containing_type() const
 {
     if (!containingType_)
     {

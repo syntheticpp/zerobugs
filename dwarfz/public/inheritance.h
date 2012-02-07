@@ -33,11 +33,10 @@ namespace Dwarf
     public:
         enum { TAG = DW_TAG_inheritance };
 
-        friend class IterationTraits<Inheritance>;
+        // friend class IterationTraits<Inheritance>;
 
         bool is_virtual() const;
 
-    protected:
         Inheritance(Dwarf_Debug dbg, Dwarf_Die die);
     };
 }

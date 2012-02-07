@@ -31,9 +31,9 @@ namespace Dwarf
     CLASS Datum : public Die
     {
     public:
-        boost::shared_ptr<Type> type() const;
+        std::shared_ptr<Type> type() const;
 
-        boost::shared_ptr<Location> loc(bool indirect = false) const;
+        std::shared_ptr<Location> loc(bool indirect = false) const;
 
         RefPtr<SharedString> linkage_name() const;
 
@@ -42,9 +42,9 @@ namespace Dwarf
          */
         Dwarf_Off start_scope() const;
 
-        void set_global(const boost::shared_ptr<Global>&);
+        void set_global(const std::shared_ptr<Global>&);
 
-        boost::shared_ptr<ConstValue> const_value() const;
+        std::shared_ptr<ConstValue> const_value() const;
 
     protected:
         virtual ~Datum() throw() {}
@@ -54,7 +54,7 @@ namespace Dwarf
         char* name_impl() const;
 
     private:
-        boost::shared_ptr<Global> global_;
+        std::shared_ptr<Global> global_;
         mutable RefPtr<SharedString> linkageName_; // mangled symbol name
     };
 }

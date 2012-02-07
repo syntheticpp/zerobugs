@@ -12,13 +12,12 @@
 // -------------------------------------------------------------------------
 
 #include "zdk/ref_ptr.h"
+#include "zdk/types.h"
 #include <sstream>
-#include <boost/shared_ptr.hpp>
 #include "const_value.h"
 #include "dwarfz/public/const_value.h"
 #include "dwarfz/public/datum.h"
 #include "typez/public/debug_symbol_impl.h"
-#include "zdk/types.h"
 
 class DataType;
 class DebugSymbolImpl;
@@ -44,7 +43,7 @@ namespace Dwarf
                  SharedString* name)
     {
         RefPtr<DebugSymbolImpl> value;
-        if (boost::shared_ptr<ConstValue> constVal = datum.const_value())
+        if (std::shared_ptr<ConstValue> constVal = datum.const_value())
         {
             ostringstream buf;
             if (interface_cast<FloatType*>(&type))

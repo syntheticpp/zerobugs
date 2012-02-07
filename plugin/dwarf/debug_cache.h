@@ -31,7 +31,7 @@ CLASS DebugCache
 
         size_t usageCount_;
         RefPtr<SharedString> fileName_;
-        boost::shared_ptr<Dwarf::Debug> handle_;
+        std::shared_ptr<Dwarf::Debug> handle_;
     };
     typedef std::set<RefPtr<SharedString> > BlackList;
 
@@ -44,7 +44,7 @@ CLASS DebugCache
     static bool show_status(void*, const char*);
 
 public:
-    typedef boost::shared_ptr<Dwarf::Debug> Handle;
+    typedef std::shared_ptr<Dwarf::Debug> Handle;
 
     /**
      * Because the operating system limits the number of

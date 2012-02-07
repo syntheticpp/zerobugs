@@ -31,15 +31,15 @@ namespace Dwarf
 
         Access access() const;
 
-        boost::shared_ptr<Location> loc() const;
+        std::shared_ptr<Location> loc() const;
 
-        boost::shared_ptr<Type> type() const;
+        std::shared_ptr<Type> type() const;
 
     protected:
         Aggregation(Dwarf_Debug, Dwarf_Die);
 
     private:
-        mutable boost::shared_ptr<Type> type_;
+        mutable std::shared_ptr<Type> type_;
     };
 }
 #endif // AGGREGATION_H__B614DC88_EC26_4C6C_A981_7FF896D8D1A5

@@ -29,7 +29,7 @@ char* PointerType::name_impl() const
     char* name = 0;
     size_t len = 0;
 
-    boost::shared_ptr<Type> type = this->type();
+    std::shared_ptr<Type> type = this->type();
     if (type)
     {
         const char* typeName = type->name() ? type->name() : "<unnamed>";
@@ -40,7 +40,7 @@ char* PointerType::name_impl() const
         strcpy(name, typeName);
     }
 
-    if (name /* && len */)
+    if (name)
     {
         switch (get_tag())
         {

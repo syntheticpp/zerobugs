@@ -28,7 +28,8 @@ char* ConstType::name_impl() const
     char* name = 0;
     size_t len = 0;
 
-    boost::shared_ptr<Type> type = this->type();
+    std::shared_ptr<Type> type = this->type();
+
     if (type)
     {
         static const char CONST_STR[] = " const";
