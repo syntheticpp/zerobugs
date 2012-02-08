@@ -28,16 +28,17 @@ public:
     virtual void add(ui::View&);
     virtual void show(ui::View&, bool);
 
-    void add_code_view(Fl_Widget* w);
-
 protected:
     int code_height() const;
+    
+    void add_code_view(Fl_Widget* w);
+    void add_var_view(Fl_Widget* w);
 
 private:
     Fl_Group*   group_; // this group
     Fl_Group*   codeArea_;
-    Fl_Tabs*    bottom_;
-    Fl_Tabs*    right_;
+    Fl_Tabs*    bottomArea_;
+    Fl_Tabs*    rightArea_;
 };
 
 

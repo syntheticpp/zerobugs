@@ -7,6 +7,7 @@
 #include "zdk/auto_condition.h"
 #include "code_view.h"
 #include "controller.h"
+#include "locals_view.h"
 #include "menu.h"
 #include <FL/Enumerations.H>
 #include "dharma/system_error.h"
@@ -64,14 +65,14 @@ public:
         return currentEventType_;
     }
 
-    virtual Symbol* current_symbol() const
+    virtual RefPtr<Symbol> current_symbol() const
     {
-        return currentSymbol_.get();
+        return currentSymbol_;
     }
 
-    virtual Thread* current_thread() const
+    virtual RefPtr<Thread> current_thread() const
     {
-        return currentThread_.get();
+        return currentThread_;
     }
 };
 
@@ -135,9 +136,9 @@ ui::Controller::~Controller()
 
 
 ////////////////////////////////////////////////////////////////
-ui::State* ui::Controller::init_state( )
+unique_ptr<ui::State> ui::Controller::init_state( )
 {
-    return new StateImpl();
+    return unique_ptr<ui::State>(new StateImpl());
 }
 
 
@@ -148,21 +149,28 @@ void ui::Controller::init_main_window()
 
 
 ////////////////////////////////////////////////////////////////
-ui::CodeView* ui::Controller::init_code_view()
+RefPtr<ui::CodeView> ui::Controller::init_code_view()
 {
     return nullptr;
 }
 
 
 ////////////////////////////////////////////////////////////////
-ui::CompositeMenu* ui::Controller::init_menu()
+RefPtr<ui::CompositeMenu> ui::Controller::init_menu()
 {
     return nullptr;
 }
 
 
 ////////////////////////////////////////////////////////////////
-ui::Layout* ui::Controller::init_layout( )
+RefPtr<ui::VarView> ui::Controller::init_locals_view()
+{
+    return new LocalsView(*this);
+}
+
+
+////////////////////////////////////////////////////////////////
+RefPtr<ui::Layout> ui::Controller::init_layout( )
 {
     return new NullLayout(*this);
 }
@@ -194,7 +202,12 @@ void ui::Controller::build_layout()
 {
     assert(layout_);
     
-    if (CodeView* v = init_code_view())
+    if (auto v = init_code_view())
+    {
+        layout_->add(*v);
+    }
+
+    if (auto  v = init_locals_view())
     {
         layout_->add(*v);
     }
@@ -211,11 +224,16 @@ void ui::Controller::build_menu()
         debugger_->quit();
     }));
     
+    menu_->add(simple_command_menu("Debug/Continue", FL_F + 5, [this]()
+    {
+        debugger_->resume();
+    }));
+    
     menu_->add(simple_command_menu("Debug/Next", FL_F + 10, [this]()
     {
         if (auto t = state_->current_thread())
         {
-            debugger_->step(t, Debugger::STEP_OVER_SOURCE_LINE);
+            debugger_->step(t.get(), Debugger::STEP_OVER_SOURCE_LINE);
             debugger_->resume();
         }
     }));

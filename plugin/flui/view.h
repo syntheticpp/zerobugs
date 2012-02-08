@@ -39,9 +39,9 @@ namespace ui
 
         virtual EventType current_event_type() const = 0;
 
-        virtual Symbol* current_symbol() const = 0;
+        virtual RefPtr<Symbol> current_symbol() const = 0;
 
-        virtual Thread* current_thread() const = 0;
+        virtual RefPtr<Thread> current_thread() const = 0;
     };
 
 

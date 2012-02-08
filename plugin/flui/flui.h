@@ -52,10 +52,11 @@ protected:
     const char* copyright() const;
 
 private:
-    virtual ui::CodeView*       init_code_view();
-    virtual ui::Layout*         init_layout();
-    virtual void                init_main_window();
-    virtual ui::CompositeMenu*  init_menu();
+    virtual RefPtr<ui::CodeView>       init_code_view();
+    virtual RefPtr<ui::Layout>         init_layout();
+    virtual RefPtr<ui::CompositeMenu>  init_menu();
+
+    virtual void    init_main_window();
 
     virtual void    lock();
     virtual void    unlock();

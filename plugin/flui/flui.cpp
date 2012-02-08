@@ -143,14 +143,14 @@ int Flui::h() const
 
 
 ////////////////////////////////////////////////////////////////
-ui::CodeView* Flui::init_code_view()
+RefPtr<ui::CodeView> Flui::init_code_view()
 {
     return new FlMultiCodeView(*this);
 }
 
 
 ////////////////////////////////////////////////////////////////
-ui::Layout* Flui::init_layout()
+RefPtr<ui::Layout> Flui::init_layout()
 {
     assert(window_);
 
@@ -185,7 +185,7 @@ void Flui::init_main_window()
 
 
 ////////////////////////////////////////////////////////////////
-ui::CompositeMenu* Flui::init_menu()
+RefPtr<ui::CompositeMenu> Flui::init_menu()
 {
     assert(window_);
     return new FlMenuBar(*this, window_);

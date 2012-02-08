@@ -20,8 +20,8 @@ export CXXVER=`cc zdk/make/gcc_ver.c -o gcc_ver && ./gcc_ver`
 
 cpu_count=`cat /proc/cpuinfo  | grep processor | wc -l`
 make_jobs=`expr \( $cpu_count \* 3 + 1 \) / 2`
-#export PARALLEL="-j $make_jobs"
-export PARALLEL="-j 4"
+export PARALLEL="-j $make_jobs"
+#export PARALLEL="-j 4"
 
 
 # libdwarf version

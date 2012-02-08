@@ -99,9 +99,6 @@ public:
         bool result = false;
         if (void* ptr = address_of(symbolName))
         {
-            /* ISO C++ forbids casting from pointer-to-object
-               to pointer-to-function */
-            // t.reset(reinterpret_cast<T*>(ptr), *this);
             t.reset((T*)ptr, *this);
 
             result = true;
@@ -123,7 +120,7 @@ public:
     /**
      * Return the reference count.
      */
-    int count() const { return handle_.count(); }
+    long count() const { return handle_.count(); }
 
     bool is_self() const { return isSelf_; }
 

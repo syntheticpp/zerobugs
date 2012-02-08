@@ -3305,7 +3305,7 @@ bool DebuggerEngine::on_interface(
         dbgout(0) << "detected plugin: " << lib->filename() << endl;
         clog << "  " << lib->filename() << endl;
 #if !defined(NDEBUG) || defined(DEBUG)
-        const int count = lib->count();
+        const long count = lib->count();
 #endif
         ImportPtr<DebuggerPlugin> plugin;
         create_instance(lib, plugin);
@@ -3363,9 +3363,6 @@ bool DebuggerEngine::on_interface(
         {
             return false;
         }
-
-        //clog << "FrameHandler loaded: " << handler.get() << ": ";
-        //clog << lib->filename() << endl;
 
         frameHandlers_.push_back(handler);
         component = handler.get();

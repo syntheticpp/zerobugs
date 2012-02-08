@@ -9,22 +9,61 @@
 #include "zdk/debug_sym.h"
 #include "view.h"
 
+class FlVarView;
+
 
 namespace ui
 {
     /**
      * Base class for viewing program variables.
      */
-    class VarView 
-        : public View
-        , public DebugSymbolEvents
+    class VarView : public View
+        , protected DebugSymbolEvents
     {
     public:
         explicit VarView(ui::Controller&);
 
+        FlVarView* widget() { return widget_; }
+
     protected:
-        void update(const State&);
+        ~VarView() throw();
+
+        BEGIN_INTERFACE_MAP(VarView)
+        END_INTERFACE_MAP()
+
+        // View interface
+        void added_to(const ui::View&);
+
+        // DebugSymbolEvents interface
         bool notify(DebugSymbol*);
+
+        /** 
+         * Symbols that correspond to aggregate objects such as
+         * class instances or arrays may be expanded, so that the
+         * user can inspect their sub-parts. This method is called
+         * by the reader implementations to determine if the client
+         * wants such an aggregate object to be expanded or not.
+         */
+        virtual bool is_expanding(DebugSymbol*) const { return false; }
+
+        /** 
+         * Readers call this method to determine what numeric base
+         * should be used for the representation of integer values.
+         */
+        virtual int numeric_base(const DebugSymbol*) const { return 0; }
+
+        /** 
+         * A change in the symbol has occurred (name, type, address
+         * etc.) A pointer to the old values is passed in.
+         */
+        virtual void symbol_change (   
+            DebugSymbol* newSym,
+            DebugSymbol* old )
+        { }
+
+    private:
+        bool        ownWidget_;
+        FlVarView*  widget_;
     };
 }
 

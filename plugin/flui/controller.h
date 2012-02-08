@@ -17,7 +17,7 @@ namespace ui
     class CodeView;
     class CompositeMenu;
     class Controller;
-
+    class VarView;
    
     /**
      * The UI typically runs an "event-pump" on a separate thread
@@ -170,22 +170,23 @@ namespace ui
             Thread*, 
             bool        /* async */);
 
-    protected:
         Debugger* debugger() { assert(debugger_); return debugger_; }
 
+    protected:
         void build();
         void build_layout();
         void build_menu();
 
         // create an object to hold state
-        virtual State* init_state();
+        virtual std::unique_ptr<State> init_state();
 
         // These are called from build(). The initXYZ are factory
         // methods, and the actual widgets that correspond to menu,
         // layout, etc. are "populated" by the buildXYZ methods.
-        virtual CodeView*       init_code_view();
-        virtual CompositeMenu*  init_menu();
-        virtual Layout*         init_layout();
+        virtual RefPtr<CodeView>       init_code_view();
+        virtual RefPtr<CompositeMenu>  init_menu();
+        virtual RefPtr<Layout>         init_layout();
+        virtual RefPtr<VarView>        init_locals_view();
 
         // this creates the main "application window"
         virtual void            init_main_window();

@@ -14,8 +14,10 @@
 // From my C/C++ Users Journal (Aug 2001 issue) article
 //  "Generalizing The Concept of auto_ptr"
 //
-#include <cassert>
+// TODO: this is not thread safe, replace with shared_ptr?
+//
 #include <algorithm>                // for std::swap
+#include <cassert>
 #include "auto_handle.h"
 
 /**
@@ -26,7 +28,7 @@
 template<
     typename H,
     typename T = handle_traits<H>,
-    typename R = unsigned int>
+    typename R = long>
 class ref_counted_base_handle
 {
 public:
@@ -95,14 +97,12 @@ public:
     void swap(ref_counted_base_handle& that) throw()
     { std::swap(ref_, that.ref_); }
 
-    // returns the reference counter value
-    const counter_type& count() const
-    // counter_type count() const
+    const long count() const
     {
-        static const counter_type zero = counter_type();
-        if (ref_) return *ref_;
-        // return counter_type();
-        return zero;
+        if (ref_)
+            return *ref_;
+
+        return 0;
     }
 
 protected:

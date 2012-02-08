@@ -4,13 +4,40 @@
 //
 // $Id: $
 //
+#include "controller.h"
+#include "flvar_view.h"
 #include "var_view.h"
+#include <iostream>
 
-namespace ui
+
+ui::VarView::VarView(ui::Controller& c)
+    : View(c)
+    , ownWidget_(true)
+    , widget_(new FlVarView(c.x(), c.y(), c.w(), c.h()))
 {
-    bool VarView::notify(DebugSymbol*)
+}
+
+
+ui::VarView::~VarView() throw()
+{
+    if (ownWidget_)
     {
-        return true;
+        delete widget_;
     }
 }
 
+
+void ui::VarView::added_to(const ui::View&)
+{
+    ownWidget_ = false;
+}
+
+
+bool ui::VarView::notify(DebugSymbol* s)
+{
+    if (s)
+    {
+        std::clog << s->name() << std::endl;
+    }
+    return true;
+}
