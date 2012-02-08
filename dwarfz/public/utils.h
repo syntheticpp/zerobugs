@@ -98,9 +98,8 @@ namespace Dwarf
             size_t,
             Dwarf_Half* retTag);
 
-        static void dump_attributes(const Dwarf::Die&, std::ostream& outs);
-
-        static void dump_children(const Dwarf::Die&, std::ostream& outs);
+        //static void dump_attributes(const Dwarf::Die&, std::ostream& outs);
+        //static void dump_children(const Dwarf::Die&, std::ostream& outs);
 
         static std::shared_ptr<Function>
             lookup_function(const FunList& funcs,
@@ -118,3 +117,4 @@ namespace Dwarf
 }
 #endif // UTILS_H__6A0BEF97_4723_4D2E_BC92_3F7B61E7F4CE
 // vim: tabstop=4:softtabstop=4:expandtab:shiftwidth=4
+

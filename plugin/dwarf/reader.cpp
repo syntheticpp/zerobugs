@@ -583,6 +583,7 @@ namespace Dwarf
           , sym_(sym)
         {
             assert(frame_);
+
             if (sym)
             {
                 ZObjectScope scope;
@@ -596,12 +597,13 @@ namespace Dwarf
 
                     if (moduleAdjust_ < 0)
                     {
-                        clog << "*** Warning: negative module address: ";
-                        clog << table->filename() << hex << moduleAdjust_;
-                        clog << dec << endl;
+                        dbgout(Log::ALWAYS) << "*** Warning: negative module address: "
+                                            << table->filename() << hex << moduleAdjust_
+                                            << dec << endl;
                     }
                 }
             }
+
             if (fun_)
             {
                 if (const CompileUnit* unit = fun_->unit())
@@ -611,7 +613,7 @@ namespace Dwarf
             }
         }
 
-        ~EmitDebugSymbol() { }
+        // ~EmitDebugSymbol() { }
 
         void operator()(const std::shared_ptr<Datum>& dat)
         {
@@ -925,7 +927,7 @@ void EmitDebugSymbol::operator()(const Dwarf::Datum& dat)
     std::shared_ptr<Dwarf::Type> type = dat.type();
     if (!type)
     {
-        cerr << "*** Warning: " << "datum with null type: " << dat.name() << endl;
+        dbgout(Log::ALWAYS) << "*** Warning: " << "datum with null type: " << dat.name() << endl;
         return;
     }
     addr_t val = 0;
@@ -1328,7 +1330,7 @@ size_t Reader::enum_globals(
     Frame* stackFrame = thread_current_frame(CHKPTR(thread));
     if (!stackFrame)
     {
-        clog << "*** Warning: " << __func__ << ": NULL stack frame\n";
+        dbgout(Log::ALWAYS) << "*** Warning: " << __func__ << ": NULL stack frame\n";
         return 0;
     }
 
@@ -1343,6 +1345,7 @@ size_t Reader::enum_globals(
         for (; link; link = link->next())
         {
             dbgout(1) << "enum_globals: " << link->filename() << endl;
+
             if (Handle dbg = get_debug_handle(link->filename(), process))
             {
                 result += enum_globals(*thread,
@@ -1385,7 +1388,7 @@ size_t Reader::enum_globals(
     }
     else
     {
-        clog << "*** Warning: unhandled scope: " << scope <<  endl;
+        dbgout(Log::ALWAYS) << "*** Warning: unhandled scope: " << scope <<  endl;
     }
     return 0;
 }
@@ -2386,13 +2389,7 @@ bool Reader::emit_function (
     {
         return false;
     }
-#if 0 // DEBUG 
-    else
-    {
-        clog << __func__ << ": ";
-        clog << interface_cast<FunType&>(*type).return_type()->name() << endl;
-    }
-#endif
+
     if (events)
     {
         RefPtr<DebugSymbol> sym = DebugSymbolImpl::create(

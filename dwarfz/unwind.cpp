@@ -163,7 +163,7 @@ static Dwarf_Addr eval_loc(
     }
     catch (const exception& e)
     {
-        clog << __func__ << ": " << e.what() << endl;
+        dbgout(Log::ALWAYS) << __func__ << ": " << e.what() << endl;
     }
     return 0;
 }
@@ -506,9 +506,7 @@ Unwind::step(Dwarf_Addr pc, AddrOps& addrOps, RegTable& frame)
     }
     if (retAddr == pc) // make sure we don't loop indefinitely
     {
-        IF_DEBUG_FH(
-            clog << __func__ << ": retAddr == pc\n"
-        )
+        IF_DEBUG_FH( clog << __func__ << ": retAddr == pc" << endl; )
         retAddr = 0;
     }
     return retAddr;

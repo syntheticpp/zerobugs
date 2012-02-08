@@ -9,20 +9,15 @@
 // http://www.boost.org/LICENSE_1_0.txt)
 // -------------------------------------------------------------------------
 
-#include <iostream>
 #include <dwarf.h>
 #include "private/factory.h"
 #include "public/error.h"
 #include "public/type.h"
-#include "impl.h"
+#include "public/impl.h"
+#include "private/log.h"
 #include "private/type_attr.h"
 
-using std::cerr;
-using std::clog;
-using std::endl;
-using std::dec;
-using std::hex;
-
+using namespace std;
 using namespace Dwarf;
 
 
@@ -82,7 +77,7 @@ std::shared_ptr<Type> TypeAttr::value() const
     // todo: other cases here
 
     default:
-        clog << "Unhandled form=0x" << hex << form() << dec << endl;
+        dbgout(Log::ALWAYS) << "Unhandled form=0x" << hex << form() << dec << endl;
         assert(false);
     }
 

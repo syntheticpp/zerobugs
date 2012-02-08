@@ -9,16 +9,16 @@
 // http://www.boost.org/LICENSE_1_0.txt)
 // -------------------------------------------------------------------------
 
-#include <stdexcept>
-#include <string>
 #include "zdk/interface_cast.h"
-#include "zdk/shared_string_impl.h"
 #include "zdk/ref_ptr.h"
+#include "zdk/shared_string_impl.h"
+#include "zdk/stdexcept.h"
 #include "dwarfz/public/debug.h"
 #include "dwarfz/public/die.h"
 #include "dwarfz/public/type.h"
 #include "typez/public/data_type_impl.h"
 #include "type_map.h"
+#include <string>
 
 
 using namespace std;
@@ -27,10 +27,6 @@ using namespace Dwarf;
 
 TypeMap::~TypeMap()
 {
-//#ifdef DEBUG
-//    clog << "type_map: byName size=" << byName_.size() << endl;
-//    clog << "type_map: byOffs size=" << byOffset_.size() << endl;
-//#endif
 }
 
 

@@ -9,6 +9,7 @@
 // http://www.boost.org/LICENSE_1_0.txt)
 // -------------------------------------------------------------------------
 
+#include "zdk/log.h"
 #include <assert.h>
 #include <iostream>
 #include <sstream>
@@ -46,9 +47,10 @@ public:
         return msg_.c_str();
     }
 
-    std::ostream& log(std::ostream& os, const char* file, size_t line)
+    std::ostream&
+    log(std::ostream& out, const char* file, size_t line) const
     {
-        return os << file << ':' << line << ' ' << what();
+        return out << file << ':' << line << ' ' << what();
     } 
 
 private:
@@ -89,7 +91,9 @@ void Error::Throw(
 
     if (file)
     {
-        e.impl_->log(std::clog, file, line) << std::endl;
+        e.impl_->log(
+            Log::Level(__FILE__, __LINE__, Log::ALWAYS), file, line)
+            << std::endl;
     }
 
     throw e;
@@ -112,6 +116,7 @@ std::string Error::Message(
         std::ostringstream ss;
 
         e.impl_->log(ss, file, line);
+
         result = ss.str() + ": " + result;
     }
 

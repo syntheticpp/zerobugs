@@ -177,7 +177,7 @@ class PageEvents(object):
     def __init__(self, druidPage):
         druidPage.set_title("ZeroBUGS Setup")
         druidPage.connect("cancel", self.__on_cancel)
-        pixbuf = gtk.gdk.pixbuf_new_from_file("500_setup.png")
+        pixbuf = gtk.gdk.pixbuf_new_from_file("python/500_setup.png")
         try:
             druidPage.set_watermark(pixbuf)
         except:

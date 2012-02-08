@@ -315,7 +315,7 @@ Dwarf_Unsigned Utils::byte_size(Dwarf_Debug dbg, Dwarf_Die die)
     return size;
 }
 
-
+#if 0
 void Utils::dump_attributes(const Dwarf::Die& die, ostream& outs)
 {
     outs << "----- " << die.name() << " ------\n";
@@ -353,7 +353,7 @@ void Utils::dump_attributes(const Dwarf::Die& die, ostream& outs)
         if (attr == DW_AT_accessibility)
         {
             GenericAttr<DW_AT_accessibility, Dwarf_Unsigned> a(die.dbg(), die.die());
-            clog << "accessibility=" << a.value() << endl;
+            outs << "accessibility=" << a.value() << endl;
         }
     }
     for (int i = 0; i < atcnt; i++)
@@ -387,6 +387,7 @@ void Utils::dump_children(const Dwarf::Die& die, ostream& outs)
         dwarf_dealloc(die.dbg(), child, DW_DLA_DIE);
     }
 }
+#endif // 0
 
 
 std::shared_ptr<Function>

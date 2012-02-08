@@ -155,7 +155,7 @@ void FlCodeTable::read_file(const char* filename)
     {
         return;
     }
-    lines_.empty();
+    lines_.clear();
     digits_ = 0;
 
     // if source code lines exceed this size, though luck - truncate them

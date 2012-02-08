@@ -177,7 +177,7 @@ namespace
             std::shared_ptr<Type> type = part.type();
             if (!type)
             {
-                clog << "unknown type: " << part.name() << endl;
+                dbgout(Log::ALWAYS) << "unknown type: " << part.name() << endl;
                 return;
             }
             TypeAdapter adapter(reader_, thread_, baseAddr_, typeMap_);
@@ -359,9 +359,7 @@ void Aggregator::operator()(const Inheritance& part) const
 {
     if (!part.type())
     {
-#if DEBUG
-        clog << "unknown type: " << part.name() << endl;
-#endif
+        dbgout(Log::ALWAYS) << "unknown type: " << part.name() << endl;
         throw runtime_error(string("null type: ") + part.name());
     }
 
@@ -381,9 +379,7 @@ void Aggregator::operator()(const Inheritance& part) const
     }
     else
     {
-#ifdef DEBUG
-        clog << part.name() << ": location not found." << endl;
-#endif
+        dbgout(0) << part.name() << ": location not found." << endl;
         return;
     }
 

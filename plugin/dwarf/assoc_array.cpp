@@ -177,12 +177,6 @@ bool AssociativeArray::walk_tree(DebugSymbolImpl* array,
         thread_read(thread, a, node.right); advance_ptr(a);
         thread_read(thread, a, node.hash);  advance_ptr(a);
 
-    #if 0
-        clog << "(" << (void*)node.left << ", "
-             << (void*)node.right << ", " << node.hash << ")\n";
-        clog << "key size=" << keyType.size() << endl;
-    #endif
-
         RefPtr<DebugSymbolImpl> key = array->create(reader, thread, keyType, *KEY, a);
         key->read(events);
         a += keyType.size(); // bump address to beginning of value

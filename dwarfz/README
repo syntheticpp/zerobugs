@@ -1,22 +1,2 @@
 libdwarfz is a C++ wrapper around the consumer interface of libdwarf.
 
-I tried making this library as standalone as possible: not depend on
-other artifacts or libraries in the Zero project, and not use STL
-constructs in headers. This way, it is more reusable in other projects.
-
-/*****
-NOTE: I have parted with the above idea recently, because I found out that 
-there is little value but a lot of waste in it. In the future, this library
-will make more use of SharedString and eliminate use of std::string
-*****/
-
-
-boost::shared_ptr is used for for non-intrusive reference counting.
-I think that some better performance might be gained
-by using intrusive refcounting, i.e. basing all objects on RefCounted and
-using RefPtr instead of shared_ptr. 
-
-Also, the base type class depends on the BaseVisitable template -- the
-acyclic visitor pattern can be used for adapting types, etc.
-
-
