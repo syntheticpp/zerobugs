@@ -4,6 +4,8 @@
 //
 // $Id: $
 //
+#include "zdk/config.h"
+#include "zdk/symbol.h"
 #include "code_view.h"
 #include "flcode_table.h"
 

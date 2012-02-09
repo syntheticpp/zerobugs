@@ -9,24 +9,21 @@
 
 
 FlVarView::FlVarView(int x, int y, int w, int h, const char* label)
-    : Fl_Tree(x, y, w, h, label)
-//    : Fl_Table(x, y, w, h, label)
+    : Fl_Table(x, y, w, h, label)
 
 {
-/*
     col_header(true);
+    col_resize(true);
+
     cols(3);
     rows(100); 
 
     col_width(0, 300);
     col_width(1, 400);
-    col_width(2, 2000); */
-
-    showroot(false);
+    col_width(2, 2000); 
 }
 
 
-/*
 void FlVarView::draw_cell(
 
     TableContext    context,
@@ -46,7 +43,8 @@ void FlVarView::draw_cell(
     case CONTEXT_COL_HEADER:
         fl_push_clip(x, y, width, height);
         fl_color(FL_LIGHT2);
-        fl_rectf(x, y, width, height);
+        //fl_rectf(x, y, width, height);
+        fl_draw_box(FL_THIN_UP_BOX, x, y, width, height, FL_LIGHT2);
         fl_pop_clip();
         break;
 
@@ -61,5 +59,4 @@ void FlVarView::draw_cell(
         break;
     }
 }
-*/
 

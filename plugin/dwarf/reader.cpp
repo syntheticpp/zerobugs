@@ -9,6 +9,8 @@
 // http://www.boost.org/LICENSE_1_0.txt)
 // -------------------------------------------------------------------------
 //
+#include "zdk/config.h"
+
 #include "zdk/argv_util.h"
 #include "zdk/assert.h"
 #include "zdk/check_ptr.h"

@@ -17,18 +17,18 @@ ui::Layout::Layout(ui::Controller& c) : View(c)
 }
 
 
-void ui::Layout::add(ui::View& v)
+void ui::Layout::add(Callback& cb, ui::View& v)
 {
     views_.push_back(&v);
-    v.added_to(*this);
+    cb.insert(v);
 }
 
 
 void ui::Layout::update(const ui::State& s)
 {
-    for (auto v = begin(views_); v != end(views_); ++v)
+    for (auto v : views_)
     {
-        (*v)->update(s);
+        v->update(s);
     }
 }
 

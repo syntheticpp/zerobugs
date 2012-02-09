@@ -78,27 +78,6 @@ public:
 
 
 ////////////////////////////////////////////////////////////////
-//
-// null object pattern
-//
-class ZDK_LOCAL NullLayout : public ui::Layout
-{
-public:
-    explicit NullLayout(ui::Controller& c) : ui::Layout(c)
-    {
-    }
-
-private:
-    // View interface
-    virtual void added_to(const ui::View&) { }
-    virtual void update(const ui::State&) { }
-    // Layout interface
-    virtual void add(ui::View&) { }
-    virtual void show(ui::View&, bool) { }
-};
-
-
-////////////////////////////////////////////////////////////////
 class ZDK_LOCAL CommandError : public ui::Command
 {
     string msg_;
@@ -166,13 +145,6 @@ RefPtr<ui::CompositeMenu> ui::Controller::init_menu()
 RefPtr<ui::VarView> ui::Controller::init_locals_view()
 {
     return new LocalsView(*this);
-}
-
-
-////////////////////////////////////////////////////////////////
-RefPtr<ui::Layout> ui::Controller::init_layout( )
-{
-    return new NullLayout(*this);
 }
 
 
@@ -302,10 +274,7 @@ class ZDK_LOCAL WaitCommand : public ui::Command
 
     void cancel() 
     {
-        {   
-            Lock<Mutex> lock(mutex_);
-            cancelled_ = true;
-        }
+        set_cancel();
         cond_.broadcast();
     }
 
@@ -314,6 +283,12 @@ protected:
 
 public:
     WaitCommand() : cancelled_(false) { }
+
+    void set_cancel()
+    {
+        Lock<Mutex> lock(mutex_);
+        cancelled_ = true;
+    }
 };
 
 

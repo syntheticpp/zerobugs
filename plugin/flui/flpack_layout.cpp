@@ -23,6 +23,11 @@
 static const int menubar_h  = 30;
 static const int statbar_h  = 30;
 
+class ZDK_LOCAL Callback : public ui::Layout::Callback
+{
+};
+
+
 //todo: change name to FlTileLayout
 
 FlPackLayout::FlPackLayout(ui::Controller& c, int x, int y, int w, int h)
@@ -58,7 +63,7 @@ FlPackLayout::FlPackLayout(ui::Controller& c, int x, int y, int w, int h)
     #if 1
         bottomArea_ = new Fl_Tabs(0, y + code_height() + menubar_h, w, h - code_height() - menubar_h);
         // bottomArea_->box(FL_DOWN_BOX);
-        // auto b =  new Fl_Box(0, y + code_height() + menubar_h, w, h - code_height() - menubar_h - 30, "Area Three");
+        /* auto b =  */new Fl_Box(0, y + code_height() + menubar_h, w, h - code_height() - menubar_h - 30, "Area Three");
         bottomArea_->end();
         //bottomArea_->resizable(b);
     #else
@@ -85,12 +90,7 @@ void FlPackLayout::update(const ui::State& s)
 }
 
 
-void FlPackLayout::added_to(const ui::View&)
-{
-}
-
-
-void FlPackLayout::add(ui::View& v)
+void FlPackLayout::add(Callback& cb, ui::View& v)
 {
     if (auto cv = dynamic_cast<FlMultiCodeView*>(&v))
     {
@@ -98,7 +98,7 @@ void FlPackLayout::add(ui::View& v)
     }
     else if (auto vv = dynamic_cast<ui::VarView*>(&v))
     {
-        add_var_view(vv->widget());
+        //add_var_view(vv->widget());
     }
 
     ui::Layout::add(v);
@@ -130,4 +130,9 @@ void FlPackLayout::show(ui::View& view, bool show)
 {
 }
 
+
+std::unique_ptr<ui::Layout::Callback> FlPackLayout::callback(ui::ViewType type)
+{
+    return nullptr;
+}
 

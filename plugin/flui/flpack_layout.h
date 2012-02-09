@@ -21,11 +21,10 @@ public:
     //Fl_Group* group() { return group_; }
 
     // View interface
-    virtual void added_to(const ui::View&);
     virtual void update(const ui::State&);
 
     // Layout interface
-    virtual void add(ui::View&);
+    virtual void add(Callback&, ui::View&);
     virtual void show(ui::View&, bool);
 
 protected:
@@ -33,6 +32,8 @@ protected:
     
     void add_code_view(Fl_Widget* w);
     void add_var_view(Fl_Widget* w);
+
+    std::unique_ptr<Callback> callback(ui::ViewType);
 
 private:
     Fl_Group*   group_; // this group

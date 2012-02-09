@@ -25,6 +25,7 @@
 #include "zdk/assert.h"
 #include "zdk/debug_reg.h"
 #include "zdk/disasm.h"
+#include "zdk/event_type.h"
 #include "zdk/generic_plugin.h"
 #include "zdk/memio.h"
 #include "zdk/misc.h"
@@ -365,45 +366,6 @@ DECLARE_ZDK_INTERFACE_(Thread, MemoryIO)
     virtual bool exited(int* status = NULL) const = 0;
 };
 
-
-
-enum EventType
-{
-    // no event, just prompting the user for a command
-    E_PROMPT,
-
-    // a debugged thread stopped because it has received a signal
-    E_THREAD_STOPPED,
-
-    // the thread stopped in the debugger with a
-    //   SIGTRAP as the result of hitting a breakpoint
-    E_THREAD_BREAK,
-
-    // the thread finished running
-    E_THREAD_FINISHED,
-
-    E_SYSCALL,
-
-    E_SINGLE_STEP,
-
-    // used internally by the expression evaluator
-    //   to indicate that a function call or some other
-    //   asynchronous evaluation has completed.
-    E_EVAL_COMPLETE,
-
-    // returned from function call
-    E_THREAD_RETURN,
-
-    // thread is about to exit
-    E_THREAD_EXITING,
-
-    // there are no more threads left in the target
-    E_TARGET_FINISHED,
-
-    // force to sizeof(uint)
-    E_NONE = UINT_MAX,
-    E_DEFAULT = E_NONE
-};
 
 
 struct InputStreamEvents;

@@ -21,7 +21,7 @@ namespace ui
 
     protected:
         // View interface
-        void update(const State&);
+        virtual void update(const State&);
 
     private:
     };

@@ -6,19 +6,29 @@
 //
 // $Id$
 //
+#include "zdk/config.h"
+#include "zdk/event_type.h"
 #include "zdk/ref_counted_impl.h"
-#include "zdk/stdexcept.h"
-#include "zdk/zero.h"
+#include "zdk/ref_ptr.h"
+#include "zdk/zerofwd.h"
+#include "view_type.h"
+#include <vector>
 
 
 namespace ui
 {
     class Controller;
     class Layout;
+    class View;
+
+    typedef RefPtr<View> ViewPtr;
 
 
     /**
      * Models the current state of the debugger and UI.
+     *
+     * Updated on the main debugger thread when debug events
+     * or other notifications are received.
      */
     struct State
     {
@@ -57,14 +67,13 @@ namespace ui
     public:
         explicit View (Controller&);
 
-        virtual void added_to(const View&) = 0;
+        virtual ViewType type() const = 0;
         virtual void update(const State&) = 0;
 
     protected:
         virtual ~View() throw() { }
 
-        Controller& controller() const 
-        {
+        Controller& controller() const {
             return c_;
         }
 
@@ -72,30 +81,47 @@ namespace ui
         Controller& c_;
     };
 
-    typedef RefPtr<View> ViewPtr;
 
-    
     /**
      * Composite view that manages the layout of other views.
      */
     class Layout : public View
     {
     public:
+        // virtual functor used during the construction of
+        // the UI layout -- passed to the View-s that are 
+        // added to the parent Layout object.
+        struct Callback
+        {
+            virtual void insert(View&) = 0;
+        };
+
         explicit Layout(Controller&);
 
-        virtual void add(View&);
+        void add(View& v) {
+            add(*callback(v.type()), v);
+        }
 
+        virtual void add(Callback&, View&);
         virtual void show(View&, bool) = 0;
 
         virtual void update(const State&);
 
+        virtual ViewType type() const {
+            return VIEW_Layout;
+        }
+
     protected:
         virtual ~Layout() throw() { }
-        
+       
+        // construct a Callback functor
+        virtual std::unique_ptr<Callback> callback(ViewType) = 0;
+
     private:
         std::vector<ViewPtr> views_;
     };
-}
+
+} // namespace
 
 #endif // VIEW_H__1C73A6F4_AE29_4B8D_A06E_24BD9FD30117
 

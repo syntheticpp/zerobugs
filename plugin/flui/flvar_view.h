@@ -6,15 +6,13 @@
 //
 // $Id: $
 //
-// #include <FL/Fl_Table.H>
-#include <FL/Fl_Tree.H>
+#include <FL/Fl_Table.H>
 
 
 /**
  * View program variables using a Fl_Table widget.
  */
-//class FlVarView : public Fl_Table
-class FlVarView : public Fl_Tree
+class FlVarView : public Fl_Table
 {
 public:
     FlVarView(int x, int y, int w, int h, const char* label = nullptr);
@@ -24,14 +22,14 @@ private:
      * implements custom drawing
      * @see http://seriss.com/people/erco/Fl_Table/documentation/Fl_Table.html#draw_cell
      */
-    /* virtual void draw_cell(
+    virtual void draw_cell(
         TableContext,
         int row,
         int col,
         int x,  
         int y,  
         int w,  
-        nt h);  */
+        int h);
 };
 
 

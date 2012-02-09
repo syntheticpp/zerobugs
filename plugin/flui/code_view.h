@@ -6,8 +6,8 @@
 //
 // $Id: $
 //
+#include "zdk/shared_string.h"
 #include "view.h"
-#include <string>
 #include <unordered_map>
 
 
@@ -25,6 +25,8 @@ namespace ui
 
     protected:
         ~CodeView() throw();
+
+        virtual ViewType type() const { return VIEW_Code; }
     };
 
     typedef RefPtr<CodeView> CodeViewPtr;
@@ -51,6 +53,8 @@ namespace ui
 
     protected:
         ~MultiCodeView() throw();
+
+        virtual ViewType type() const { return VIEW_Code; }
 
         virtual void update(const State&);
 

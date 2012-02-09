@@ -55,6 +55,9 @@
 /* Define to 1 if you have the <inttypes.h> header file. */
 #undef HAVE_INTTYPES_H
 
+/* Define if C++11 lambda functions are supported */
+#undef HAVE_LAMBDA_SUPPORT
+
 /* Define to 1 if you have the `elf' library (-lelf). */
 #undef HAVE_LIBELF
 

@@ -8,13 +8,13 @@
 //
 // $Id$
 //
-#include <iostream>
+#include "zdk/log.h"
+#include "zdk/thread_util.h"
 #include "dharma/environ.h"
 #include "public/types.h"
 #include "public/util.h"
 #include "private/debug_rtti.h"
 #include "unmangle/unmangle.h"
-#include "zdk/thread_util.h"
 
 using namespace std;
 using Platform::byte_size;
@@ -147,8 +147,8 @@ scan_vtable(const Thread& thread, addr_t addr, size_t nEntries)
         RefPtr<Symbol> sym = symbols->lookup_symbol(addr);
         if (!sym)
         {
-            clog << __func__ << ": symbol not found ";
-            clog << hex << addr << dec << endl;
+            dbgout(Log::ALWAYS) << __func__ << ": symbol not found "
+                                << hex << addr << dec << endl;
             continue;
         }
         if (sym->offset())

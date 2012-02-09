@@ -4992,7 +4992,6 @@ fi
 
 
 
-
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking for yyFlexLexer::yywrap" >&5
 $as_echo_n "checking for yyFlexLexer::yywrap... " >&6; }
 if ${ac_cv_yyFlexLexer_yywrap+:} false; then :
@@ -5008,7 +5007,7 @@ int main()
     return 0;
 }
 ---end---
-    if g++ tmp.cpp 2>/dev/null; then
+    if $CXX tmp.cpp 2>/dev/null; then
         ac_cv_yyFlexLexer_yywrap=true
         rm a.out
     fi
@@ -5022,6 +5021,40 @@ $as_echo "$ac_cv_yyFlexLexer_yywrap" >&6; }
 $as_echo "#define HAVE_YYFLEXLEXER_YYWRAP 1" >>confdefs.h
 
     fi
+
+
+
+# Check for C++11 lambda support in the compiler
+
+
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for C++11 Lambda compiler support" >&5
+$as_echo_n "checking for C++11 Lambda compiler support... " >&6; }
+if ${ac_cv_lambda+:} false; then :
+  $as_echo_n "(cached) " >&6
+else
+  ac_cv_lambda=false
+cat > tmp.cpp << ---end---
+
+int main()
+{
+    return []()->int { return 0; }();
+}
+---end---
+    if $CXX -std=c++0x tmp.cpp 2>/dev/null; then
+        ac_cv_lambda=true
+        rm a.out
+    fi
+    rm tmp.cpp
+fi
+{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_cv_lambda" >&5
+$as_echo "$ac_cv_lambda" >&6; }
+
+    if test "$ac_cv_lambda" = true; then
+
+$as_echo "#define HAVE_LAMBDA_SUPPORT 1" >>confdefs.h
+
+    fi
+
 
 
 

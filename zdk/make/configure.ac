@@ -2,8 +2,6 @@
 # vim: tabstop=4:softtabstop=4:expandtab:shiftwidth=4
 # Process this file with autoconf to produce a configure script.
 #
-# TODO: check for python devel
-#
 AC_PREREQ(2.59)
 m4_include(ax_boost_base.m4)
 m4_include(ax_python.m4)
@@ -55,7 +53,7 @@ int main()
     return 0;
 }
 ---end---
-    if g++ tmp.cpp 2>/dev/null; then 
+    if $CXX tmp.cpp 2>/dev/null; then 
         ac_cv_yyFlexLexer_yywrap=true
         rm a.out
     fi
@@ -66,8 +64,35 @@ int main()
                 [Define if yyFlexLexer::yywrap is declared])
     fi
 ])
-
 AC_YYFLEXLEXER_YYWRAP
+
+
+# Check for C++11 lambda support in the compiler
+AC_DEFUN([AC_CXX_LAMBDA],
+    [AC_CACHE_CHECK([for C++11 Lambda compiler support],
+               [ac_cv_lambda],
+               [ac_cv_lambda=false
+cat > tmp.cpp << ---end---
+
+int main()
+{
+    return [[]]()->int { return 0; }();
+}
+---end---
+    if $CXX -std=c++0x tmp.cpp 2>/dev/null; then 
+        ac_cv_lambda=true
+        rm a.out
+    fi
+    rm tmp.cpp])
+
+    if test "$ac_cv_lambda" = true; then
+        AC_DEFINE([HAVE_LAMBDA_SUPPORT], [1],
+                [Define if C++11 lambda functions are supported])
+    fi
+])
+
+AC_CXX_LAMBDA
+
 
 
 # Checks for libraries.

@@ -20,10 +20,10 @@
 #include <algorithm>
 #include <functional>
 #include <map>
-#include <stdexcept>
 #include "generic/temporary.h"
 #include "zdk/check_ptr.h"
 #include "zdk/platform.h"                   // for byte_size
+#include "zdk/stdexcept.h"
 #include "zdk/thread_util.h"
 #include "zdk/types.h"
 #include "zdk/type_system_util.h"

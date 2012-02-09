@@ -9,21 +9,24 @@
 // http://www.boost.org/LICENSE_1_0.txt)
 // -------------------------------------------------------------------------
 //
+#include "zdk/config.h"
+
+#include "zdk/argv_util.h"
+#include "zdk/check_ptr.h"
+#include "zdk/frame_handler.h"
+#include "zdk/shared_string_impl.h"
+#include "zdk/stdexcept.h"
+#include "zdk/thread_util.h"
+#include "zdk/type_system_util.h"
+#include "zdk/zero.h"
+#include "zdk/zobject_scope.h"
+
 #include <sstream>
-#include <stdexcept>
 #include "reader.h"
 #include "dbgout.h"
 #include "dharma/canonical_path.h"
 #include "dharma/environ.h"
 #include "dharma/symbol_util.h"
-#include "zdk/argv_util.h"
-#include "zdk/check_ptr.h"
-#include "zdk/frame_handler.h"
-#include "zdk/shared_string_impl.h"
-#include "zdk/thread_util.h"
-#include "zdk/type_system_util.h"
-#include "zdk/zero.h"
-#include "zdk/zobject_scope.h"
 #include "elfz/public/binary.h"
 #include "stabz/public/compile_unit.h"
 #include "stabz/public/function.h"

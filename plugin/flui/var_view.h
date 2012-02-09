@@ -23,7 +23,7 @@ namespace ui
     public:
         explicit VarView(ui::Controller&);
 
-        FlVarView* widget() { return widget_; }
+        // FlVarView* widget() { return widget_; }
 
     protected:
         ~VarView() throw();
@@ -31,10 +31,7 @@ namespace ui
         BEGIN_INTERFACE_MAP(VarView)
         END_INTERFACE_MAP()
 
-        // View interface
-        void added_to(const ui::View&);
-
-        // DebugSymbolEvents interface
+        // === DebugSymbolEvents interface ===
         bool notify(DebugSymbol*);
 
         /** 
@@ -44,13 +41,17 @@ namespace ui
          * by the reader implementations to determine if the client
          * wants such an aggregate object to be expanded or not.
          */
-        virtual bool is_expanding(DebugSymbol*) const { return false; }
+        virtual bool is_expanding(DebugSymbol*) const { 
+            return false;
+        }
 
         /** 
          * Readers call this method to determine what numeric base
          * should be used for the representation of integer values.
          */
-        virtual int numeric_base(const DebugSymbol*) const { return 0; }
+        virtual int numeric_base(const DebugSymbol*) const { 
+            return 0;
+        }
 
         /** 
          * A change in the symbol has occurred (name, type, address
@@ -58,11 +59,14 @@ namespace ui
          */
         virtual void symbol_change (   
             DebugSymbol* newSym,
-            DebugSymbol* old )
-        { }
+            DebugSymbol* old ) { }
+
+        // === View interface === 
+        virtual ViewType type() const {
+            return VIEW_Vars;
+        }
 
     private:
-        bool        ownWidget_;
         FlVarView*  widget_;
     };
 }

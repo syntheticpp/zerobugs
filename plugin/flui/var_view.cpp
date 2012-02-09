@@ -12,7 +12,6 @@
 
 ui::VarView::VarView(ui::Controller& c)
     : View(c)
-    , ownWidget_(true)
     , widget_(new FlVarView(c.x(), c.y(), c.w(), c.h()))
 {
 }
@@ -20,16 +19,6 @@ ui::VarView::VarView(ui::Controller& c)
 
 ui::VarView::~VarView() throw()
 {
-    if (ownWidget_)
-    {
-        delete widget_;
-    }
-}
-
-
-void ui::VarView::added_to(const ui::View&)
-{
-    ownWidget_ = false;
 }
 
 

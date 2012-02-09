@@ -6,7 +6,7 @@
 //
 // $Id$
 //
-#include "zdk/ref_counted_impl.h"
+#include "zdk/zero.h"
 #include "view.h"
 #include <cassert>
 #include <memory>
@@ -185,7 +185,7 @@ namespace ui
         // layout, etc. are "populated" by the buildXYZ methods.
         virtual RefPtr<CodeView>       init_code_view();
         virtual RefPtr<CompositeMenu>  init_menu();
-        virtual RefPtr<Layout>         init_layout();
+        virtual RefPtr<Layout>         init_layout() = 0;
         virtual RefPtr<VarView>        init_locals_view();
 
         // this creates the main "application window"
