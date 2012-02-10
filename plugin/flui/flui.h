@@ -11,7 +11,6 @@
 #include "menu.h"
 
 class Fl_Double_Window;
-class Fl_Window;
 
 
 /**
@@ -52,9 +51,10 @@ protected:
     const char* copyright() const;
 
 private:
-    virtual RefPtr<ui::CodeView>       init_code_view();
-    virtual RefPtr<ui::Layout>         init_layout();
-    virtual RefPtr<ui::CompositeMenu>  init_menu();
+    virtual RefPtr<ui::CodeView>        init_code_view();
+    virtual RefPtr<ui::Layout>          init_layout();
+    virtual RefPtr<ui::VarView>         init_locals_view();
+    virtual RefPtr<ui::CompositeMenu>   init_menu();
 
     virtual void    init_main_window();
 
@@ -66,7 +66,7 @@ private:
 
 private:
     SArray              args_;
-    Fl_Double_Window*   window_;
+    Fl_Double_Window*   window_;    // double-buffered window
 };
 
 

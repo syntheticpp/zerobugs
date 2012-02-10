@@ -9,21 +9,18 @@
 #include "zdk/debug_sym.h"
 #include "view.h"
 
-class FlVarView;
-
 
 namespace ui
 {
     /**
      * Base class for viewing program variables.
      */
-    class VarView : public View
+    class VarView 
+        : public View
         , protected DebugSymbolEvents
     {
     public:
         explicit VarView(ui::Controller&);
-
-        // FlVarView* widget() { return widget_; }
 
     protected:
         ~VarView() throw();
@@ -41,7 +38,8 @@ namespace ui
          * by the reader implementations to determine if the client
          * wants such an aggregate object to be expanded or not.
          */
-        virtual bool is_expanding(DebugSymbol*) const { 
+        virtual bool is_expanding(DebugSymbol*) const
+        {
             return false;
         }
 
@@ -49,25 +47,25 @@ namespace ui
          * Readers call this method to determine what numeric base
          * should be used for the representation of integer values.
          */
-        virtual int numeric_base(const DebugSymbol*) const { 
+        virtual int numeric_base(const DebugSymbol*) const
+        {
             return 0;
         }
 
         /** 
-         * A change in the symbol has occurred (name, type, address
-         * etc.) A pointer to the old values is passed in.
+         * A change in the symbol has occurred (name, type, address * etc.)
+         * A pointer to the old values is passed in.
          */
         virtual void symbol_change (   
             DebugSymbol* newSym,
-            DebugSymbol* old ) { }
+            DebugSymbol* old )
+        { }
 
         // === View interface === 
-        virtual ViewType type() const {
+        virtual ViewType type() const
+        {
             return VIEW_Vars;
         }
-
-    private:
-        FlVarView*  widget_;
     };
 }
 

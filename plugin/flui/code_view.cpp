@@ -5,6 +5,7 @@
 // $Id: $
 //
 #include "zdk/config.h"
+#include "zdk/check_ptr.h"
 #include "zdk/symbol.h"
 #include "code_view.h"
 #include "flcode_table.h"
@@ -45,12 +46,25 @@ void ui::MultiCodeView::update(const ui::State& s)
         SharedStringPtr filename = sym->file();
 
         auto i = views_.find(filename);
+    //
+    // TODO: observe some upper limit?
+    //
         if (i == views_.end())
         {
-            i = views_.insert(std::make_pair(filename, make_view(*sym))).first;
+            CodeViewPtr cv = make_view(*sym);
+            if (cv.is_null())
+            {
+                return;
+            }
+            i = views_.insert(std::make_pair(filename, cv)).first;
+
+            Layout::CallbackPtr cb(make_callback());
+
+            assert(cb);
+            cv->insert_self(*cb);
         }
 
-        i->second->update(s);
+        CHKPTR(i->second)->update(s);
     }
 }
 

@@ -23,7 +23,9 @@ SRCS=	code_view.cpp		\
 		flui.cpp 			\
 		flmenu.cpp			\
 		flpack_layout.cpp	\
+		fl_tabbed.cpp		\
 		flvar_view.cpp		\
+		flview.cpp			\
 		locals_view.cpp		\
 		menu.cpp			\
 		var_view.cpp		\

@@ -6,16 +6,18 @@
 //
 // $Id: $
 //
+#include "flview.h"
+#include "locals_view.h"
 #include <FL/Fl_Table.H>
 
 
 /**
  * View program variables using a Fl_Table widget.
  */
-class FlVarView : public Fl_Table
+class Fl_VarTable : public Fl_Table
 {
 public:
-    FlVarView(int x, int y, int w, int h, const char* label = nullptr);
+    explicit Fl_VarTable(int x = 0, int y = 0, int w = 0, int h = 0, const char* label = nullptr);
 
 private:
     /** 
@@ -32,6 +34,15 @@ private:
         int h);
 };
 
+
+
+class FlLocalsView : public FlView<ui::LocalsView, Fl_VarTable>
+{
+public:
+    explicit FlLocalsView(ui::Controller& c) : base_type(c, 0, 0, 0, 0, "Locals")
+    {
+    }
+};
 
 #endif // FLVAR_VIEW_H__CE09CF79_2049_42E6_BD43_6EF8BFCB1DEC
 

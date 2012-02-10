@@ -8,6 +8,7 @@
 #include "zdk/check_ptr.h"
 
 #include "flcode_view.h"
+#include "flvar_view.h"
 #include "flmenu.h"
 #include "flpack_layout.h"
 #include "flui.h"
@@ -19,7 +20,6 @@
 // fltk headers
 #include <FL/Fl.H>
 #include <FL/Fl_Double_Window.H>
-//#include <FL/Fl_Window.H>
 
 using namespace std;
 
@@ -160,6 +160,13 @@ RefPtr<ui::Layout> Flui::init_layout()
     window_->show();
 
     return layout;
+}
+
+
+////////////////////////////////////////////////////////////////
+RefPtr<ui::VarView> Flui::init_locals_view()
+{
+    return new FlLocalsView(*this);
 }
 
 

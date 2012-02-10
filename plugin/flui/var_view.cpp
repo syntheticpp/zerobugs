@@ -10,9 +10,7 @@
 #include <iostream>
 
 
-ui::VarView::VarView(ui::Controller& c)
-    : View(c)
-    , widget_(new FlVarView(c.x(), c.y(), c.w(), c.h()))
+ui::VarView::VarView(ui::Controller& c) : View(c)
 {
 }
 

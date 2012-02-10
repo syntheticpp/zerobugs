@@ -17,10 +17,10 @@ ui::Layout::Layout(ui::Controller& c) : View(c)
 }
 
 
-void ui::Layout::add(Callback& cb, ui::View& v)
+void ui::Layout::add(ui::View& v, ui::LayoutCallback& cb)
 {
     views_.push_back(&v);
-    cb.insert(v);
+    v.insert_self(cb);
 }
 
 

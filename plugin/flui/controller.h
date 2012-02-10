@@ -183,10 +183,10 @@ namespace ui
         // These are called from build(). The initXYZ are factory
         // methods, and the actual widgets that correspond to menu,
         // layout, etc. are "populated" by the buildXYZ methods.
-        virtual RefPtr<CodeView>       init_code_view();
-        virtual RefPtr<CompositeMenu>  init_menu();
+        virtual RefPtr<CodeView>       init_code_view() = 0;
+        virtual RefPtr<CompositeMenu>  init_menu() = 0;
         virtual RefPtr<Layout>         init_layout() = 0;
-        virtual RefPtr<VarView>        init_locals_view();
+        virtual RefPtr<VarView>        init_locals_view() = 0;
 
         // this creates the main "application window"
         virtual void            init_main_window();

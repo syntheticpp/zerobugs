@@ -31,7 +31,9 @@ namespace ui
 
     typedef RefPtr<CodeView> CodeViewPtr;
 
-/* would such a further specialization be useful?
+
+////////////////////////////////////////////////////////////////
+/* TODO: would such a hierarchy useful?
     class SourceView : public CodeView
     {
     public:
@@ -42,6 +44,8 @@ namespace ui
     public:
     };
 */
+////////////////////////////////////////////////////////////////
+
 
     /**
      * Composite code view.
@@ -58,9 +62,11 @@ namespace ui
 
         virtual void update(const State&);
 
+    private:
+        virtual Layout::CallbackPtr make_callback() = 0;
+
         virtual CodeViewPtr make_view(const Symbol&) = 0;
 
-    private:
         // map code views by file name
         std::unordered_map<SharedStringPtr, CodeViewPtr> views_;
     };

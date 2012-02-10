@@ -128,27 +128,6 @@ void ui::Controller::init_main_window()
 
 
 ////////////////////////////////////////////////////////////////
-RefPtr<ui::CodeView> ui::Controller::init_code_view()
-{
-    return nullptr;
-}
-
-
-////////////////////////////////////////////////////////////////
-RefPtr<ui::CompositeMenu> ui::Controller::init_menu()
-{
-    return nullptr;
-}
-
-
-////////////////////////////////////////////////////////////////
-RefPtr<ui::VarView> ui::Controller::init_locals_view()
-{
-    return new LocalsView(*this);
-}
-
-
-////////////////////////////////////////////////////////////////
 void ui::Controller::build()
 {
     init_main_window();

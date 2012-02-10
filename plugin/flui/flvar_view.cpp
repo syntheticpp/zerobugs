@@ -8,7 +8,7 @@
 #include "flvar_view.h"
 
 
-FlVarView::FlVarView(int x, int y, int w, int h, const char* label)
+Fl_VarTable::Fl_VarTable(int x, int y, int w, int h, const char* label)
     : Fl_Table(x, y, w, h, label)
 
 {
@@ -24,7 +24,7 @@ FlVarView::FlVarView(int x, int y, int w, int h, const char* label)
 }
 
 
-void FlVarView::draw_cell(
+void Fl_VarTable::draw_cell(
 
     TableContext    context,
     int             row,
@@ -43,7 +43,6 @@ void FlVarView::draw_cell(
     case CONTEXT_COL_HEADER:
         fl_push_clip(x, y, width, height);
         fl_color(FL_LIGHT2);
-        //fl_rectf(x, y, width, height);
         fl_draw_box(FL_THIN_UP_BOX, x, y, width, height, FL_LIGHT2);
         fl_pop_clip();
         break;
