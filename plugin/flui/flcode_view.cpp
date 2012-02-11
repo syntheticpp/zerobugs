@@ -17,7 +17,7 @@
 using namespace std;
 
 
-static const int label_height = 30;
+static const int LABEL_HEIGHT = 25;
 static const string arrow = { "arrow" };
 
 
@@ -30,6 +30,7 @@ FlCodeView::FlCodeView(
 {
     widget()->set_mark_pixmap(arrow, arrow_xpm);
     widget()->copy_label(filename);
+    widget()->labelfont(FL_TIMES);
 }
 
 
@@ -98,7 +99,11 @@ RefPtr<ui::CodeView> FlMultiCodeView::make_view(const Symbol& sym)
 ui::Layout::CallbackPtr FlMultiCodeView::make_callback()
 {
     return std::unique_ptr<ui::LayoutCallback>(
-        new Callback(widget(), widget()->x(), widget()->y() + label_height,
-                               widget()->w(), widget()->h() - label_height));
+        new Callback(
+            widget(),
+            widget()->x(),
+            widget()->y() + LABEL_HEIGHT,
+            widget()->w(),
+            widget()->h() - LABEL_HEIGHT));
 }
 

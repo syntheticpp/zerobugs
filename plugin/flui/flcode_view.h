@@ -14,9 +14,9 @@
 
 
 /**
- * Implements ui::CodeView by delegating to a FlCodeTable.
+ * Implements ui::CodeView by delegating to a Fl_CodeTable.
  */
-class FlCodeView : public FlView<ui::CodeView, FlCodeTable>
+class FlCodeView : public FlView<ui::CodeView, Fl_CodeTable>
 {
 public:
     FlCodeView(ui::Controller&, const char* filename);

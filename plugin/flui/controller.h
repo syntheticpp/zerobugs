@@ -18,6 +18,7 @@ namespace ui
     class CompositeMenu;
     class Controller;
     class VarView;
+    class StackView;
    
     /**
      * The UI typically runs an "event-pump" on a separate thread
@@ -91,6 +92,8 @@ namespace ui
 
         // schedule command for execution on main thread
         void call_async_on_main_thread(RefPtr<Command>);
+
+        void interrupt_main_thread();
 
         // --- DebuggerPlugin interface
         /**
@@ -176,6 +179,9 @@ namespace ui
         void build();
         void build_layout();
         void build_menu();
+        
+        void done();
+
 
         // create an object to hold state
         virtual std::unique_ptr<State> init_state();
@@ -187,6 +193,7 @@ namespace ui
         virtual RefPtr<CompositeMenu>  init_menu() = 0;
         virtual RefPtr<Layout>         init_layout() = 0;
         virtual RefPtr<VarView>        init_locals_view() = 0;
+        virtual RefPtr<StackView>      init_stack_view() = 0;
 
         // this creates the main "application window"
         virtual void            init_main_window();

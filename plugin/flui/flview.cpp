@@ -9,6 +9,9 @@
 #include "flview.h"
 
 
+static const int TAB_LABEL_HEIGHT = 22;
+
+
 ////////////////////////////////////////////////////////////////
 void insert(Fl_Widget& w, ui::LayoutCallback& cb)
 {
@@ -32,10 +35,11 @@ FlPackLayout::make_callback(ui::ViewType type)
         break;
 
     case ui::VIEW_Vars:
-        callback.reset(new ::Callback(bottom_, bottom_->x(), bottom_->y(), bottom_->w(), bottom_->h() - 30));
+        callback.reset(new ::Callback(bottom_, bottom_->x(), bottom_->y(), bottom_->w(), bottom_->h() - TAB_LABEL_HEIGHT));
         break;
 
     case ui::VIEW_Stack:
+        callback.reset(new ::Callback(bottom_, bottom_->x(), bottom_->y(), bottom_->w(), bottom_->h() - TAB_LABEL_HEIGHT));
         break;
 
     case ui::VIEW_Threads:

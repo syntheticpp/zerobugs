@@ -22,24 +22,25 @@ enum ColumnType
 };
 
 
-FlCodeTable::FlCodeTable(int x, int y, int w, int h, const char* label)
+Fl_CodeTable::Fl_CodeTable(int x, int y, int w, int h, const char* label)
     : Fl_Table(x, y, w, h, label)
     , font_(FL_SCREEN)  // Terminal style font
     , fontSize_(11)
     , highlight_(0)
+    , maxWidth_(0)
     , digits_(0)
 {
     col_header(true);
 
     cols(3);// one column for markers, one for line numbers, third for text
 
-    col_width(0, 30);
-    col_width(1, 50);
-    col_width(2, 2000); // TODO: compute 
+    col_width(COL_MARK, 30);
+    col_width(COL_LINE, 50);
+    col_width(COL_TEXT, 500);
 }
 
 
-int FlCodeTable::line_digits() const
+int Fl_CodeTable::line_digits() const
 {
     if (digits_ == 0)
     {
@@ -54,7 +55,7 @@ int FlCodeTable::line_digits() const
 }
 
 
-void FlCodeTable::draw_header(int col, int x, int y, int w, int h)
+void Fl_CodeTable::draw_header(int col, int x, int y, int w, int h)
 {
     fl_push_clip(x, y, w, h);
 
@@ -71,7 +72,7 @@ void FlCodeTable::draw_header(int col, int x, int y, int w, int h)
 }
 
 
-void FlCodeTable::draw_line_marks(int row, int x, int y)
+void Fl_CodeTable::draw_line_marks(int row, int x, int y)
 {
     // draw pixmap marks if any
     auto m = marks_.find(row + 1);
@@ -89,7 +90,7 @@ void FlCodeTable::draw_line_marks(int row, int x, int y)
 }
 
 
-void FlCodeTable::draw_cell(
+void Fl_CodeTable::draw_cell(
     TableContext    context,
     int             row,
     int             col,
@@ -149,13 +150,16 @@ void FlCodeTable::draw_cell(
 }
 
 
-void FlCodeTable::read_file(const char* filename)
+void Fl_CodeTable::read_file(const char* filename)
 {
     if (filename_ == filename)
     {
         return;
     }
     lines_.clear();
+
+    highlight_ = 0;
+    maxWidth_ = 0;
     digits_ = 0;
 
     // if source code lines exceed this size, though luck - truncate them
@@ -169,14 +173,17 @@ void FlCodeTable::read_file(const char* filename)
         while (fin.getline(&buf[0], buf.size()))
         {
             lines_.push_back(&buf[0]);
+            if (lines_.back().length() > maxWidth_)
+            {
+                maxWidth_ = lines_.back().length();
+            }
         }
-
         rows(lines_.size());
     }
 }
 
 
-void FlCodeTable::highlight_line(int line)
+void Fl_CodeTable::highlight_line(int line)
 {
     highlight_ = line;
     --line;
@@ -189,7 +196,7 @@ void FlCodeTable::highlight_line(int line)
 }
 
 
-void FlCodeTable::set_mark_at_line(
+void Fl_CodeTable::set_mark_at_line(
 
     int                 line,
     const std::string&  mark,
@@ -206,11 +213,20 @@ void FlCodeTable::set_mark_at_line(
 }
 
 
-void FlCodeTable::set_mark_pixmap(
+void Fl_CodeTable::set_mark_pixmap(
 
     const std::string&  mark,
     const char* const*  data )
 {
     pixmaps_.insert(make_pair(mark, data));
+}
+
+
+void Fl_CodeTable::resize(int x, int y, int w, int h)
+{
+    Fl_Table::resize(x, y, w, h);
+
+    int textWidth = std::max(maxWidth_, w - col_width(COL_MARK) - col_width(COL_LINE) - 25);
+    col_width(COL_TEXT, textWidth);
 }
 

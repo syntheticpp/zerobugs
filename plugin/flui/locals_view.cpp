@@ -17,6 +17,8 @@ ui::LocalsView::LocalsView(ui::Controller& c)
 
 void ui::LocalsView::update(const ui::State& state)
 {
+    VarView::update(state);
+
     if (auto t = state.current_thread())
     {
         controller().debugger()->enum_variables(

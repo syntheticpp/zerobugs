@@ -10,13 +10,14 @@
 #include "dharma/sarray.h"
 #include "menu.h"
 
-class Fl_Double_Window;
+class FlMainWindow;
 
 
 /**
  * Fltk-based user interface plugin.
  */
-class Flui : public ui::Controller
+class Flui 
+    : public ui::Controller
     , VersionInfoImpl<ZERO_API_MAJOR, ZERO_API_MINOR>
 {
 public:
@@ -55,6 +56,7 @@ private:
     virtual RefPtr<ui::Layout>          init_layout();
     virtual RefPtr<ui::VarView>         init_locals_view();
     virtual RefPtr<ui::CompositeMenu>   init_menu();
+    virtual RefPtr<ui::StackView>       init_stack_view();
 
     virtual void    init_main_window();
 
@@ -65,8 +67,8 @@ private:
     virtual int     wait_for_event();
 
 private:
-    SArray              args_;
-    Fl_Double_Window*   window_;    // double-buffered window
+    SArray          args_;
+    FlMainWindow*   window_;
 };
 
 

@@ -6,7 +6,9 @@
 //
 // $Id: $
 //
+#include "zdk/zerofwd.h"
 #include "view.h"
+
 
 namespace ui
 {
@@ -16,13 +18,25 @@ namespace ui
     class StackView : public View
     {
     public:
+        typedef std::vector<RefPtr<Frame> > Frames;
+
         explicit StackView(Controller&);
+
+        size_t frame_count() const;
+
+        RefPtr<Frame> get_frame(size_t n) const;
 
     protected:
         ~StackView() throw();
 
+        virtual void update(const ui::State&);
+
+        virtual ViewType type() const {
+            return VIEW_Stack;
+        }
 
     private:
+        RefPtr<StackTrace>   stack_;
     };
 }
 

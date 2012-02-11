@@ -85,12 +85,12 @@ namespace ui
         virtual void insert_self(LayoutCallback&) = 0;
         virtual void update(const State&) = 0;
 
-    protected:
-        virtual ~View() throw() { }
-
         Controller& controller() const {
             return c_;
         }
+
+    protected:
+        virtual ~View() throw() { }
 
     private:
         Controller& c_;

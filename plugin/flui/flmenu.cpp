@@ -17,7 +17,7 @@ FlMenuBar::FlMenuBar(
 
 ) : ui::CompositeMenu()
   , controller_(c)
-  , menu_(new Fl_Menu_Bar(0, 0, w->w(), 30))
+  , menu_(new Fl_Menu_Bar(0, 0, w->w(), 25))
 {
 }
 

@@ -7,7 +7,11 @@
 // $Id: $
 //
 #include "zdk/debug_sym.h"
+#include "symkey.h"
 #include "view.h"
+#include <map>
+#include <vector>
+#include <set>
 
 
 namespace ui
@@ -16,11 +20,23 @@ namespace ui
      * Base class for viewing program variables.
      */
     class VarView 
-        : public View
+        : public    View
         , protected DebugSymbolEvents
     {
     public:
         explicit VarView(ui::Controller&);
+
+        DebugSymbol& get_symbol(size_t n) const;
+
+        size_t symbol_count() const {
+            return symbols_.size();
+        }
+
+        bool is_expanding(size_t row) const {
+            return is_expanding(symbols_[row].get());
+        }
+
+        void expand(size_t row, bool = true);
 
     protected:
         ~VarView() throw();
@@ -38,17 +54,13 @@ namespace ui
          * by the reader implementations to determine if the client
          * wants such an aggregate object to be expanded or not.
          */
-        virtual bool is_expanding(DebugSymbol*) const
-        {
-            return false;
-        }
+        virtual bool is_expanding(DebugSymbol*) const;
 
         /** 
          * Readers call this method to determine what numeric base
          * should be used for the representation of integer values.
          */
-        virtual int numeric_base(const DebugSymbol*) const
-        {
+        virtual int numeric_base(const DebugSymbol*) const {
             return 0;
         }
 
@@ -62,10 +74,18 @@ namespace ui
         { }
 
         // === View interface === 
-        virtual ViewType type() const
-        {
+        virtual ViewType type() const {
             return VIEW_Vars;
         }
+        
+        virtual void update(const State&);
+
+    protected:
+        typedef std::vector<RefPtr<DebugSymbol> > Symbols;
+        typedef std::set<SymKey> Expands;
+
+        Symbols     symbols_;
+        Expands     expands_;
     };
 }
 

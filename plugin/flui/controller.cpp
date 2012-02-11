@@ -8,6 +8,7 @@
 #include "code_view.h"
 #include "controller.h"
 #include "locals_view.h"
+#include "stack_view.h"
 #include "menu.h"
 #include <FL/Enumerations.H>
 #include "dharma/system_error.h"
@@ -158,7 +159,12 @@ void ui::Controller::build_layout()
         layout_->add(*v);
     }
 
-    if (auto  v = init_locals_view())
+    if (auto v = init_stack_view())
+    {
+        layout_->add(*v);
+    }
+
+    if (auto v = init_locals_view())
     {
         layout_->add(*v);
     }
@@ -221,6 +227,7 @@ void ui::Controller::run()
     }
 }
 
+
 ////////////////////////////////////////////////////////////////
 /**
  * Parse command line and other initializing stuff
@@ -236,6 +243,18 @@ bool ui::Controller::initialize(
 }
 
 
+////////////////////////////////////////////////////////////////
+void ui::Controller::done()
+{
+    std::clog << __func__ << std::endl;
+    call_async_on_main_thread(new SimpleCommand<>([this]() {
+        debugger_->quit();
+    }));
+    unlock();
+}
+
+
+////////////////////////////////////////////////////////////////
 class ZDK_LOCAL WaitCommand : public ui::Command
 {
     Mutex       mutex_;
@@ -291,6 +310,7 @@ RefPtr<ui::Command> ui::Controller::update(
         
     if (!command_)
     {
+        // TODO: reuse WaitCommand
         command_ = new WaitCommand();
     }
 
@@ -343,6 +363,7 @@ void* ui::Controller::run(void* p)
     {
         assert(false);
     }
+    controller->done();
     return nullptr;
 }
 
@@ -365,6 +386,7 @@ void ui::Controller::shutdown()
     LockedScope lock(*this);
 
     done_ = true;
+    // pthread_join(uiThreadId_, nullptr);
 }
 
 
@@ -455,12 +477,20 @@ void ui::Controller::call_async_on_main_thread(RefPtr<Command> c)
 {
     if (c)
     {
-        if (command_)
-        {
-            command_->cancel();
-        }
-        
+        interrupt_main_thread();
         command_ = c;
+    
+        std::clog << __func__ << std::endl;
+    }
+}
+
+
+////////////////////////////////////////////////////////////////
+void ui::Controller::interrupt_main_thread()
+{
+    if (command_)
+    {
+        command_->cancel();
     }
 }
 

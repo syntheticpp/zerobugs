@@ -9,8 +9,10 @@
 
 #include "flcode_view.h"
 #include "flvar_view.h"
+#include "flmain_window.h"
 #include "flmenu.h"
 #include "flpack_layout.h"
+#include "flstack_view.h"
 #include "flui.h"
 
 // C++ headers
@@ -19,7 +21,6 @@
 
 // fltk headers
 #include <FL/Fl.H>
-#include <FL/Fl_Double_Window.H>
 
 using namespace std;
 
@@ -171,6 +172,13 @@ RefPtr<ui::VarView> Flui::init_locals_view()
 
 
 ////////////////////////////////////////////////////////////////
+RefPtr<ui::StackView> Flui::init_stack_view()
+{
+    return new FlStackView(*this);
+}
+
+
+////////////////////////////////////////////////////////////////
 void Flui::init_main_window()
 {
     assert(window_ == nullptr);
@@ -183,8 +191,7 @@ void Flui::init_main_window()
     const word_t h = prop.get_word(WINDOW_H, default_window_height);
     const word_t w = prop.get_word(WINDOW_W, default_window_width);
 
-    // window_ = new Fl_Window(x, y, w, h, WINDOW_TITLE);
-    window_ = new Fl_Double_Window(x, y, w, h, WINDOW_TITLE);
+    window_ = new FlMainWindow(*this, x, y, w, h, WINDOW_TITLE);
     window_->resizable(window_);
 
     window_->begin();
@@ -210,7 +217,6 @@ void Flui::lock()
 void Flui::unlock()
 {
     Fl::unlock();
-    // Fl::awake();
 }
 
 

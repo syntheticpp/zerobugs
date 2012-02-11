@@ -18,10 +18,10 @@
  * Custom widget that displays source code in a Table widget.
  * TODO: is FlTextTable a better name?
  */
-class FlCodeTable : public Fl_Table
+class Fl_CodeTable : public Fl_Table
 {
 public:
-    FlCodeTable(int x, int y, int w, int h, const char* label = nullptr);
+    Fl_CodeTable(int x, int y, int w, int h, const char* label = nullptr);
 
     void read_file(const char* filename);
 
@@ -56,6 +56,8 @@ private:
     void draw_header(int col, int x, int y, int w, int h);
     void draw_line_marks(int row, int x, int y);
 
+    virtual void resize(int x, int y, int w, int h);
+
     /**
      * @return the number of digits needed to print the highest line number
      */
@@ -73,6 +75,7 @@ private:
     Fl_Font                     font_;
     int                         fontSize_;
     int                         highlight_;
+    int                         maxWidth_;
     mutable int                 digits_;
 
     std::unordered_map<int, std::set<std::string> > marks_;

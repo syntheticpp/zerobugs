@@ -12,12 +12,22 @@
 
 
 /**
- * View program variables using a Fl_Table widget.
+ * Display program variables using a Fl_Table widget.
  */
 class Fl_VarTable : public Fl_Table
 {
 public:
-    explicit Fl_VarTable(int x = 0, int y = 0, int w = 0, int h = 0, const char* label = nullptr);
+    static const int COL_VarName     = 0;
+    static const int COL_VarType     = 1;
+    static const int COL_VarValue    = 2;
+
+    explicit Fl_VarTable(
+        ui::VarView*    view,
+        int             x,
+        int             y,
+        int             w,
+        int             h,
+        const char*     label);
 
 private:
     /** 
@@ -25,23 +35,43 @@ private:
      * @see http://seriss.com/people/erco/Fl_Table/documentation/Fl_Table.html#draw_cell
      */
     virtual void draw_cell(
-        TableContext,
-        int row,
-        int col,
-        int x,  
-        int y,  
-        int w,  
-        int h);
+        TableContext    ctxt,
+        int             row,
+        int             col,
+        int             x,
+        int             y,
+        int             w,
+        int             h);
+    
+    void draw_symbol(
+        int             row,
+        int             col,
+        int             x,
+        int             y,
+        int             w,
+        int             h);
+
+    virtual void resize(int x, int y, int w, int h);
+
+    void event_callback();
+
+    static void event_callback(Fl_Widget*, void*);
+
+private:
+    ui::VarView* view_;
 };
 
 
 
+/**
+ * View variables that local to a scope.
+ */
 class FlLocalsView : public FlView<ui::LocalsView, Fl_VarTable>
 {
 public:
-    explicit FlLocalsView(ui::Controller& c) : base_type(c, 0, 0, 0, 0, "Locals")
-    {
-    }
+    explicit FlLocalsView(ui::Controller&);
+
+    virtual void update(const ui::State&);
 };
 
 #endif // FLVAR_VIEW_H__CE09CF79_2049_42E6_BD43_6EF8BFCB1DEC
