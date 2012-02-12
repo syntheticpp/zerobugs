@@ -217,6 +217,7 @@ void Flui::lock()
 void Flui::unlock()
 {
     Fl::unlock();
+    Fl::awake();
 }
 
 

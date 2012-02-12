@@ -4,7 +4,7 @@
 //
 // $Id$
 //
-#include "zdk/auto_condition.h"
+#include "zdk/thread_util.h"
 #include "code_view.h"
 #include "controller.h"
 #include "locals_view.h"
@@ -19,8 +19,11 @@
 using namespace std;
 
 
-
-class ZDK_LOCAL StateImpl : public ui::State
+/**
+ * Pass debugger and debuggee state information
+ * from main thread to UI thread.
+ */
+class ui::Controller::StateImpl : public ui::State
 {
     RefPtr<Symbol>      currentSymbol_;
     RefPtr<Thread>      currentThread_;
@@ -37,13 +40,14 @@ public:
 
     virtual void update(Thread* thread, EventType eventType)
     {
-        currentThread_ = thread;
-        currentEventType_ = eventType;
+        isTargetStopped_    = false;
+        currentThread_      = thread;
+        currentEventType_   = eventType;
         
-        isTargetStopped_ = true;
-
         if (thread)
         {
+            isTargetStopped_ = thread_stopped(*thread);
+
             addr_t pc = thread->program_count();
             assert(thread->symbols());
 
@@ -51,11 +55,6 @@ public:
         }
     }
    
-    virtual void set_target_stopped(bool stopped)
-    {
-        isTargetStopped_ = stopped;
-    }
-
     virtual bool is_target_stopped() const
     {
         return isTargetStopped_;
@@ -79,7 +78,13 @@ public:
 
 
 ////////////////////////////////////////////////////////////////
-class ZDK_LOCAL CommandError : public ui::Command
+/**
+ * An error may occur while executing a command on the main thread.
+ * When this happens the controller replaces the command in the
+ * mail-slot with this one, so that an error message is shown in
+ * the UI thread.
+ */
+class CommandError : public ui::Command
 {
     string msg_;
 
@@ -116,9 +121,9 @@ ui::Controller::~Controller()
 
 
 ////////////////////////////////////////////////////////////////
-unique_ptr<ui::State> ui::Controller::init_state( )
+unique_ptr<ui::Controller::StateImpl> ui::Controller::init_state( )
 {
-    return unique_ptr<ui::State>(new StateImpl());
+    return unique_ptr<StateImpl>(new StateImpl());
 }
 
 
@@ -134,14 +139,12 @@ void ui::Controller::build()
     init_main_window();
 
     menu_ = init_menu();
-
     if (menu_)
     {
         build_menu();
     }
 
     layout_ = init_layout();
-
     if (layout_)
     {
         build_layout();
@@ -246,7 +249,6 @@ bool ui::Controller::initialize(
 ////////////////////////////////////////////////////////////////
 void ui::Controller::done()
 {
-    std::clog << __func__ << std::endl;
     call_async_on_main_thread(new SimpleCommand<>([this]() {
         debugger_->quit();
     }));
@@ -255,7 +257,10 @@ void ui::Controller::done()
 
 
 ////////////////////////////////////////////////////////////////
-class ZDK_LOCAL WaitCommand : public ui::Command
+/**
+ * If no other command is in the mail-slot, then just wait
+ */
+class WaitCommand : public ui::Command
 {
     Mutex       mutex_;
     Condition   cond_;
@@ -291,10 +296,12 @@ public:
 
 
 ////////////////////////////////////////////////////////////////
-RefPtr<ui::Command> ui::Controller::update(
+void ui::Controller::update(
+    
+    LockedScope&    scope,
+    Thread*         thread,
+    EventType       eventType )
 
-    Thread*     thread,
-    EventType   eventType )
 {
     LockedScope lock(*this);
     state_->update(thread, eventType);
@@ -302,6 +309,18 @@ RefPtr<ui::Command> ui::Controller::update(
     // pass updated state info to UI elements
     layout_->update(*state_);
     menu_->update(*state_);
+}
+
+
+////////////////////////////////////////////////////////////////
+RefPtr<ui::Command> ui::Controller::update(
+
+    Thread*     thread,
+    EventType   eventType )
+
+{
+    LockedScope lock(*this);
+    update(lock, thread, eventType);
 
     if (command_ && command_->is_done())
     {
@@ -328,7 +347,6 @@ bool ui::Controller::on_event(
 
 {
     RefPtr<Command> c = update(thread, eventType);
-
     try
     {
         c->execute_on_main_thread();
@@ -337,9 +355,7 @@ bool ui::Controller::on_event(
     {
         c = new CommandError(e.what());
     }
-
     notify_ui_thread();
-
     return true;    // event handled
 }
 
@@ -357,6 +373,7 @@ void* ui::Controller::run(void* p)
     }
     catch (const exception& e)
     {
+        // TODO: log
         cerr << __func__ << ": " << e.what() << endl;
     }
     catch (...)
@@ -383,10 +400,11 @@ void ui::Controller::start()
 ////////////////////////////////////////////////////////////////
 void ui::Controller::shutdown()
 {
-    LockedScope lock(*this);
-
-    done_ = true;
-    // pthread_join(uiThreadId_, nullptr);
+    {
+        LockedScope lock(*this);
+        done_ = true;
+    }
+    pthread_join(uiThreadId_, nullptr);
 }
 
 
@@ -434,7 +452,8 @@ void ui::Controller::on_syscall(Thread*, int32_t)
 ////////////////////////////////////////////////////////////////
 void ui::Controller::on_program_resumed()
 {
-    state_->set_target_stopped( false );
+    LockedScope lock(*this);
+    update(lock, nullptr, E_NONE);
 }
 
 
@@ -479,8 +498,6 @@ void ui::Controller::call_async_on_main_thread(RefPtr<Command> c)
     {
         interrupt_main_thread();
         command_ = c;
-    
-        std::clog << __func__ << std::endl;
     }
 }
 

@@ -13,8 +13,6 @@
 #include <string>
 #include <vector>
 
-#include <iostream>
-
 
 namespace ui
 {
@@ -78,9 +76,6 @@ namespace ui
         {
             c_();
             done_ = true;
-        #if DEBUG
-            std::clog << __func__ << std::endl;
-        #endif
         }
 
         bool is_done() const

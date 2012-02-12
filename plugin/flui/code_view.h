@@ -32,19 +32,17 @@ namespace ui
     typedef RefPtr<CodeView> CodeViewPtr;
 
 
-////////////////////////////////////////////////////////////////
-/* TODO: would such a hierarchy useful?
     class SourceView : public CodeView
     {
     public:
+        explicit SourceView(Controller& c) : CodeView(c) { }
     };
 
     class AsmView : public CodeView
     {
     public:
+        explicit AsmView(Controller& c) : CodeView(c) { }
     };
-*/
-////////////////////////////////////////////////////////////////
 
 
     /**

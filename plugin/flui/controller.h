@@ -52,7 +52,8 @@ namespace ui
      */
     class Controller : public DebuggerPlugin
     {
-    public:
+        class StateImpl;
+
         class LockedScope
         {
         public:
@@ -67,6 +68,7 @@ namespace ui
             Controller& ui_;
         };
 
+    public:
         Controller();
         virtual ~Controller();
 
@@ -182,9 +184,8 @@ namespace ui
         
         void done();
 
-
         // create an object to hold state
-        virtual std::unique_ptr<State> init_state();
+        virtual std::unique_ptr<StateImpl> init_state();
 
         // These are called from build(). The initXYZ are factory
         // methods, and the actual widgets that correspond to menu,
@@ -202,6 +203,7 @@ namespace ui
 
     private:
         RefPtr<Command> update(Thread*, EventType);
+        void update(LockedScope&, Thread*, EventType);
 
     private:
         Debugger*                   debugger_;
@@ -209,9 +211,9 @@ namespace ui
 
         RefPtr<Layout>              layout_;
         RefPtr<CompositeMenu>       menu_;
-        std::unique_ptr<State>      state_;
+        std::unique_ptr<StateImpl>  state_;
 
-        bool                        done_;
+        bool                        done_; // terminate UI loop?
 
         // mail box for passing requests between main and ui threads
         RefPtr<Command>             command_;    

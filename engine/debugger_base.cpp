@@ -641,7 +641,7 @@ void DebuggerBase::detach_all_targets()
         {
             const pid_t pid = proc->pid();
             target->detach();
-            cout << "Detached from process " << pid << "\n";
+            dbgout(Log::ALWAYS) << "Detached from process " << pid << endl;
         }
 
         remove_target(*i);

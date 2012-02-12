@@ -31,11 +31,15 @@ void ui::StackView::update(const ui::State& state)
     {
         stack_ = state.current_thread()->stack_trace();
     }
+    else
+    {
+        stack_.reset();
+    }
 }
 
 
 size_t ui::StackView::frame_count() const
 {
-    return stack_->size();
+    return stack_ ? stack_->size() : 0;
 }
 

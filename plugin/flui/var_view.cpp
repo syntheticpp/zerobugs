@@ -7,7 +7,6 @@
 #include "controller.h"
 #include "flvar_view.h"
 #include "var_view.h"
-#include <iostream>
 
 
 ui::VarView::VarView(ui::Controller& c) : View(c)
@@ -44,6 +43,7 @@ void ui::VarView::expand(size_t row, bool toggle)
     {
         expands_.erase(key);
     }
+    controller().interrupt_main_thread();
 }
 
 

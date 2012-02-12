@@ -164,7 +164,6 @@ void Fl_VarTable::event_callback()
             const bool expanded = view_->is_expanding(row);
 
             view_->expand(row, !expanded);
-            view_->controller().interrupt_main_thread();
         }
     }
 }

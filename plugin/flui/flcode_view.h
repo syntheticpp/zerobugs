@@ -14,15 +14,15 @@
 
 
 /**
- * Implements ui::CodeView by delegating to a Fl_CodeTable.
+ * Implements ui::SourceView by delegating to a Fl_SourceTable.
  */
-class FlCodeView : public FlView<ui::CodeView, Fl_CodeTable>
+class FlSourceView : public FlView<ui::SourceView, Fl_SourceTable>
 {
 public:
-    FlCodeView(ui::Controller&, const char* filename);
+    FlSourceView(ui::Controller&, const char* filename);
 
 protected:
-    ~FlCodeView() throw();
+    ~FlSourceView() throw();
 
     virtual void update(const ui::State&);
 };

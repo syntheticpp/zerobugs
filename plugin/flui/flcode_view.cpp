@@ -21,7 +21,7 @@ static const int LABEL_HEIGHT = 25;
 static const string arrow = { "arrow" };
 
 
-FlCodeView::FlCodeView(
+FlSourceView::FlSourceView(
 
     ui::Controller& controller,
     const char*     filename)
@@ -34,18 +34,19 @@ FlCodeView::FlCodeView(
 }
 
 
-FlCodeView::~FlCodeView() throw()
+FlSourceView::~FlSourceView() throw()
 {
 }
 
 
-void FlCodeView::update(const ui::State& s)
+void FlSourceView::update(const ui::State& s)
 {
     if (RefPtr<Symbol> sym = s.current_symbol())
     {
         assert(sym->line());
 
         widget()->read_file(sym->file()->c_str());
+
         widget()->set_mark_at_line(widget()->highlighted_line(), arrow, false);
         widget()->highlight_line(sym->line());
         widget()->set_mark_at_line(sym->line(), arrow);
@@ -54,6 +55,7 @@ void FlCodeView::update(const ui::State& s)
 
 
 ////////////////////////////////////////////////////////////////
+//
 // multi view
 //
 FlMultiCodeView::FlMultiCodeView(ui::Controller& controller) 
@@ -85,7 +87,7 @@ RefPtr<ui::CodeView> FlMultiCodeView::make_view(const Symbol& sym)
     }
     else
     {
-        RefPtr<FlCodeView> codeView = new FlCodeView(
+        RefPtr<FlSourceView> codeView = new FlSourceView(
             controller(),
             basename(sym.file()->c_str()));
 

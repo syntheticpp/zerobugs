@@ -198,9 +198,9 @@ void BreakPointBase::debug_enable(
     RefPtr<SymbolMap> symbols(thread->symbols());
     RefPtr<Symbol> sym(CHKPTR(symbols)->lookup_symbol(addr()));
 
-    dbgout(1) << (onOff ? "enabling " : "disabling");
-              << ' ' << type() << " breakpoint: pid=";
-              << thread->lwpid() << " owner=";
+    dbgout(1) << (onOff ? "enabling " : "disabling")
+              << ' ' << type() << " breakpoint: pid="
+              << thread->lwpid() << " owner="
               << this->thread()->lwpid() << " "
               << hex << addr() << dec << endl;
 
