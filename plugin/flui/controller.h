@@ -6,7 +6,9 @@
 //
 // $Id$
 //
-#include "zdk/zero.h"
+#include "zdk/zero.h"   // DebuggerPlugin
+#include "zdk/plugin.h"
+#include "command.h"
 #include "view.h"
 #include <cassert>
 #include <memory>
@@ -16,36 +18,9 @@ namespace ui
 {
     class CodeView;
     class CompositeMenu;
-    class Controller;
     class VarView;
     class StackView;
-   
-    /**
-     * The UI typically runs an "event-pump" on a separate thread
-     * that the main debugger thread (which attaches to targets
-     * and manipulates them via ptrace; all ptrace calls have to
-     * be issued by the main thread). 
-     * The UI may issue a "command" to the main thread, which will
-     * execute it and possibly continue with another action on the
-     * UI thread. 
-     * @see Controller::on_event for how this class is used.
-     */
-    class Command : public RefCountedImpl<>
-    {
-    protected:
-        virtual ~Command() throw() { }
-        
-    public:
-        // request from ui to main thread
-        virtual void execute_on_main_thread() { }
-        // response to ui thread
-        virtual void continue_on_ui_thread(Controller&) { }
-
-        virtual void cancel() { }
-
-        virtual bool is_done() const { return true; }
-    };
-
+    class Toolbar;   
 
     /**
      * Toolkit-agnostic controller. Implements the DebuggerPlugin interface.
@@ -181,6 +156,7 @@ namespace ui
         void build();
         void build_layout();
         void build_menu();
+        void build_toolbar();
         
         void done();
 
@@ -190,11 +166,12 @@ namespace ui
         // These are called from build(). The initXYZ are factory
         // methods, and the actual widgets that correspond to menu,
         // layout, etc. are "populated" by the buildXYZ methods.
-        virtual RefPtr<CodeView>       init_code_view() = 0;
-        virtual RefPtr<CompositeMenu>  init_menu() = 0;
-        virtual RefPtr<Layout>         init_layout() = 0;
-        virtual RefPtr<VarView>        init_locals_view() = 0;
-        virtual RefPtr<StackView>      init_stack_view() = 0;
+        virtual RefPtr<CodeView>        init_code_view() = 0;
+        virtual RefPtr<CompositeMenu>   init_menu() = 0;
+        virtual RefPtr<Layout>          init_layout() = 0;
+        virtual RefPtr<VarView>         init_locals_view() = 0;
+        virtual RefPtr<StackView>       init_stack_view() = 0;
+        virtual RefPtr<Toolbar>         init_toolbar() = 0;
 
         // this creates the main "application window"
         virtual void            init_main_window();
@@ -211,12 +188,15 @@ namespace ui
 
         RefPtr<Layout>              layout_;
         RefPtr<CompositeMenu>       menu_;
+        RefPtr<Toolbar>             toolbar_;
         std::unique_ptr<StateImpl>  state_;
 
         bool                        done_; // terminate UI loop?
 
         // mail box for passing requests between main and ui threads
-        RefPtr<Command>             command_;    
+        RefPtr<Command>             command_;
+
+        RefPtr<Command>             idle_;
     };
 
 } // namespace 

@@ -60,8 +60,7 @@ bool LocalsView::update(RefPtr<Thread> thread)
         }
         RefPtr<Symbol> fun = frame->function();
         RefPtr<FrameState> state =
-            interface_cast<FrameState*>(
-                frame->get_user_object(".state"));
+            interface_cast<FrameState*>(frame->get_user_object(".state"));
 
         if (!is_same_scope(fun_, fun))
         {

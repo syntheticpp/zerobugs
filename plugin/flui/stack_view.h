@@ -26,6 +26,8 @@ namespace ui
 
         RefPtr<Frame> get_frame(size_t n) const;
 
+        void select_frame(size_t);
+
     protected:
         ~StackView() throw();
 

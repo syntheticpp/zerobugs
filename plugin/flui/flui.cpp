@@ -13,6 +13,7 @@
 #include "flmenu.h"
 #include "flpack_layout.h"
 #include "flstack_view.h"
+#include "fltoolbar.h"
 #include "flui.h"
 
 // C++ headers
@@ -202,7 +203,15 @@ void Flui::init_main_window()
 RefPtr<ui::CompositeMenu> Flui::init_menu()
 {
     assert(window_);
-    return new FlMenuBar(*this, window_);
+    return new FlMenuBar(*this, window_->w(), 25);
+}
+
+
+////////////////////////////////////////////////////////////////
+RefPtr<ui::Toolbar> Flui::init_toolbar()
+{
+    assert(window_);
+    return new FlToolbar(*this, window_->w(), 30);
 }
 
 

@@ -13,15 +13,17 @@
 class FlMenuBar : public ui::CompositeMenu
 {
 public:
-    FlMenuBar(ui::Controller&, Fl_Window*);
+    FlMenuBar(ui::Controller&, int w, int h);
     ~FlMenuBar() throw();
 
     virtual void add(RefPtr<ui::Menu>);
 
 private:
     void exec_command(const char* path);
+
     static void exec_command(Fl_Widget*, void*);
 
+private:
     ui::Controller& controller_;
     Fl_Menu_Bar*    menu_;
 };

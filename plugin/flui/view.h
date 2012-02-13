@@ -87,6 +87,8 @@ namespace ui
             return c_;
         }
 
+        void interrupt_main_thread();
+
     protected:
         virtual ~View() throw() { }
 

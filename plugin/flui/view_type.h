@@ -17,6 +17,7 @@ namespace ui
         VIEW_Modules,
         VIEW_Stack,
         VIEW_Threads,
+        VIEW_Toolbar,
         VIEW_Vars,
     };
 }

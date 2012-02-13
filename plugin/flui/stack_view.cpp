@@ -5,7 +5,9 @@
 // $Id: $
 //
 #include "zdk/zero.h"
+#include "controller.h"
 #include "stack_view.h"
+// #include <iostream>
 
 
 ui::StackView::StackView(ui::Controller& c)
@@ -41,5 +43,17 @@ void ui::StackView::update(const ui::State& state)
 size_t ui::StackView::frame_count() const
 {
     return stack_ ? stack_->size() : 0;
+}
+
+
+void ui::StackView::select_frame(size_t n)
+{
+    if (!stack_)
+    {
+        return;
+    }
+    controller().call_async_on_main_thread(new MainThreadCommand<>([this, n](){
+        stack_->select_frame(n);
+    }));
 }
 

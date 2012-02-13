@@ -9,6 +9,7 @@
 #include "controller.h"
 #include "locals_view.h"
 #include "stack_view.h"
+#include "toolbar.h"
 #include "menu.h"
 #include <FL/Enumerations.H>
 #include "dharma/system_error.h"
@@ -102,6 +103,45 @@ public:
 
 
 ////////////////////////////////////////////////////////////////
+/**
+ * If no other command is in the mail-slot, then just wait
+ */
+class WaitCommand : public ui::Command
+{
+    Mutex       mutex_;
+    Condition   cond_;
+    bool        cancelled_;
+
+    void execute_on_main_thread()
+    {
+        Lock<Mutex> lock(mutex_);
+        for (cancelled_ = false; !cancelled_; )
+        {
+            cond_.wait(lock);
+        }
+    }
+
+    void cancel() 
+    {
+        set_cancel();
+        cond_.broadcast();
+    }
+
+protected:
+    ~WaitCommand() throw() { }
+
+public:
+    WaitCommand() : cancelled_(false) { }
+
+    void set_cancel()
+    {
+        Lock<Mutex> lock(mutex_);
+        cancelled_ = true;
+    }
+};
+
+
+////////////////////////////////////////////////////////////////
 //
 // Controller implementation
 // 
@@ -110,6 +150,7 @@ ui::Controller::Controller()
     , uiThreadId_(0)
     , state_(init_state())
     , done_(false)
+    , idle_(new WaitCommand)
 {
 }
 
@@ -138,24 +179,16 @@ void ui::Controller::build()
 {
     init_main_window();
 
-    menu_ = init_menu();
-    if (menu_)
-    {
-        build_menu();
-    }
-
-    layout_ = init_layout();
-    if (layout_)
-    {
-        build_layout();
-    }
+    build_menu();
+    build_toolbar();
+    build_layout();
 }
 
 
 ////////////////////////////////////////////////////////////////
 void ui::Controller::build_layout()
 {
-    assert(layout_);
+    layout_ = init_layout();
     
     if (auto v = init_code_view())
     {
@@ -177,7 +210,7 @@ void ui::Controller::build_layout()
 ////////////////////////////////////////////////////////////////
 void ui::Controller::build_menu()
 {
-    assert(menu_);
+    menu_ = init_menu();
 
     menu_->add(simple_command_menu("File/Quit", FL_ALT + 'q', [this]()
     {
@@ -197,6 +230,13 @@ void ui::Controller::build_menu()
             debugger_->resume();
         }
     }));
+}
+
+
+////////////////////////////////////////////////////////////////
+void ui::Controller::build_toolbar()
+{
+    toolbar_ = init_toolbar();
 }
 
 
@@ -249,50 +289,11 @@ bool ui::Controller::initialize(
 ////////////////////////////////////////////////////////////////
 void ui::Controller::done()
 {
-    call_async_on_main_thread(new SimpleCommand<>([this]() {
+    call_async_on_main_thread(new MainThreadCommand<>([this]() {
         debugger_->quit();
     }));
     unlock();
 }
-
-
-////////////////////////////////////////////////////////////////
-/**
- * If no other command is in the mail-slot, then just wait
- */
-class WaitCommand : public ui::Command
-{
-    Mutex       mutex_;
-    Condition   cond_;
-    bool        cancelled_;
-
-    void execute_on_main_thread()
-    {
-        Lock<Mutex> lock(mutex_);
-        while (!cancelled_) 
-        {
-            cond_.wait(lock);
-        }
-    }
-
-    void cancel() 
-    {
-        set_cancel();
-        cond_.broadcast();
-    }
-
-protected:
-    ~WaitCommand() throw() { }
-
-public:
-    WaitCommand() : cancelled_(false) { }
-
-    void set_cancel()
-    {
-        Lock<Mutex> lock(mutex_);
-        cancelled_ = true;
-    }
-};
 
 
 ////////////////////////////////////////////////////////////////
@@ -307,8 +308,18 @@ void ui::Controller::update(
     state_->update(thread, eventType);
 
     // pass updated state info to UI elements
-    layout_->update(*state_);
-    menu_->update(*state_);
+    if (layout_)
+    {
+        layout_->update(*state_);
+    }
+    if (menu_)
+    {
+        menu_->update(*state_);
+    }
+    if (toolbar_)
+    {
+        toolbar_->update(*state_);
+    }
 }
 
 
@@ -322,15 +333,14 @@ RefPtr<ui::Command> ui::Controller::update(
     LockedScope lock(*this);
     update(lock, thread, eventType);
 
-    if (command_ && command_->is_done())
+    if (command_ && command_->is_complete())
     {
         command_.reset();
     }
         
     if (!command_)
     {
-        // TODO: reuse WaitCommand
-        command_ = new WaitCommand();
+        command_ = idle_;
     }
 
     return command_;

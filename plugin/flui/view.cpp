@@ -4,11 +4,18 @@
 //
 // $Id: $
 //
+#include "controller.h"
 #include "view.h"
 
 
 ui::View::View(ui::Controller& c) : c_(c)
 {
+}
+
+
+void ui::View::interrupt_main_thread()
+{
+    c_.interrupt_main_thread();
 }
 
 

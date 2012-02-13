@@ -25,6 +25,7 @@ SRCS=	code_view.cpp		\
 		flmenu.cpp			\
 		flpack_layout.cpp	\
 		flstack_view.cpp	\
+		fltoolbar.cpp		\
 		flvar_view.cpp		\
 		flview.cpp			\
 		locals_view.cpp		\
@@ -33,6 +34,7 @@ SRCS=	code_view.cpp		\
 		view.cpp			\
 		stack_view.cpp		\
 		symkey.cpp			\
+		toolbar.cpp			\
 		$(NULL)
 
 PLUGIN=$(PLUGIN_PATH)zflui.so

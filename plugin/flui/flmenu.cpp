@@ -4,20 +4,21 @@
 //
 // $Id$
 //
+#include "controller.h"
 #include "flmenu.h"
-#include <iostream>
+// #include <iostream>
 #include <typeinfo>
-#include <FL/Fl_Window.H>
 
 
 FlMenuBar::FlMenuBar(
 
     ui::Controller& c,
-    Fl_Window*      w
+    int             w,
+    int             h )
 
-) : ui::CompositeMenu()
+  : ui::CompositeMenu()
   , controller_(c)
-  , menu_(new Fl_Menu_Bar(0, 0, w->w(), 25))
+  , menu_(new Fl_Menu_Bar(0, 0, w, h))
 {
 }
 
@@ -36,7 +37,7 @@ void FlMenuBar::add(RefPtr<ui::Menu> menu)
 }
 
 
-void FlMenuBar::exec_command(Fl_Widget* w, void* p)
+void FlMenuBar::exec_command(Fl_Widget* /* w */, void* p)
 {
     FlMenuBar* menubar = reinterpret_cast<FlMenuBar*>(p);
 

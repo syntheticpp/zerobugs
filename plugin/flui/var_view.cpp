@@ -4,7 +4,6 @@
 //
 // $Id: $
 //
-#include "controller.h"
 #include "flvar_view.h"
 #include "var_view.h"
 
@@ -33,6 +32,8 @@ bool ui::VarView::is_expanding(DebugSymbol* sym) const
 
 void ui::VarView::expand(size_t row, bool toggle)
 {
+    // TODO: expand state etc. should be stored per frame
+
     SymKey key(get_symbol(row));
 
     if (toggle)
@@ -43,7 +44,7 @@ void ui::VarView::expand(size_t row, bool toggle)
     {
         expands_.erase(key);
     }
-    controller().interrupt_main_thread();
+    interrupt_main_thread();
 }
 
 

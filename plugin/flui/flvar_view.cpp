@@ -63,7 +63,7 @@ void Fl_VarTable::draw_cell(
     case CONTEXT_COL_HEADER:
         fl_font(FL_HELVETICA_BOLD, 11);
         fl_push_clip(x, y, w, h);
-        fl_color(FL_LIGHT2);
+        fl_color(FL_LIGHT3);
         fl_draw_box(FL_THIN_UP_BOX, x, y, w, h, FL_LIGHT2);
         fl_color(FL_BLACK);
         fl_draw(header[col], x + 2, y, w, h, FL_ALIGN_LEFT);
@@ -155,8 +155,8 @@ void Fl_VarTable::event_callback()
     {
         // check if user clicked on the tree expand / unexpand icon
         DebugSymbol& sym = view_->get_symbol(row);
-        const int x_min = pix_width * sym.depth();
-        const int x_max = x_min + pix_width;
+        const int x_min = pix_width * sym.depth() + x();
+        const int x_max = x_min + pix_width + x();
 
         if (Fl::event() == FL_PUSH && Fl::event_button1() &&
             Fl::event_x() > x_min && Fl::event_x() <= x_max)
@@ -180,6 +180,7 @@ void Fl_VarTable::resize(int x, int y, int w, int h)
 FlLocalsView::FlLocalsView(ui::Controller& c) 
     : base_type(c, this, 0, 0, 0, 0, "Locals")
 {
+    widget()->tooltip("Local variables");
 }
 
 

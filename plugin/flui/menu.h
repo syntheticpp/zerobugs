@@ -6,8 +6,8 @@
 //
 // $Id$
 //
-#include "zdk/ref_counted_impl.h"
-#include "controller.h"
+#include "command.h"
+#include "view.h"
 
 #include <functional>
 #include <string>
@@ -59,33 +59,6 @@ namespace ui
 
 
     /**
-     * Simple commands execute on the main debugger thread
-     * asynchronously, and have no continuation in the UI.
-     */
-    template<typename Callable = std::function<void ()> >
-    class SimpleCommand : public Command
-    {
-        Callable c_;
-        bool done_;
-
-    public:                
-        SimpleCommand(Callable c) : c_(c), done_(false) { }
-        ~SimpleCommand() throw() {}
-
-        void execute_on_main_thread() 
-        {
-            c_();
-            done_ = true;
-        }
-
-        bool is_done() const
-        {
-            return done_;
-        }
-    };
-
-
-    /**
      * Execute a command on the main thread, no continuation
      * on the UI thread.
      */
@@ -105,7 +78,7 @@ namespace ui
         
         virtual RefPtr<Command> emit_command() const
         {
-            return new SimpleCommand<Callable>(callable_);
+            return new MainThreadCommand<Callable>(callable_);
         }
 
     private:

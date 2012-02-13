@@ -15,8 +15,9 @@
 
 
 // todo: move these to a header file and include in flmenu.cpp
-static const int MENUBAR_HEIGHT  = 25;
-static const int STATBAR_HEIGHT  = 25;
+static const int MENUBAR_HEIGHT     = 25 + 30;
+static const int STATBAR_HEIGHT     = 25;
+static const int THREAD_REGS_WIDTH  = 250;
 
 
 //todo: change name to FlTileLayout
@@ -32,15 +33,15 @@ FlPackLayout::FlPackLayout(ui::Controller& c, int x, int y, int w, int h)
     tile->type(Fl_Pack::VERTICAL);
     tile->box(FL_DOWN_BOX);
 
-    // area where source (or assembly) code is displayed
-    auto pack = new Fl_Group(x, y + MENUBAR_HEIGHT, w - 250, code_height());
+    // area where source or assembly code is displayed
+    auto pack = new Fl_Group(x, y + MENUBAR_HEIGHT, w - THREAD_REGS_WIDTH, code_height());
 
     code_ = pack;
     code_->box(FL_DOWN_BOX);
     code_->end();
 
     // area where Threads and Registers are displayed
-    auto g = new Fl_Group(x + code_->w(), y + MENUBAR_HEIGHT, 250, tile->h());
+    auto g = new Fl_Group(x + code_->w(), y + MENUBAR_HEIGHT, THREAD_REGS_WIDTH, tile->h());
     g->box(FL_DOWN_BOX);
     right_ = new Fl_Tabs(g->x() + 2, g->y() + 2, 246, code_height() - 4);
 

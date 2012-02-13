@@ -9,15 +9,23 @@
 #include "zdk/zobject_scope.h"
 #include "flstack_view.h"
 #include <FL/fl_draw.H>
+#include <iostream>
 
 
 static const std::vector<const char*> headers = {
     "Address", "Function", "Line", "Path", "Module"
 };
 
-static const int LEFT_MARGIN = 2;
+static const int LEFT_MARGIN    = 2;
+
+static const int COL_Address    = 0;
+static const int COL_Function   = 1;
+static const int COL_Line       = 2;
+static const int COL_Path       = 3;
+static const int COL_Module     = 4;
 
 
+////////////////////////////////////////////////////////////////
 Fl_StackTable::Fl_StackTable(
 
     ui::StackView*  view,
@@ -65,7 +73,7 @@ void Fl_StackTable::draw_cell(
     case CONTEXT_COL_HEADER:
         fl_font(FL_HELVETICA_BOLD, 11);
         fl_push_clip(x, y, w, h);
-        fl_color(FL_LIGHT2);
+        fl_color(FL_LIGHT3);
         fl_draw_box(FL_THIN_UP_BOX, x, y, w, h, FL_LIGHT2);
         fl_color(FL_BLACK);
         fl_draw(headers[col], x + LEFT_MARGIN, y, w, h, FL_ALIGN_LEFT);
@@ -112,7 +120,7 @@ void Fl_StackTable::draw_frame(
 
     switch (col)
     {
-    case 0: // address
+    case COL_Address:
         {
             std::ostringstream ss;
             ss << "0x" << std::hex << frame->program_count();
@@ -120,14 +128,14 @@ void Fl_StackTable::draw_frame(
         }
         break;
 
-    case 1: // function
+    case COL_Function:
         if (sym)
         {
             fl_draw(sym->name()->c_str(), x + LEFT_MARGIN , y, w, h, FL_ALIGN_LEFT);
         }
         break;
 
-    case 2: // line
+    case COL_Line:
         if (sym)
         {
             if (sym->line())
@@ -139,14 +147,14 @@ void Fl_StackTable::draw_frame(
         }
         break;
 
-    case 3: // path
+    case COL_Path:
         if (sym)
         {
             fl_draw(sym->file()->c_str(), x + LEFT_MARGIN , y, w, h, FL_ALIGN_LEFT);
         }
         break;
 
-    case 4: // module
+    case COL_Module:
         if (sym)
         {
             ZObjectScope scope;
@@ -176,7 +184,10 @@ void Fl_StackTable::event_callback()
 {
     if (Fl::event_button1() && Fl::event_is_click())
     {
-        select_row(callback_row(), 1);
+        const int row = callback_row();
+        select_row(row, 1);
+
+        view_->select_frame(row);
     }
 }
 
@@ -185,6 +196,7 @@ void Fl_StackTable::event_callback()
 FlStackView::FlStackView(ui::Controller& c) 
     : base_type(c, this, 0, 0, 0, 0, "Stack")
 {
+    widget()->tooltip("Call stack");
 }
 
 

@@ -7,6 +7,7 @@
 // $Id$
 //
 #include "zdk/version_info_impl.h"
+#include "controller.h"
 #include "dharma/sarray.h"
 #include "menu.h"
 
@@ -57,6 +58,7 @@ private:
     virtual RefPtr<ui::VarView>         init_locals_view();
     virtual RefPtr<ui::CompositeMenu>   init_menu();
     virtual RefPtr<ui::StackView>       init_stack_view();
+    virtual RefPtr<ui::Toolbar>         init_toolbar();
 
     virtual void    init_main_window();
 
