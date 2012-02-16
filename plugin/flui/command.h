@@ -48,12 +48,18 @@ namespace ui
     template<typename Callable = std::function<void ()> >
     class MainThreadCommand : public Command
     {
-        Callable c_;
-        bool complete_;
+        Callable    callable_;
+        bool        complete_;
+
+    protected:
+        void reset()
+        {
+            complete_ = false;
+        }
 
     public:                
-        MainThreadCommand(const Callable& c) 
-            : c_(c)
+        MainThreadCommand(Callable callable)
+            : callable_(callable)
             , complete_(false)
         { }
 
@@ -62,7 +68,7 @@ namespace ui
 
         void execute_on_main_thread() 
         {
-            c_();
+            callable_();
             complete_ = true;
         }
 

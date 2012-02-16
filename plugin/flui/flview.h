@@ -17,6 +17,8 @@ template<typename W>
 class FlViewImpl : public W
 {
 public:
+    typedef W widget_type;
+
     template<typename... Args>
     FlViewImpl(Args... args) : W(args...)
     {
