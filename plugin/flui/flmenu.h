@@ -14,9 +14,17 @@ class FlMenuBar : public ui::CompositeMenu
 {
 public:
     FlMenuBar(ui::Controller&, int w, int h);
+
+protected:
     ~FlMenuBar() throw();
 
-    virtual void add(RefPtr<ui::Menu>);
+    virtual void add(RefPtr<ui::MenuElem>);
+
+    virtual void add(
+            const std::string&  name,
+            int                 shortcut,
+            EnableCondition     enable,
+            RefPtr<ui::Command> command);
 
 private:
     void exec_command(const char* path);
@@ -29,4 +37,9 @@ private:
 };
 
 
+
+// TODO
+class FlMenuItem : public ui::MenuItem
+{
+};
 #endif // FLMENU_H__93D60C08_34D0_4D9C_98D1_19BBD50428EA

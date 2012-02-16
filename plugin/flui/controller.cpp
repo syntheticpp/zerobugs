@@ -212,24 +212,24 @@ void ui::Controller::build_menu()
 {
     menu_ = init_menu();
 
-    menu_->add(simple_command_menu("File/Quit", FL_ALT + 'q', [this]()
+    menu_->add_item("&File/&Quit", FL_ALT + 'q', MenuElem::Enable_Always, [this]()
     {
         debugger_->quit();
-    }));
+    });
     
-    menu_->add(simple_command_menu("Debug/Continue", FL_F + 5, [this]()
+    menu_->add_item("&Debug/&Continue", FL_F + 5, MenuElem::Enable_IfStopped, [this]()
     {
         debugger_->resume();
-    }));
+    });
     
-    menu_->add(simple_command_menu("Debug/Next", FL_F + 10, [this]()
+    menu_->add_item("&Debug/&Next", FL_F + 10, MenuElem::Enable_IfStopped, [this]()
     {
         if (auto t = state_->current_thread())
         {
             debugger_->step(t.get(), Debugger::STEP_OVER_SOURCE_LINE);
             debugger_->resume();
         }
-    }));
+    });
 }
 
 

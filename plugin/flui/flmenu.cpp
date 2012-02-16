@@ -6,7 +6,6 @@
 //
 #include "controller.h"
 #include "flmenu.h"
-// #include <iostream>
 #include <typeinfo>
 
 
@@ -28,12 +27,23 @@ FlMenuBar::~FlMenuBar() throw()
 }
 
 
-void FlMenuBar::add(RefPtr<ui::Menu> menu)
+void FlMenuBar::add(RefPtr<ui::MenuElem> menu)
 {
     assert(menu);
     ui::CompositeMenu::add(menu);
 
     menu_->add(menu->name().c_str(), menu->shortcut(), exec_command, this);
+}
+
+
+void FlMenuBar::add(
+
+    const std::string&  name,
+    int                 shortcut,
+    EnableCondition     enable,
+    RefPtr<ui::Command> command)
+{
+    ui::CompositeMenu::add(name, shortcut, enable, command);
 }
 
 

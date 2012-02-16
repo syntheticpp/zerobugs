@@ -38,6 +38,9 @@ namespace ui
         virtual void cancel() { }
 
         virtual bool is_complete() const { return true; }
+
+        // reset whatever state the implementation maintains internally
+        virtual void reset() { }
     };
     
     

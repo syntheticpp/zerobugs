@@ -8,7 +8,6 @@
 //
 #include "command.h"
 #include "view.h"
-
 #include <functional>
 #include <string>
 #include <vector>
@@ -19,22 +18,28 @@ namespace ui
     /**
      * Toolkit-agnostic menu element.
      */
-    class Menu : public RefCountedImpl<>
+    class MenuElem : public RefCountedImpl<>
     {
-    public:
-        Menu()
-        {
-        }
+    protected:
+        MenuElem()
+        { }
 
-        explicit Menu(const std::string& name, int shortcut) 
+        explicit MenuElem(const std::string& name, int shortcut) 
             : name_(name)
             , shortcut_(shortcut)
-        {
-        }
+        { }
+    
+        ~MenuElem() throw()
+        { }
 
-        ~Menu() throw()
+    public:
+        enum EnableCondition
         {
-        }
+            Enable_Always,
+            Enable_IfStopped,
+            Enable_IfRunning,
+            Enable_IfAttached,
+        };
 
         const std::string& name() const
         {
@@ -58,76 +63,78 @@ namespace ui
     };
 
 
-    /**
-     * Execute a command on the main thread, no continuation
-     * on the UI thread.
-     */
-    template<typename Callable = std::function<void ()> >
-    class SimpleCommandMenu : public Menu
+
+    class MenuItem : public MenuElem
     {
     public:
-        SimpleCommandMenu(const std::string& name, int shortcut, Callable c)
-            : Menu(name, shortcut)
-            , callable_(c)
-        {
-        }
+        MenuItem(
+            const std::string&  name,
+            int                 shortcut,
+            EnableCondition     enable,
+            RefPtr<Command>     command );
 
-        ~SimpleCommandMenu() throw()
-        {
-        }
+    protected:
+        ~MenuItem() throw()
+        { }
         
         virtual RefPtr<Command> emit_command() const
         {
-            return new MainThreadCommand<Callable>(callable_);
+            command_->reset();
+            return command_;
         }
 
+        virtual void update(const State&);
+
+        virtual void enable(bool) { }
+
     private:
-        Callable callable_;
+        RefPtr<Command> command_;
+        EnableCondition enable_;
     };
 
-   
-    template<typename T> inline
-    RefPtr<SimpleCommandMenu<T> > simple_command_menu(
-    
-        const std::string&  name,
-        int                 shortcut,
-        T                   callable )
-    {
-        return new SimpleCommandMenu<T>(name, shortcut, callable);
-    }
 
 
-    class CompositeMenu : public Menu
+    /**
+     * Base class for menu-bar, contextual menus, etc.
+     * Aggregates sub-menus or menu elements.
+     */
+    class CompositeMenu : public MenuElem
     {
     public:
         CompositeMenu()
-        {
-        }
+        { }
 
-        CompositeMenu(const std::string& name, int shortcut = 0) 
-            : Menu(name, shortcut)
-        {
-        }
+        explicit CompositeMenu(const std::string& name, int shortcut = 0)
+            : MenuElem(name, shortcut)
+        { }
 
-        ~CompositeMenu() throw()
-        {
-        }
-        
-        virtual void add(RefPtr<Menu> menu) 
-        {
-            children_.push_back(menu);
-        }
-        
-        virtual void update(const State& state) 
-        {
-            for (auto i = children_.begin(); i != children_.end(); ++i)
-            {
-                (*i)->update(state);
-            }
-        }
-        //todo: add protected lookup method
     protected:
-        std::vector<RefPtr<Menu> >  children_;
+        ~CompositeMenu() throw()
+        { }
+
+    public:
+        virtual void add(RefPtr<MenuElem> menu);
+
+        virtual void add(
+            const std::string&  name,
+            int                 shortcut,
+            EnableCondition     enable,
+            RefPtr<Command>     command );
+
+        template<typename T>
+        void add_item(
+            const std::string&  name,
+            int                 shortcut,
+            EnableCondition     enable,
+            T                   callable )
+        {
+            add(name, shortcut, enable, new MainThreadCommand<T>(callable));
+        }
+
+        virtual void update(const State& state);
+
+    protected:
+        std::vector<RefPtr<MenuElem> >  children_;
     };
 }
 
