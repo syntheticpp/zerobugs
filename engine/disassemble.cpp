@@ -280,9 +280,7 @@ void ListingHelper::read_file(SharedString* filename)
 ////////////////////////////////////////////////////////////////
 const Symbol* ListingHelper::notify(addr_t addr, bool exact)
 {
-    if (exact && sym_
-              && sym_->offset() == 0
-              && sym_->addr() <= addr)
+    if (exact && sym_ && sym_->offset() == 0 && sym_->addr() <= addr)
     {
         // optimization: short-circuit the lookup
         if (sym_->addr() == addr)
@@ -368,3 +366,4 @@ size_t DebuggerEngine::disassemble (
     return 0;
 }
 // vim: tabstop=4:softtabstop=4:expandtab:shiftwidth=4
+

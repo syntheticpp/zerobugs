@@ -453,7 +453,6 @@ size_t Disasm86::disassemble (
                 break;
 
             default:
-                //if ((ud_.mnemonic >= UD_Ijcxz) && (ud_.mnemonic <= UD_Ijnle))
                 if ((ud_.mnemonic >= UD_Ijcxz) && (ud_.mnemonic <= UD_Ijg))
                 {
                     print_call_or_jmp(lookupSymbol, addr + len, line);
@@ -497,3 +496,4 @@ void Disasm86::print_call_or_jmp(SymbolCallback* symLookup, addr_t addr, ostream
 }
 
 // vim: tabstop=4:softtabstop=4:expandtab:shiftwidth=4
+

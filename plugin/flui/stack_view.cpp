@@ -7,7 +7,7 @@
 #include "zdk/zero.h"
 #include "controller.h"
 #include "stack_view.h"
-// #include <iostream>
+#include <iostream>
 
 
 ui::StackView::StackView(ui::Controller& c)
@@ -50,9 +50,15 @@ void ui::StackView::select_frame(size_t n)
 {
     if (!stack_)
     {
+        // TODO: any better ideas?
         return;
     }
-    controller().call_async_on_main_thread(new MainThreadCommand<>([this, n](){
+
+#if DEBUG
+    std::clog << __func__ <<  " " << n << std::endl;
+#endif
+
+    controller().call_async_on_main_thread(new MainThreadCommand<>([this, n]() {
         stack_->select_frame(n);
     }));
 }

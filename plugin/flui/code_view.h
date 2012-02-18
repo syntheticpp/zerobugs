@@ -15,15 +15,19 @@ namespace ui
 {
     class Controller;
 
-
+    /**
+     * Base (abstract) class for displaying some sort of CODE
+     * listing (as source code, assembly, or whatever -- annotated?
+     * format).
+     */
     class CodeView : public View
     {
     public:
-        explicit CodeView(Controller&);
-        
-        virtual void update(const State&);
+        // make the specified symbol (and the code surrounding it) visible
+        virtual void show(RefPtr<Symbol>) = 0;
 
     protected:
+        explicit CodeView(Controller&);
         ~CodeView() throw();
 
         virtual ViewType type() const { return VIEW_Code; }
@@ -32,19 +36,31 @@ namespace ui
     typedef RefPtr<CodeView> CodeViewPtr;
 
 
+    ////////////////////////////////////////////////////////////
     class SourceView : public CodeView
     {
     public:
         explicit SourceView(Controller& c) : CodeView(c) { }
+       
+    protected:
     };
 
+
+    ////////////////////////////////////////////////////////////
     class AsmView : public CodeView
     {
     public:
         explicit AsmView(Controller& c) : CodeView(c) { }
+
+    protected:
+        virtual void show(RefPtr<Symbol>);
+
+    private:
+        
     };
 
 
+    ////////////////////////////////////////////////////////////
     /**
      * Composite code view.
      */
@@ -59,6 +75,8 @@ namespace ui
         virtual ViewType type() const { return VIEW_Code; }
 
         virtual void update(const State&);
+
+        virtual void make_visible(CodeViewPtr) = 0;
 
     private:
         virtual Layout::CallbackPtr make_callback() = 0;

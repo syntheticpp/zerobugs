@@ -78,7 +78,14 @@ void Fl_CodeTable::set_mark_pixmap(
 
 ////////////////////////////////////////////////////////////////
 
-Fl_SourceTable::Fl_SourceTable(int x, int y, int w, int h, const char* label)
+Fl_SourceTable::Fl_SourceTable(
+
+    int         x,
+    int         y,
+    int         w,
+    int         h,
+    const char* label)
+
     : Fl_CodeTable(x, y, w, h, label)
     , highlight_(0)
     , maxWidth_(0)
@@ -247,4 +254,46 @@ void Fl_SourceTable::highlight_line(int line)
 }
 
 
+////////////////////////////////////////////////////////////////
+
+Fl_AsmTable::Fl_AsmTable(int x, int y, int w, int h, const char* label)
+    : Fl_CodeTable(x, y, w, h, label)
+{
+    cols(2);
+    rows(1);
+    col_header(true);
+}
+
+
+void Fl_AsmTable::draw_cell(
+    TableContext    context,
+    int             row,
+    int             col,
+    int             x,
+    int             y,
+    int             width,
+    int             height)
+{
+    switch (context)
+    {
+    case CONTEXT_STARTPAGE:
+        //TODO
+        break;
+
+    case CONTEXT_COL_HEADER:
+        //TODO
+        break;
+
+    case CONTEXT_CELL:
+        fl_push_clip(x, y, width, height);
+        {
+        //TODO
+        }
+        fl_pop_clip();
+        break;
+
+    default:
+        break;
+    }
+}
 

@@ -26,11 +26,17 @@ public:
 };
 
 
+struct FlViewBase
+{
+    virtual Fl_Widget* base_widget() = 0;
+};
+
+
 /**
  * Implements interface T in terms of a widget W.
  */
 template<typename T, typename W>
-class FlView : public T
+class FlView : public T, public FlViewBase
 {
 public:
     template<typename... Args>
@@ -52,6 +58,11 @@ protected:
     {
         assert(impl_);
         return impl_;
+    }
+
+    Fl_Widget* base_widget()
+    {
+        return widget();
     }
 
 private:

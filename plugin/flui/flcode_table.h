@@ -15,13 +15,12 @@
 
 
 /**
- * Custom widget that displays code in a Table widget.
+ * Base class for custom widgets that displays some sort of code listing
+ * (can be source, assembly, or anything the derived classes want).
  */
 class Fl_CodeTable : public Fl_Table
 {
 public:
-    Fl_CodeTable(int x, int y, int w, int h, const char* label = nullptr);
-
     void set_mark_pixmap(
         const std::string&  mark,
         const char* const*  pixmapData );
@@ -29,6 +28,8 @@ public:
     void set_mark_at_line(int, const std::string& mark, bool = true);
 
 protected:
+    Fl_CodeTable(int x, int y, int w, int h, const char* label = nullptr);
+
     void draw_line_marks(int row, int x, int y);
 
     Fl_Color text_color() const { return FL_BLACK; }
@@ -43,7 +44,10 @@ private:
     Fl_Font                     font_;
     int                         fontSize_;
 
+    // map line number to set of (optional) marks at that line
     std::unordered_map<int, std::set<std::string> > marks_;
+
+    // map mark name to pixmap data
     std::unordered_map<std::string, SArray> pixmaps_;
 };
 
@@ -97,6 +101,26 @@ private:
     int                         highlight_;
     int                         maxWidth_;
     mutable int                 digits_;
+};
+
+
+/**
+ * Table widget that displays assembly code.
+ */
+class Fl_AsmTable : public Fl_CodeTable
+{
+public:
+    Fl_AsmTable(int x, int y, int w, int h, const char* label = nullptr);
+
+protected:
+    virtual void draw_cell(
+        TableContext,
+        int row,
+        int col,
+        int x, 
+        int y, 
+        int w, 
+        int h);
 };
 
 #endif // FLCODE_TABLE_H__D3145B5F_F5C3_4180_81B1_DBE0A33D9DF9

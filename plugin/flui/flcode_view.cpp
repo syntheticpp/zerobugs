@@ -5,7 +5,6 @@
 // $Id: $
 //
 #include "zdk/symbol.h"
-
 #include "flcallback.h"
 #include "flcode_view.h"
 #include "flcode_table.h"
@@ -13,6 +12,7 @@
 #include "icons/arrow.xpm"
 #include <FL/Enumerations.H>
 
+#include <iostream>
 
 using namespace std;
 
@@ -30,7 +30,6 @@ FlSourceView::FlSourceView(
 {
     widget()->set_mark_pixmap(arrow, arrow_xpm);
     widget()->copy_label(filename);
-    widget()->labelfont(FL_TIMES);
 }
 
 
@@ -39,20 +38,54 @@ FlSourceView::~FlSourceView() throw()
 }
 
 
-void FlSourceView::update(const ui::State& s)
+void FlSourceView::show(RefPtr<Symbol> sym)
 {
-    if (RefPtr<Symbol> sym = s.current_symbol())
-    {
-        assert(sym->line());
+    const size_t line = sym->line();
+    assert(line);
 
-        widget()->read_file(sym->file()->c_str());
+    // @note: the widget is expected to deal with duplicate reads
+    widget()->read_file(sym->file()->c_str());
 
-        widget()->set_mark_at_line(widget()->highlighted_line(), arrow, false);
-        widget()->highlight_line(sym->line());
-        widget()->set_mark_at_line(sym->line(), arrow);
-    }
+    widget()->set_mark_at_line(widget()->highlighted_line(), arrow, false);
+    widget()->highlight_line(line);
+    widget()->set_mark_at_line(line, arrow);
+
+    widget()->show();
 }
 
+
+void FlSourceView::update(const ui::State& s)
+{
+}
+
+
+////////////////////////////////////////////////////////////////
+FlAsmView::FlAsmView(ui::Controller& controller, const Symbol& sym)
+    : base_type(controller, 0, 0, 0, 0)
+{
+    const char* fname = basename(sym.file()->c_str());
+    widget()->copy_label(fname);
+}
+
+
+FlAsmView::~FlAsmView() throw()
+{
+}
+
+
+void FlAsmView::update(const ui::State& state)
+{
+}
+
+
+void FlAsmView::show(RefPtr<Symbol> sym)
+{
+#if DEBUG
+    std::clog << __func__ << ": " << sym->name()->c_str() << std::endl;
+#endif
+
+    widget()->show();
+}
 
 ////////////////////////////////////////////////////////////////
 //
@@ -70,6 +103,12 @@ FlMultiCodeView::~FlMultiCodeView() throw ()
 }
 
 
+void FlMultiCodeView::show(RefPtr<Symbol>)
+{
+    // nothing to be seen here, move on...
+}
+
+
 void FlMultiCodeView::update(const ui::State& s)
 {
     ui::MultiCodeView::update(s);
@@ -82,16 +121,12 @@ RefPtr<ui::CodeView> FlMultiCodeView::make_view(const Symbol& sym)
 
     if (sym.line() == 0) // no source code?
     {
-        // TODO: make an assembly code view
-        assert(false);
+        view = new FlAsmView(controller(), sym);
     }
     else
     {
-        RefPtr<FlSourceView> codeView = new FlSourceView(
-            controller(),
-            basename(sym.file()->c_str()));
-
-        view = codeView;
+        const char* fname = basename(sym.file()->c_str());
+        view = new FlSourceView(controller(), fname);
     }
 
     return view;
@@ -107,5 +142,14 @@ ui::Layout::CallbackPtr FlMultiCodeView::make_callback()
             widget()->y() + LABEL_HEIGHT,
             widget()->w(),
             widget()->h() - LABEL_HEIGHT));
+}
+
+
+void FlMultiCodeView::make_visible(RefPtr<CodeView> view)
+{
+    if (auto v = dynamic_cast<FlViewBase*>(view.get()))
+    {
+        widget()->value(v->base_widget());
+    }
 }
 

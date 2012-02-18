@@ -196,7 +196,8 @@ void Flui::init_main_window()
     window_->resizable(window_);
 
     window_->begin();
-    new Fl_Pack(x, y, w, h);
+    //auto pack = new Fl_Pack(x, y, w, h);
+    //window_->resizable(pack);
 }
 
 

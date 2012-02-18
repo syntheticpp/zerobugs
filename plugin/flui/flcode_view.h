@@ -25,6 +25,25 @@ protected:
     ~FlSourceView() throw();
 
     virtual void update(const ui::State&);
+
+    virtual void show(RefPtr<Symbol>);
+};
+
+
+/**
+ * Show assembly code.
+ */
+class FlAsmView : public FlView<ui::AsmView, Fl_AsmTable>
+{
+public:
+    FlAsmView(ui::Controller&, const Symbol&);
+
+protected:
+    ~FlAsmView() throw();
+    
+    virtual void update(const ui::State&);
+
+    virtual void show(RefPtr<Symbol>);
 };
 
 
@@ -39,11 +58,15 @@ public:
 protected:
     ~FlMultiCodeView() throw();
 
+    virtual void show(RefPtr<Symbol>);
+
     virtual void update(const ui::State&);
 
     virtual ui::Layout::CallbackPtr make_callback();
 
     virtual RefPtr<CodeView> make_view(const Symbol&);
+
+    virtual void make_visible(RefPtr<CodeView>);
 };
 
 #endif // FLCODE_VIEW_H__8EF08CB5_1507_4F24_80E2_8FF2EA8DF721

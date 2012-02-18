@@ -27,20 +27,13 @@ DECLARE_ZDK_INTERFACE_(Disassembler, Plugin)
 {
     DECLARE_UUID("f313e09b-3358-4e81-a3b1-7a4eaf5399bb")
 
-    typedef EnumCallback2<
-        addr_t,
-        bool,
-        const Symbol*> SymbolCallback;
+    
+    typedef std::vector<std::string> Strings;
+    typedef EnumCallback2<addr_t, bool, const Symbol*> SymbolCallback; 
+    typedef EnumCallback2<addr_t, size_t, const Strings*> SourceCallback;
 
-    typedef EnumCallback2<
-        addr_t,
-        size_t,
-        const std::vector<std::string>*> SourceCallback;
-
-    struct OutputCallback : public EnumCallback3<addr_t,
-                                                 const char*,
-                                                 size_t,
-                                                 bool>
+    // template params: address, asm line, line length, return type
+    struct OutputCallback : public EnumCallback3<addr_t, const char*, size_t, bool>
     {
         virtual bool tabstops(size_t*, size_t*) const = 0;
     };
