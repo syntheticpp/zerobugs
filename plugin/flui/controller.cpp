@@ -4,6 +4,7 @@
 //
 // $Id$
 //
+#include "zdk/log.h"
 #include "zdk/thread_util.h"
 #include "code_view.h"
 #include "controller.h"
@@ -13,10 +14,8 @@
 #include "menu.h"
 #include <FL/Enumerations.H>
 #include "dharma/system_error.h"
-#include <iostream>
-#include <string>
 #include <pthread.h>
-
+#include <iostream>
 using namespace std;
 
 
@@ -44,8 +43,9 @@ public:
         isTargetStopped_    = false;
         currentThread_      = thread;
         currentEventType_   = eventType;
-        
-        if (thread)
+        currentSymbol_.reset();
+
+        if (thread && eventType != E_TARGET_RESUMED)
         {
             isTargetStopped_ = thread_stopped(*thread);
 
@@ -56,6 +56,12 @@ public:
         }
     }
    
+    virtual bool is_target_running() const
+    {
+        bool result = (currentEventType_ == E_TARGET_RESUMED);
+        return result;
+    }
+
     virtual bool is_target_stopped() const
     {
         return isTargetStopped_;
@@ -212,25 +218,38 @@ void ui::Controller::build_menu()
 {
     menu_ = init_menu();
 
-    menu_->add_item("&File/&Quit", FL_ALT + 'q', MenuElem::Enable_Always, [this]()
-    {
-        debugger_->quit();
-    });
-    
-    menu_->add_item("&Debug/&Continue", FL_F + 5, MenuElem::Enable_IfStopped, [this]()
-    {
-        debugger_->resume();
-    });
-    
-    menu_->add_item("&Debug/&Next", FL_F + 10, MenuElem::Enable_IfStopped, [this]()
-    {
-        if (auto t = state_->current_thread())
+    menu_->add_item("&File/&Quit", FL_ALT + 'q', MenuElem::Enable_Always,
+        [this]()
         {
-            debugger_->step(t.get(), Debugger::STEP_OVER_SOURCE_LINE);
+            debugger_->quit();
+        });
+        
+    menu_->add_item("&Debug/&Continue", FL_F + 5, MenuElem::Enable_IfStopped,
+        [this]()
+        {
             debugger_->resume();
-        }
-    });
-}
+        });
+        
+    menu_->add_item("&Debug/&Next", FL_F + 10, MenuElem::Enable_IfStopped,
+        [this]()
+        {
+            if (auto t = state_->current_thread())
+            {
+                debugger_->step(t.get(), Debugger::STEP_OVER_SOURCE_LINE);
+                debugger_->resume();
+            }
+        });
+
+    menu_->add_item("&Debug/&Step", FL_F + 11, MenuElem::Enable_IfStopped,
+        [this]()
+        {
+        });
+
+    menu_->add_item("&Debug/&Break", FL_CTRL + 'c', MenuElem::Enable_IfRunning,
+        [this]()
+        {
+        });
+    }
 
 
 ////////////////////////////////////////////////////////////////
@@ -304,7 +323,6 @@ void ui::Controller::update(
     EventType       eventType )
 
 {
-    LockedScope lock(*this);
     state_->update(thread, eventType);
 
     // pass updated state info to UI elements
@@ -335,6 +353,7 @@ RefPtr<ui::Command> ui::Controller::update(
 
     if (command_ && command_->is_complete())
     {
+        clog << "command complete" << endl;
         command_.reset();
     }
         
@@ -383,8 +402,7 @@ void* ui::Controller::run(void* p)
     }
     catch (const exception& e)
     {
-        // TODO: log
-        cerr << __func__ << ": " << e.what() << endl;
+        dbgout(Log::ALWAYS) << __func__ << ": " << e.what() << endl;
     }
     catch (...)
     {
@@ -463,7 +481,7 @@ void ui::Controller::on_syscall(Thread*, int32_t)
 void ui::Controller::on_program_resumed()
 {
     LockedScope lock(*this);
-    update(lock, nullptr, E_NONE);
+    update(lock, nullptr, E_TARGET_RESUMED);
 }
 
 
@@ -506,7 +524,15 @@ void ui::Controller::call_async_on_main_thread(RefPtr<Command> c)
 {
     if (c)
     {
-        interrupt_main_thread();
+        if (state_ && state_->is_target_running())
+        {
+            debugger_->stop();
+        }
+        else
+        {
+            interrupt_main_thread();
+        }
+
         command_ = c;
     }
 }

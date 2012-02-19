@@ -42,6 +42,8 @@ enum EventType
     // there are no more threads left in the target
     E_TARGET_FINISHED,
 
+    E_TARGET_RESUMED,
+
     // force to sizeof(uint)
     E_NONE = UINT_MAX,
     E_DEFAULT = E_NONE

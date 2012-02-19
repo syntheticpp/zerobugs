@@ -6,7 +6,8 @@
 //
 #include "controller.h"
 #include "flmenu.h"
-#include <typeinfo>
+// #include <iostream>
+using namespace std;
 
 
 FlMenuBar::FlMenuBar(
@@ -27,23 +28,17 @@ FlMenuBar::~FlMenuBar() throw()
 }
 
 
-void FlMenuBar::add(RefPtr<ui::MenuElem> menu)
-{
-    assert(menu);
-    ui::CompositeMenu::add(menu);
-
-    menu_->add(menu->name().c_str(), menu->shortcut(), exec_command, this);
-}
-
-
 void FlMenuBar::add(
 
-    const std::string&  name,
+    const string&       name,
     int                 shortcut,
     EnableCondition     enable,
     RefPtr<ui::Command> command)
 {
-    ui::CompositeMenu::add(name, shortcut, enable, command);
+    int i = menu_->add(name.c_str(), shortcut, exec_command, this);
+    RefPtr<ui::MenuElem> item(
+        new FlMenuItem(name, shortcut, enable, command, menu_, i));
+    ui::CompositeMenu::add(item);
 }
 
 
@@ -62,6 +57,7 @@ void FlMenuBar::exec_command(Fl_Widget* /* w */, void* p)
 void FlMenuBar::exec_command(const char* path)
 {
     // find the menu item that issued the command
+
     for (auto mi = begin(children_); mi != end(children_); ++mi)
     {
         if (strcmp((*mi)->name().c_str(), path) == 0)
@@ -71,4 +67,35 @@ void FlMenuBar::exec_command(const char* path)
         }
     }
 }
+
+FlMenuItem::FlMenuItem(
+
+    const string&       name,
+    int                 shortcut,
+    EnableCondition     cond,
+    RefPtr<ui::Command> cmd,
+    Fl_Menu_Bar*        menu,
+    int                 index )
+
+    : ui::MenuItem(name, shortcut, cond, cmd)
+    , menu_(menu)
+    , index_(index)
+{
+}
+
+
+void FlMenuItem::enable(bool activate)
+{
+    const int flags = menu_->mode(index_);
+
+    if (activate)
+    {
+        menu_->mode(index_, flags & ~FL_MENU_INACTIVE);
+    }
+    else
+    {
+        menu_->mode(index_, flags | FL_MENU_INACTIVE);
+    }
+}
+
 

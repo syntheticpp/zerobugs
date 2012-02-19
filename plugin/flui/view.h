@@ -38,11 +38,12 @@ namespace ui
         virtual ~State() { }
 
         /** 
-         * NOTE: this method is expected to be called on the
+         * @note: this method is expected to be called on the
          * main debugger thread only
          */
         virtual void update(Thread*, EventType) = 0;
 
+        virtual bool is_target_running() const = 0;
         /**
          * @return true if target is stopped in the debugger
          */

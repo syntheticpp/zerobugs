@@ -38,7 +38,6 @@ namespace ui
             Enable_Always,
             Enable_IfStopped,
             Enable_IfRunning,
-            Enable_IfAttached,
         };
 
         const std::string& name() const
@@ -89,7 +88,7 @@ namespace ui
 
     private:
         RefPtr<Command> command_;
-        EnableCondition enable_;
+        EnableCondition enableCond_;
     };
 
 
@@ -111,15 +110,15 @@ namespace ui
     protected:
         ~CompositeMenu() throw()
         { }
+        
+        void add(RefPtr<MenuElem> menu);
 
     public:
-        virtual void add(RefPtr<MenuElem> menu);
-
         virtual void add(
             const std::string&  name,
             int                 shortcut,
             EnableCondition     enable,
-            RefPtr<Command>     command );
+            RefPtr<Command>     command ) = 0;
 
         template<typename T>
         void add_item(

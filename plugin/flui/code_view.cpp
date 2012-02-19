@@ -16,7 +16,7 @@
 
 
 using namespace std;
-static const size_t ASM_WINDOW_SIZE = 512;
+static const size_t ASM_WINDOW_SIZE = 256;
 
 
 ui::CodeView::CodeView(ui::Controller& controller)
@@ -227,7 +227,7 @@ protected:
             thread_.get(), 
             start_.get(),
             buffer_.size(),
-            true,   /* include source code in listing */
+            false,   /* include source code in listing? */
             &buffer_[0],
             this);
     }
@@ -296,16 +296,7 @@ bool ui::AsmView::refresh(
 
     RefPtr<SymbolMap> symbols = CHKPTR(t)->symbols();
     RefPtr<Symbol> start = CHKPTR(symbols)->lookup_symbol(addr);
-    if (start)
-    {
-        // try and align at beginning of the function
-        RefPtr<Symbol> tmp = symbols->lookup_symbol(start->addr() - start->offset());
-        if (tmp)
-        {
-            start = tmp;
-        }
-    }
-    else
+    if (!start)
     {
         start = s;
     }

@@ -18,8 +18,6 @@ public:
 protected:
     ~FlMenuBar() throw();
 
-    virtual void add(RefPtr<ui::MenuElem>);
-
     virtual void add(
             const std::string&  name,
             int                 shortcut,
@@ -38,8 +36,26 @@ private:
 
 
 
-// TODO
 class FlMenuItem : public ui::MenuItem
 {
+public:
+    FlMenuItem(
+        const std::string&  name,
+        int                 shortcut,
+        EnableCondition     enable,
+        RefPtr<ui::Command> command,
+        Fl_Menu_Bar*        menu,
+        int                 index );
+
+protected:
+    ~FlMenuItem() throw() { }
+
+    virtual void enable(bool);
+
+private:
+    Fl_Menu_Bar*    menu_;
+    int             index_;
 };
+
 #endif // FLMENU_H__93D60C08_34D0_4D9C_98D1_19BBD50428EA
+

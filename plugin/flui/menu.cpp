@@ -18,7 +18,7 @@ void ui::CompositeMenu::add(RefPtr<MenuElem> menu)
     children_.push_back(menu);
 }
 
-
+/*
 void ui::CompositeMenu::add(
 
     const std::string&  name,
@@ -29,6 +29,7 @@ void ui::CompositeMenu::add(
     RefPtr<ui::MenuElem> elem(new MenuItem(name, shortcut, enable, command));
     add(elem);
 }
+*/
 
 
 void ui::CompositeMenu::update(const State& state) 
@@ -41,20 +42,22 @@ void ui::CompositeMenu::update(const State& state)
 
 
 ui::MenuItem::MenuItem(
+
     const std::string&  name,
     int                 shortcut,
-    EnableCondition     enable,
+    EnableCondition     enableCond,
     RefPtr<ui::Command> command )
 
-    :  MenuElem(name, shortcut)
-    ,  command_(command)
+    : MenuElem(name, shortcut)
+    , command_(command)
+    , enableCond_(enableCond)
 {
 }
 
 
 void ui::MenuItem::update(const State& state)
 {
-    switch (enable_)
+    switch (enableCond_)
     {
     case Enable_Always:
         break;
@@ -64,11 +67,7 @@ void ui::MenuItem::update(const State& state)
         break;
 
     case Enable_IfRunning:
-        enable(!state.is_target_stopped());
-        break;
-
-    case Enable_IfAttached:
-        // TODO
+        enable(state.is_target_running());
         break;
     }
 }

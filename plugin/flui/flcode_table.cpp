@@ -74,7 +74,8 @@ void Fl_CodeTable::highlight_line(ui::CodeListing* listing, int line)
         {
             throw out_of_range(__func__);
         }
-        row_position(line);
+
+        row_position(line ? line - 1 : line);
     }
 }
 
