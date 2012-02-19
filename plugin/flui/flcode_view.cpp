@@ -54,6 +54,7 @@ FlAsmView::FlAsmView(ui::Controller& controller, const Symbol& sym)
     const char* fname = basename(sym.file()->c_str());
     widget()->copy_label(fname);
     widget()->set_listing(this);
+    widget()->set_mark_pixmap(Fl_CodeTable::mark_arrow, arrow_xpm);
 }
 
 

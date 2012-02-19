@@ -5,6 +5,7 @@
 // $Id: $
 //
 #include "zdk/stdexcept.h"
+#include "zdk/symbol.h"
 #include "flcode_table.h"
 #include <FL/fl_draw.H>
 #include <FL/Enumerations.H>
@@ -17,19 +18,35 @@ using namespace std;
 
 const string Fl_CodeTable::mark_arrow = { "arrow" };
 
-// Fl_SourceTable column types
 enum ColumnType
 {
     COL_Mark,
     COL_Line,
-    COL_Text
+    COL_Text,
+    COL_Asm,
+    COL_Addr = COL_Line
 };
 
+////////////////////////////////////////////////////////////////
 
 Fl_CodeTable::Fl_CodeTable(int x, int y, int w, int h, const char* label)
     : Fl_Table(x, y, w, h, label)
+    , highlight_(0)
 {
     col_header(true);
+}
+
+
+Fl_Color Fl_CodeTable::cell_background(int row, int col) const
+{
+    if (col == COL_Mark)
+    {
+        return FL_LIGHT2;
+    }
+    else
+    {
+        return row + 1 == highlight_ ? highlight_background() : text_background();
+    }
 }
 
 
@@ -42,6 +59,25 @@ int Fl_CodeTable::font_size() const
 {
     return 11;
 }
+
+
+// Set the highlighted line index. There can be only one.
+void Fl_CodeTable::highlight_line(ui::CodeListing* listing, int line)
+{
+    highlight_ = line;
+
+    if (line)
+    {
+        --line;
+
+        if (line < 0 || size_t(line) >= listing->line_count())
+        {
+            throw out_of_range(__func__);
+        }
+        row_position(line);
+    }
+}
+
 
 // draw pixmap marks associated with row, if any
 void Fl_CodeTable::draw_line_marks(int row, int x, int y)
@@ -101,8 +137,8 @@ Fl_SourceTable::Fl_SourceTable(
 
     : Fl_CodeTable(x, y, w, h, label)
     , listing_(nullptr)
-    , highlight_(0)
     , digits_(0)
+    , maxTextLen_(0)
 {
     cols(3);// one column for markers, one for line numbers, third for text
             // (one for the money, two for the show three to get ready...)
@@ -122,13 +158,14 @@ void Fl_SourceTable::refresh(
     if (listing_->refresh(t, sym))
     {
         digits_ = 0;
+        maxTextLen_ = 0;
         rows(listing_->line_count());
     }
 
     const size_t line = listing_->current_line();
 
     set_mark_at_line(highlighted_line(), mark_arrow, false);
-    highlight_line(line);
+    highlight_line(listing_, line);
     set_mark_at_line(line, mark_arrow);
 }
 
@@ -188,14 +225,7 @@ void Fl_SourceTable::draw_cell(
     case CONTEXT_CELL:
         fl_push_clip(x, y, width, height);
         {
-            if (col == COL_Mark)
-            {
-                fl_color(FL_LIGHT2);
-            }
-            else
-            {
-                fl_color(row + 1 == highlight_ ? highlight_background() : text_background());
-            }
+            fl_color(cell_background(row, col));
             fl_rectf(x, y, width, height);
 
             if (col == COL_Mark)
@@ -215,7 +245,7 @@ void Fl_SourceTable::draw_cell(
             else if (col == COL_Text)
             {
                 fl_color(text_color());
-                fl_draw(listing_->line(row), x, y, width, height, FL_ALIGN_LEFT);
+                fl_draw(listing_->line(row).c_str(), x, y, width, height, FL_ALIGN_LEFT);
             }
         }
         fl_pop_clip();
@@ -230,29 +260,11 @@ void Fl_SourceTable::draw_cell(
 void Fl_SourceTable::resize(int x, int y, int w, int h)
 {
     Fl_Table::resize(x, y, w, h);
-    int maxWidth = listing_->max_line_width();
+    int maxWidth = maxTextLen_;
     int textWidth = std::max(
         maxWidth,
         w - col_width(COL_Mark) - col_width(COL_Line) - 25);
     col_width(COL_Text, textWidth);
-}
-
-
-// Set the highlighted line index. There can be only one.
-void Fl_SourceTable::highlight_line(int line)
-{
-    highlight_ = line;
-
-    if (line)
-    {
-        --line;
-
-        if (line < 0 || size_t(line) >= listing_->line_count())
-        {
-            throw out_of_range(__func__);
-        }
-        row_position(line);
-    }
 }
 
 
@@ -264,10 +276,15 @@ Fl_AsmTable::Fl_AsmTable(int x, int y, int w, int h, const char* label)
     : Fl_CodeTable(x, y, w, h, label)
     , listing_(nullptr)
     , rowNum_(-1)
+    , maxAsmLen_(0)
 {
-    cols(1);
-    col_width(0, 1000);
     col_header(true);
+    cols(4);
+
+    col_width(COL_Mark, 30);
+    col_width(COL_Addr, 160);
+    col_width(COL_Text, 300);
+    col_width(COL_Asm,  1000);
 }
 
 
@@ -292,14 +309,51 @@ void Fl_AsmTable::draw_cell(
     case CONTEXT_CELL:
         if (row != rowNum_)
         {
-            const char* line = listing_->line(row);
+            const string& line = listing_->line(row);
             boost::split(rowData_, line, boost::algorithm::is_any_of("\t"));
         }
+
         fl_push_clip(x, y, width, height);
-        fl_color(FL_WHITE);
+        fl_color(cell_background(row, col));
         fl_rectf(x, y, width, height);
-        fl_color(FL_BLACK);
-        fl_draw(listing_->line(row), x, y, width, height, FL_ALIGN_LEFT);
+        
+        fl_color(text_color());
+
+        switch (col)
+        {
+        case COL_Mark:
+            draw_line_marks(row, x, y);
+            break;
+
+        case COL_Addr:
+            if (rowData_.size())
+            {
+                fl_draw(rowData_[0].c_str(), x, y, width, height, FL_ALIGN_LEFT);
+            }
+            break;
+            
+        case COL_Text:
+            if (rowData_.size() > 1)
+            {
+                fl_draw(rowData_[1].c_str(), x, y, width, height, FL_ALIGN_LEFT);
+            }
+            break;
+
+        case COL_Asm:
+            if (rowData_.size() > 2)
+            {
+                const string& asmText = rowData_[2];
+                if (strncmp(asmText.c_str(), "invalid", 7) == 0)
+                {
+                    break;
+                }               
+                if (asmText.length() > maxAsmLen_)
+                {
+                    maxAsmLen_ = asmText.length();
+                }
+                fl_draw(asmText.c_str(), x, y, width, height, FL_ALIGN_LEFT);
+            }
+        }
         fl_pop_clip();
         break;
 
@@ -317,5 +371,24 @@ void Fl_AsmTable::refresh(
 {
     if (listing_->refresh(t, sym))
     {
+        maxAsmLen_ = 0;
     }
+
+    int line = listing_->addr_to_line(sym->addr());
+    set_mark_at_line(highlighted_line(), mark_arrow, false);
+    highlight_line(listing_, line);
+    set_mark_at_line(line, mark_arrow);
 }
+
+
+void Fl_AsmTable::resize(int x, int y, int w, int h)
+{
+    Fl_Table::resize(x, y, w, h);
+
+    int maxWidth = maxAsmLen_;
+    int asmWidth = std::max(
+        maxWidth,
+        w - col_width(COL_Mark) - col_width(COL_Addr) - col_width(COL_Text) - 25);
+    col_width(COL_Asm, asmWidth);
+}
+

@@ -72,20 +72,15 @@ namespace ui
             return lines_.size();
         }
 
-        virtual size_t max_line_width() const {
-            return maxLineWidth_;
-        }
-
-        virtual const char* line(size_t index) const {
+        virtual const std::string& line(size_t index) const {
             assert(index < lines_.size());
-            return lines_[index].c_str();
+            return lines_[index];
         }
 
     private:
         // Store the file as a vector of lines of text.
         std::vector<std::string>    lines_;
         std::string                 filename_;
-        size_t                      maxLineWidth_;
     };
 
 
@@ -114,6 +109,8 @@ namespace ui
         //
         // CodeListing interface
         //
+        int addr_to_line(addr_t) const;
+
         virtual bool refresh(
             const RefPtr<Thread>&,
             const RefPtr<Symbol>&
@@ -122,17 +119,10 @@ namespace ui
         virtual const char* current_file() const;
         virtual size_t current_line() const;
 
-        virtual const char* line(size_t index) const {
-            assert(index < lines_.size());
-            return lines_[index].c_str();
-        }
-        
+        virtual const std::string& line(size_t index) const;
+ 
         virtual size_t line_count() const {
             return lines_.size();
-        }
-
-        virtual size_t max_line_width() const {
-            return maxLineWidth_;
         }
 
     private:
@@ -146,7 +136,6 @@ namespace ui
         AddrToLine  addrToLine_;
         LineToAddr  lineToAddr_;
 
-        size_t      maxLineWidth_;
         Lines       lines_;
     };
 

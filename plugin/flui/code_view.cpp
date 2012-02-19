@@ -16,7 +16,7 @@
 
 
 using namespace std;
-static const size_t ASM_WINDOW_SIZE = 256;
+static const size_t ASM_WINDOW_SIZE = 512;
 
 
 ui::CodeView::CodeView(ui::Controller& controller)
@@ -33,7 +33,6 @@ ui::CodeView::~CodeView() throw()
 ////////////////////////////////////////////////////////////////
 ui::SourceView::SourceView(Controller& controller)
     : ui::CodeView(controller)
-    , maxLineWidth_(0)
 {
 }
 
@@ -66,7 +65,6 @@ void ui::SourceView::read_file(const char* filename)
     filename_ = filename;
 
     lines_.clear();
-    maxLineWidth_ = 0;
 
     // if source code lines exceed this size, though luck
     vector<char> buf(2048);
@@ -79,10 +77,6 @@ void ui::SourceView::read_file(const char* filename)
         while (fin.getline(&buf[0], buf.size()))
         {
             lines_.push_back(&buf[0]);
-            if (lines_.back().length() > size_t(maxLineWidth_))
-            {
-                maxLineWidth_ = lines_.back().length();
-            }
         }
     }
 }
@@ -150,7 +144,6 @@ void ui::MultiCodeView::update(const ui::State& s)
 ////////////////////////////////////////////////////////////////
 ui::AsmView::AsmView(ui::Controller& c) 
     : CodeView(c)
-    , maxLineWidth_(0)
 {
 }
 
@@ -186,6 +179,17 @@ const char* ui::AsmView::current_file() const
 size_t ui::AsmView::current_line() const
 {
     return current_ ? current_->line() : 0;
+}
+
+
+const string& ui::AsmView::line(size_t n) const
+{
+    static const string empty;
+    if (n >= lines_.size())
+    {
+        return empty;
+    }
+    return lines_[n];
 }
 
 
@@ -260,6 +264,13 @@ private:
 };
 
 
+int ui::AsmView::addr_to_line(addr_t addr) const
+{
+    auto i = addrToLine_.find(addr);
+    return i == addrToLine_.end() ? 0 : i->second;
+}
+
+
 bool ui::AsmView::refresh(
 
     const RefPtr<Thread>&   t,
@@ -275,7 +286,6 @@ bool ui::AsmView::refresh(
     addrToLine_.clear();    // reset addr / line mapping
     lineToAddr_.clear();
 
-    maxLineWidth_ = 0;
     current_ = s;
 
     addr_t addr = s->addr();

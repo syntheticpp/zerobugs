@@ -40,10 +40,23 @@ protected:
     Fl_Color header_background() const { return FL_LIGHT2; }
     Fl_Color highlight_background() const { return FL_GRAY; }
 
+    Fl_Color cell_background(int row, int column) const;
+
     Fl_Font font() const;
     int     font_size() const;
+    
+    /**
+     * Highlight specfied line, may throw std::out_of_range.
+     * Only one line can be highlighted at the time.
+     */
+    void highlight_line(ui::CodeListing*, int);
+
+    int highlighted_line() const {
+        return highlight_;
+    }
 
 private:
+    int  highlight_; // index of current highlighted line
 
     // map line number to set of (optional) marks at that line
     std::unordered_map<int, std::set<std::string> > marks_;
@@ -77,16 +90,6 @@ private:
 
     void draw_header(int col, int x, int y, int w, int h);
 
-    /**
-     * Highlight specfied line, may throw std::out_of_range.
-     * Only one line can be highlighted at the time.
-     */
-    void highlight_line(int);
-
-    int highlighted_line() const {
-        return highlight_;
-    }
-
     virtual void resize(int x, int y, int w, int h);
 
     /**
@@ -96,8 +99,8 @@ private:
 
 private:
     ui::CodeListing*    listing_;
-    int                 highlight_; // index of current highlighted line
     mutable int         digits_;
+    size_t              maxTextLen_;
 };
 
 
@@ -117,6 +120,8 @@ public:
 
 private:
     void draw_cell(TableContext, int row, int col, int x, int y, int w, int h);
+    
+    virtual void resize(int x, int y, int w, int h);
 
 private:
     typedef std::vector<std::string> Columns;
@@ -124,6 +129,7 @@ private:
     ui::CodeListing*    listing_;
     Columns             rowData_;
     int                 rowNum_;
+    size_t              maxAsmLen_;
 };
 
 #endif // FLCODE_TABLE_H__D3145B5F_F5C3_4180_81B1_DBE0A33D9DF9

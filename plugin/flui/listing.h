@@ -6,6 +6,7 @@
 //
 // $Id: $
 //
+#include "zdk/platform.h"
 #include "zdk/ref_ptr.h"
 
 struct Symbol;
@@ -21,6 +22,11 @@ namespace ui
     struct CodeListing
     {
         virtual ~CodeListing() { }
+        
+        virtual int addr_to_line(Platform::addr_t) const {
+            return 0;
+        }
+
         /** 
          * Update so that it contains the given symbol.
          * @return true if changed, false otherwise.
@@ -35,9 +41,7 @@ namespace ui
 
         virtual size_t line_count() const = 0;
 
-        virtual size_t max_line_width() const = 0;
-
-        virtual const char* line(size_t index) const = 0;
+        virtual const std::string& line(size_t index) const = 0;
     };
 }
 
