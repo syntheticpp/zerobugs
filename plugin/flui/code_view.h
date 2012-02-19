@@ -6,9 +6,14 @@
 //
 // $Id: $
 //
+#include "zdk/config.h"
+#include "zdk/platform.h"
 #include "zdk/shared_string.h"
+#include "listing.h"
 #include "view.h"
 #include <unordered_map>
+
+using Platform::addr_t;
 
 
 namespace ui
@@ -17,20 +22,24 @@ namespace ui
 
     /**
      * Base (abstract) class for displaying some sort of CODE
-     * listing (as source code, assembly, or whatever -- annotated?
-     * format).
+     * listing (such as source code, assembly, etc.)
      */
     class CodeView : public View
     {
     public:
-        // make the specified symbol (and the code surrounding it) visible
-        virtual void show(RefPtr<Symbol>) = 0;
+        /**
+         * Make the symbol (and the code surrounding it) visible.
+         */
+        virtual void show(RefPtr<Thread>, RefPtr<Symbol>) = 0;
 
     protected:
         explicit CodeView(Controller&);
         ~CodeView() throw();
 
         virtual ViewType type() const { return VIEW_Code; }
+       
+    protected:
+        RefPtr<Symbol>  current_;
     };
 
     typedef RefPtr<CodeView> CodeViewPtr;
@@ -38,25 +47,107 @@ namespace ui
 
     ////////////////////////////////////////////////////////////
     class SourceView : public CodeView
+                     , protected CodeListing
     {
     public:
-        explicit SourceView(Controller& c) : CodeView(c) { }
+        explicit SourceView(Controller&);
        
     protected:
+        ~SourceView() throw();
+
+        void read_file(const char* filename);
+
+        //
+        // CodeListing interface
+        //
+        virtual bool refresh(
+            const RefPtr<Thread>&,
+            const RefPtr<Symbol>&
+            );
+
+        virtual const char* current_file() const;
+        virtual size_t current_line() const;
+
+        virtual size_t line_count() const {
+            return lines_.size();
+        }
+
+        virtual size_t max_line_width() const {
+            return maxLineWidth_;
+        }
+
+        virtual const char* line(size_t index) const {
+            assert(index < lines_.size());
+            return lines_[index].c_str();
+        }
+
+    private:
+        // Store the file as a vector of lines of text.
+        std::vector<std::string>    lines_;
+        std::string                 filename_;
+        size_t                      maxLineWidth_;
     };
 
 
     ////////////////////////////////////////////////////////////
     class AsmView : public CodeView
+                  , protected CodeListing
     {
     public:
-        explicit AsmView(Controller& c) : CodeView(c) { }
+        explicit AsmView(Controller&);
+
+        /**
+         * add a listing line to the view.
+         * @param addr address in the target's code that
+         *  the listing line corresponds to
+         * @param line listing line may be (assembly or source)
+         */
+        void add_listing_line(
+            addr_t              addr,
+            const std::string&  line);
+
+        virtual void set_row_count(int) = 0;
 
     protected:
-        virtual void show(RefPtr<Symbol>);
+        virtual ~AsmView() throw();
+
+        //
+        // CodeListing interface
+        //
+        virtual bool refresh(
+            const RefPtr<Thread>&,
+            const RefPtr<Symbol>&
+            );
+
+        virtual const char* current_file() const;
+        virtual size_t current_line() const;
+
+        virtual const char* line(size_t index) const {
+            assert(index < lines_.size());
+            return lines_[index].c_str();
+        }
+        
+        virtual size_t line_count() const {
+            return lines_.size();
+        }
+
+        virtual size_t max_line_width() const {
+            return maxLineWidth_;
+        }
 
     private:
+        // maintain mapping (direct and reverse) between
+        // addresses in the code and lines in the listing
+        typedef std::unordered_map<addr_t, int> AddrToLine;
+        typedef std::unordered_multimap<int, addr_t> LineToAddr;
         
+        typedef std::vector<std::string> Lines;
+        
+        AddrToLine  addrToLine_;
+        LineToAddr  lineToAddr_;
+
+        size_t      maxLineWidth_;
+        Lines       lines_;
     };
 
 

@@ -8,11 +8,14 @@
 #include "flcode_table.h"
 #include <FL/fl_draw.H>
 #include <FL/Enumerations.H>
+#include <algorithm>
 #include <cassert>
-#include <iostream>
-#include <fstream>
+#include <boost/algorithm/string.hpp>
 
 using namespace std;
+
+
+const string Fl_CodeTable::mark_arrow = { "arrow" };
 
 // Fl_SourceTable column types
 enum ColumnType
@@ -25,12 +28,20 @@ enum ColumnType
 
 Fl_CodeTable::Fl_CodeTable(int x, int y, int w, int h, const char* label)
     : Fl_Table(x, y, w, h, label)
-    , font_(FL_SCREEN)  // Terminal style font
-    , fontSize_(11)
 {
     col_header(true);
 }
 
+
+Fl_Font Fl_CodeTable::font() const
+{
+    return FL_SCREEN;
+}
+
+int Fl_CodeTable::font_size() const
+{
+    return 11;
+}
 
 // draw pixmap marks associated with row, if any
 void Fl_CodeTable::draw_line_marks(int row, int x, int y)
@@ -77,7 +88,9 @@ void Fl_CodeTable::set_mark_pixmap(
 
 
 ////////////////////////////////////////////////////////////////
-
+//
+// Source Code Table
+//
 Fl_SourceTable::Fl_SourceTable(
 
     int         x,
@@ -87,8 +100,8 @@ Fl_SourceTable::Fl_SourceTable(
     const char* label)
 
     : Fl_CodeTable(x, y, w, h, label)
+    , listing_(nullptr)
     , highlight_(0)
-    , maxWidth_(0)
     , digits_(0)
 {
     cols(3);// one column for markers, one for line numbers, third for text
@@ -100,12 +113,32 @@ Fl_SourceTable::Fl_SourceTable(
 }
 
 
+void Fl_SourceTable::refresh(
+
+    const RefPtr<Thread>& t,
+    const RefPtr<Symbol>& sym)
+
+{
+    if (listing_->refresh(t, sym))
+    {
+        digits_ = 0;
+        rows(listing_->line_count());
+    }
+
+    const size_t line = listing_->current_line();
+
+    set_mark_at_line(highlighted_line(), mark_arrow, false);
+    highlight_line(line);
+    set_mark_at_line(line, mark_arrow);
+}
+
+
 // Compute lazily how many digits are needed to print line numbers
 int Fl_SourceTable::line_digits() const
 {
     if (digits_ == 0)
     {
-        size_t n = lines_.size();
+        size_t n = listing_->line_count();
         while (n)
         {
             n /= 10;
@@ -126,7 +159,7 @@ void Fl_SourceTable::draw_header(int col, int x, int y, int w, int h)
     if (col == COL_Text)
     {
         fl_color(text_color());
-        fl_draw(filename_.c_str(), x, y, w, h, FL_ALIGN_LEFT);
+        fl_draw(listing_->current_file(), x, y, w, h, FL_ALIGN_LEFT);
     }
 
     fl_pop_clip();
@@ -182,7 +215,7 @@ void Fl_SourceTable::draw_cell(
             else if (col == COL_Text)
             {
                 fl_color(text_color());
-                fl_draw(lines_[row].c_str(), x, y, width, height, FL_ALIGN_LEFT);
+                fl_draw(listing_->line(row), x, y, width, height, FL_ALIGN_LEFT);
             }
         }
         fl_pop_clip();
@@ -194,44 +227,13 @@ void Fl_SourceTable::draw_cell(
 }
 
 
-void Fl_SourceTable::read_file(const char* filename)
-{
-    if (filename_ == filename)
-    {
-        return;
-    }
-    lines_.clear();
-
-    highlight_line(0);
-    maxWidth_ = 0;
-    digits_ = 0;
-
-    // if source code lines exceed this size, though luck - truncate them
-    vector<char> buf(2048);
-
-    ifstream fin(filename);
-    if (fin)
-    {
-        filename_ = filename;
-
-        while (fin.getline(&buf[0], buf.size()))
-        {
-            lines_.push_back(&buf[0]);
-            if (lines_.back().length() > size_t(maxWidth_))
-            {
-                maxWidth_ = lines_.back().length();
-            }
-        }
-        rows(lines_.size());
-    }
-}
-
-
 void Fl_SourceTable::resize(int x, int y, int w, int h)
 {
     Fl_Table::resize(x, y, w, h);
-
-    int textWidth = std::max(maxWidth_, w - col_width(COL_Mark) - col_width(COL_Line) - 25);
+    int maxWidth = listing_->max_line_width();
+    int textWidth = std::max(
+        maxWidth,
+        w - col_width(COL_Mark) - col_width(COL_Line) - 25);
     col_width(COL_Text, textWidth);
 }
 
@@ -245,7 +247,7 @@ void Fl_SourceTable::highlight_line(int line)
     {
         --line;
 
-        if (line < 0 || size_t(line) >= lines_.size())
+        if (line < 0 || size_t(line) >= listing_->line_count())
         {
             throw out_of_range(__func__);
         }
@@ -255,12 +257,16 @@ void Fl_SourceTable::highlight_line(int line)
 
 
 ////////////////////////////////////////////////////////////////
-
+//
+// (Dis)Assembly Code Table
+//
 Fl_AsmTable::Fl_AsmTable(int x, int y, int w, int h, const char* label)
     : Fl_CodeTable(x, y, w, h, label)
+    , listing_(nullptr)
+    , rowNum_(-1)
 {
-    cols(2);
-    rows(1);
+    cols(1);
+    col_width(0, 1000);
     col_header(true);
 }
 
@@ -277,18 +283,23 @@ void Fl_AsmTable::draw_cell(
     switch (context)
     {
     case CONTEXT_STARTPAGE:
-        //TODO
+        fl_font(font(), font_size());
         break;
 
     case CONTEXT_COL_HEADER:
-        //TODO
         break;
 
     case CONTEXT_CELL:
-        fl_push_clip(x, y, width, height);
+        if (row != rowNum_)
         {
-        //TODO
+            const char* line = listing_->line(row);
+            boost::split(rowData_, line, boost::algorithm::is_any_of("\t"));
         }
+        fl_push_clip(x, y, width, height);
+        fl_color(FL_WHITE);
+        fl_rectf(x, y, width, height);
+        fl_color(FL_BLACK);
+        fl_draw(listing_->line(row), x, y, width, height, FL_ALIGN_LEFT);
         fl_pop_clip();
         break;
 
@@ -297,3 +308,14 @@ void Fl_AsmTable::draw_cell(
     }
 }
 
+
+void Fl_AsmTable::refresh(
+
+    const RefPtr<Thread>& t,
+    const RefPtr<Symbol>& sym)
+
+{
+    if (listing_->refresh(t, sym))
+    {
+    }
+}

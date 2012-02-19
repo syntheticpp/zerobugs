@@ -26,7 +26,7 @@ protected:
 
     virtual void update(const ui::State&);
 
-    virtual void show(RefPtr<Symbol>);
+    virtual void show(RefPtr<Thread>, RefPtr<Symbol>);
 };
 
 
@@ -40,10 +40,14 @@ public:
 
 protected:
     ~FlAsmView() throw();
-    
+   
     virtual void update(const ui::State&);
 
-    virtual void show(RefPtr<Symbol>);
+    virtual void show(RefPtr<Thread>, RefPtr<Symbol>);
+
+    virtual void set_row_count(int n) {
+        widget()->rows(n);
+    }
 };
 
 
@@ -58,9 +62,7 @@ public:
 protected:
     ~FlMultiCodeView() throw();
 
-    virtual void show(RefPtr<Symbol>);
-
-    virtual void update(const ui::State&);
+    virtual void show(RefPtr<Thread>, RefPtr<Symbol>);
 
     virtual ui::Layout::CallbackPtr make_callback();
 

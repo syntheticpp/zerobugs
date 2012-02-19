@@ -6,21 +6,24 @@
 //
 // $Id: $
 //
-#include <FL/Fl_Table.H>
+#include "listing.h"
 #include <set>
 #include <string>
 #include <vector>
 #include <unordered_map>
+#include <FL/Fl_Table.H>
 #include "dharma/sarray.h"
 
 
 /**
- * Base class for custom widgets that displays some sort of code listing
- * (can be source, assembly, or anything the derived classes want).
+ * Base class for custom widgets that display some sort of code listing
+ * (can be source, assembly, or anything else the derived classes may want).
  */
 class Fl_CodeTable : public Fl_Table
 {
 public:
+    static const std::string mark_arrow;
+
     void set_mark_pixmap(
         const std::string&  mark,
         const char* const*  pixmapData );
@@ -37,12 +40,10 @@ protected:
     Fl_Color header_background() const { return FL_LIGHT2; }
     Fl_Color highlight_background() const { return FL_GRAY; }
 
-    Fl_Font font() const { return font_; }
-    int     font_size() const { return fontSize_; }
+    Fl_Font font() const;
+    int     font_size() const;
 
 private:
-    Fl_Font                     font_;
-    int                         fontSize_;
 
     // map line number to set of (optional) marks at that line
     std::unordered_map<int, std::set<std::string> > marks_;
@@ -61,7 +62,20 @@ class Fl_SourceTable : public Fl_CodeTable
 public:
     Fl_SourceTable(int x, int y, int w, int h, const char* label = nullptr);
 
-    void read_file(const char* filename);
+    void set_listing(ui::CodeListing* listing) {
+        listing_ = listing;
+    }
+
+    void refresh(const RefPtr<Thread>&, const RefPtr<Symbol>&);
+
+private:
+    /**
+     * implements custom drawing
+     * @see http://seriss.com/people/erco/Fl_Table/documentation/Fl_Table.html#draw_cell
+     */
+    void draw_cell(TableContext, int row, int col, int x, int y, int w, int h);
+
+    void draw_header(int col, int x, int y, int w, int h);
 
     /**
      * Highlight specfied line, may throw std::out_of_range.
@@ -69,23 +83,9 @@ public:
      */
     void highlight_line(int);
 
-    int highlighted_line() const { return highlight_; }
-
-private:
-    /**
-     * implements custom drawing
-     * @see http://seriss.com/people/erco/Fl_Table/documentation/Fl_Table.html#draw_cell
-     */
-    virtual void draw_cell(
-        TableContext,
-        int row,
-        int col,
-        int x, 
-        int y, 
-        int w, 
-        int h);
-
-    void draw_header(int col, int x, int y, int w, int h);
+    int highlighted_line() const {
+        return highlight_;
+    }
 
     virtual void resize(int x, int y, int w, int h);
 
@@ -95,12 +95,9 @@ private:
     int  line_digits() const;
 
 private:
-    // Store the file as a vector of lines of text.
-    std::vector<std::string>    lines_;
-    std::string                 filename_;
-    int                         highlight_;
-    int                         maxWidth_;
-    mutable int                 digits_;
+    ui::CodeListing*    listing_;
+    int                 highlight_; // index of current highlighted line
+    mutable int         digits_;
 };
 
 
@@ -112,15 +109,21 @@ class Fl_AsmTable : public Fl_CodeTable
 public:
     Fl_AsmTable(int x, int y, int w, int h, const char* label = nullptr);
 
-protected:
-    virtual void draw_cell(
-        TableContext,
-        int row,
-        int col,
-        int x, 
-        int y, 
-        int w, 
-        int h);
+    void refresh(const RefPtr<Thread>&, const RefPtr<Symbol>&);
+
+    void set_listing(ui::CodeListing* listing) {
+        listing_ = listing;
+    }
+
+private:
+    void draw_cell(TableContext, int row, int col, int x, int y, int w, int h);
+
+private:
+    typedef std::vector<std::string> Columns;
+
+    ui::CodeListing*    listing_;
+    Columns             rowData_;
+    int                 rowNum_;
 };
 
 #endif // FLCODE_TABLE_H__D3145B5F_F5C3_4180_81B1_DBE0A33D9DF9
