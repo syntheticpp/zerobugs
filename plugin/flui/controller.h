@@ -23,6 +23,30 @@ namespace ui
     class Toolbar;   
 
     /**
+     * Controller executes this command when idle.
+     */
+    class IdleCommand : public Command
+    {
+    public:
+        IdleCommand();
+
+        // break out of idle state
+        void cancel();
+    
+    protected:
+        ~IdleCommand() throw() { }
+
+    private:
+        void execute_on_main_thread();
+        void set_cancel();
+
+        Mutex       mutex_;
+        Condition   cond_;
+        bool        cancelled_;
+    };
+
+
+    /**
      * Toolkit-agnostic controller. Implements the DebuggerPlugin interface.
      */
     class Controller : public DebuggerPlugin
@@ -196,7 +220,7 @@ namespace ui
         // mail box for passing requests between main and ui threads
         RefPtr<Command>             command_;
 
-        RefPtr<Command>             idle_;
+        RefPtr<IdleCommand>         idle_;
     };
 
 } // namespace 

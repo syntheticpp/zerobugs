@@ -16,6 +16,7 @@
 #include "dharma/system_error.h"
 #include <pthread.h>
 #include <iostream>
+#include <typeinfo>
 using namespace std;
 
 
@@ -109,43 +110,33 @@ public:
 
 
 ////////////////////////////////////////////////////////////////
-/**
- * If no other command is in the mail-slot, then just wait
- */
-class WaitCommand : public ui::Command
+ui::IdleCommand::IdleCommand() : cancelled_(false)
 {
-    Mutex       mutex_;
-    Condition   cond_;
-    bool        cancelled_;
+}
 
-    void execute_on_main_thread()
+
+void ui::IdleCommand::execute_on_main_thread()
+{
+    Lock<Mutex> lock(mutex_);
+    for (cancelled_ = false; !cancelled_; )
     {
-        Lock<Mutex> lock(mutex_);
-        for (cancelled_ = false; !cancelled_; )
-        {
-            cond_.wait(lock);
-        }
+        cond_.wait(lock);
     }
+}
 
-    void cancel() 
-    {
-        set_cancel();
-        cond_.broadcast();
-    }
 
-protected:
-    ~WaitCommand() throw() { }
+void ui::IdleCommand::cancel() 
+{
+    set_cancel();
+    cond_.broadcast();
+}
 
-public:
-    WaitCommand() : cancelled_(false) { }
 
-    void set_cancel()
-    {
-        Lock<Mutex> lock(mutex_);
-        cancelled_ = true;
-    }
-};
-
+void ui::IdleCommand::set_cancel()
+{
+    Lock<Mutex> lock(mutex_);
+    cancelled_ = true;
+}
 
 ////////////////////////////////////////////////////////////////
 //
@@ -156,7 +147,7 @@ ui::Controller::Controller()
     , uiThreadId_(0)
     , state_(init_state())
     , done_(false)
-    , idle_(new WaitCommand)
+    , idle_(new IdleCommand)
 {
 }
 
@@ -349,12 +340,19 @@ RefPtr<ui::Command> ui::Controller::update(
 
 {
     LockedScope lock(*this);
+
+    // allow for *one* command to be issued during update
+    CommandPtr command;
+    command.swap(command_);
+
     update(lock, thread, eventType);
 
-    if (command_ && command_->is_complete())
+    // if no command was issued during update,
+    // and the current command is not complete,
+    // re-instate it.
+    if (!command_ && command && !command->is_complete())
     {
-        clog << "command complete" << endl;
-        command_.reset();
+        command_ = command;
     }
         
     if (!command_)
@@ -362,7 +360,7 @@ RefPtr<ui::Command> ui::Controller::update(
         command_ = idle_;
     }
 
-    return command_;
+    return command ? command : command_;
 }
 
 
@@ -532,6 +530,8 @@ void ui::Controller::call_async_on_main_thread(RefPtr<Command> c)
         {
             interrupt_main_thread();
         }
+        // make sure we're not overriding incomplete command
+        // assert(command_.is_null() || command_->is_complete());
 
         command_ = c;
     }
@@ -541,9 +541,6 @@ void ui::Controller::call_async_on_main_thread(RefPtr<Command> c)
 ////////////////////////////////////////////////////////////////
 void ui::Controller::interrupt_main_thread()
 {
-    if (command_)
-    {
-        command_->cancel();
-    }
+    idle_->cancel();
 }
 

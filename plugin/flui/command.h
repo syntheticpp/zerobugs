@@ -35,8 +35,6 @@ namespace ui
         // response to ui thread
         virtual void continue_on_ui_thread(Controller&) { }
 
-        virtual void cancel() { }
-
         virtual bool is_complete() const { return true; }
 
         // reset whatever state the implementation maintains internally
@@ -66,17 +64,14 @@ namespace ui
             , complete_(false)
         { }
 
-        ~MainThreadCommand() throw()
-        { }
+        ~MainThreadCommand() throw() { }
 
-        void execute_on_main_thread() 
-        {
+        void execute_on_main_thread() {
             callable_();
             complete_ = true;
         }
 
-        bool is_complete() const
-        {
+        bool is_complete() const {
             return complete_;
         }
     };
