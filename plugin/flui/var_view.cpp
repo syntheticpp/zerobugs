@@ -19,9 +19,10 @@ ui::VarView::~VarView() throw()
 }
 
 
-void ui::VarView::update(const ui::State&)
+void ui::VarView::update(const ui::State& s)
 {
-    symbols_.clear();
+    variables_.clear();
+    current_ = s.current_symbol();
 }
 
 
@@ -33,7 +34,7 @@ bool ui::VarView::is_expanding(DebugSymbol* sym) const
 
 void ui::VarView::expand(size_t row, bool flag)
 {
-    scope()->expand(get_symbol(row), flag);
+    scope()->expand(get_variable(row), flag);
     awaken_main_thread();
 }
 
@@ -42,7 +43,7 @@ bool ui::VarView::notify(DebugSymbol* sym)
 {
     if (sym)
     {
-        symbols_.push_back(sym);
+        variables_.push_back(sym);
 
         if (is_expanding(sym))
         {
@@ -54,38 +55,47 @@ bool ui::VarView::notify(DebugSymbol* sym)
 }
 
 
-DebugSymbol& ui::VarView::get_symbol(size_t n) const
+DebugSymbol& ui::VarView::get_variable(size_t n) const
 {
-    if (n >= symbols_.size())
+    if (n >= variables_.size())
     {
         throw std::out_of_range(__func__);
     }
 
-    return *symbols_[n];
+    return *variables_[n];
 }
 
+
+bool ui::VarView::is_same_scope(Symbol* sym) const
+{
+    return current_ && sym && (current_->value() == sym->value());
+}
 
 
 RefPtr<ui::VarView::Scope> ui::VarView::scope() const
 {
-    RefPtr<ui::VarView::Scope> scope;
-
     if (RefPtr<Frame> f = controller().selection())
     {
+        // ensure that there's scope object
+        // associated with the stack frame object
         RefPtr<ZObject> obj = f->get_user_object(".scope");
         if (!obj)
         {
             obj = new ui::VarView::Scope;
             f->set_user_object(".scope", obj.get());
         }
-        scope = interface_cast<ui::VarView::Scope>(obj);
+        // change to the frame's scope if necessary
+        if (!is_same_scope(f->function()))
+        {
+            scope_ = interface_cast<ui::VarView::Scope>(obj);
+        }
     }
 
-    if (!scope)
+    if (!scope_)
     {
-        scope = new ui::VarView::Scope;
+        scope_ = new ui::VarView::Scope;
     }
-    return scope;
+    return scope_;
 }
 
 
@@ -96,7 +106,7 @@ bool ui::VarView::Scope::is_expanding(const DebugSymbol& sym) const
     auto i = vars_.find(key);
     if (i != vars_.end())
     {
-        return i->second.expand_; 
+        return i->second.expand_;
     }
     return false;
 }
@@ -105,15 +115,7 @@ bool ui::VarView::Scope::is_expanding(const DebugSymbol& sym) const
 void ui::VarView::Scope::expand(DebugSymbol& sym, bool expand)
 {
     SymKey key(sym);
-
-    auto i = vars_.find(key);
-    if (i == vars_.end())
-    {
-        vars_[key].expand_ = expand;
-    }
-    else
-    {
-        i->second.expand_ = expand;
-    }
+    vars_[key].expand_ = expand;
 }
+
 

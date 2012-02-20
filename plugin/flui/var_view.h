@@ -19,21 +19,21 @@ namespace ui
     /**
      * Base class for viewing program variables.
      */
-    class VarView 
+    class VarView
         : public    View
         , protected DebugSymbolEvents
     {
     public:
         explicit VarView(ui::Controller&);
 
-        DebugSymbol& get_symbol(size_t n) const;
+        DebugSymbol& get_variable(size_t n) const;
 
-        size_t symbol_count() const {
-            return symbols_.size();
+        size_t variable_count() const {
+            return variables_.size();
         }
 
         bool is_expanding(size_t row) const {
-            return is_expanding(symbols_[row].get());
+            return is_expanding(variables_[row].get());
         }
 
         void expand(size_t row, bool = true);
@@ -44,10 +44,12 @@ namespace ui
         BEGIN_INTERFACE_MAP(VarView)
         END_INTERFACE_MAP()
 
-        // === DebugSymbolEvents interface ===
+        bool is_same_scope(Symbol*) const;
+
+        /// DebugSymbolEvents interface
         bool notify(DebugSymbol*);
 
-        /** 
+        /**
          * Symbols that correspond to aggregate objects such as
          * class instances or arrays may be expanded, so that the
          * user can inspect their sub-parts. This method is called
@@ -56,7 +58,7 @@ namespace ui
          */
         virtual bool is_expanding(DebugSymbol*) const;
 
-        /** 
+        /**
          * Readers call this method to determine what numeric base
          * should be used for the representation of integer values.
          */
@@ -64,23 +66,25 @@ namespace ui
             return 0;
         }
 
-        /** 
+        /**
          * A change in the symbol has occurred (name, type, address * etc.)
          * A pointer to the old values is passed in.
          */
-        virtual void symbol_change (   
+        virtual void symbol_change (
             DebugSymbol* newSym,
             DebugSymbol* old )
         { }
 
-        // === View interface === 
+        /// View interface
         virtual ViewType type() const {
             return VIEW_Vars;
         }
-        
+
         virtual void update(const State&);
 
     private:
+        typedef std::vector<RefPtr<DebugSymbol> > Variables;
+
         struct VarState
         {
             bool            expand_;
@@ -92,24 +96,26 @@ namespace ui
          */
         struct Scope : public ZObjectImpl<>
         {
-        DECLARE_UUID("ef5bcbfa-aa9d-49f5-9889-2a891f578205")
+            DECLARE_UUID("ef5bcbfa-aa9d-49f5-9889-2a891f578205")
 
-        BEGIN_INTERFACE_MAP(Scope)
-            INTERFACE_ENTRY(Scope)
-        END_INTERFACE_MAP()
+            BEGIN_INTERFACE_MAP(Scope)
+                INTERFACE_ENTRY(Scope)
+            END_INTERFACE_MAP()
 
             ~Scope() throw() { }
-            std::map<SymKey, VarState> vars_;
-
             bool is_expanding(const DebugSymbol&) const;
             void expand(DebugSymbol&, bool);
+
+        private:
+            std::map<SymKey, VarState> vars_;
         };
 
+    private:
         RefPtr<Scope> scope() const;
 
-        typedef std::vector<RefPtr<DebugSymbol> > Symbols;
-
-        Symbols symbols_;
+        RefPtr<Symbol>          current_;
+        mutable RefPtr<Scope>   scope_;
+        Variables               variables_;
     };
 }
 

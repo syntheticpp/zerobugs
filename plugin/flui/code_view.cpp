@@ -105,10 +105,14 @@ ui::MultiCodeView::~MultiCodeView() throw()
 {
 }
 
-
 void ui::MultiCodeView::update(const ui::State& s)
 {
-    RefPtr<Symbol> sym;
+    if (s.current_event_type() == E_TARGET_FINISHED)
+    {
+        // TODO: target has detached, close all views
+    }
+
+    RefPtr<Symbol> sym; // current symbol in view
 
     RefPtr<Thread> t = s.current_thread();
     if (t)

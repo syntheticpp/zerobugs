@@ -67,7 +67,7 @@ public:
             currentSymbol_ = thread->symbols()->lookup_symbol(pc);
         }
     }
-   
+
     virtual bool is_target_running() const
     {
         bool result = (currentEventType_ == E_TARGET_RESUMED);
@@ -113,7 +113,7 @@ public:
 
     virtual ~CommandError() throw() { }
 
-    void continue_on_ui_thread(ui::Controller& controller) 
+    void continue_on_ui_thread(ui::Controller& controller)
     {
         controller.error_message(msg_);
     }
@@ -136,7 +136,7 @@ void ui::IdleCommand::execute_on_main_thread()
 }
 
 
-void ui::IdleCommand::cancel() 
+void ui::IdleCommand::cancel()
 {
     set_cancel();
     cond_.broadcast();
@@ -152,7 +152,7 @@ void ui::IdleCommand::set_cancel()
 ////////////////////////////////////////////////////////////////
 //
 // Controller implementation
-// 
+//
 ui::Controller::Controller()
     : debugger_(nullptr)
     , uiThreadId_(0)
@@ -197,7 +197,7 @@ void ui::Controller::build()
 void ui::Controller::build_layout()
 {
     layout_ = init_layout();
-    
+
     if (auto v = init_code_view())
     {
         layout_->add(*v);
@@ -225,13 +225,13 @@ void ui::Controller::build_menu()
         {
             debugger_->quit();
         });
-        
+
     menu_->add_item("&Debug/&Continue", FL_F + 5, MenuElem::Enable_IfStopped,
         [this]()
         {
             debugger_->resume();
         });
-        
+
     menu_->add_item("&Debug/&Next", FL_F + 10, MenuElem::Enable_IfStopped,
         [this]()
         {
@@ -245,6 +245,11 @@ void ui::Controller::build_menu()
     menu_->add_item("&Debug/&Step", FL_F + 11, MenuElem::Enable_IfStopped,
         [this]()
         {
+            if (auto t = state_->current_thread())
+            {
+                debugger_->step(t.get(), Debugger::STEP_SOURCE_LINE);
+                debugger_->resume();
+            }
         });
 
     menu_->add_item("&Debug/&Break", FL_CTRL + 'c', MenuElem::Enable_IfRunning,
@@ -319,7 +324,7 @@ void ui::Controller::done()
 
 ////////////////////////////////////////////////////////////////
 void ui::Controller::update(
-    
+
     LockedScope&    scope,
     Thread*         thread,
     EventType       eventType )
@@ -365,7 +370,7 @@ RefPtr<ui::Command> ui::Controller::update(
     {
         command_ = command;
     }
-        
+
     if (!command_)
     {
         command_ = idle_;
@@ -403,7 +408,7 @@ void* ui::Controller::run(void* p)
 {
     auto controller = reinterpret_cast<ui::Controller*>(p);
     try
-    {    
+    {
         controller->lock();
         controller->build();
 
@@ -474,9 +479,11 @@ void ui::Controller::on_attach(Thread* thread)
 ////////////////////////////////////////////////////////////////
 void ui::Controller::on_detach(Thread* thread)
 {
-    // if (thread == 0) // detached from all threads?
-    // {
-    // } 
+    if (thread == 0) // detached from all threads?
+    {
+        LockedScope lock(*this);
+        update(lock, nullptr, E_TARGET_FINISHED);
+    }
 }
 
 

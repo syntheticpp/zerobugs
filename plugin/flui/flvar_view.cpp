@@ -96,12 +96,12 @@ void Fl_VarTable::draw_symbol(
     int             w,
     int             h)
 {
-    if (size_t(row) >= view_->symbol_count())
+    if (size_t(row) >= view_->variable_count())
     {
         return;
     }
 
-    DebugSymbol& sym = view_->get_symbol(row);
+    DebugSymbol& sym = view_->get_variable(row);
     switch (col)
     {
     case COL_VarName:
@@ -146,7 +146,7 @@ void Fl_VarTable::event_callback()
     }
 
     const size_t row = callback_row();
-    if (row >= view_->symbol_count())
+    if (row >= view_->variable_count())
     {
         return;
     }
@@ -154,7 +154,7 @@ void Fl_VarTable::event_callback()
     if (callback_col() == COL_VarName)
     {
         // check if user clicked on the tree expand / unexpand icon
-        DebugSymbol& sym = view_->get_symbol(row);
+        DebugSymbol& sym = view_->get_variable(row);
         const int x_min = pix_width * sym.depth() + x();
         const int x_max = x_min + pix_width + x();
 
@@ -177,7 +177,7 @@ void Fl_VarTable::resize(int x, int y, int w, int h)
 
 
 ////////////////////////////////////////////////////////////////
-FlLocalsView::FlLocalsView(ui::Controller& c) 
+FlLocalsView::FlLocalsView(ui::Controller& c)
     : base_type(c, this, 0, 0, 0, 0, "Locals")
 {
     widget()->tooltip("Local variables");
@@ -187,7 +187,7 @@ FlLocalsView::FlLocalsView(ui::Controller& c)
 void FlLocalsView::update(const ui::State& state)
 {
     base_type::update(state);
-    widget()->rows( symbol_count() );
+    widget()->rows(variable_count());
     widget()->redraw();
 }
 
