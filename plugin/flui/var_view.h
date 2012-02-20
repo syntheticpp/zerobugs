@@ -7,11 +7,11 @@
 // $Id: $
 //
 #include "zdk/debug_sym.h"
+#include "zdk/zobject_impl.h"
 #include "symkey.h"
 #include "view.h"
 #include <map>
 #include <vector>
-#include <set>
 
 
 namespace ui
@@ -80,12 +80,36 @@ namespace ui
         
         virtual void update(const State&);
 
-    protected:
-        typedef std::vector<RefPtr<DebugSymbol> > Symbols;
-        typedef std::set<SymKey> Expands;
+    private:
+        struct VarState
+        {
+            bool            expand_;
+            SharedStringPtr value_;
+        };
+        /**
+         * Track state associated with variables
+         * visualized within a given scope.
+         */
+        struct Scope : public ZObjectImpl<>
+        {
+        DECLARE_UUID("ef5bcbfa-aa9d-49f5-9889-2a891f578205")
 
-        Symbols     symbols_;
-        Expands     expands_;
+        BEGIN_INTERFACE_MAP(Scope)
+            INTERFACE_ENTRY(Scope)
+        END_INTERFACE_MAP()
+
+            ~Scope() throw() { }
+            std::map<SymKey, VarState> vars_;
+
+            bool is_expanding(const DebugSymbol&) const;
+            void expand(DebugSymbol&, bool);
+        };
+
+        RefPtr<Scope> scope() const;
+
+        typedef std::vector<RefPtr<DebugSymbol> > Symbols;
+
+        Symbols symbols_;
     };
 }
 

@@ -26,7 +26,7 @@ class DebugSymbol;
 class SymKey
 {
 public:
-    explicit SymKey(DebugSymbol&);
+    explicit SymKey(const DebugSymbol&);
 
     SymKey() : addr_(0), depth_(0), hash_(0) { }
 

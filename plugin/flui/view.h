@@ -36,6 +36,8 @@ namespace ui
     struct State
     {
         virtual ~State() { }
+        
+        RefPtr<Frame> selection() const;
 
         /** 
          * @note: this method is expected to be called on the
@@ -88,7 +90,7 @@ namespace ui
             return c_;
         }
 
-        void interrupt_main_thread();
+        void awaken_main_thread();
 
     protected:
         virtual ~View() throw() { }

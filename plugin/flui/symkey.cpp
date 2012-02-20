@@ -15,7 +15,7 @@
 using namespace std;
 
 
-SymKey::SymKey(DebugSymbol& sym)
+SymKey::SymKey(const DebugSymbol& sym)
     : addr_(sym.addr())
     , depth_(sym.depth())
     , hash_(0)

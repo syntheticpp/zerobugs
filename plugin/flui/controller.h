@@ -94,7 +94,8 @@ namespace ui
         // schedule command for execution on main thread
         void call_async_on_main_thread(RefPtr<Command>);
 
-        void interrupt_main_thread();
+        // wake up main thread if in idle state
+        void awaken_main_thread();
 
         // --- DebuggerPlugin interface
         /**
@@ -175,6 +176,8 @@ namespace ui
             bool        /* async */);
 
         Debugger* debugger() { assert(debugger_); return debugger_; }
+
+        RefPtr<Frame> selection() const;
 
     protected:
         void build();

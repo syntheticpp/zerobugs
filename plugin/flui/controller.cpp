@@ -15,9 +15,20 @@
 #include <FL/Enumerations.H>
 #include "dharma/system_error.h"
 #include <pthread.h>
-#include <iostream>
-#include <typeinfo>
+
 using namespace std;
+
+
+RefPtr<Frame> ui::State::selection() const
+{
+    RefPtr<Frame> f;
+
+    if (RefPtr<Thread> t = current_thread())
+    {
+        f = t->stack_trace()->selection();
+    }
+    return f;
+}
 
 
 /**
@@ -528,7 +539,7 @@ void ui::Controller::call_async_on_main_thread(RefPtr<Command> c)
         }
         else
         {
-            interrupt_main_thread();
+            awaken_main_thread();
         }
         // make sure we're not overriding incomplete command
         // assert(command_.is_null() || command_->is_complete());
@@ -539,8 +550,15 @@ void ui::Controller::call_async_on_main_thread(RefPtr<Command> c)
 
 
 ////////////////////////////////////////////////////////////////
-void ui::Controller::interrupt_main_thread()
+void ui::Controller::awaken_main_thread()
 {
     idle_->cancel();
 }
+
+////////////////////////////////////////////////////////////////
+RefPtr<Frame> ui::Controller::selection() const
+{
+    return state_ ? state_->selection() : nullptr;
+}
+
 

@@ -13,9 +13,9 @@ ui::View::View(ui::Controller& c) : c_(c)
 }
 
 
-void ui::View::interrupt_main_thread()
+void ui::View::awaken_main_thread()
 {
-    c_.interrupt_main_thread();
+    c_.awaken_main_thread();
 }
 
 

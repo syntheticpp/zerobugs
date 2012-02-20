@@ -4,6 +4,7 @@
 //
 // $Id: $
 //
+#include "controller.h"
 #include "flvar_view.h"
 #include "var_view.h"
 
@@ -26,25 +27,14 @@ void ui::VarView::update(const ui::State&)
 
 bool ui::VarView::is_expanding(DebugSymbol* sym) const
 {
-    return expands_.count(SymKey(*sym)) != 0;
+    return sym && scope()->is_expanding(*sym);
 }
 
 
-void ui::VarView::expand(size_t row, bool toggle)
+void ui::VarView::expand(size_t row, bool flag)
 {
-    // TODO: expand state etc. should be stored per frame
-
-    SymKey key(get_symbol(row));
-
-    if (toggle)
-    {
-        expands_.insert(key);
-    }
-    else
-    {
-        expands_.erase(key);
-    }
-    interrupt_main_thread();
+    scope()->expand(get_symbol(row), flag);
+    awaken_main_thread();
 }
 
 
@@ -74,4 +64,56 @@ DebugSymbol& ui::VarView::get_symbol(size_t n) const
     return *symbols_[n];
 }
 
+
+
+RefPtr<ui::VarView::Scope> ui::VarView::scope() const
+{
+    RefPtr<ui::VarView::Scope> scope;
+
+    if (RefPtr<Frame> f = controller().selection())
+    {
+        RefPtr<ZObject> obj = f->get_user_object(".scope");
+        if (!obj)
+        {
+            obj = new ui::VarView::Scope;
+            f->set_user_object(".scope", obj.get());
+        }
+        scope = interface_cast<ui::VarView::Scope>(obj);
+    }
+
+    if (!scope)
+    {
+        scope = new ui::VarView::Scope;
+    }
+    return scope;
+}
+
+
+bool ui::VarView::Scope::is_expanding(const DebugSymbol& sym) const
+{
+    SymKey key(sym);
+
+    auto i = vars_.find(key);
+    if (i != vars_.end())
+    {
+        return i->second.expand_; 
+    }
+    return false;
+}
+
+
+void ui::VarView::Scope::expand(DebugSymbol& sym, bool expand)
+{
+    SymKey key(sym);
+
+    auto i = vars_.find(key);
+    if (i == vars_.end())
+    {
+        vars_[key].expand_ = expand;
+    }
+    else
+    {
+        i->second.expand_ = expand;
+    }
+}
 
