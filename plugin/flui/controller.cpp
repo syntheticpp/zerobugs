@@ -344,19 +344,19 @@ RefPtr<ui::Command> ui::Controller::update(
 
 {
     LockedScope lock(*this);
-
-    // allow for *one* command to be issued during update
-    CommandPtr command;
-    command.swap(command_);
-
     update(lock, thread, eventType);
+
+    if (command_ && command_->is_complete())
+    {
+        command_.reset();
+    }
 
     if (!command_)
     {
         command_ = idle_;
     }
 
-    return command ? command : command_;
+    return command_;
 }
 
 

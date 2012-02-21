@@ -306,8 +306,11 @@ bool ui::AsmView::refresh(
     }
 
     RefPtr<ui::Command> disassemble = new DisasmCommand(this, t, start);
+#if 0
     controller().call_async_on_main_thread(disassemble);
-
+#else   
+    disassemble->execute_on_main_thread();
+#endif
     return true;
 }
 
