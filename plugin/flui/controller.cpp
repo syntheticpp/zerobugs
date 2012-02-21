@@ -19,18 +19,6 @@
 using namespace std;
 
 
-RefPtr<Frame> ui::State::selection() const
-{
-    RefPtr<Frame> f;
-
-    if (RefPtr<Thread> t = current_thread())
-    {
-        f = t->stack_trace()->selection();
-    }
-    return f;
-}
-
-
 /**
  * Pass debugger and debuggee state information
  * from main thread to UI thread.
@@ -363,14 +351,6 @@ RefPtr<ui::Command> ui::Controller::update(
 
     update(lock, thread, eventType);
 
-    // if no command was issued during update,
-    // and the current command is not complete,
-    // re-instate it.
-    if (!command_ && command && !command->is_complete())
-    {
-        command_ = command;
-    }
-
     if (!command_)
     {
         command_ = idle_;
@@ -561,11 +541,4 @@ void ui::Controller::awaken_main_thread()
 {
     idle_->cancel();
 }
-
-////////////////////////////////////////////////////////////////
-RefPtr<Frame> ui::Controller::selection() const
-{
-    return state_ ? state_->selection() : nullptr;
-}
-
 

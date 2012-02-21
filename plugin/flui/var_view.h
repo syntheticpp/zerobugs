@@ -83,6 +83,13 @@ namespace ui
         virtual void update(const State&);
 
     private:
+        // @note: just to be consistent with the fact that this
+        // view (and its derived classses) show program variables
+        // to the user the Variables name is used here; the 
+        // debugger engine uses DebugSymbols to model variables;
+        // DebugSymbols may model other types of program artifacts,
+        // so they are more general. In the context of VarViews
+        // it is fair to use them interchangeably
         typedef std::vector<RefPtr<DebugSymbol> > Variables;
 
         struct VarState
@@ -106,16 +113,19 @@ namespace ui
             bool is_expanding(const DebugSymbol&) const;
             void expand(DebugSymbol&, bool);
 
+            void add_value(DebugSymbol&);
+            bool is_same_value(const DebugSymbol&);
+
         private:
             std::map<SymKey, VarState> vars_;
         };
 
     private:
-        RefPtr<Scope> scope() const;
+        Scope& scope() const;
 
-        RefPtr<Symbol>          current_;
-        mutable RefPtr<Scope>   scope_;
-        Variables               variables_;
+        RefPtr<Symbol>  current_;
+        RefPtr<Scope>   scope_;
+        Variables       variables_;
     };
 }
 

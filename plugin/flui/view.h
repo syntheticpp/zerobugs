@@ -37,8 +37,6 @@ namespace ui
     {
         virtual ~State() { }
         
-        RefPtr<Frame> selection() const;
-
         /** 
          * @note: this method is expected to be called on the
          * main debugger thread only

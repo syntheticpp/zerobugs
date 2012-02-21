@@ -177,8 +177,6 @@ namespace ui
 
         Debugger* debugger() { assert(debugger_); return debugger_; }
 
-        RefPtr<Frame> selection() const;
-
     protected:
         void build();
         void build_layout();
