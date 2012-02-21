@@ -12,7 +12,6 @@
 #include <FL/fl_draw.H>
 #include <FL/Enumerations.H>
 
-#include <iostream>
 
 static std::vector<const char*> header = { "Variable", "Type", "Value" };
 static const int pix_width = 16;
@@ -88,13 +87,12 @@ void Fl_VarTable::draw_cell(
 
 
 void Fl_VarTable::draw_symbol(
-
-    int             row,
-    int             col,
-    int             x,
-    int             y,
-    int             w,
-    int             h)
+    int row,
+    int col,
+    int x,
+    int y,
+    int w,
+    int h )
 {
     if (size_t(row) >= view_->variable_count())
     {
@@ -118,6 +116,10 @@ void Fl_VarTable::draw_symbol(
         break;
 
     case COL_VarValue:
+        if (view_->has_variable_changed(sym))
+        {
+            fl_color(FL_RED);
+        }
         fl_draw(sym.value()->c_str(), x + 2, y, w, h, FL_ALIGN_LEFT);
         break;
 

@@ -7,7 +7,6 @@
 // $Id: $
 //
 #include "zdk/debug_sym.h"
-#include "zdk/zobject_impl.h"
 #include "symkey.h"
 #include "view.h"
 #include <map>
@@ -37,6 +36,8 @@ namespace ui
         }
 
         void expand(size_t row, bool = true);
+
+        bool has_variable_changed(const DebugSymbol&) const;
 
     protected:
         ~VarView() throw();
@@ -92,33 +93,7 @@ namespace ui
         // it is fair to use them interchangeably
         typedef std::vector<RefPtr<DebugSymbol> > Variables;
 
-        struct VarState
-        {
-            bool            expand_;
-            SharedStringPtr value_;
-        };
-        /**
-         * Track state associated with variables
-         * visualized within a given scope.
-         */
-        struct Scope : public ZObjectImpl<>
-        {
-            DECLARE_UUID("ef5bcbfa-aa9d-49f5-9889-2a891f578205")
-
-            BEGIN_INTERFACE_MAP(Scope)
-                INTERFACE_ENTRY(Scope)
-            END_INTERFACE_MAP()
-
-            ~Scope() throw() { }
-            bool is_expanding(const DebugSymbol&) const;
-            void expand(DebugSymbol&, bool);
-
-            void add_value(DebugSymbol&);
-            bool is_same_value(const DebugSymbol&);
-
-        private:
-            std::map<SymKey, VarState> vars_;
-        };
+        struct Scope;
 
     private:
         Scope& scope() const;

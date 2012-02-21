@@ -5,13 +5,83 @@
 // $Id: $
 //
 #include "zdk/thread_util.h"
+#include "zdk/zobject_impl.h"
 #include "controller.h"
 #include "flvar_view.h"
 #include "var_view.h"
-#include <iostream>
-using namespace std;
+//#include <iostream>
+//using namespace std;
 
 
+struct VarState
+{
+    bool            expand_;
+    SharedStringPtr value_;
+};
+
+/**
+ * Track state associated with variables
+ * visualized within a given scope.
+ */
+struct ui::VarView::Scope : public ZObjectImpl<>
+{
+    DECLARE_UUID("ef5bcbfa-aa9d-49f5-9889-2a891f578205")
+
+    BEGIN_INTERFACE_MAP(Scope)
+        INTERFACE_ENTRY(Scope)
+    END_INTERFACE_MAP()
+
+    ~Scope() throw() { }
+    bool is_expanding(const DebugSymbol&) const;
+    void expand(DebugSymbol&, bool);
+
+    bool has_variable_changed(const DebugSymbol&);
+
+private:
+    std::map<SymKey, VarState> vars_;
+};
+
+
+ui::VarView::Scope& ui::VarView::scope() const
+{
+    assert(scope_);
+    return *scope_;
+}
+
+
+bool ui::VarView::Scope::is_expanding(const DebugSymbol& sym) const
+{
+    SymKey key(sym);
+
+    auto i = vars_.find(key);
+    if (i != vars_.end())
+    {
+        return i->second.expand_;
+    }
+    return false;
+}
+
+
+void ui::VarView::Scope::expand(DebugSymbol& sym, bool expand)
+{
+    SymKey key(sym);
+    vars_[key].expand_ = expand;
+}
+
+
+bool ui::VarView::Scope::has_variable_changed(const DebugSymbol& sym)
+{
+    SymKey key(sym);
+    VarState& v = vars_[key];
+
+    const bool result = v.value_ && !v.value_->is_equal2(sym.value());
+    v.value_ = sym.value();
+
+    return result;
+}
+
+
+////////////////////////////////////////////////////////////////
 ui::VarView::VarView(ui::Controller& c) : View(c)
 {
 }
@@ -112,30 +182,8 @@ bool ui::VarView::is_same_scope(Symbol* sym) const
 }
 
 
-ui::VarView::Scope& ui::VarView::scope() const
+bool ui::VarView::has_variable_changed(const DebugSymbol& sym) const
 {
-    assert(scope_);
-    return *scope_;
+    return scope().has_variable_changed(sym);
 }
-
-
-bool ui::VarView::Scope::is_expanding(const DebugSymbol& sym) const
-{
-    SymKey key(sym);
-
-    auto i = vars_.find(key);
-    if (i != vars_.end())
-    {
-        return i->second.expand_;
-    }
-    return false;
-}
-
-
-void ui::VarView::Scope::expand(DebugSymbol& sym, bool expand)
-{
-    SymKey key(sym);
-    vars_[key].expand_ = expand;
-}
-
 
