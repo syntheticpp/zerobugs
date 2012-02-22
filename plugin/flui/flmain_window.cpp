@@ -6,7 +6,7 @@
 //
 #include "controller.h"
 #include "flmain_window.h"
-#include <iostream>
+// #include <iostream>
 
 using namespace std;
 
@@ -26,6 +26,7 @@ FlMainWindow::FlMainWindow(
 }
 
 
+// just a debug hook for monitoring events
 int FlMainWindow::handle(int eventType)
 {
     return Fl_Double_Window::handle(eventType); 

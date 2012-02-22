@@ -528,8 +528,6 @@ void ui::Controller::call_async_on_main_thread(RefPtr<Command> c)
         {
             awaken_main_thread();
         }
-        // make sure we're not overriding incomplete command
-        // assert(command_.is_null() || command_->is_complete());
 
         command_ = c;
     }

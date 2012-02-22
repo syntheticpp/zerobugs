@@ -64,7 +64,6 @@ bool BreakPointManagerBase::enable_software_breakpoint(
         catch (const exception& e)
         {
            dbgout(Log::ALWAYS) << e.what() << endl;
-            cerr<< __func__ << ": " << e.what() << endl;
         }
     }
     // failed using the thread for reading?
@@ -449,10 +448,6 @@ void BreakPointManagerImpl::erase(RefPtr<BreakPoint> bpnt)
             if (i->get() == wp)
             {
                 watchPoints_.erase(i);
-
-                // is it needed to call notification callback here?
-                //call_callback(onRemove_, bpnt.get());
-
                 break;
             }
         }
@@ -473,8 +468,8 @@ void BreakPointManagerImpl::erase(RefPtr<BreakPoint> bpnt)
 
     if (i != mptr->end())
     {
-        call_callback(onRemove_, bpnt.get());
         mptr->erase(i);
+        call_callback(onRemove_, bpnt.get());
     }
     else
     {
