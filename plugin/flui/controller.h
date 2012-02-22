@@ -212,6 +212,7 @@ namespace ui
         pthread_t                   uiThreadId_;
 
         RefPtr<Layout>              layout_;
+        RefPtr<CodeView>            code_;
         RefPtr<CompositeMenu>       menu_;
         RefPtr<Toolbar>             toolbar_;
         std::unique_ptr<StateImpl>  state_;

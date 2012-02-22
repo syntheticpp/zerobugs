@@ -6,13 +6,14 @@
 //
 // $Id: $
 //
+#include "zdk/shared_string.h"
 #include "listing.h"
+#include <map>
 #include <set>
-#include <string>
 #include <vector>
 #include <unordered_map>
+#include <FL/Fl_Pixmap.H>
 #include <FL/Fl_Table.H>
-#include "dharma/sarray.h"
 
 
 /**
@@ -22,16 +23,19 @@
 class Fl_CodeTable : public Fl_Table
 {
 public:
-    static const std::string mark_arrow;
+    static const SharedStringPtr mark_arrow;
+    static const SharedStringPtr mark_stop_enabled;
+    static const SharedStringPtr mark_stop_disabled;
 
     void set_mark_pixmap(
-        const std::string&  mark,
+        SharedStringPtr     mark,
         const char* const*  pixmapData );
     
-    void set_mark_at_line(int, const std::string& mark, bool = true);
+    void set_mark_at_line(int, SharedStringPtr, bool = true);
 
 protected:
     Fl_CodeTable(int x, int y, int w, int h, const char* label = nullptr);
+    ~Fl_CodeTable();
 
     void draw_line_marks(int row, int x, int y);
 
@@ -59,10 +63,10 @@ private:
     int  highlight_; // index of current highlighted line
 
     // map line number to set of (optional) marks at that line
-    std::unordered_map<int, std::set<std::string> > marks_;
+    std::unordered_map<int, std::set<SharedStringPtr> > marks_;
 
     // map mark name to pixmap data
-    std::unordered_map<std::string, SArray> pixmaps_;
+    std::map<SharedStringPtr, Fl_Pixmap*> pixmaps_;
 };
 
 

@@ -85,6 +85,30 @@ public:
 
 
 ////////////////////////////////////////////////////////////////
+class BreakPointUpdater : public EnumCallback<volatile BreakPoint*>
+{
+public:
+    explicit BreakPointUpdater(const RefPtr<ui::CodeView> view) 
+        : view_(view)
+    { }
+
+    void notify(volatile BreakPoint* breakpoint)
+    {
+        if (RefPtr<BreakPoint> bp = const_cast<BreakPoint*>(breakpoint))
+        {
+            if (bp->enum_actions("USER"))
+            {
+                view_->update_breakpoint(*bp);
+            }
+        }
+    }
+
+private:
+    RefPtr<ui::CodeView> view_;
+};
+
+
+////////////////////////////////////////////////////////////////
 /**
  * An error may occur while executing a command on the main thread.
  * When this happens the controller replaces the command in the
@@ -186,9 +210,10 @@ void ui::Controller::build_layout()
 {
     layout_ = init_layout();
 
-    if (auto v = init_code_view())
+    code_ = init_code_view();
+    if (code_)
     {
-        layout_->add(*v);
+        layout_->add(*code_);
     }
 
     if (auto v = init_stack_view())
@@ -214,13 +239,13 @@ void ui::Controller::build_menu()
             debugger_->quit();
         });
 
-    menu_->add_item("&Debug/&Continue", FL_F + 5, MenuElem::Enable_IfStopped,
+    menu_->add_item("&Run/&Continue", FL_F + 5, MenuElem::Enable_IfStopped,
         [this]()
         {
             debugger_->resume();
         });
 
-    menu_->add_item("&Debug/&Next", FL_F + 10, MenuElem::Enable_IfStopped,
+    menu_->add_item("&Run/&Next", FL_F + 10, MenuElem::Enable_IfStopped,
         [this]()
         {
             if (auto t = state_->current_thread())
@@ -230,7 +255,7 @@ void ui::Controller::build_menu()
             }
         });
 
-    menu_->add_item("&Debug/&Step", FL_F + 11, MenuElem::Enable_IfStopped,
+    menu_->add_item("&Run/&Step", FL_F + 11, MenuElem::Enable_IfStopped,
         [this]()
         {
             if (auto t = state_->current_thread())
@@ -240,7 +265,7 @@ void ui::Controller::build_menu()
             }
         });
 
-    menu_->add_item("&Debug/&Break", FL_CTRL + 'c', MenuElem::Enable_IfRunning,
+    menu_->add_item("&Run/&Break", FL_CTRL + 'c', MenuElem::Enable_IfRunning,
         [this]()
         {
         });
@@ -332,6 +357,14 @@ void ui::Controller::update(
     if (toolbar_)
     {
         toolbar_->update(*state_);
+    }
+
+    code_->update(*state_);
+
+    BreakPointUpdater updater(code_);
+    if (RefPtr<BreakPointManager> mgr = debugger_->breakpoint_manager())
+    {
+        mgr->enum_breakpoints(&updater);
     }
 }
 
@@ -484,12 +517,16 @@ void ui::Controller::on_program_resumed()
 ////////////////////////////////////////////////////////////////
 void ui::Controller::on_insert_breakpoint(volatile BreakPoint*)
 {
+    LockedScope lock(*this);
+    update(lock, state_->current_thread().get(), E_PROMPT);
 }
 
 
 ////////////////////////////////////////////////////////////////
 void ui::Controller::on_remove_breakpoint(volatile BreakPoint*)
 {
+    LockedScope lock(*this);
+    update(lock, state_->current_thread().get(), E_PROMPT);
 }
 
 

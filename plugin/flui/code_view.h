@@ -31,13 +31,18 @@ namespace ui
          * Make the symbol (and the code surrounding it) visible.
          */
         virtual void show(RefPtr<Thread>, RefPtr<Symbol>) = 0;
+        
+        /**
+         * update view to show breakpoint, if necessary
+         */
+        virtual void update_breakpoint(BreakPoint&) = 0;
 
     protected:
         explicit CodeView(Controller&);
         ~CodeView() throw();
 
         virtual ViewType type() const { return VIEW_Code; }
-       
+
     protected:
         RefPtr<Symbol>  current_;
     };
@@ -155,6 +160,11 @@ namespace ui
         virtual ViewType type() const { return VIEW_Code; }
 
         virtual void update(const State&);
+        
+        /**
+         * update view to show breakpoint, if necessary
+         */
+        void update_breakpoint(BreakPoint&);
 
         virtual void make_visible(CodeViewPtr) = 0;
 

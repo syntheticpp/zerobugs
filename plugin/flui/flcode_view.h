@@ -26,6 +26,7 @@ protected:
 
     virtual void update(const ui::State&);
 
+    virtual void update_breakpoint(BreakPoint&);
     virtual void show(RefPtr<Thread>, RefPtr<Symbol>);
 };
 
@@ -40,9 +41,11 @@ public:
 
 protected:
     ~FlAsmView() throw();
-   
+
+
     virtual void update(const ui::State&);
 
+    virtual void update_breakpoint(BreakPoint&);
     virtual void show(RefPtr<Thread>, RefPtr<Symbol>);
 
     virtual void set_row_count(int n) {

@@ -6,6 +6,7 @@
 //
 #include "code_view.h"
 #include "zdk/align.h"
+#include "zdk/breakpoint.h"
 #include "zdk/check_ptr.h"
 #include "zdk/zero.h"
 #include "command.h"
@@ -14,11 +15,11 @@
 #include <fstream>
 #include <iostream>
 
-
 using namespace std;
 static const size_t ASM_WINDOW_SIZE = 256;
 
 
+////////////////////////////////////////////////////////////////
 ui::CodeView::CodeView(ui::Controller& controller)
     : ui::View(controller)
 {
@@ -42,20 +43,15 @@ ui::SourceView::~SourceView() throw()
 }
 
 
-bool ui::SourceView::refresh(
-
-    const RefPtr<Thread>&,
-    const RefPtr<Symbol>& sym)
+const char* ui::SourceView::current_file() const
 {
-    current_ = sym;
+    return filename_.c_str();
+}
 
-    const char* filename = sym->file()->c_str();
-    if (filename_ == filename)
-    {
-        return false;
-    }
-    read_file(filename);
-    return true;
+
+size_t ui::SourceView::current_line() const
+{
+    return current_ ? current_->line() : 0;
 }
 
 
@@ -82,15 +78,21 @@ void ui::SourceView::read_file(const char* filename)
 }
 
 
-const char* ui::SourceView::current_file() const
-{
-    return filename_.c_str();
-}
+bool ui::SourceView::refresh(
 
+    const RefPtr<Thread>& /* not used */,
+    const RefPtr<Symbol>& sym )
 
-size_t ui::SourceView::current_line() const
 {
-    return current_ ? current_->line() : 0;
+    current_ = sym;
+
+    const char* filename = sym->file()->c_str();
+    if (filename_ == filename)
+    {
+        return false;
+    }
+    read_file(filename);
+    return true;
 }
 
 
@@ -105,8 +107,14 @@ ui::MultiCodeView::~MultiCodeView() throw()
 {
 }
 
+
 void ui::MultiCodeView::update(const ui::State& s)
 {
+    for (auto v = views_.begin(); v != views_.end(); ++v)
+    {
+        v->second->update(s);
+    }
+
     if (s.current_event_type() == E_TARGET_FINISHED)
     {
         // TODO: target has detached, close all views
@@ -141,13 +149,30 @@ void ui::MultiCodeView::update(const ui::State& s)
         }
         current_ = sym;
         i->second->show(t, sym);
+
         make_visible(i->second);
     }
 }
 
+
+void ui::MultiCodeView::update_breakpoint(BreakPoint& bpnt)
+{
+    if (RefPtr<Symbol> sym = bpnt.symbol())
+    {
+        SharedStringPtr filename = sym->file();
+
+        auto i = views_.find(filename);
+        if (i != views_.end())
+        {
+            i->second->update_breakpoint(bpnt);
+        }
+    }
+}
+
+
 ////////////////////////////////////////////////////////////////
-ui::AsmView::AsmView(ui::Controller& c) 
-    : CodeView(c)
+ui::AsmView::AsmView(ui::Controller& controller)
+    : CodeView(controller)
 {
 }
 
@@ -188,11 +213,16 @@ size_t ui::AsmView::current_line() const
 
 const string& ui::AsmView::line(size_t n) const
 {
+#if 0
     static const string empty;
     if (n >= lines_.size())
     {
         return empty;
     }
+#else
+    assert (n < lines_.size());
+#endif
+
     return lines_[n];
 }
 

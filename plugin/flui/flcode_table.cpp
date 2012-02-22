@@ -4,7 +4,7 @@
 //
 // $Id: $
 //
-#include "zdk/stdexcept.h"
+#include "zdk/shared_string_impl.h"
 #include "zdk/symbol.h"
 #include "flcode_table.h"
 #include <FL/fl_draw.H>
@@ -16,7 +16,10 @@
 using namespace std;
 
 
-const string Fl_CodeTable::mark_arrow = { "arrow" };
+const SharedStringPtr Fl_CodeTable::mark_arrow = shared_string("arrow");
+const SharedStringPtr Fl_CodeTable::mark_stop_enabled = shared_string( "_stopOn");
+const SharedStringPtr Fl_CodeTable::mark_stop_disabled = shared_string( "_stopOff");
+
 
 enum ColumnType
 {
@@ -35,6 +38,16 @@ Fl_CodeTable::Fl_CodeTable(int x, int y, int w, int h, const char* label)
 {
     col_header(true);
 }
+
+
+Fl_CodeTable::~Fl_CodeTable()
+{
+    for (auto i = pixmaps_.begin(); i != pixmaps_.end(); ++i)
+    {
+        delete i->second;
+    }
+}
+
 
 
 Fl_Color Fl_CodeTable::cell_background(int row, int col) const
@@ -80,7 +93,9 @@ void Fl_CodeTable::highlight_line(ui::CodeListing* listing, int line)
 }
 
 
-// draw pixmap marks associated with row, if any
+/**
+ * Draw pixmap marks associated with row, if any.
+ */
 void Fl_CodeTable::draw_line_marks(int row, int x, int y)
 {
     auto m = marks_.find(row + 1);
@@ -91,7 +106,7 @@ void Fl_CodeTable::draw_line_marks(int row, int x, int y)
             auto p = pixmaps_.find(mark);
             if (p != pixmaps_.end())
             {
-                fl_draw_pixmap(p->second.cstrings(), x, y, FL_LIGHT2);
+                p->second->draw(x, y);
             }
         }
     }
@@ -101,10 +116,24 @@ void Fl_CodeTable::draw_line_marks(int row, int x, int y)
 void Fl_CodeTable::set_mark_at_line(
 
     int                 line,
-    const std::string&  mark,
+    SharedStringPtr     mark,
     bool                setMark /* = true */)
 {
-    if (setMark)
+    if (line < 0)
+    {
+        for (auto i = marks_.begin(); i != marks_.end(); ++i)
+        {
+            if (setMark)
+            {
+                i->second.insert(mark);
+            }
+            else
+            {
+                i->second.erase(mark);
+            }
+        }
+    }
+    else if (setMark)
     {
         marks_[line].insert(mark);
     }
@@ -117,10 +146,10 @@ void Fl_CodeTable::set_mark_at_line(
 
 void Fl_CodeTable::set_mark_pixmap(
 
-    const std::string&  mark,
+    SharedStringPtr     mark,
     const char* const*  data )
 {
-    pixmaps_.insert(make_pair(mark, data));
+    pixmaps_.insert(make_pair(mark, new Fl_Pixmap(data)));
 }
 
 
