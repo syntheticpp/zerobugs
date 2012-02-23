@@ -27,11 +27,25 @@ public:
     static const SharedStringPtr mark_stop_enabled;
     static const SharedStringPtr mark_stop_disabled;
 
+    /**
+     * Associate a mark name with the pixmap data.
+     */
     void set_mark_pixmap(
         SharedStringPtr     mark,
-        const char* const*  pixmapData );
-    
-    void set_mark_at_line(int, SharedStringPtr, bool = true);
+        const char* const*  pixmap );
+
+    /**
+     * Set or remove a pixmap marker at specified line.
+     */
+    void set_mark_at_line(
+        int             line,
+        SharedStringPtr mark,
+        bool            setMark = true);
+
+    /**
+     * Remove all marks at all lines with given mark name
+     */
+    void remove_all_marks(SharedStringPtr mark);
 
 protected:
     Fl_CodeTable(int x, int y, int w, int h, const char* label = nullptr);
@@ -66,9 +80,9 @@ private:
     std::unordered_map<int, std::set<SharedStringPtr> > marks_;
 
     // map mark name to pixmap data
-    std::map<SharedStringPtr, Fl_Pixmap*> pixmaps_;
+    // @note: use a map to implicitly sort by name
+    std::map<SharedStringPtr, std::shared_ptr<Fl_Pixmap> > pixmaps_;
 };
-
 
 
 /**

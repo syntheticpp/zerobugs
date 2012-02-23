@@ -9,13 +9,10 @@
 #include "flcode_view.h"
 #include "flcode_table.h"
 #include "flpack_layout.h"
-#include "icons/arrow.xpm"
-#include "icons/stop_red.xpm"
-#include "icons/stop_pink.xpm"
 #include <FL/Enumerations.H>
+#include <iostream>
 
 using namespace std;
-
 
 static const int LABEL_HEIGHT = 25;
 
@@ -29,10 +26,6 @@ FlSourceView::FlSourceView(
 {
     widget()->copy_label(filename);
     widget()->set_listing(this);
-
-    widget()->set_mark_pixmap(Fl_CodeTable::mark_arrow, arrow_xpm);
-    widget()->set_mark_pixmap(Fl_CodeTable::mark_stop_enabled, stop_red_xpm);
-    widget()->set_mark_pixmap(Fl_CodeTable::mark_stop_disabled, stop_pink_xpm);
 }
 
 
@@ -49,23 +42,20 @@ void FlSourceView::show(RefPtr<Thread> t, RefPtr<Symbol> sym)
 
 void FlSourceView::update(const ui::State&)
 {
-    widget()->set_mark_at_line(-1, Fl_CodeTable::mark_stop_enabled, false);
-    widget()->set_mark_at_line(-1, Fl_CodeTable::mark_stop_disabled, false);
+    widget()->remove_all_marks(Fl_CodeTable::mark_stop_enabled);
+    widget()->remove_all_marks(Fl_CodeTable::mark_stop_disabled);
 }
 
 
 void FlSourceView::update_breakpoint(BreakPoint& bpnt)
 {
-    size_t line = bpnt.symbol()->line();
+    const size_t line = bpnt.symbol()->line();
 
-    if (bpnt.is_enabled())
-    {
-        widget()->set_mark_at_line(line, Fl_CodeTable::mark_stop_enabled);
-    }
-    else
-    {
-        widget()->set_mark_at_line(line, Fl_CodeTable::mark_stop_disabled);
-    }
+    SharedStringPtr mark = bpnt.is_enabled()
+        ? Fl_CodeTable::mark_stop_enabled
+        : Fl_CodeTable::mark_stop_disabled;
+
+    widget()->set_mark_at_line(line, mark);
 }
 
 
@@ -74,9 +64,9 @@ FlAsmView::FlAsmView(ui::Controller& controller, const Symbol& sym)
     : base_type(controller, 0, 0, 0, 0)
 {
     const char* fname = basename(sym.file()->c_str());
+    
     widget()->copy_label(fname);
     widget()->set_listing(this);
-    widget()->set_mark_pixmap(Fl_CodeTable::mark_arrow, arrow_xpm);
 }
 
 
@@ -87,13 +77,24 @@ FlAsmView::~FlAsmView() throw()
 
 void FlAsmView::update(const ui::State&)
 {
-    // TODO: remove all breakpoint marks
+    widget()->remove_all_marks(Fl_CodeTable::mark_stop_enabled);
+    widget()->remove_all_marks(Fl_CodeTable::mark_stop_disabled);
 }
 
 
 void FlAsmView::update_breakpoint(BreakPoint& bpnt)
 {
-    // TODO:
+    addr_t addr = bpnt.symbol()->addr();
+    if (bpnt.is_deferred())
+    {
+        // TODO: adjust address
+    }
+
+    SharedStringPtr mark = bpnt.is_enabled()
+        ? Fl_CodeTable::mark_stop_enabled
+        : Fl_CodeTable::mark_stop_disabled;
+
+    widget()->set_mark_at_line(addr_to_line(addr), mark);
 }
 
 
@@ -116,6 +117,13 @@ FlMultiCodeView::FlMultiCodeView(ui::Controller& controller)
 
 FlMultiCodeView::~FlMultiCodeView() throw ()
 {
+}
+
+
+void FlMultiCodeView::clear()
+{
+    widget()->clear();
+    MultiCodeView::clear();
 }
 
 

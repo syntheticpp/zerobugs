@@ -38,50 +38,51 @@ public:
         , isTargetStopped_(false)
     { }
 
-    virtual void update(Thread* thread, EventType eventType)
-    {
-        isTargetStopped_    = false;
-        currentThread_      = thread;
-        currentEventType_   = eventType;
-        currentSymbol_.reset();
+    virtual void update(Thread*, EventType);
 
-        if (thread && eventType != E_TARGET_RESUMED)
-        {
-            isTargetStopped_ = thread_stopped(*thread);
-
-            addr_t pc = thread->program_count();
-            assert(thread->symbols());
-
-            currentSymbol_ = thread->symbols()->lookup_symbol(pc);
-        }
-    }
-
-    virtual bool is_target_running() const
-    {
+    virtual bool is_target_running() const {
         bool result = (currentEventType_ == E_TARGET_RESUMED);
         return result;
     }
 
-    virtual bool is_target_stopped() const
-    {
+    virtual bool is_target_stopped() const {
         return isTargetStopped_;
     }
 
-    virtual EventType current_event_type() const
-    {
+    virtual EventType current_event_type() const {
         return currentEventType_;
     }
 
-    virtual RefPtr<Symbol> current_symbol() const
-    {
+    virtual RefPtr<Symbol> current_symbol() const {
         return currentSymbol_;
     }
 
-    virtual RefPtr<Thread> current_thread() const
-    {
+    virtual RefPtr<Thread> current_thread() const {
         return currentThread_;
     }
 };
+
+void ui::Controller::StateImpl::update(
+    
+    Thread*     currentThread,
+    EventType   eventType )
+
+{
+    isTargetStopped_    = false;
+    currentThread_      = currentThread;
+    currentEventType_   = eventType;
+    currentSymbol_.reset();
+
+    if (currentThread && eventType != E_TARGET_RESUMED)
+    {
+        isTargetStopped_ = thread_stopped(*currentThread);
+
+        addr_t pc = currentThread->program_count();
+        assert(currentThread->symbols());
+
+        currentSymbol_ = currentThread->symbols()->lookup_symbol(pc);
+    }
+}
 
 
 ////////////////////////////////////////////////////////////////
@@ -92,14 +93,14 @@ public:
         : view_(view)
     { }
 
-    void notify(volatile BreakPoint* breakpoint)
+    void notify(volatile BreakPoint* bp)
     {
-        if (RefPtr<BreakPoint> bp = const_cast<BreakPoint*>(breakpoint))
+        // we only care about user-defined breakpoints,
+        // the internal breakpoints used by the engine 
+        // are not shown 
+        if (bp->enum_actions("USER"))
         {
-            if (bp->enum_actions("USER"))
-            {
-                view_->update_breakpoint(*bp);
-            }
+            view_->update_breakpoint(const_cast<BreakPoint&>(*bp));
         }
     }
 
@@ -111,7 +112,7 @@ private:
 ////////////////////////////////////////////////////////////////
 /**
  * An error may occur while executing a command on the main thread.
- * When this happens the controller replaces the command in the
+ * Should that happen, the controller replaces the command in the
  * mail-slot with this one, so that an error message is shown in
  * the UI thread.
  */
@@ -267,7 +268,8 @@ void ui::Controller::build_menu()
 
     menu_->add_item("&Run/&Break", FL_CTRL + 'c', MenuElem::Enable_IfRunning,
         [this]()
-        {
+        {   // nothing to do here, call_async_on_main_thread 
+            // will ensure the target breaks into the debugger
         });
     }
 
@@ -345,11 +347,9 @@ void ui::Controller::update(
 {
     state_->update(thread, eventType);
 
+    //
     // pass updated state info to UI elements
-    if (layout_)
-    {
-        layout_->update(*state_);
-    }
+    //
     if (menu_)
     {
         menu_->update(*state_);
@@ -358,13 +358,21 @@ void ui::Controller::update(
     {
         toolbar_->update(*state_);
     }
-
-    code_->update(*state_);
-
-    BreakPointUpdater updater(code_);
-    if (RefPtr<BreakPointManager> mgr = debugger_->breakpoint_manager())
+  
+    if (layout_)
     {
-        mgr->enum_breakpoints(&updater);
+        layout_->update(*state_);
+    }
+    // @note: Updating the layout automatically updates code views
+    // and we want to update breakpoints last;
+    // DO NOT CHANGE this order of operations.
+    if (code_)
+    {
+        BreakPointUpdater updater(code_);
+        if (RefPtr<BreakPointManager> mgr = debugger_->breakpoint_manager())
+        {
+            mgr->enum_breakpoints(&updater);
+        }
     }
 }
 
@@ -412,7 +420,7 @@ bool ui::Controller::on_event(
         c = new CommandError(e.what());
     }
     notify_ui_thread();
-    return true;    // event handled
+    return true; // event handled
 }
 
 
@@ -484,15 +492,15 @@ void ui::Controller::on_table_done(SymbolTable*)
 
 
 ////////////////////////////////////////////////////////////////
-void ui::Controller::on_attach(Thread* thread)
+void ui::Controller::on_attach(Thread*)
 {
 }
 
 
 ////////////////////////////////////////////////////////////////
-void ui::Controller::on_detach(Thread* thread)
+void ui::Controller::on_detach(Thread* t)
 {
-    if (thread == 0) // detached from all threads?
+    if (t == 0) // detached from all threads?
     {
         LockedScope lock(*this);
         update(lock, nullptr, E_TARGET_FINISHED);
@@ -515,18 +523,24 @@ void ui::Controller::on_program_resumed()
 
 
 ////////////////////////////////////////////////////////////////
-void ui::Controller::on_insert_breakpoint(volatile BreakPoint*)
+void ui::Controller::on_insert_breakpoint(volatile BreakPoint* bpnt)
 {
-    LockedScope lock(*this);
-    update(lock, state_->current_thread().get(), E_PROMPT);
+    if (bpnt->enum_actions("USER"))
+    {
+        LockedScope lock(*this);
+        update(lock, state_->current_thread().get(), E_PROMPT);
+    }
 }
 
 
 ////////////////////////////////////////////////////////////////
-void ui::Controller::on_remove_breakpoint(volatile BreakPoint*)
+void ui::Controller::on_remove_breakpoint(volatile BreakPoint* bpnt)
 {
-    LockedScope lock(*this);
-    update(lock, state_->current_thread().get(), E_PROMPT);
+    if (bpnt->enum_actions("USER"))
+    {
+        LockedScope lock(*this);
+        update(lock, state_->current_thread().get(), E_PROMPT);
+    }
 }
 
 
@@ -557,7 +571,7 @@ void ui::Controller::call_async_on_main_thread(RefPtr<Command> c)
 {
     if (c)
     {
-        if (state_ && state_->is_target_running())
+        if (state_->is_target_running())
         {
             debugger_->stop();
         }
@@ -576,4 +590,3 @@ void ui::Controller::awaken_main_thread()
 {
     idle_->cancel();
 }
-

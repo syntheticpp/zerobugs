@@ -190,6 +190,5 @@ void FlLocalsView::update(const ui::State& state)
 {
     base_type::update(state);
     widget()->rows(variable_count());
-    widget()->redraw();
 }
 

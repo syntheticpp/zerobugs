@@ -65,6 +65,8 @@ public:
 protected:
     ~FlMultiCodeView() throw();
 
+    virtual void clear();
+
     virtual void show(RefPtr<Thread>, RefPtr<Symbol>);
 
     virtual ui::Layout::CallbackPtr make_callback();
@@ -75,4 +77,3 @@ protected:
 };
 
 #endif // FLCODE_VIEW_H__8EF08CB5_1507_4F24_80E2_8FF2EA8DF721
-

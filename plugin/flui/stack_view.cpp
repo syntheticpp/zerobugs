@@ -54,7 +54,7 @@ void ui::StackView::select_frame(size_t n)
         return;
     }
 
-#if DEBUG
+#if 0 //  DEBUG
     std::clog << __func__ <<  " " << n << std::endl;
 #endif
 

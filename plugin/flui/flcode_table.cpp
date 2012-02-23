@@ -7,18 +7,22 @@
 #include "zdk/shared_string_impl.h"
 #include "zdk/symbol.h"
 #include "flcode_table.h"
+
+#include "icons/arrow.xpm"
+#include "icons/stop_red.xpm"
+#include "icons/stop_pink.xpm"
+
 #include <FL/fl_draw.H>
 #include <FL/Enumerations.H>
 #include <algorithm>
-#include <cassert>
 #include <boost/algorithm/string.hpp>
 
 using namespace std;
 
 
 const SharedStringPtr Fl_CodeTable::mark_arrow = shared_string("arrow");
-const SharedStringPtr Fl_CodeTable::mark_stop_enabled = shared_string( "_stopOn");
-const SharedStringPtr Fl_CodeTable::mark_stop_disabled = shared_string( "_stopOff");
+const SharedStringPtr Fl_CodeTable::mark_stop_enabled = shared_string( "__stop_on");
+const SharedStringPtr Fl_CodeTable::mark_stop_disabled = shared_string( "__stop_off");
 
 
 enum ColumnType
@@ -30,6 +34,7 @@ enum ColumnType
     COL_Addr = COL_Line
 };
 
+
 ////////////////////////////////////////////////////////////////
 
 Fl_CodeTable::Fl_CodeTable(int x, int y, int w, int h, const char* label)
@@ -37,17 +42,16 @@ Fl_CodeTable::Fl_CodeTable(int x, int y, int w, int h, const char* label)
     , highlight_(0)
 {
     col_header(true);
+
+    set_mark_pixmap(Fl_CodeTable::mark_arrow, arrow_xpm);
+    set_mark_pixmap(Fl_CodeTable::mark_stop_enabled, stop_red_xpm);
+    set_mark_pixmap(Fl_CodeTable::mark_stop_disabled, stop_pink_xpm);
 }
 
 
 Fl_CodeTable::~Fl_CodeTable()
 {
-    for (auto i = pixmaps_.begin(); i != pixmaps_.end(); ++i)
-    {
-        delete i->second;
-    }
 }
-
 
 
 Fl_Color Fl_CodeTable::cell_background(int row, int col) const
@@ -67,6 +71,7 @@ Fl_Font Fl_CodeTable::font() const
 {
     return FL_SCREEN;
 }
+
 
 int Fl_CodeTable::font_size() const
 {
@@ -113,27 +118,22 @@ void Fl_CodeTable::draw_line_marks(int row, int x, int y)
 }
 
 
+void Fl_CodeTable::remove_all_marks(SharedStringPtr mark)
+{
+    for (auto i = marks_.begin(); i != marks_.end(); ++i)
+    {
+        i->second.erase(mark);
+    }
+}
+
+
 void Fl_CodeTable::set_mark_at_line(
 
     int                 line,
     SharedStringPtr     mark,
     bool                setMark /* = true */)
 {
-    if (line < 0)
-    {
-        for (auto i = marks_.begin(); i != marks_.end(); ++i)
-        {
-            if (setMark)
-            {
-                i->second.insert(mark);
-            }
-            else
-            {
-                i->second.erase(mark);
-            }
-        }
-    }
-    else if (setMark)
+    if (setMark)
     {
         marks_[line].insert(mark);
     }
@@ -200,7 +200,9 @@ void Fl_SourceTable::refresh(
 }
 
 
-// Compute lazily how many digits are needed to print line numbers
+/**
+ * Compute lazily how many digits are needed to print line numbers
+ */
 int Fl_SourceTable::line_digits() const
 {
     if (digits_ == 0)
@@ -234,6 +236,7 @@ void Fl_SourceTable::draw_header(int col, int x, int y, int w, int h)
 
 
 void Fl_SourceTable::draw_cell(
+
     TableContext    context,
     int             row,
     int             col,
@@ -241,6 +244,7 @@ void Fl_SourceTable::draw_cell(
     int             y,
     int             width,
     int             height)
+
 {
     switch (context)
     {
@@ -300,7 +304,7 @@ void Fl_SourceTable::resize(int x, int y, int w, int h)
 
 ////////////////////////////////////////////////////////////////
 //
-// (Dis)Assembly Code Table
+// Disassembly Code Table
 //
 Fl_AsmTable::Fl_AsmTable(int x, int y, int w, int h, const char* label)
     : Fl_CodeTable(x, y, w, h, label)
@@ -373,6 +377,8 @@ void Fl_AsmTable::draw_cell(
             if (rowData_.size() > 2)
             {
                 const string& asmText = rowData_[2];
+                // there may be an incomplete instruction at the end of
+                // the disassembly window
                 if (strncmp(asmText.c_str(), "invalid", 7) == 0)
                 {
                     break;
@@ -421,4 +427,3 @@ void Fl_AsmTable::resize(int x, int y, int w, int h)
         w - col_width(COL_Mark) - col_width(COL_Addr) - col_width(COL_Text) - 25);
     col_width(COL_Asm, asmWidth);
 }
-

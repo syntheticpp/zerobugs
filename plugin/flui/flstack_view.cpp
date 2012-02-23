@@ -204,6 +204,5 @@ void FlStackView::update(const ui::State& state)
 {
     base_type::update(state);
     widget()->rows(frame_count());
-    widget()->redraw();
 }
 

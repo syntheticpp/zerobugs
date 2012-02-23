@@ -6,11 +6,12 @@
 //
 // $Id: $
 //
-#include "zdk/config.h"
+// Toolkit-independent logic for displaying source and assembly code.
+//
+#include "view.h"
 #include "zdk/platform.h"
 #include "zdk/shared_string.h"
 #include "listing.h"
-#include "view.h"
 #include <unordered_map>
 
 using Platform::addr_t;
@@ -156,6 +157,8 @@ namespace ui
 
     protected:
         ~MultiCodeView() throw();
+
+        virtual void clear();
 
         virtual ViewType type() const { return VIEW_Code; }
 

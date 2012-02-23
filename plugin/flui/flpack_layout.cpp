@@ -83,11 +83,7 @@ int FlPackLayout::code_height() const
 void FlPackLayout::update(const ui::State& s)
 {
     ui::Layout::update(s);
-
-    if (s.is_target_stopped())
-    {
-        group_->redraw();
-    }
+    group_->redraw();
 }
 
 

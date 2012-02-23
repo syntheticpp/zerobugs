@@ -108,6 +108,12 @@ ui::MultiCodeView::~MultiCodeView() throw()
 }
 
 
+void ui::MultiCodeView::clear()
+{
+    views_.clear();
+}
+
+
 void ui::MultiCodeView::update(const ui::State& s)
 {
     for (auto v = views_.begin(); v != views_.end(); ++v)
@@ -117,7 +123,9 @@ void ui::MultiCodeView::update(const ui::State& s)
 
     if (s.current_event_type() == E_TARGET_FINISHED)
     {
-        // TODO: target has detached, close all views
+        // target has detached, close all views
+        clear();
+        return;
     }
 
     RefPtr<Symbol> sym; // current symbol in view
@@ -266,13 +274,11 @@ protected:
             this);
     }
 
-    void continue_on_ui_thread(ui::Controller&)
-    {
+    void continue_on_ui_thread(ui::Controller&) {
         complete_ = true;
     }
 
-    bool is_complete() const
-    {
+    bool is_complete() const {
         return complete_;
     }
     //
