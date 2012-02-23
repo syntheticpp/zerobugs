@@ -11,7 +11,6 @@
 #include "flcode_table.h"
 #include "flpack_layout.h"
 #include <FL/Enumerations.H>
-// #include <iostream>
 
 using namespace std;
 
@@ -59,7 +58,11 @@ void FlSourceView::update_breakpoint(BreakPoint& bpnt)
 
 
 ////////////////////////////////////////////////////////////////
-FlAsmView::FlAsmView(ui::Controller& controller, const Symbol& sym)
+FlAsmView::FlAsmView(
+
+    ui::Controller& controller,
+    const Symbol&   sym )
+
     : base_type(controller, 0, 0, 0, 0)
 {
     const char* fname = basename(sym.file()->c_str());

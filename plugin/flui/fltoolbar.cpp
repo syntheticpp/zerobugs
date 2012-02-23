@@ -18,7 +18,7 @@ FlToolbar::FlToolbar(
     : base_type(c, 0, 25, width, height)
 {
     widget()->type(Fl_Pack::HORIZONTAL);
-    widget()->box( FL_UP_FRAME );
+    widget()->box(FL_UP_FRAME);
     widget()->spacing(4);
     widget()->end();
 }
