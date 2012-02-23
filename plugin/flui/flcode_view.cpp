@@ -5,16 +5,15 @@
 // $Id: $
 //
 #include "zdk/zero.h"
+#include "const.h"
 #include "flcallback.h"
 #include "flcode_view.h"
 #include "flcode_table.h"
 #include "flpack_layout.h"
 #include <FL/Enumerations.H>
-#include <iostream>
+// #include <iostream>
 
 using namespace std;
-
-static const int LABEL_HEIGHT = 25;
 
 
 FlSourceView::FlSourceView(
@@ -155,9 +154,9 @@ ui::Layout::CallbackPtr FlMultiCodeView::make_callback()
         new Callback(
             widget(),
             widget()->x(),
-            widget()->y() + LABEL_HEIGHT,
+            widget()->y() + ui::Const::label_height,
             widget()->w(),
-            widget()->h() - LABEL_HEIGHT));
+            widget()->h() - ui::Const::label_height));
 }
 
 

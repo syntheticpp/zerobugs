@@ -6,7 +6,6 @@
 //
 #include "controller.h"
 #include "flmain_window.h"
-// #include <iostream>
 
 using namespace std;
 

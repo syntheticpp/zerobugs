@@ -5,6 +5,7 @@
 // $Id: $
 //
 #include "code_view.h"
+#include "const.h"
 #include "zdk/align.h"
 #include "zdk/breakpoint.h"
 #include "zdk/check_ptr.h"
@@ -16,7 +17,6 @@
 #include <iostream>
 
 using namespace std;
-static const size_t ASM_WINDOW_SIZE = 256;
 
 
 ////////////////////////////////////////////////////////////////
@@ -259,7 +259,7 @@ protected:
 
     void execute_on_main_thread()
     {
-        const size_t nwords = round_to_word(ASM_WINDOW_SIZE);
+        const size_t nwords = round_to_word(ui::Const::asm_window_size);
         buffer_.resize(nwords * sizeof(word_t));
         word_t* wordBuf = reinterpret_cast<word_t*>(&buffer_[0]);
         thread_->read_code(start_->addr(), wordBuf, nwords);
@@ -332,7 +332,7 @@ bool ui::AsmView::refresh(
 
     // disassemble before the symbol in view
     // so that the user can scroll up and down
-    addr -= ASM_WINDOW_SIZE / 2;
+    addr -= ui::Const::asm_window_size / 2;
 
     RefPtr<SymbolMap> symbols = CHKPTR(t)->symbols();
     RefPtr<Symbol> start = CHKPTR(symbols)->lookup_symbol(addr);

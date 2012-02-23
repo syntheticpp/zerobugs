@@ -6,7 +6,7 @@
 // ZDK headers
 #include "zdk/argv_util.h"
 #include "zdk/check_ptr.h"
-
+#include "const.h"
 #include "flcode_view.h"
 #include "flvar_view.h"
 #include "flmain_window.h"
@@ -31,9 +31,6 @@ using namespace std;
 #define WINDOW_W        "flui.window.width"
 #define WINDOW_H        "flui.window.height"
 #define WINDOW_TITLE    "ZeroBUGS"
-
-static const int default_window_width   = 1200;
-static const int default_window_height  = 800;
 
 
 /**
@@ -189,8 +186,8 @@ void Flui::init_main_window()
     // get coordinates and dimensions from saved properties
     const word_t x = prop.get_word(WINDOW_X, 0);
     const word_t y = prop.get_word(WINDOW_Y, 0);
-    const word_t h = prop.get_word(WINDOW_H, default_window_height);
-    const word_t w = prop.get_word(WINDOW_W, default_window_width);
+    const word_t h = prop.get_word(WINDOW_H, ui::Const::default_window_height);
+    const word_t w = prop.get_word(WINDOW_W, ui::Const::default_window_width);
 
     window_ = new FlMainWindow(*this, x, y, w, h, WINDOW_TITLE);
     window_->resizable(window_);
