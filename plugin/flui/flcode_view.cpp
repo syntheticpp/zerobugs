@@ -11,7 +11,7 @@
 #include "flcode_table.h"
 #include "flpack_layout.h"
 #include <FL/Enumerations.H>
-
+#include <iostream>
 using namespace std;
 
 
@@ -29,6 +29,12 @@ FlSourceView::FlSourceView(
 
 FlSourceView::~FlSourceView() throw()
 {
+}
+
+
+int FlSourceView::selected_line() const
+{
+    return widget()->selected_row() + 1;
 }
 
 
@@ -74,6 +80,12 @@ FlAsmView::FlAsmView(
 
 FlAsmView::~FlAsmView() throw()
 {
+}
+
+
+int FlAsmView::selected_line() const
+{
+    return widget()->selected_row() + 1;
 }
 
 
@@ -166,5 +178,21 @@ ui::Layout::CallbackPtr FlMultiCodeView::make_callback()
 void FlMultiCodeView::make_visible(RefPtr<CodeView> view)
 {
     widget()->value(dynamic_cast<FlViewBase&>(*view).base_widget());
+}
+
+
+ui::CodeViewPtr FlMultiCodeView::get_visible_view()
+{
+    for (auto v = begin(views_); v != end(views_); ++v)
+    {
+        Fl_Widget* w = dynamic_cast<FlViewBase&>(*v->second).base_widget();
+
+        if (w == widget()->value())
+        {
+            return v->second;
+        }
+    }
+
+    return nullptr;
 }
 

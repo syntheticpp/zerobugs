@@ -1515,7 +1515,9 @@ END_SLOT()
 
 ////////////////////////////////////////////////////////////////
 void
-MainWindow::set_breakpoint_on_main_thread(string spec, RefPtr<Thread> thread)
+MainWindow::set_breakpoint_on_main_thread(
+    string          spec,
+    RefPtr<Thread>  thread)
 {
     assert_main_thread();
 
@@ -1548,10 +1550,7 @@ MainWindow::set_breakpoint_on_main_thread(string spec, RefPtr<Thread> thread)
     }
 
     post_command(&MainWindow::set_breakpoints_on_ui_thread,
-                 this,
-                 spec,
-                 thread,
-                 sym);
+                 this, spec, thread, sym);
 }
 
 
@@ -1731,10 +1730,10 @@ END_SLOT()
 
 ////////////////////////////////////////////////////////////////
 void MainWindow::insert_breakpoints (
-    RefPtr<Thread> thread,
-    vector<addr_t> addr, // by value purposely
-    bool silent,
-    bool permanent
+    RefPtr<Thread>  thread,
+    vector<addr_t>  addr, // by value purposely
+    bool            silent,
+    bool            permanent
     )
 {
     assert(pthread_self() == maintid);

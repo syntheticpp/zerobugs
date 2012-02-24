@@ -21,8 +21,7 @@ public:
 
     template<typename... Args>
     FlViewImpl(Args... args) : W(args...)
-    {
-    }
+    { }
 };
 
 
@@ -43,25 +42,26 @@ public:
     FlView(ui::Controller& controller, Args... args) 
         : T(controller)
         , impl_(new FlViewImpl<W>(args...))
-    {
-    }
+    { }
 
 protected:
     typedef FlView<T, W> base_type;
 
-    virtual void insert_self(ui::LayoutCallback& cb)
-    {
+    virtual void insert_self(ui::LayoutCallback& cb) {
         insert(*impl_, cb);
     }
 
-    W* widget() 
-    {
+    W* widget() {
+        assert(impl_);
+        return impl_;
+    }
+    
+    const W* widget() const {
         assert(impl_);
         return impl_;
     }
 
-    Fl_Widget* base_widget()
-    {
+    Fl_Widget* base_widget() {
         return widget();
     }
 

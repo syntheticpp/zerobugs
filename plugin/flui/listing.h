@@ -15,6 +15,8 @@ struct Thread;
 
 namespace ui
 {
+    using Platform::addr_t;
+
     /**
      * Model the notion of a "listing" which consists of lines
      * of code (can be high-level source, disassembly).
@@ -42,6 +44,9 @@ namespace ui
         virtual size_t line_count() const = 0;
 
         virtual const std::string& line(size_t index) const = 0;
+        
+        virtual addr_t selected_addr() const = 0;
+        virtual int selected_line() const = 0;
     };
 }
 

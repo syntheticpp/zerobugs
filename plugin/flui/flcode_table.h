@@ -13,14 +13,14 @@
 #include <vector>
 #include <unordered_map>
 #include <FL/Fl_Pixmap.H>
-#include <FL/Fl_Table.H>
+#include <FL/Fl_Table_Row.H>
 
 
 /**
  * Base class for custom widgets that display some sort of code listing
  * (can be source, assembly, or anything else the derived classes may want).
  */
-class Fl_CodeTable : public Fl_Table
+class Fl_CodeTable : public Fl_Table_Row
 {
 public:
     static const SharedStringPtr mark_arrow;
@@ -47,6 +47,10 @@ public:
      */
     void remove_all_marks(SharedStringPtr mark);
 
+    int selected_row() const {
+        return selected_ < 0 ? highlight_ - 1 : selected_;
+    }
+
 protected:
     Fl_CodeTable(int x, int y, int w, int h, const char* label = nullptr);
     ~Fl_CodeTable();
@@ -62,7 +66,9 @@ protected:
 
     Fl_Font font() const;
     int     font_size() const;
-    
+
+    void    set_font(int row, int col);
+
     /**
      * Highlight specfied line, may throw std::out_of_range.
      * Only one line can be highlighted at the time.
@@ -73,8 +79,13 @@ protected:
         return highlight_;
     }
 
+    void event_callback();
+
+    static void event_callback(Fl_Widget*, void*);
+
 private:
-    int  highlight_; // index of current highlighted line
+    int highlight_; // index of current highlighted line
+    int selected_;  // index of selected row
 
     // map line number to set of (optional) marks at that line
     std::unordered_map<int, std::set<SharedStringPtr> > marks_;

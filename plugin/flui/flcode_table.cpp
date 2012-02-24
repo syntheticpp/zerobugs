@@ -38,14 +38,18 @@ enum ColumnType
 ////////////////////////////////////////////////////////////////
 
 Fl_CodeTable::Fl_CodeTable(int x, int y, int w, int h, const char* label)
-    : Fl_Table(x, y, w, h, label)
+    : Fl_Table_Row(x, y, w, h, label)
     , highlight_(0)
+    , selected_(-1)
 {
     col_header(true);
 
     set_mark_pixmap(Fl_CodeTable::mark_arrow, arrow_xpm);
     set_mark_pixmap(Fl_CodeTable::mark_stop_enabled, stop_red_xpm);
     set_mark_pixmap(Fl_CodeTable::mark_stop_disabled, stop_pink_xpm);
+    
+    callback(event_callback, this);
+    when(FL_WHEN_RELEASE);
 }
 
 
@@ -153,6 +157,34 @@ void Fl_CodeTable::set_mark_pixmap(
 }
 
 
+void Fl_CodeTable::event_callback(Fl_Widget* w, void*)
+{
+    reinterpret_cast<Fl_CodeTable*>(w)->event_callback();
+}
+
+
+void Fl_CodeTable::event_callback()
+{
+    if (Fl::event_button1() && Fl::event_is_click())
+    {
+        selected_ = callback_row();
+    }
+}
+
+
+void Fl_CodeTable::set_font(int row, int col)
+{
+    if (row == selected_row())
+    {
+        fl_font(FL_SCREEN_BOLD, font_size());
+    }
+    else
+    {
+        fl_font(font(), font_size());
+    }
+}
+
+
 ////////////////////////////////////////////////////////////////
 //
 // Source Code Table
@@ -249,7 +281,6 @@ void Fl_SourceTable::draw_cell(
     switch (context)
     {
     case CONTEXT_STARTPAGE:
-        fl_font(font(), font_size());
         break;
 
     case CONTEXT_COL_HEADER:
@@ -257,6 +288,7 @@ void Fl_SourceTable::draw_cell(
         break;
 
     case CONTEXT_CELL:
+        set_font(row, col);
         fl_push_clip(x, y, width, height);
         {
             fl_color(cell_background(row, col));
@@ -341,6 +373,8 @@ void Fl_AsmTable::draw_cell(
         break;
 
     case CONTEXT_CELL:
+        set_font(row, col);
+
         if (row != rowNum_)
         {
             const string& line = listing_->line(row);

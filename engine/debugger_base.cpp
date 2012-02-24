@@ -1281,9 +1281,12 @@ SymbolTableEvents* DebuggerBase::symbol_table_events()
 
 
 ////////////////////////////////////////////////////////////////
-Thread* DebuggerBase::get_thread(pid_t lwpid, unsigned long tid) const
+Thread* DebuggerBase::get_thread(
+    pid_t           lwpid,
+    unsigned long   tid ) const
 {
     Thread* result = NULL;
+
     Lock<Mutex> lock(TargetManager::mutex());
     const TargetManager::const_iterator e = end(lock);
 

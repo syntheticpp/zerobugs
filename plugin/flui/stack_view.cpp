@@ -54,10 +54,6 @@ void ui::StackView::select_frame(size_t n)
         return;
     }
 
-#if 0 //  DEBUG
-    std::clog << __func__ <<  " " << n << std::endl;
-#endif
-
     controller().call_async_on_main_thread(new MainThreadCommand<>([this, n]() {
         stack_->select_frame(n);
     }));

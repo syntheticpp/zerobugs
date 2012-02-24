@@ -9,6 +9,7 @@
 #include "zdk/align.h"
 #include "zdk/breakpoint.h"
 #include "zdk/check_ptr.h"
+#include "zdk/shared_string_impl.h"
 #include "zdk/zero.h"
 #include "command.h"
 #include "controller.h"
@@ -55,7 +56,31 @@ size_t ui::SourceView::current_line() const
 }
 
 
-void ui::SourceView::read_file(const char* filename)
+/**
+ * Helper class for populating a LineAddrMap.
+ */
+class LineAddrMapper : public EnumCallback2<SymbolTable*, addr_t>
+{
+public:
+    explicit LineAddrMapper(ui::LineAddrMap& m) 
+        : m_(m), lineNum_(0)
+    { }
+
+    void notify(SymbolTable*, addr_t addr) {
+        m_.add(lineNum_, addr);
+    }
+
+    void set_line_num(int lineNum) {
+        lineNum_ = lineNum;
+    }
+
+private:
+    ui::LineAddrMap& m_;
+    int lineNum_;
+};
+
+
+void ui::SourceView::read_file(Thread* t, const char* filename)
 {
     assert(filename_ != filename);
     filename_ = filename;
@@ -65,6 +90,9 @@ void ui::SourceView::read_file(const char* filename)
     // if source code lines exceed this size, though luck
     vector<char> buf(2048);
 
+    //
+    // read text lines into a vector of strings
+    //
     ifstream fin(filename);
     if (fin)
     {
@@ -75,12 +103,32 @@ void ui::SourceView::read_file(const char* filename)
             lines_.push_back(&buf[0]);
         }
     }
+
+    //
+    // map source lines to addresses
+    //
+    lineAddrMap_.clear();
+    LineAddrMapper addrMapper(lineAddrMap_);
+
+    SharedStringPtr fname(shared_string(filename));
+
+    for (size_t i = 0; i != lines_.size(); ++i)
+    {
+        addrMapper.set_line_num(i + 1);
+        controller().debugger()->line_to_addr(fname.get(), i + 1, &addrMapper, t);
+    }
+}
+
+
+addr_t ui::SourceView::selected_addr() const
+{
+    return lineAddrMap_.line_to_addr(selected_line());
 }
 
 
 bool ui::SourceView::refresh(
 
-    const RefPtr<Thread>& /* not used */,
+    const RefPtr<Thread>& t,
     const RefPtr<Symbol>& sym )
 
 {
@@ -91,7 +139,7 @@ bool ui::SourceView::refresh(
     {
         return false;
     }
-    read_file(filename);
+    read_file(t.get(), filename);
     return true;
 }
 
@@ -105,6 +153,13 @@ ui::MultiCodeView::MultiCodeView(ui::Controller& controller)
 
 ui::MultiCodeView::~MultiCodeView() throw()
 {
+}
+
+
+const ui::CodeListing* ui::MultiCodeView::get_listing() 
+{
+    CodeViewPtr view = get_visible_view();
+    return view ? view->get_listing() : nullptr;
 }
 
 
@@ -179,6 +234,36 @@ void ui::MultiCodeView::update_breakpoint(BreakPoint& bpnt)
 
 
 ////////////////////////////////////////////////////////////////
+void ui::LineAddrMap::add(int lineNum, addr_t addr)
+{
+    addrToLine_[addr] = lineNum;
+    lineToAddr_.insert(make_pair(lineNum, addr));
+}
+
+
+addr_t ui::LineAddrMap::line_to_addr(int lineNum) const
+{
+    auto i = lineToAddr_.find(lineNum);
+    if (i == lineToAddr_.end())
+    {
+        throw out_of_range(__func__);
+    }
+    return i->second;
+}
+
+
+int ui::LineAddrMap::addr_to_line(addr_t addr) const
+{
+    auto i = addrToLine_.find(addr);
+    if (i == addrToLine_.end())
+    {
+        throw out_of_range(__func__);
+    }
+    return i->second;
+}
+
+
+////////////////////////////////////////////////////////////////
 ui::AsmView::AsmView(ui::Controller& controller)
     : CodeView(controller)
 {
@@ -201,9 +286,7 @@ void ui::AsmView::add_listing_line(
     lines_.push_back(line);
     set_row_count(lines_.size());
 
-    // build addr <-> line mappings
-    addrToLine_[addr] = lineNum;
-    lineToAddr_.insert(make_pair(lineNum, addr));
+    lineAddrMap_.add(lineNum, addr);
 }
 
 
@@ -221,17 +304,15 @@ size_t ui::AsmView::current_line() const
 
 const string& ui::AsmView::line(size_t n) const
 {
-#if 0
-    static const string empty;
-    if (n >= lines_.size())
-    {
-        return empty;
-    }
-#else
     assert (n < lines_.size());
-#endif
 
     return lines_[n];
+}
+
+
+addr_t ui::AsmView::selected_addr() const
+{
+    return lineAddrMap_.line_to_addr(selected_line());
 }
 
 
@@ -306,8 +387,7 @@ private:
 
 int ui::AsmView::addr_to_line(addr_t addr) const
 {
-    auto i = addrToLine_.find(addr);
-    return i == addrToLine_.end() ? 0 : i->second;
+    return lineAddrMap_.addr_to_line(addr);
 }
 
 
@@ -323,8 +403,7 @@ bool ui::AsmView::refresh(
     }
 
     lines_.clear();         // reset listing lines
-    addrToLine_.clear();    // reset addr / line mapping
-    lineToAddr_.clear();
+    lineAddrMap_.clear();
 
     current_ = s;
 

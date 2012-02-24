@@ -1461,12 +1461,12 @@ BreakPoint* DebuggerEngine::set_temp_breakpoint (
 
 ////////////////////////////////////////////////////////////////
 size_t DebuggerEngine::remove_user_breakpoint (
-    pid_t proc,     // process id
-    pid_t thread,   // lwpid of thread
-    addr_t addr)
+    pid_t   procID,
+    pid_t   threadID,   // lwpid of thread
+    addr_t  addr)
 {
     size_t removedCount =
-        remove_breakpoint_action(proc, thread, addr, "USER");
+        remove_breakpoint_action(procID, threadID, addr, "USER");
 
     // it is essential to update the history here -- otherwise,
     // if the module gets reloaded (after a fork(), for e.q.) the

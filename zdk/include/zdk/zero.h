@@ -682,9 +682,6 @@ DECLARE_ZDK_INTERFACE_(Debugger, Unknown2)
      * If a breakpoint exists, and all its associated actions
      * are disabled, and the enableExisting parameter is true,
      * then the breakpoint actions are enabled.
-     * If no thread is specified, the breakpoint applies to
-     * all debugged threads.
-     * @param thread current thread of execution
      * @param addr code address where to insert breakpoint
      * @param perThread if true, the breakpoint applies to
      * the current thread of execution only, otherwise it applies
@@ -692,10 +689,10 @@ DECLARE_ZDK_INTERFACE_(Debugger, Unknown2)
      * thread's process.
      */
     virtual bool set_user_breakpoint(
-                                    Runnable*,
-                                    addr_t addr,
-                                    bool enableExisting = false,
-                                    bool perThread = false) = 0;
+        Runnable*,
+        addr_t addr,
+        bool enableExisting = false,
+        bool perThread = false) = 0;
 
     /**
      * Same as set_user_breakpoint, only that the breakpoint
@@ -782,7 +779,7 @@ DECLARE_ZDK_INTERFACE_(Debugger, Unknown2)
     typedef EnumCallback2<SymbolTable*, addr_t> AddrEvents;
 
     /**
-     * Given a source file name string, and a line number pair
+     * Given a source filename and a line number
      * find all the code addresses that correspond to it.
      * @note The engine delegates to the loaded DebugInfoReader
      * plug-ins to find the correspondence between source code

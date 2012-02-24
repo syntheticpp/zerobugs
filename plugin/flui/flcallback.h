@@ -22,21 +22,27 @@ public:
         , y_(y)
         , w_(w)
         , h_(h)
-    {
-    }
+    { }
 
-    void set_widget(Fl_Widget* w)
-    {
+    void set_widget(Fl_Widget* w) {
         widget_ = w;
     }
 
-    virtual void insert()
-    {
+    virtual void insert() {
         assert(group_);
         assert(widget_);
 
         widget_->resize(x_, y_, w_, h_);
         group_->add_resizable(*widget_);
+    }
+
+protected:
+    Fl_Group* group() { 
+        return group_;
+    }
+
+    Fl_Widget* widget() { 
+        return widget_;
     }
 
 private:

@@ -9,7 +9,6 @@
 #include "flcode_table.h"
 #include "flview.h"
 #include "code_view.h"
-
 #include <FL/Fl_Tabs.H>
 
 
@@ -28,6 +27,8 @@ protected:
 
     virtual void update_breakpoint(BreakPoint&);
     virtual void show(RefPtr<Thread>, RefPtr<Symbol>);
+
+    virtual int selected_line() const;
 };
 
 
@@ -51,6 +52,8 @@ protected:
     virtual void set_row_count(int n) {
         widget()->rows(n);
     }
+    
+    virtual int selected_line() const;
 };
 
 
@@ -74,6 +77,9 @@ protected:
     virtual RefPtr<CodeView> make_view(const Symbol&);
 
     virtual void make_visible(RefPtr<CodeView>);
+    
+    virtual RefPtr<CodeView> get_visible_view();
 };
 
 #endif // FLCODE_VIEW_H__8EF08CB5_1507_4F24_80E2_8FF2EA8DF721
+

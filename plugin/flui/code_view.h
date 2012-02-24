@@ -38,6 +38,8 @@ namespace ui
          */
         virtual void update_breakpoint(BreakPoint&) = 0;
 
+        virtual const CodeListing* get_listing() = 0;
+
     protected:
         explicit CodeView(Controller&);
         ~CodeView() throw();
@@ -52,8 +54,36 @@ namespace ui
 
 
     ////////////////////////////////////////////////////////////
-    class SourceView : public CodeView
-                     , protected CodeListing
+    /**
+     * Map source code line numbers to addresses in the code.
+     */
+    class LineAddrMap
+    {
+    public:
+        void add(int line, addr_t addr);
+
+        int addr_to_line(addr_t) const;
+
+        addr_t line_to_addr(int) const;
+
+        void clear() {
+            addrToLine_.clear();
+            lineToAddr_.clear();
+        }
+
+    private:
+        // maintain mapping (direct and reverse) between
+        // addresses in the code and lines in the listing
+        typedef std::unordered_map<addr_t, int> AddrToLine;
+        typedef std::unordered_multimap<int, addr_t> LineToAddr;
+
+        AddrToLine  addrToLine_;
+        LineToAddr  lineToAddr_;
+    };
+
+
+    ////////////////////////////////////////////////////////////
+    class SourceView : public CodeView, protected CodeListing
     {
     public:
         explicit SourceView(Controller&);
@@ -61,7 +91,11 @@ namespace ui
     protected:
         ~SourceView() throw();
 
-        void read_file(const char* filename);
+        void read_file(Thread*, const char* filename);
+
+        const CodeListing* get_listing() {
+            return this;
+        }
 
         //
         // CodeListing interface
@@ -83,16 +117,19 @@ namespace ui
             return lines_[index];
         }
 
+        virtual addr_t selected_addr() const;
+
     private:
         // Store the file as a vector of lines of text.
         std::vector<std::string>    lines_;
         std::string                 filename_;
+        
+        LineAddrMap                 lineAddrMap_;
     };
 
 
     ////////////////////////////////////////////////////////////
-    class AsmView : public CodeView
-                  , protected CodeListing
+    class AsmView : public CodeView, protected CodeListing
     {
     public:
         explicit AsmView(Controller&);
@@ -106,6 +143,10 @@ namespace ui
         void add_listing_line(
             addr_t              addr,
             const std::string&  line);
+
+        const CodeListing* get_listing() {
+            return this;
+        }
 
         virtual void set_row_count(int) = 0;
 
@@ -131,18 +172,13 @@ namespace ui
             return lines_.size();
         }
 
+        virtual addr_t selected_addr() const;
+
     private:
-        // maintain mapping (direct and reverse) between
-        // addresses in the code and lines in the listing
-        typedef std::unordered_map<addr_t, int> AddrToLine;
-        typedef std::unordered_multimap<int, addr_t> LineToAddr;
-        
         typedef std::vector<std::string> Lines;
         
-        AddrToLine  addrToLine_;
-        LineToAddr  lineToAddr_;
-
         Lines       lines_;
+        LineAddrMap lineAddrMap_;
     };
 
 
@@ -159,6 +195,8 @@ namespace ui
         ~MultiCodeView() throw();
 
         virtual void clear();
+        
+        virtual const CodeListing* get_listing();
 
         virtual ViewType type() const { return VIEW_Code; }
 
@@ -176,6 +214,9 @@ namespace ui
 
         virtual CodeViewPtr make_view(const Symbol&) = 0;
 
+        virtual CodeViewPtr get_visible_view() = 0;
+
+    protected:
         // map code views by file name
         std::unordered_map<SharedStringPtr, CodeViewPtr> views_;
     };

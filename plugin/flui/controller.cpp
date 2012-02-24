@@ -15,6 +15,7 @@
 #include <FL/Enumerations.H>
 #include "dharma/system_error.h"
 #include <pthread.h>
+#include <iostream>
 
 using namespace std;
 
@@ -271,7 +272,23 @@ void ui::Controller::build_menu()
         {   // nothing to do here, call_async_on_main_thread 
             // will ensure the target breaks into the debugger
         });
-    }
+    
+    menu_->add_item("&Breakpoints/&Toggle", FL_F + 9, MenuElem::Enable_IfStopped,
+        [this]()
+        {
+            if (auto listing = code_->get_listing())
+            {
+                addr_t addr = listing->selected_addr();
+                if (auto t = state_->current_thread().get())
+                {
+                    if (!debugger_->set_user_breakpoint(get_runnable(t), addr))
+                    {
+                        debugger_->remove_user_breakpoint(0, 0, addr);
+                    }
+                }
+            }
+        });
+}
 
 
 ////////////////////////////////////////////////////////////////
