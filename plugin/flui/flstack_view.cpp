@@ -172,11 +172,13 @@ void Fl_StackTable::draw_frame(
 void Fl_StackTable::resize(int x, int y, int w, int h)
 {
     Fl_Table_Row::resize(x, y, w, h);
+#if 0
     col_width(COL_Module, w
         - col_width(COL_Address)
         - col_width(COL_Function)
         - col_width(COL_Line)
         - col_width(COL_Path) - 2);
+#endif
 }
 
 

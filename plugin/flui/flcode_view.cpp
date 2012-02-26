@@ -20,11 +20,11 @@ static void set_event_callback(
     Fl_CodeTable*   widget )
 {
     widget->set_event_callback([view](Fl_CodeTable& w) {
-        
+
         if (Fl::event_button1() && Fl::event_is_click())
         {
             w.select_callback_row();
-            if (auto parent = view->parent()) 
+            if (auto parent = view->parent())
             {
                 parent->set_current_view(view);
             }
@@ -91,7 +91,7 @@ FlAsmView::FlAsmView(
     : base_type(controller, 0, 0, 0, 0)
 {
     const char* fname = basename(sym.file()->c_str());
-    
+
     widget()->copy_label(fname);
     widget()->set_listing(this);
     set_event_callback(this, widget());
@@ -142,7 +142,7 @@ void FlAsmView::show(RefPtr<Thread> t, RefPtr<Symbol> sym)
 //
 // multi view
 //
-FlMultiCodeView::FlMultiCodeView(ui::Controller& controller) 
+FlMultiCodeView::FlMultiCodeView(ui::Controller& controller)
     : base_type(controller, 0, 0, 0, 0)
 {
     widget()->end();
@@ -174,7 +174,7 @@ ui::Layout::CallbackPtr FlMultiCodeView::make_callback()
             widget()->x(),
             widget()->y() + ui::Const::label_height,
             widget()->w(),
-            widget()->h() - ui::Const::label_height));
+            widget()->h() - ui::Const::label_height - 1));
 }
 
 

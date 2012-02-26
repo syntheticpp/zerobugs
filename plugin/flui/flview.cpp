@@ -36,7 +36,7 @@ FlPackLayout::make_callback(ViewType type)
 
     case VIEW_Vars:
         callback.reset(new ::Callback(bottomL_, bottomL_,
-            0, 0, 0, -Const::tab_label_height));
+            0, 0, -1, -Const::tab_label_height));
         break;
 
     case VIEW_Stack:

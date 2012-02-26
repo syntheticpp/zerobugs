@@ -39,30 +39,37 @@ FlPackLayout::FlPackLayout(ui::Controller& c, int x, int y, int w, int h)
     code_->end();
 
     // area where Threads and Registers are displayed
-    auto g = new Fl_Group(x + code_->w(), Const::layout_y(y),
-        Const::thread_regs_width, tile->h());
+    auto g = new Fl_Group(
+        x + code_->w(),
+        Const::layout_y(y),
+        Const::thread_regs_width,
+        tile->h());
     g->box(FL_DOWN_BOX);
 
     right_ = new Fl_Tabs(
         g->x() + Const::margin,
-        g->y() + Const::margin,
+        g->y() /* + Const::margin */,
         Const::thread_regs_width - 2 * Const::margin,
-        code_height() - 2 * Const::margin);
-
+        code_height() /* - 2 * Const::margin */);
+    //
     // place holders
-    auto b = new Fl_Box(right_->x(), right_->y(), right_->w(),
-        right_->h() - Const::tab_label_height, "Threads");
-    b->labelfont(FL_HELVETICA);
-    b = new Fl_Box(right_->x(), right_->y(), right_->w(),
-        right_->h() - Const::tab_label_height, "Registers");
-    b->labelfont(FL_HELVETICA);
+    //
+    {
+        auto b = new Fl_Box(right_->x(), right_->y(), right_->w(),
+            right_->h() - Const::tab_label_height, "Threads");
+        b->labelfont(FL_HELVETICA);
+        b = new Fl_Box(right_->x(), right_->y(), right_->w(),
+            right_->h() - Const::tab_label_height, "Registers");
+        b->labelfont(FL_HELVETICA);
 
-    right_->end();
-    g->end();
-
+        right_->end();
+        g->end();
+    }
     tile->end();
 
+    //
     // area for stack traces, local variables and watches
+    //
     g = new Fl_Group(
         x,
         y + code_height() + Const::menubar_height,
@@ -70,24 +77,33 @@ FlPackLayout::FlPackLayout(ui::Controller& c, int x, int y, int w, int h)
         h - code_height() - Const::menubar_height - Const::statbar_height);
     g->box(FL_DOWN_BOX);
     {
-        Fl_Tile* tile = new Fl_Tile(g->x() + 2, g->y() + 2, g->w() - 4, g->h() - 4);
+        Fl_Tile* tile = new Fl_Tile(g->x() + 2, g->y(), g->w() - 4, g->h());
         tile->type(Fl_Pack::HORIZONTAL);
         tile->box(FL_DOWN_BOX);
-        auto g1 = new Fl_Group(g->x() + 2, g->y() + 2, g->w() / 2, g->h() - 4);
-        g1->box(FL_DOWN_BOX);
-        bottomL_ = new Fl_Tabs(g->x() + 2, g->y() + 2, g->w() / 2, g->h() - 4);
+        auto flat = new Fl_Tabs(tile->x(), tile->y(), tile->w() / 2, tile->h());
+        flat->box(FL_FLAT_BOX);
+        bottomL_ = new Fl_Tabs(tile->x(), tile->y(), tile->w() / 2, tile->h());
         bottomL_->end();
-        g1->end();
-        auto g2  = new Fl_Group(g->x() + 2 + g->w() / 2, g->y() + 2, g->w() / 2 - 4, g->h() - 4);
-        bottomR_ = new Fl_Tabs(g->x() + 2 + g->w() / 2, g->y() + 2, g->w() / 2 - 4, g->h() - 4);
+        flat->end();
+
+        bottomR_ = new Fl_Tabs(
+            tile->x() + tile->w() / 2,
+            tile->y(),
+            tile->w() / 2,
+            tile->h());
         bottomR_->end();
-        g2->end();
         tile->end();
     }
     g->end();
     group_->end();
 
-    auto status = new Fl_Box(x, y + group_->y() + group_->h(), w - 2, Const::statbar_height - 2);
+    // status bar
+    auto status = new Fl_Box(
+        x,
+        y + group_->y() + group_->h(),
+        w - 2,
+        Const::statbar_height - 2);
+
     status->box(FL_BORDER_BOX);
 }
 
