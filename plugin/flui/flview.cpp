@@ -31,18 +31,17 @@ FlPackLayout::make_callback(ViewType type)
     switch (type)
     {
     case VIEW_Code:
-        callback.reset(new ::Callback(code_, code_->x(), code_->y(),
-            code_->w(), code_->h()));
+        callback.reset(new ::Callback(code_, code_));
         break;
 
     case VIEW_Vars:
-        callback.reset(new ::Callback(bottomL_, bottomL_->x(),bottomL_->y(),
-            bottomL_->w(), bottomL_->h() - Const::tab_label_height));
+        callback.reset(new ::Callback(bottomL_, bottomL_,
+            0, 0, 0, -Const::tab_label_height));
         break;
 
     case VIEW_Stack:
-        callback.reset(new ::Callback(bottomR_, bottomR_->x(), bottomR_->y(),
-            bottomR_->w(), bottomR_->h() - Const::tab_label_height));
+        callback.reset(new ::Callback(bottomR_, bottomR_,
+            0, 0, 0, -Const::tab_label_height));
         break;
 
     case VIEW_Threads:

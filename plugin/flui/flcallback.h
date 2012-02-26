@@ -17,13 +17,22 @@
 class Callback : public ui::LayoutCallback
 {
 public:
-    explicit Callback(Fl_Group* g, int x = 0, int y = 0, int w = 0, int h = 0) 
+    explicit Callback(Fl_Group* g, int x = 0, int y = 0, int w = 0, int h = 0)
         : group_(g)
         , widget_(nullptr)
         , x_(x)
         , y_(y)
         , w_(w)
         , h_(h)
+    { }
+
+    Callback(Fl_Group* g, Fl_Widget* w, int dx = 0, int dy = 0, int dw = 0, int dh = 0)
+        : group_(g)
+        , widget_(nullptr)
+        , x_(w->x() + dx)
+        , y_(w->y() + dy)
+        , w_(w->w() + dw)
+        , h_(w->h() + dh)
     { }
 
     void set_widget(Fl_Widget* w) {
@@ -39,11 +48,11 @@ public:
     }
 
 protected:
-    Fl_Group* group() { 
+    Fl_Group* group() {
         return group_;
     }
 
-    Fl_Widget* widget() { 
+    Fl_Widget* widget() {
         return widget_;
     }
 

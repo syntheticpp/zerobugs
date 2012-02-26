@@ -31,21 +31,30 @@ FlPackLayout::FlPackLayout(ui::Controller& c, int x, int y, int w, int h)
     tile->box(FL_DOWN_BOX);
 
     // area where source or assembly code is displayed
-    auto pack = new Fl_Group(x, Const::layout_y(y), w - Const::thread_regs_width, code_height());
+    auto pack = new Fl_Group(x, Const::layout_y(y),
+        w - Const::thread_regs_width, code_height());
 
     code_ = pack;
     code_->box(FL_DOWN_BOX);
     code_->end();
 
     // area where Threads and Registers are displayed
-    auto g = new Fl_Group(x + code_->w(), Const::layout_y(y), Const::thread_regs_width, tile->h());
+    auto g = new Fl_Group(x + code_->w(), Const::layout_y(y),
+        Const::thread_regs_width, tile->h());
     g->box(FL_DOWN_BOX);
-    right_ = new Fl_Tabs(g->x() + 2, g->y() + 2, 246, code_height() - 4);
+
+    right_ = new Fl_Tabs(
+        g->x() + Const::margin,
+        g->y() + Const::margin,
+        Const::thread_regs_width - 2 * Const::margin,
+        code_height() - 2 * Const::margin);
 
     // place holders
-    auto b = new Fl_Box(right_->x(), right_->y(), right_->w(), right_->h() - 22, "Threads");
+    auto b = new Fl_Box(right_->x(), right_->y(), right_->w(),
+        right_->h() - Const::tab_label_height, "Threads");
     b->labelfont(FL_HELVETICA);
-    b = new Fl_Box(right_->x(), right_->y(), right_->w(), right_->h() - 22, "Registers");
+    b = new Fl_Box(right_->x(), right_->y(), right_->w(),
+        right_->h() - Const::tab_label_height, "Registers");
     b->labelfont(FL_HELVETICA);
 
     right_->end();
