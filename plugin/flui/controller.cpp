@@ -6,6 +6,7 @@
 //
 #include "zdk/log.h"
 #include "zdk/thread_util.h"
+#include "const.h"
 #include "code_view.h"
 #include "controller.h"
 #include "locals_view.h"
@@ -16,6 +17,12 @@
 #include "dharma/system_error.h"
 #include <pthread.h>
 #include <iostream>
+
+// properties
+#define WINDOW_X        "flui.window.x"
+#define WINDOW_Y        "flui.window.y"
+#define WINDOW_W        "flui.window.width"
+#define WINDOW_H        "flui.window.height"
 
 using namespace std;
 
@@ -64,7 +71,7 @@ public:
 };
 
 void ui::Controller::StateImpl::update(
-    
+
     Thread*     currentThread,
     EventType   eventType )
 
@@ -90,15 +97,15 @@ void ui::Controller::StateImpl::update(
 class BreakPointUpdater : public EnumCallback<volatile BreakPoint*>
 {
 public:
-    explicit BreakPointUpdater(const RefPtr<ui::CodeView> view) 
+    explicit BreakPointUpdater(const RefPtr<ui::CodeView> view)
         : view_(view)
     { }
 
     void notify(volatile BreakPoint* bp)
     {
         // we only care about user-defined breakpoints,
-        // the internal breakpoints used by the engine 
-        // are not shown 
+        // the internal breakpoints used by the engine
+        // are not shown
         if (bp->enum_actions("USER"))
         {
             view_->update_breakpoint(const_cast<BreakPoint&>(*bp));
@@ -191,15 +198,16 @@ unique_ptr<ui::Controller::StateImpl> ui::Controller::init_state( )
 
 
 ////////////////////////////////////////////////////////////////
-void ui::Controller::init_main_window()
-{
-}
-
-
-////////////////////////////////////////////////////////////////
 void ui::Controller::build()
 {
-    init_main_window();
+    Properties& prop = *debugger_->properties();
+    // get coordinates and dimensions from saved properties
+    const word_t x = prop.get_word(WINDOW_X, 0);
+    const word_t y = prop.get_word(WINDOW_Y, 0);
+    const word_t h = prop.get_word(WINDOW_H, Const::default_window_height);
+    const word_t w = prop.get_word(WINDOW_W, Const::default_window_width);
+
+    init_main_window(x, y, w, h);
 
     build_menu();
     build_toolbar();
@@ -269,10 +277,10 @@ void ui::Controller::build_menu()
 
     menu_->add_item("&Run/&Break", FL_CTRL + 'c', MenuElem::Enable_IfRunning,
         [this]()
-        {   // nothing to do here, call_async_on_main_thread 
+        {   // nothing to do here, call_async_on_main_thread
             // will ensure the target breaks into the debugger
         });
-    
+
     menu_->add_item("&Breakpoints/&Toggle", FL_F + 9, MenuElem::Enable_IfStopped,
         [this]()
         {
@@ -378,7 +386,7 @@ void ui::Controller::update(
     {
         toolbar_->update(*state_);
     }
-  
+
     if (layout_)
     {
         layout_->update(*state_);
@@ -485,6 +493,7 @@ void ui::Controller::shutdown()
 {
     {
         LockedScope lock(*this);
+        save_configuration();
         done_ = true;
     }
     pthread_join(uiThreadId_, nullptr);
@@ -610,3 +619,16 @@ void ui::Controller::awaken_main_thread()
 {
     idle_->cancel();
 }
+
+
+////////////////////////////////////////////////////////////////
+void ui::Controller::save_configuration()
+{
+    Properties& prop = *debugger_->properties();
+
+    prop.set_word(WINDOW_X, x());
+    prop.set_word(WINDOW_Y, y());
+    prop.set_word(WINDOW_H, h());
+    prop.set_word(WINDOW_W, w());
+}
+

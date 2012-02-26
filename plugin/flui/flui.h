@@ -17,7 +17,7 @@ class FlMainWindow;
 /**
  * Fltk-based user interface plugin.
  */
-class Flui 
+class Flui
     : public ui::Controller
     , VersionInfoImpl<ZERO_API_MAJOR, ZERO_API_MINOR>
 {
@@ -60,13 +60,13 @@ private:
     virtual RefPtr<ui::StackView>       init_stack_view();
     virtual RefPtr<ui::Toolbar>         init_toolbar();
 
-    virtual void    init_main_window();
+    virtual void init_main_window(int x, int y, int w, int h);
 
-    virtual void    lock();
-    virtual void    unlock();
-    virtual void    notify_ui_thread();
+    virtual void lock();
+    virtual void unlock();
+    virtual void notify_ui_thread();
 
-    virtual int     wait_for_event();
+    virtual int  wait_for_event();
 
 private:
     SArray          args_;

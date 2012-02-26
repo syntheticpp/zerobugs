@@ -20,7 +20,7 @@ namespace ui
     class CompositeMenu;
     class VarView;
     class StackView;
-    class Toolbar;   
+    class Toolbar;
 
     /**
      * Controller executes this command when idle.
@@ -32,7 +32,7 @@ namespace ui
 
         // break out of idle state
         void cancel();
-    
+
     protected:
         ~IdleCommand() throw() { }
 
@@ -107,11 +107,11 @@ namespace ui
         virtual void start();
 
         virtual void shutdown();
-       
+
         virtual void register_streamable_objects(ObjectFactory*);
 
         /**
-         * This method is called whenever the debugger 
+         * This method is called whenever the debugger
          * is about to read a new symbol table.
          */
         virtual void on_table_init(SymbolTable*);
@@ -122,14 +122,14 @@ namespace ui
          */
         virtual void on_table_done(SymbolTable*);
 
-        /** 
+        /**
          * Called when the debugger attaches itself to a new thread
          */
         virtual void on_attach(Thread*);
 
         /**
          * Called for each thread that finishes, and with a
-         * NULL thread when the debugger detaches from the 
+         * NULL thread when the debugger detaches from the
          * program.
          */
         virtual void on_detach(Thread*);
@@ -156,23 +156,23 @@ namespace ui
         virtual void on_insert_breakpoint(volatile BreakPoint*);
 
         virtual void on_remove_breakpoint(volatile BreakPoint*);
-       
+
         /**
-         * When a plug-in calls Debugger::progress, the 
+         * When a plug-in calls Debugger::progress, the
          * notification is being passed to all the loaded
          * plug-ins. The initiator may choose to ignore the
          * event if it identifies the cookie as being the
          * same value as passed to the progress() call.
          */
         virtual bool on_progress(
-            const char* what, 
-            double      percent, 
+            const char* what,
+            double      percent,
             word_t      cookie);
 
         virtual bool on_message(
-            const char*, 
-            Debugger::MessageType, 
-            Thread*, 
+            const char*,
+            Debugger::MessageType,
+            Thread*,
             bool        /* async */);
 
         Debugger* debugger() { assert(debugger_); return debugger_; }
@@ -182,7 +182,7 @@ namespace ui
         void build_layout();
         void build_menu();
         void build_toolbar();
-        
+
         void done();
 
         // create an object to hold state
@@ -199,9 +199,11 @@ namespace ui
         virtual RefPtr<Toolbar>         init_toolbar() = 0;
 
         // this creates the main "application window"
-        virtual void            init_main_window();
+        virtual void init_main_window(int x, int y, int w, int h) = 0;
 
         virtual int wait_for_event() = 0;
+
+        virtual void save_configuration();
 
     private:
         RefPtr<Command> update(Thread*, EventType);
@@ -225,6 +227,6 @@ namespace ui
         RefPtr<IdleCommand>         idle_;
     };
 
-} // namespace 
+} // namespace
 
 #endif // USER_INTERFACE_H__9D4F2D44_5193_4023_9688_2AB5F7BBB634

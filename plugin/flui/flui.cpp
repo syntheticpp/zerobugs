@@ -1,12 +1,12 @@
 // -*- tab-width: 4; indent-tabs-mode: nil;  -*-
-// vim: tabstop=4:softtabstop=4:expandtab:shiftwidth=4 
+// vim: tabstop=4:softtabstop=4:expandtab:shiftwidth=4
 //
 // $Id$
 //
 // ZDK headers
 #include "zdk/argv_util.h"
 #include "zdk/check_ptr.h"
-#include "const.h"
+// #include "const.h"
 #include "flcode_view.h"
 #include "flvar_view.h"
 #include "flmain_window.h"
@@ -26,10 +26,6 @@
 using namespace std;
 
 // properties
-#define WINDOW_X        "flui.window.x"
-#define WINDOW_Y        "flui.window.y"
-#define WINDOW_W        "flui.window.width"
-#define WINDOW_H        "flui.window.height"
 #define WINDOW_TITLE    "ZeroBUGS"
 
 
@@ -53,7 +49,7 @@ int32_t query_version(int32_t* minor)
 Plugin* create_plugin(uuidref_t iid)
 {
     Plugin* plugin = 0;
-   
+
     if (uuid_equal(DebuggerPlugin::_uuid(), iid))
     {
         plugin = new Flui();
@@ -153,7 +149,7 @@ RefPtr<ui::Layout> Flui::init_layout()
 {
     assert(window_);
 
-    auto layout = new FlPackLayout(*this, x(), y(), w(), h());
+    auto layout = new FlPackLayout(*this, 0, 0, w(), h());
 
     window_->end();
     window_->show();
@@ -177,24 +173,13 @@ RefPtr<ui::StackView> Flui::init_stack_view()
 
 
 ////////////////////////////////////////////////////////////////
-void Flui::init_main_window()
+void Flui::init_main_window(int x, int y, int w, int h)
 {
     assert(window_ == nullptr);
 
-    Properties& prop = *debugger()->properties();
-
-    // get coordinates and dimensions from saved properties
-    const word_t x = prop.get_word(WINDOW_X, 0);
-    const word_t y = prop.get_word(WINDOW_Y, 0);
-    const word_t h = prop.get_word(WINDOW_H, ui::Const::default_window_height);
-    const word_t w = prop.get_word(WINDOW_W, ui::Const::default_window_width);
-
     window_ = new FlMainWindow(*this, x, y, w, h, WINDOW_TITLE);
     window_->resizable(window_);
-
     window_->begin();
-    //auto pack = new Fl_Pack(x, y, w, h);
-    //window_->resizable(pack);
 }
 
 
