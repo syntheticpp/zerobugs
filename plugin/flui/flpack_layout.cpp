@@ -22,7 +22,8 @@ FlPackLayout::FlPackLayout(ui::Controller& c, int x, int y, int w, int h)
     : ui::Layout(c)
     , group_(new Fl_Tile(x, Const::layout_y(y), w, Const::layout_height(h)))
     , code_(nullptr)
-    , bottom_(nullptr)
+    , bottomL_(nullptr)
+    , bottomR_(nullptr)
     , right_(nullptr)
 {
     Fl_Tile* tile = new Fl_Tile(0, Const::layout_y(y), w, code_height());
@@ -59,12 +60,25 @@ FlPackLayout::FlPackLayout(ui::Controller& c, int x, int y, int w, int h)
         w,
         h - code_height() - Const::menubar_height - Const::statbar_height);
     g->box(FL_DOWN_BOX);
-    bottom_ = new Fl_Tabs(g->x() + 2, g->y() + 2, g->w() - 4, g->h() - 4);
-    bottom_->end();
+    {
+        Fl_Tile* tile = new Fl_Tile(g->x() + 2, g->y() + 2, g->w() - 4, g->h() - 4);
+        tile->type(Fl_Pack::HORIZONTAL);
+        tile->box(FL_DOWN_BOX);
+        auto g1 = new Fl_Group(g->x() + 2, g->y() + 2, g->w() / 2, g->h() - 4);
+        g1->box(FL_DOWN_BOX);
+        bottomL_ = new Fl_Tabs(g->x() + 2, g->y() + 2, g->w() / 2, g->h() - 4);
+        bottomL_->end();
+        g1->end();
+        auto g2  = new Fl_Group(g->x() + 2 + g->w() / 2, g->y() + 2, g->w() / 2 - 4, g->h() - 4);
+        bottomR_ = new Fl_Tabs(g->x() + 2 + g->w() / 2, g->y() + 2, g->w() / 2 - 4, g->h() - 4);
+        bottomR_->end();
+        g2->end();
+        tile->end();
+    }
     g->end();
     group_->end();
 
-    auto status = new Fl_Box(x, y + group_->y() + group_->h(), w - 2, Const::statbar_height - 2 /* , "Status Bar" */);
+    auto status = new Fl_Box(x, y + group_->y() + group_->h(), w - 2, Const::statbar_height - 2);
     status->box(FL_BORDER_BOX);
 }
 

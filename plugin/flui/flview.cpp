@@ -4,16 +4,16 @@
 //
 // $Id: $
 //
+#include "const.h"
 #include "flcallback.h"
 #include "flpack_layout.h"
 #include "flview.h"
 
-
-static const int TAB_LABEL_HEIGHT = 22;
+using namespace ui;
 
 
 ////////////////////////////////////////////////////////////////
-void insert(Fl_Widget& w, ui::LayoutCallback& cb)
+void insert(Fl_Widget& w, LayoutCallback& cb)
 {
     auto& callback = dynamic_cast<Callback&>(cb);
 
@@ -23,26 +23,29 @@ void insert(Fl_Widget& w, ui::LayoutCallback& cb)
 
 
 ////////////////////////////////////////////////////////////////
-ui::Layout::CallbackPtr
-FlPackLayout::make_callback(ui::ViewType type)
+Layout::CallbackPtr
+FlPackLayout::make_callback(ViewType type)
 {
-    ui::Layout::CallbackPtr callback;
+    Layout::CallbackPtr callback;
 
     switch (type)
     {
-    case ui::VIEW_Code:
-        callback.reset(new ::Callback(code_, code_->x(), code_->y(), code_->w(), code_->h()));
+    case VIEW_Code:
+        callback.reset(new ::Callback(code_, code_->x(), code_->y(),
+            code_->w(), code_->h()));
         break;
 
-    case ui::VIEW_Vars:
-        callback.reset(new ::Callback(bottom_, bottom_->x(), bottom_->y(), bottom_->w(), bottom_->h() - TAB_LABEL_HEIGHT));
+    case VIEW_Vars:
+        callback.reset(new ::Callback(bottomL_, bottomL_->x(),bottomL_->y(),
+            bottomL_->w(), bottomL_->h() - Const::tab_label_height));
         break;
 
-    case ui::VIEW_Stack:
-        callback.reset(new ::Callback(bottom_, bottom_->x(), bottom_->y(), bottom_->w(), bottom_->h() - TAB_LABEL_HEIGHT));
+    case VIEW_Stack:
+        callback.reset(new ::Callback(bottomR_, bottomR_->x(), bottomR_->y(),
+            bottomR_->w(), bottomR_->h() - Const::tab_label_height));
         break;
 
-    case ui::VIEW_Threads:
+    case VIEW_Threads:
         break;
 
     default:

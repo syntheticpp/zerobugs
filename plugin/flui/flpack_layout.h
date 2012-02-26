@@ -25,15 +25,17 @@ public:
 
 protected:
     int code_height() const;
-    
+
     CallbackPtr make_callback(ui::ViewType);
 
 private:
     Fl_Group*   group_; // this group
     Fl_Group*   code_;
-    Fl_Group*   bottom_;
+    Fl_Group*   bottomL_;
+    Fl_Group*   bottomR_;
     Fl_Group*   right_;
 };
 
 
 #endif // FLPACK_LAYOUT_H__C9EE8D01_7D07_4F48_9578_2355F6269D67
+

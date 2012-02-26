@@ -40,11 +40,11 @@ Fl_StackTable::Fl_StackTable(
 {
     cols(headers.size());
 
-    col_width(0, 100);
-    col_width(1, 200);
-    col_width(2, 40);
-    col_width(3, 800);
-    col_width(4, 1000);
+    col_width(COL_Address, 100);
+    col_width(COL_Function, 160);
+    col_width(COL_Line, 40);
+    col_width(COL_Path, 200);
+    col_width(COL_Module, 1000);
     col_resize_min(40);
 
     col_header(true);
@@ -160,7 +160,8 @@ void Fl_StackTable::draw_frame(
             ZObjectScope scope;
             if (auto table = sym->table(&scope))
             {
-                fl_draw(table->filename()->c_str(), x + LEFT_MARGIN , y, w, h, FL_ALIGN_LEFT);
+                const char* module = basename(table->filename()->c_str());
+                fl_draw(module, x + LEFT_MARGIN , y, w, h, FL_ALIGN_LEFT);
             }
         }
         break;
@@ -171,6 +172,11 @@ void Fl_StackTable::draw_frame(
 void Fl_StackTable::resize(int x, int y, int w, int h)
 {
     Fl_Table_Row::resize(x, y, w, h);
+    col_width(COL_Module, w
+        - col_width(COL_Address)
+        - col_width(COL_Function)
+        - col_width(COL_Line)
+        - col_width(COL_Path) - 2);
 }
 
 
@@ -197,7 +203,7 @@ void Fl_StackTable::event_callback()
 
 
 ////////////////////////////////////////////////////////////////
-FlStackView::FlStackView(ui::Controller& c) 
+FlStackView::FlStackView(ui::Controller& c)
     : base_type(c, this, 0, 0, 0, 0, "Stack")
 {
     widget()->tooltip("Call stack");

@@ -17,6 +17,7 @@ namespace ui
         static const int margin             = 2;
         static const int menubar_height     = 25 + 30 /* toolbar height == 30  */;
         static const int statbar_height     = 25;
+        static const int tab_label_height   = 22;
         static const int thread_regs_width  = 250;
 
         // default main window dimensions
