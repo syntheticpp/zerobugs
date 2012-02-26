@@ -50,11 +50,10 @@ void ui::StackView::select_frame(size_t n)
 {
     if (!stack_)
     {
-        // TODO: any better ideas?
         return;
     }
 
-    controller().call_async_on_main_thread(new MainThreadCommand<>([this, n]() {
+    controller().call_main_thread_async(new MainThreadCommand<>([this, n]() {
         stack_->select_frame(n);
     }));
 }

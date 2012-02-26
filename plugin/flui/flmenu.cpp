@@ -61,7 +61,7 @@ void FlMenuBar::exec_command(const char* path)
     {
         if (strcmp((*mi)->name().c_str(), path) == 0)
         {
-            controller_.call_async_on_main_thread((*mi)->emit_command());
+            controller_.call_main_thread_async((*mi)->emit_command());
             break;
         }
     }

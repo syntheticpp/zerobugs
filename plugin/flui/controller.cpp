@@ -50,7 +50,7 @@ public:
         return isTargetStopped_;
     }
 
-    virtual EventType current_event_type() const {
+    virtual EventType current_event() const {
         return currentEventType_;
     }
 
@@ -276,15 +276,18 @@ void ui::Controller::build_menu()
     menu_->add_item("&Breakpoints/&Toggle", FL_F + 9, MenuElem::Enable_IfStopped,
         [this]()
         {
+            if (!code_ || !state_->current_thread())
+            {
+                return;
+            }
             if (auto listing = code_->get_listing())
             {
                 addr_t addr = listing->selected_addr();
-                if (auto t = state_->current_thread().get())
+
+                auto t = state_->current_thread().get();
+                if (!debugger_->set_user_breakpoint(get_runnable(t), addr))
                 {
-                    if (!debugger_->set_user_breakpoint(get_runnable(t), addr))
-                    {
-                        debugger_->remove_user_breakpoint(0, 0, addr);
-                    }
+                    debugger_->remove_user_breakpoint(0, 0, addr);
                 }
             }
         });
@@ -347,7 +350,7 @@ bool ui::Controller::initialize(
 ////////////////////////////////////////////////////////////////
 void ui::Controller::done()
 {
-    call_async_on_main_thread(new MainThreadCommand<>([this]() {
+    call_main_thread_async(new MainThreadCommand<>([this]() {
         debugger_->quit();
     }));
     unlock();
@@ -584,7 +587,7 @@ bool ui::Controller::on_message (
 
 
 ////////////////////////////////////////////////////////////////
-void ui::Controller::call_async_on_main_thread(RefPtr<Command> c)
+void ui::Controller::call_main_thread_async(RefPtr<Command> c)
 {
     if (c)
     {

@@ -49,7 +49,7 @@ namespace ui
          */
         virtual bool is_target_stopped() const = 0;
 
-        virtual EventType current_event_type() const = 0;
+        virtual EventType current_event() const = 0;
 
         virtual RefPtr<Symbol> current_symbol() const = 0;
 

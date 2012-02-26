@@ -92,7 +92,7 @@ namespace ui
         static void* run(void*);
 
         // schedule command for execution on main thread
-        void call_async_on_main_thread(RefPtr<Command>);
+        void call_main_thread_async(RefPtr<Command>);
 
         // wake up main thread if in idle state
         void awaken_main_thread();

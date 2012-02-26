@@ -178,7 +178,7 @@ Frame* StackTraceImpl::frame(size_t index) const
     if (index >= frames_.size())
     {
     #if DEBUG
-        clog << __func__ << ": index=" << index << ", stack depth=";
+        clog << __func__ << " index is out of range: " << index << ", stack depth=";
         clog << frames_.size() << endl;
     #endif
         if (env::get("ZERO_ABORT_ON_ERROR", 0) == 2)

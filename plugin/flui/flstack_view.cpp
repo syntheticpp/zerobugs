@@ -185,9 +185,13 @@ void Fl_StackTable::event_callback()
     if (Fl::event_button1() && Fl::event_is_click())
     {
         const int row = callback_row();
-        select_row(row, 1);
 
-        view_->select_frame(row);
+        // we may get row == -1 when clicking on the header
+        if (row >= 0)
+        {
+            select_row(row, 1);
+            view_->select_frame(row);
+        }
     }
 }
 

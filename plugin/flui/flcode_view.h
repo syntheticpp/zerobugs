@@ -77,8 +77,6 @@ protected:
     virtual RefPtr<CodeView> make_view(const Symbol&);
 
     virtual void make_visible(RefPtr<CodeView>);
-    
-    virtual RefPtr<CodeView> get_visible_view();
 };
 
 #endif // FLCODE_VIEW_H__8EF08CB5_1507_4F24_80E2_8FF2EA8DF721

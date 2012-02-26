@@ -14,12 +14,14 @@
 #include "listing.h"
 #include <unordered_map>
 
-using Platform::addr_t;
-
 
 namespace ui
 {
+    using Platform::addr_t;
+
     class Controller;
+    class MultiCodeView;
+
 
     /**
      * Base (abstract) class for displaying some sort of CODE
@@ -32,7 +34,7 @@ namespace ui
          * Make the symbol (and the code surrounding it) visible.
          */
         virtual void show(RefPtr<Thread>, RefPtr<Symbol>) = 0;
-        
+
         /**
          * update view to show breakpoint, if necessary
          */
@@ -40,14 +42,29 @@ namespace ui
 
         virtual const CodeListing* get_listing() = 0;
 
+        MultiCodeView* parent() const {
+            return parent_;
+        }
+
+        void set_parent(MultiCodeView* parent) {
+            parent_ = parent;
+        }
+
     protected:
         explicit CodeView(Controller&);
         ~CodeView() throw();
 
         virtual ViewType type() const { return VIEW_Code; }
 
-    protected:
+        const RefPtr<Symbol>& current_symbol() const {
+            return current_;
+        }
+
+        void set_current_symbol(const RefPtr<Symbol>& sym);
+
+    private:
         RefPtr<Symbol>  current_;
+        MultiCodeView*  parent_;
     };
 
     typedef RefPtr<CodeView> CodeViewPtr;
@@ -87,7 +104,7 @@ namespace ui
     {
     public:
         explicit SourceView(Controller&);
-       
+
     protected:
         ~SourceView() throw();
 
@@ -123,7 +140,7 @@ namespace ui
         // Store the file as a vector of lines of text.
         std::vector<std::string>    lines_;
         std::string                 filename_;
-        
+
         LineAddrMap                 lineAddrMap_;
     };
 
@@ -167,7 +184,7 @@ namespace ui
         virtual size_t current_line() const;
 
         virtual const std::string& line(size_t index) const;
- 
+
         virtual size_t line_count() const {
             return lines_.size();
         }
@@ -176,7 +193,7 @@ namespace ui
 
     private:
         typedef std::vector<std::string> Lines;
-        
+
         Lines       lines_;
         LineAddrMap lineAddrMap_;
     };
@@ -191,17 +208,21 @@ namespace ui
     public:
         explicit MultiCodeView(Controller&);
 
+        void set_current_view(const RefPtr<CodeView>& v) {
+            currentView_ = v;
+        }
+
     protected:
         ~MultiCodeView() throw();
 
         virtual void clear();
-        
+
         virtual const CodeListing* get_listing();
 
         virtual ViewType type() const { return VIEW_Code; }
 
         virtual void update(const State&);
-        
+
         /**
          * update view to show breakpoint, if necessary
          */
@@ -214,11 +235,12 @@ namespace ui
 
         virtual CodeViewPtr make_view(const Symbol&) = 0;
 
-        virtual CodeViewPtr get_visible_view() = 0;
-
     protected:
         // map code views by file name
         std::unordered_map<SharedStringPtr, CodeViewPtr> views_;
+
+    private:
+        CodeViewPtr currentView_;
     };
 };
 

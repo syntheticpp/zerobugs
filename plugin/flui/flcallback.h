@@ -11,7 +11,9 @@
 #include <FL/Fl_Widget.H>
 
 
-
+/**
+ * "Stock" layout callback.
+ */
 class Callback : public ui::LayoutCallback
 {
 public:

@@ -16,6 +16,7 @@
 #include <FL/Enumerations.H>
 #include <algorithm>
 #include <boost/algorithm/string.hpp>
+#include <iostream>
 
 using namespace std;
 
@@ -165,9 +166,9 @@ void Fl_CodeTable::event_callback(Fl_Widget* w, void*)
 
 void Fl_CodeTable::event_callback()
 {
-    if (Fl::event_button1() && Fl::event_is_click())
+    if (eventCallback_)
     {
-        selected_ = callback_row();
+        eventCallback_(*this);
     }
 }
 
@@ -281,6 +282,7 @@ void Fl_SourceTable::draw_cell(
     switch (context)
     {
     case CONTEXT_STARTPAGE:
+        fl_font(font(), font_size());
         break;
 
     case CONTEXT_COL_HEADER:

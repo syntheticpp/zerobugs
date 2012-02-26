@@ -23,6 +23,8 @@
 class Fl_CodeTable : public Fl_Table_Row
 {
 public:
+    typedef std::function<void (Fl_CodeTable&)> EventCallback;
+
     static const SharedStringPtr mark_arrow;
     static const SharedStringPtr mark_stop_enabled;
     static const SharedStringPtr mark_stop_disabled;
@@ -49,6 +51,14 @@ public:
 
     int selected_row() const {
         return selected_ < 0 ? highlight_ - 1 : selected_;
+    }
+
+    void select_callback_row() { 
+        selected_ = callback_row();
+    }
+
+    void set_event_callback(EventCallback f) {
+        eventCallback_ = f;
     }
 
 protected:
@@ -84,8 +94,8 @@ protected:
     static void event_callback(Fl_Widget*, void*);
 
 private:
-    int highlight_; // index of current highlighted line
-    int selected_;  // index of selected row
+    int highlight_; // index of current highlighted line (1-based)
+    int selected_;  // index of selected row (o-based)
 
     // map line number to set of (optional) marks at that line
     std::unordered_map<int, std::set<SharedStringPtr> > marks_;
@@ -93,6 +103,8 @@ private:
     // map mark name to pixmap data
     // @note: use a map to implicitly sort by name
     std::map<SharedStringPtr, std::shared_ptr<Fl_Pixmap> > pixmaps_;
+
+    EventCallback eventCallback_;
 };
 
 

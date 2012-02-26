@@ -23,12 +23,19 @@ using namespace std;
 ////////////////////////////////////////////////////////////////
 ui::CodeView::CodeView(ui::Controller& controller)
     : ui::View(controller)
+    , parent_(nullptr)
 {
 }
 
 
 ui::CodeView::~CodeView() throw()
 {
+}
+
+
+void ui::CodeView::set_current_symbol(const RefPtr<Symbol>& sym)
+{
+    current_ = sym;
 }
 
 
@@ -52,7 +59,7 @@ const char* ui::SourceView::current_file() const
 
 size_t ui::SourceView::current_line() const
 {
-    return current_ ? current_->line() : 0;
+    return current_symbol() ? current_symbol()->line() : 0;
 }
 
 
@@ -62,7 +69,7 @@ size_t ui::SourceView::current_line() const
 class LineAddrMapper : public EnumCallback2<SymbolTable*, addr_t>
 {
 public:
-    explicit LineAddrMapper(ui::LineAddrMap& m) 
+    explicit LineAddrMapper(ui::LineAddrMap& m)
         : m_(m), lineNum_(0)
     { }
 
@@ -132,7 +139,7 @@ bool ui::SourceView::refresh(
     const RefPtr<Symbol>& sym )
 
 {
-    current_ = sym;
+    set_current_symbol(sym);
 
     const char* filename = sym->file()->c_str();
     if (filename_ == filename)
@@ -156,10 +163,9 @@ ui::MultiCodeView::~MultiCodeView() throw()
 }
 
 
-const ui::CodeListing* ui::MultiCodeView::get_listing() 
+const ui::CodeListing* ui::MultiCodeView::get_listing()
 {
-    CodeViewPtr view = get_visible_view();
-    return view ? view->get_listing() : nullptr;
+    return currentView_ ? currentView_->get_listing() : nullptr;
 }
 
 
@@ -176,7 +182,7 @@ void ui::MultiCodeView::update(const ui::State& s)
         v->second->update(s);
     }
 
-    if (s.current_event_type() == E_TARGET_FINISHED)
+    if (s.current_event() == E_TARGET_FINISHED)
     {
         // target has detached, close all views
         clear();
@@ -197,7 +203,6 @@ void ui::MultiCodeView::update(const ui::State& s)
     if (sym)
     {
         SharedStringPtr filename = sym->file();
-
         auto i = views_.find(filename);
 
         if (i == views_.end())
@@ -209,12 +214,23 @@ void ui::MultiCodeView::update(const ui::State& s)
             assert(cb);
 
             cv->insert_self(*cb);
+            cv->set_parent(this);
         }
-        current_ = sym;
         i->second->show(t, sym);
 
-        make_visible(i->second);
+        // If the event is caused by a change in the debug target
+        // then update the current view; if the event is caused by
+        // some user interaction (E_PROMPT) then leave it alone,
+        // as the user may have explicitly changed it.
+
+        if (s.current_event() != E_PROMPT || current_symbol() != sym)
+        {
+            currentView_ = i->second;
+        }
+        set_current_symbol(sym);
     }
+
+    make_visible(currentView_);
 }
 
 
@@ -282,7 +298,7 @@ void ui::AsmView::add_listing_line(
 
 {
     int lineNum = lines_.size();
-    
+
     lines_.push_back(line);
     set_row_count(lines_.size());
 
@@ -292,13 +308,13 @@ void ui::AsmView::add_listing_line(
 
 const char* ui::AsmView::current_file() const
 {
-    return current_ ? current_->file()->c_str() : "";
+    return current_symbol() ? current_symbol()->file()->c_str() : "";
 }
 
 
 size_t ui::AsmView::current_line() const
 {
-    return current_ ? current_->line() : 0;
+    return current_symbol() ? current_symbol()->line() : 0;
 }
 
 
@@ -347,7 +363,7 @@ protected:
 
         Debugger* debugger = CHKPTR(thread_->debugger());
         debugger->disassemble(
-            thread_.get(), 
+            thread_.get(),
             start_.get(),
             buffer_.size(),
             false,   /* include source code in listing? */
@@ -397,7 +413,7 @@ bool ui::AsmView::refresh(
     const RefPtr<Symbol>&   s )
 
 {
-    if (s == current_)
+    if (s == current_symbol())
     {
         return false;
     }
@@ -405,7 +421,7 @@ bool ui::AsmView::refresh(
     lines_.clear();         // reset listing lines
     lineAddrMap_.clear();
 
-    current_ = s;
+    set_current_symbol(s);
 
     addr_t addr = s->addr();
 
@@ -421,11 +437,8 @@ bool ui::AsmView::refresh(
     }
 
     RefPtr<ui::Command> disassemble = new DisasmCommand(this, t, start);
-#if 0
-    controller().call_async_on_main_thread(disassemble);
-#else   
     disassemble->execute_on_main_thread();
-#endif
+
     return true;
 }
 
