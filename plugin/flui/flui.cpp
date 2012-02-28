@@ -6,7 +6,6 @@
 // ZDK headers
 #include "zdk/argv_util.h"
 #include "zdk/check_ptr.h"
-// #include "const.h"
 #include "flcode_view.h"
 #include "flvar_view.h"
 #include "flmain_window.h"
@@ -112,28 +111,30 @@ bool Flui::initialize(
 }
 
 
+#define WINDOW_COORD(wnd,f) (wnd ? wnd->parent()->f() : 0)
+
 ////////////////////////////////////////////////////////////////
 int Flui::x() const
 {
-    return window_ ? window_->x() : 0;
+    return WINDOW_COORD(window_, x);
 }
 
 ////////////////////////////////////////////////////////////////
 int Flui::y() const
 {
-    return window_ ? window_->y() : 0;
+    return WINDOW_COORD(window_, y);
 }
 
 ////////////////////////////////////////////////////////////////
 int Flui::w() const
 {
-    return window_ ? window_->w() : 0;
+    return WINDOW_COORD(window_, w);
 }
 
 ////////////////////////////////////////////////////////////////
 int Flui::h() const
 {
-    return window_ ? window_->h() : 0;
+    return WINDOW_COORD(window_, h);
 }
 
 
@@ -177,8 +178,21 @@ void Flui::init_main_window(int x, int y, int w, int h)
 {
     assert(window_ == nullptr);
 
-    window_ = new FlMainWindow(*this, x, y, w, h, WINDOW_TITLE);
+    // Kludge picked up from
+    // http://comments.gmane.org/gmane.comp.lib.fltk.devel/571
+
+    // "The X double buffer has a nasty bug that results in large black flickering
+    // when resizing the window. This is due to the window manager resizing the
+    // window before the app can get around to drawing the off-screen buffer. One
+    // fix is to nest two windows and only double-buffer the inner one [...]"
+
+    auto appWnd = new Fl_Window(x, y, w, h, WINDOW_TITLE);
+    appWnd->resizable(appWnd);
+    window_ = new FlMainWindow(*this, 0, 0, w, h);
     window_->resizable(window_);
+    window_->end();
+    appWnd->end();
+    appWnd->show();
     window_->begin();
 }
 

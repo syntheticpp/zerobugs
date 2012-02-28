@@ -244,7 +244,7 @@ public:
      * Set a one-time breakpoint that is automatically
      * removed after being hit.
      */
-    BreakPoint* set_temp_breakpoint(Runnable*, addr_t);
+    BreakPoint* set_temp_breakpoint(Runnable*, addr_t, const char* = "TEMP");
 
     /**
      * Print all breakpoints (user-defined as well as internal) to

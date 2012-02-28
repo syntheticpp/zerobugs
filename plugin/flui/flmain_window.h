@@ -17,10 +17,16 @@ namespace ui
 class FlMainWindow : public Fl_Double_Window
 {
 public:
-    FlMainWindow(ui::Controller&, int x, int y, int w, int h, const char*);
+    FlMainWindow(
+        ui::Controller&,
+        int x,
+        int y,
+        int w,
+        int h,
+        const char* title = nullptr);
 
 private:
-    virtual int handle(int);
+    //virtual int handle(int);
 
 private:
     ui::Controller& controller_;

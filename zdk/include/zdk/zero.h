@@ -12,7 +12,7 @@
 // -------------------------------------------------------------------------
 
 #define ZERO_API_MAJOR  1
-#define ZERO_API_MINOR 22
+#define ZERO_API_MINOR 23
 
 #define ZDK_MAJOR ZERO_API_MAJOR
 #define ZDK_MINOR ZERO_API_MINOR
@@ -699,7 +699,10 @@ DECLARE_ZDK_INTERFACE_(Debugger, Unknown2)
      * is temporary, i.e. it is automatically removed after
      * being hit.
      */
-    virtual BreakPoint* set_temp_breakpoint(Runnable*, addr_t) = 0;
+    virtual BreakPoint* set_temp_breakpoint(
+        Runnable*,
+        addr_t,
+        const char* actionName = "TEMP") = 0;
 
     /**
      * Remove all user-defined breakpoint actions for

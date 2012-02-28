@@ -933,12 +933,12 @@ static bool valid_syscall_trap( const Thread& thread )
         return true;
     }
 
-    // Heuristic for older Linux kernels that 
+    // Heuristic for older Linux kernels that
     // do not support PTRACE_O_TRACESYSGOOD.
 
     const pid_t sender = thread.get_signal_sender();
     const long ncall = thread.syscall_num();
-   
+
     // sender <= 0: trap originated in kernel?
     return (ncall >= 0) && (sender <= 0 || sender == thread.lwpid());
 }
@@ -967,7 +967,7 @@ void DebuggerEngine::on_syscall(
     // ignore traps caused by ptrace(PTRACE_SYSCALL)
     if ( !usingPtraceCont || !valid_syscall_trap(thread) )
     {
-        // does not look like a legit syscall trap, break in 
+        // does not look like a legit syscall trap, break in
         // the debugger only if the ZERO_IGNORE_UNKNOWN_TRAP
         // environment variable is set to "false"
 
@@ -1278,6 +1278,10 @@ void DebuggerEngine::schedule_actions(
     {
         set_event_description(thread, pc, "Exception");
     }
+    else if (bpnt.enum_actions() == 1 && bpnt.enum_actions("STEP_OVER"))
+    {
+        set_event_description(thread, pc, "Stepped");
+    }
     else
     {
         set_event_description(thread, pc, "Breakpoint");
@@ -1422,12 +1426,13 @@ bool DebuggerEngine::set_user_breakpoint(
 ////////////////////////////////////////////////////////////////
 BreakPoint* DebuggerEngine::set_temp_breakpoint (
     Runnable*   runnable,
-    addr_t      addr)
+    addr_t      addr,
+    const char* name)
 {
     Thread* thread = CHKPTR(runnable)->thread();
     CHKPTR(thread);
 
-    RefPtr<BreakPointAction> action = interactive_action("TEMP", false);
+    RefPtr<BreakPointAction> action = interactive_action(name, false);
     RefPtr<BreakPoint> bpnt = get_breakpoint(*thread, addr);
 
     dbgout(0) << __func__ << ": " << hex << addr << dec << endl;
@@ -1443,7 +1448,7 @@ BreakPoint* DebuggerEngine::set_temp_breakpoint (
         if ((options() & OPT_HARDWARE_BREAKPOINTS) == 0
             // hardware bkp at current PC may not be honored
             || program_count(*thread) == addr
-         ) 
+         )
         {
             type = BreakPoint::EMULATED;
         }
@@ -3810,7 +3815,7 @@ void DebuggerEngine::set_breakpoint_at_throw(
             &DebuggerEngine::break_at_throw,
             permanent,
             cookie));
-    
+
     FunctionEnum funcs;
 
     for (size_t i = 0; i != sizeof(throwFunc)/sizeof(throwFunc[0]); ++i)

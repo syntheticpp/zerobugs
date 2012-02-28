@@ -6,8 +6,9 @@
 //
 #include "const.h"
 #include "flpack_layout.h"
-
+#include "zdk/thread_util.h"
 #include <FL/Fl_Box.H>
+#include <FL/Fl_Output.H>
 #include <FL/Fl_Pack.H>
 #include <FL/Fl_Scroll.H>
 #include <FL/Fl_Tabs.H>
@@ -25,32 +26,32 @@ FlPackLayout::FlPackLayout(ui::Controller& c, int x, int y, int w, int h)
     , bottomL_(nullptr)
     , bottomR_(nullptr)
     , right_(nullptr)
+    , status_(nullptr)
 {
-    Fl_Tile* tile = new Fl_Tile(0, Const::layout_y(y), w, code_height());
-    tile->type(Fl_Pack::VERTICAL);
-    tile->box(FL_DOWN_BOX);
+    Fl_Tile* vtile = new Fl_Tile(group_->x(), Const::layout_y(y), w, code_height());
+    vtile->type(Fl_Pack::VERTICAL);
+    vtile->box(FL_DOWN_BOX);
 
     // area where source or assembly code is displayed
-    auto pack = new Fl_Group(x, Const::layout_y(y),
-        w - Const::thread_regs_width, code_height());
-
-    code_ = pack;
+    code_ = new Fl_Group(vtile->x(), Const::layout_y(y),
+        vtile->w() - Const::thread_regs_width, code_height());
     code_->box(FL_DOWN_BOX);
     code_->end();
 
-    // area where Threads and Registers are displayed
+    // area where Threads and Registers are displayed,
+    // wrapped inside a group widget
     auto g = new Fl_Group(
-        x + code_->w(),
+        vtile->x() + code_->w(),
         Const::layout_y(y),
         Const::thread_regs_width,
-        tile->h());
+        vtile->h());
     g->box(FL_DOWN_BOX);
 
     right_ = new Fl_Tabs(
-        g->x() + Const::margin,
-        g->y() /* + Const::margin */,
-        Const::thread_regs_width - 2 * Const::margin,
-        code_height() /* - 2 * Const::margin */);
+        g->x() + 1,
+        g->y() + 1,
+        Const::thread_regs_width - 2,
+        code_height() - 2);
     //
     // place holders
     //
@@ -63,20 +64,22 @@ FlPackLayout::FlPackLayout(ui::Controller& c, int x, int y, int w, int h)
         b->labelfont(FL_HELVETICA);
 
         right_->end();
-        g->end();
     }
-    tile->end();
+    g->end();
+    vtile->end();
 
     //
     // area for stack traces, local variables and watches
     //
     g = new Fl_Group(
-        x,
+        group_->x(),
         y + code_height() + Const::menubar_height,
-        w,
+        group_->w(),
         h - code_height() - Const::menubar_height - Const::statbar_height);
+
     g->box(FL_DOWN_BOX);
-    {
+    {   // horizontal tile contains a left-side tabs
+        // and a right-side tabs widget
         Fl_Tile* tile = new Fl_Tile(g->x() + 2, g->y(), g->w() - 4, g->h());
         tile->type(Fl_Pack::HORIZONTAL);
         tile->box(FL_DOWN_BOX);
@@ -89,7 +92,7 @@ FlPackLayout::FlPackLayout(ui::Controller& c, int x, int y, int w, int h)
         bottomR_ = new Fl_Tabs(
             tile->x() + tile->w() / 2,
             tile->y(),
-            tile->w() / 2,
+            tile->w() - tile->w() / 2,
             tile->h());
         bottomR_->end();
         tile->end();
@@ -98,13 +101,14 @@ FlPackLayout::FlPackLayout(ui::Controller& c, int x, int y, int w, int h)
     group_->end();
 
     // status bar
-    auto status = new Fl_Box(
-        x,
-        y + group_->y() + group_->h(),
-        w - 2,
+    status_ = new Fl_Output(
+        x + 2,
+        y + group_->y() + group_->h() + 1,
+        w - 4,
         Const::statbar_height - 2);
-
-    status->box(FL_BORDER_BOX);
+    status_->textfont(FL_SCREEN);
+    status_->textsize(12);
+    status_->color(FL_LIGHT1);
 }
 
 
@@ -122,7 +126,30 @@ int FlPackLayout::code_height() const
 void FlPackLayout::update(const ui::State& s)
 {
     ui::Layout::update(s);
+
+    if (status_)
+    {
+        update_status(s);
+    }
     group_->redraw();
+}
+
+
+void FlPackLayout::update_status(const ui::State& s)
+{
+    assert(status_);
+
+    if (s.current_event() == E_TARGET_FINISHED)
+    {
+        status_->value("Target disconnected");
+    }
+    else if (s.current_thread())
+    {
+        if (auto descr = thread_get_event_description(*s.current_thread()))
+        {
+            status_->value(descr->c_str());
+        }
+    }
 }
 
 

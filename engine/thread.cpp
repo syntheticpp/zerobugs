@@ -1600,7 +1600,7 @@ bool ThreadImpl::resume_stepping()
                 try
                 {
                     assert (!is_plt_jump(*this, pc));
-                    debugger()->set_temp_breakpoint(&runnable_, pc);
+                    debugger()->set_temp_breakpoint(&runnable_, pc, "STEP_OVER");
                 }
                 catch (const exception& e)
                 {

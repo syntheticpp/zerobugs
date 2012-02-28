@@ -25,9 +25,11 @@ FlMainWindow::FlMainWindow(
 }
 
 
+#if 0
 // just a debug hook for monitoring events
 int FlMainWindow::handle(int eventType)
 {
-    return Fl_Double_Window::handle(eventType); 
+    return Fl_Double_Window::handle(eventType);
 }
+#endif
 
