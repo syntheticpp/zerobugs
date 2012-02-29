@@ -299,6 +299,14 @@ void ui::Controller::build_menu()
                 }
             }
         });
+
+    menu_->add_ui_item("&Tools/E&valuate", FL_CTRL + 'v', MenuElem::Enable_IfStopped,
+        [this](Controller&)
+        {
+            //
+            // TODO: show dialog
+            //
+        });
 }
 
 

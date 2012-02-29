@@ -24,11 +24,11 @@ namespace ui
         MenuElem()
         { }
 
-        explicit MenuElem(const std::string& name, int shortcut) 
+        explicit MenuElem(const std::string& name, int shortcut)
             : name_(name)
             , shortcut_(shortcut)
         { }
-    
+
         ~MenuElem() throw()
         { }
 
@@ -45,7 +45,7 @@ namespace ui
             return name_;
         }
 
-        int shortcut() const 
+        int shortcut() const
         {
             return shortcut_;
         }
@@ -53,7 +53,7 @@ namespace ui
         virtual void update(const State& state)
         {
         }
-        
+
         virtual RefPtr<Command> emit_command() const;
 
     private:
@@ -75,7 +75,7 @@ namespace ui
     protected:
         ~MenuItem() throw()
         { }
-        
+
         virtual RefPtr<Command> emit_command() const
         {
             command_->reset();
@@ -110,18 +110,11 @@ namespace ui
     protected:
         ~CompositeMenu() throw()
         { }
-        
+
         void add(RefPtr<MenuElem> menu);
 
     public:
-        virtual void add(
-            const std::string&  name,
-            int                 shortcut,
-            EnableCondition     enable,
-            RefPtr<Command>     command ) = 0;
-
-        template<typename T>
-        void add_item(
+        template<typename T> void add_item(
             const std::string&  name,
             int                 shortcut,
             EnableCondition     enable,
@@ -130,9 +123,24 @@ namespace ui
             add(name, shortcut, enable, new MainThreadCommand<T>(callable));
         }
 
+        template<typename T> void add_ui_item(
+            const std::string&  name,
+            int                 shortcut,
+            EnableCondition     enable,
+            T                   callable )
+        {
+            add(name, shortcut, enable, new UIThreadCommand<T>(callable));
+        }
+
         virtual void update(const State& state);
 
     protected:
+        virtual void add(
+            const std::string&  name,
+            int                 shortcut,
+            EnableCondition     enable,
+            RefPtr<Command>     command ) = 0;
+
         std::vector<RefPtr<MenuElem> >  children_;
     };
 }

@@ -18,19 +18,6 @@ void ui::CompositeMenu::add(RefPtr<MenuElem> menu)
     children_.push_back(menu);
 }
 
-/*
-void ui::CompositeMenu::add(
-
-    const std::string&  name,
-    int                 shortcut,
-    EnableCondition     enable,
-    RefPtr<Command>     command)
-{
-    RefPtr<ui::MenuElem> elem(new MenuItem(name, shortcut, enable, command));
-    add(elem);
-}
-*/
-
 
 void ui::CompositeMenu::update(const State& state) 
 {

@@ -18,8 +18,10 @@ LDFLAGS+=-Wl,--no-undefined
 ################################################################
 SRCS=	code_view.cpp		\
 		controller.cpp		\
+		dialog.cpp			\
 		flcode_view.cpp		\
 		flcode_table.cpp	\
+		fldialog.cpp		\
 		flui.cpp 			\
 		flmain_window.cpp	\
 		flmenu.cpp			\

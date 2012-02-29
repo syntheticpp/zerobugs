@@ -22,7 +22,6 @@
 #include <deque>
 #include <iosfwd>
 #include <stack>
-#include <boost/utility.hpp>
 #include "breakpoint.h"
 #include "breakpoint_mgr.h"
 #include "debugger_base.h"
@@ -52,7 +51,6 @@ class DebuggerEngine : public DebuggerBase
                      , public CommandCenter
                      , public PluginManager
                      , public VersionInfo
-                     , private boost::noncopyable
 {
 protected:
     typedef std::deque<RefPtr<BreakPoint> > BreakPointList;
@@ -395,7 +393,7 @@ private:
     //
     typedef std::stack<RefPtr<ZObject> > ActionContextStack;
 
-    struct ZDK_LOCAL ActionScope : boost::noncopyable
+    struct ZDK_LOCAL ActionScope
     {
         ActionContextStack& stack_;
 
@@ -413,6 +411,11 @@ private:
             }
             stack_.pop();
         }
+
+    private:
+        // non-copyable
+        ActionScope(const ActionScope&);
+        ActionScope& operator=(const ActionScope&);
     }; // ActionScope
 
     void break_into_interactive_mode(RefPtr<Thread>, RefPtr<BreakPoint>);
@@ -510,6 +513,10 @@ private:
                                  EnumCallback<SymbolTable*>*
                                 ) const;
 private:
+    // non-copyable
+    DebuggerEngine(const DebuggerEngine&);
+    DebuggerEngine& operator=(const DebuggerEngine&);
+
     PluginList plugins_; // all plug-ins
     ActionContextStack actionContextStack_;
 

@@ -4,15 +4,5 @@
 //
 // $Id: $
 //
-#include "toolbar.h"
-
-
-ui::Toolbar::Toolbar(ui::Controller& c) : ui::View(c)
-{
-}
-
-
-ui::Toolbar::~Toolbar() throw()
-{
-}
+#include "fldialog.h"
 
