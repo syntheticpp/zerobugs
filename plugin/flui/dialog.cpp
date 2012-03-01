@@ -4,6 +4,7 @@
 //
 // $Id: $
 //
+#include "controller.h"
 #include "dialog.h"
 using namespace ui;
 
@@ -16,6 +17,8 @@ Dialog::Dialog( Controller& controller )
 
 Dialog::~Dialog()
 {
+    //TODO: support stacked dialogs?
+    controller_.set_current_dialog(nullptr);
 }
 
 

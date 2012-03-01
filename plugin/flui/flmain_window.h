@@ -26,7 +26,7 @@ public:
         const char* title = nullptr);
 
 private:
-    //virtual int handle(int);
+    // virtual int handle(int);
 
 private:
     ui::Controller& controller_;

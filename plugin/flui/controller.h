@@ -18,6 +18,7 @@ namespace ui
 {
     class CodeView;
     class CompositeMenu;
+    class Dialog;
     class VarView;
     class StackView;
     class Toolbar;
@@ -81,6 +82,8 @@ namespace ui
         virtual void error_message(const std::string&) const;
 
         // UI thread entry point
+        static void* run(void*);
+
         virtual void run();
 
         // main window position and dimensions
@@ -89,13 +92,26 @@ namespace ui
         virtual int w() const = 0;
         virtual int h() const = 0;
 
-        static void* run(void*);
+        virtual void show_eval_dialog() = 0;
 
         // schedule command for execution on main thread
         void call_main_thread_async(RefPtr<Command>);
 
         // wake up main thread if in idle state
         void awaken_main_thread();
+
+        Debugger* debugger() {
+            assert(debugger_);
+            return debugger_;
+        }
+
+        const Dialog* current_dialog() const {
+            return dialog_;
+        }
+
+        void set_current_dialog(Dialog* dialog) {
+            dialog_ = dialog;
+        }
 
         // --- DebuggerPlugin interface
         /**
@@ -175,8 +191,6 @@ namespace ui
             Thread*,
             bool        /* async */);
 
-        Debugger* debugger() { assert(debugger_); return debugger_; }
-
     protected:
         void build();
         void build_layout();
@@ -205,6 +219,8 @@ namespace ui
 
         virtual void save_configuration();
 
+        State& state();
+
     private:
         RefPtr<Command> update(Thread*, EventType);
         void update(LockedScope&, Thread*, EventType);
@@ -220,6 +236,7 @@ namespace ui
         std::unique_ptr<StateImpl>  state_;
 
         bool                        done_; // terminate UI loop?
+        Dialog*                     dialog_; // current modal dlg, if any
 
         // mail box for passing requests between main and ui threads
         RefPtr<Command>             command_;

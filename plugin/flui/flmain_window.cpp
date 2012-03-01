@@ -6,9 +6,7 @@
 //
 #include "controller.h"
 #include "flmain_window.h"
-
-using namespace std;
-
+#include <FL/Fl.H>
 
 FlMainWindow::FlMainWindow(
 
@@ -25,11 +23,14 @@ FlMainWindow::FlMainWindow(
 }
 
 
-#if 0
-// just a debug hook for monitoring events
+/*
 int FlMainWindow::handle(int eventType)
 {
+    if (eventType == FL_KEYDOWN && Fl::event_key() != FL_Escape)
+    {
+        return 1;
+    }
+
     return Fl_Double_Window::handle(eventType);
 }
-#endif
-
+*/

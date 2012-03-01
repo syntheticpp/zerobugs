@@ -7,6 +7,7 @@
 #include "zdk/argv_util.h"
 #include "zdk/check_ptr.h"
 #include "flcode_view.h"
+#include "fleval_dlg.h"
 #include "flvar_view.h"
 #include "flmain_window.h"
 #include "flmenu.h"
@@ -69,6 +70,14 @@ Flui::Flui()
 Flui::~Flui()
 {
     delete window_;
+}
+
+
+////////////////////////////////////////////////////////////////
+void Flui::run()
+{
+    Fl_Group::current(nullptr);
+    ui::Controller::run();
 }
 
 
@@ -173,6 +182,19 @@ RefPtr<ui::StackView> Flui::init_stack_view()
 }
 
 
+static void (*default_callback)(Fl_Widget*, void*);
+
+////////////////////////////////////////////////////////////////
+static void close_callback(Fl_Widget* w, void* data)
+{
+    if (Fl::event() == FL_SHORTCUT && Fl::event_key() == FL_Escape)
+    {
+        return;
+    }
+    default_callback(w, data);
+}
+
+
 ////////////////////////////////////////////////////////////////
 void Flui::init_main_window(int x, int y, int w, int h)
 {
@@ -188,6 +210,11 @@ void Flui::init_main_window(int x, int y, int w, int h)
 
     auto appWnd = new Fl_Window(x, y, w, h, WINDOW_TITLE);
     appWnd->resizable(appWnd);
+    // install custom callback to prevent Escape from closing
+    // the main window (http://www.fltk.org/doc-1.1/Fl_Widget.html#Fl_Widget.callback)
+    default_callback = appWnd->callback();
+    appWnd->callback(close_callback);
+
     window_ = new FlMainWindow(*this, 0, 0, w, h);
     window_->resizable(window_);
     window_->end();
@@ -253,5 +280,16 @@ const char* Flui::description() const
 const char* Flui::copyright() const
 {
     return "";
+}
+
+
+////////////////////////////////////////////////////////////////
+void Flui::show_eval_dialog()
+{
+    Fl_Group::current(nullptr); // HACK
+    static FlEvalDialog dlg(*this);
+    dlg.popup(state());
+
+    set_current_dialog(&dlg);
 }
 

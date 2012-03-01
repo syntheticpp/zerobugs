@@ -4,11 +4,13 @@
 //
 // $Id$
 //
+#include "zdk/check_ptr.h"
 #include "zdk/log.h"
 #include "zdk/thread_util.h"
 #include "const.h"
 #include "code_view.h"
 #include "controller.h"
+#include "dialog.h"
 #include "locals_view.h"
 #include "stack_view.h"
 #include "toolbar.h"
@@ -17,6 +19,7 @@
 #include "dharma/system_error.h"
 #include <pthread.h>
 #include <iostream>
+#include <typeinfo>
 
 // properties
 #define WINDOW_X        "flui.window.x"
@@ -69,6 +72,7 @@ public:
         return currentThread_;
     }
 };
+
 
 void ui::Controller::StateImpl::update(
 
@@ -179,6 +183,7 @@ ui::Controller::Controller()
     , uiThreadId_(0)
     , state_(init_state())
     , done_(false)
+    , dialog_(nullptr)
     , idle_(new IdleCommand)
 {
 }
@@ -300,12 +305,10 @@ void ui::Controller::build_menu()
             }
         });
 
-    menu_->add_ui_item("&Tools/E&valuate", FL_CTRL + 'v', MenuElem::Enable_IfStopped,
-        [this](Controller&)
+    menu_->add_ui_item("&Tools/E&valuate", FL_ALT + 'v', MenuElem::Enable_IfStopped,
+        [this](Controller& controller)
         {
-            //
-            // TODO: show dialog
-            //
+            controller.show_eval_dialog();
         });
 }
 
@@ -366,6 +369,9 @@ bool ui::Controller::initialize(
 ////////////////////////////////////////////////////////////////
 void ui::Controller::done()
 {
+#if DEBUG
+    clog << __FUNCTION__ << endl;
+#endif
     call_main_thread_async(new MainThreadCommand<>([this]() {
         debugger_->quit();
     }));
@@ -382,6 +388,12 @@ void ui::Controller::update(
 
 {
     state_->update(thread, eventType);
+
+    // update modal dialog if any
+    if (dialog_)
+    {
+        dialog_->update(*state_);
+    }
 
     //
     // pass updated state info to UI elements
@@ -432,6 +444,9 @@ RefPtr<ui::Command> ui::Controller::update(
     {
         command_ = idle_;
     }
+#if DEBUG
+    clog << __func__ << ": current command=" << typeid(*command_).name() << endl;
+#endif
 
     return command_;
 }
@@ -638,5 +653,12 @@ void ui::Controller::save_configuration()
     prop.set_word(WINDOW_Y, y());
     prop.set_word(WINDOW_H, h());
     prop.set_word(WINDOW_W, w());
+}
+
+
+////////////////////////////////////////////////////////////////
+ui::State& ui::Controller::state()
+{
+    return *CHKPTR(state_.get());
 }
 

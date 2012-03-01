@@ -18,8 +18,8 @@ class Fl_VarTable : public Fl_Table
 {
 public:
     static const int COL_VarName     = 0;
-    static const int COL_VarType     = 1;
-    static const int COL_VarValue    = 2;
+    static const int COL_VarValue    = 1;
+    static const int COL_VarType     = 2;
 
     explicit Fl_VarTable(
         ui::VarView*    view,
@@ -63,13 +63,23 @@ private:
 
 
 
+class FlVarView : public FlView<ui::VarView, Fl_VarTable>
+{
+public:
+    explicit FlVarView(ui::Controller&);
+
+    virtual void update(const ui::State&);
+};
+
+
+
 /**
  * View variables that local to a scope.
  */
 class FlLocalsView : public FlView<ui::LocalsView, Fl_VarTable>
 {
 public:
-    explicit FlLocalsView(ui::Controller&);
+    explicit FlLocalsView(ui::Controller&, const char* = "Locals");
 
     virtual void update(const ui::State&);
 };

@@ -53,8 +53,8 @@ void ui::StackView::select_frame(size_t n)
         return;
     }
 
-    controller().call_main_thread_async(new MainThreadCommand<>([this, n]() {
+    call_main_thread(controller(), [this, n]() {
         stack_->select_frame(n);
-    }));
+    });
 }
 

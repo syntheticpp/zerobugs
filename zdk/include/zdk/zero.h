@@ -647,7 +647,7 @@ DECLARE_ZDK_INTERFACE_(Debugger, Unknown2)
     virtual bool evaluate(
         const char* expr,
         Thread*     thread,
-        addr_t      addr,
+        addr_t      /* reserved */,
         ExprEvents* events,
         int         numericBase = 0) = 0;
 

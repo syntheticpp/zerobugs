@@ -13,7 +13,7 @@
 #include <FL/Enumerations.H>
 
 
-static std::vector<const char*> header = { "Variable", "Type", "Value" };
+static std::vector<const char*> header = { "Variable", "Value", "Type" };
 static const int pix_width = 16;
 
 
@@ -37,9 +37,9 @@ Fl_VarTable::Fl_VarTable(
 
     cols(header.size());
 
-    col_width(COL_VarName, 300);
-    col_width(COL_VarType, 200);
+    col_width(COL_VarName, 200);
     col_width(COL_VarValue, 300);
+    col_width(COL_VarType, 100);
     col_resize_min(100);
 
     callback(event_callback, this);
@@ -120,7 +120,10 @@ void Fl_VarTable::draw_symbol(
         {
             fl_color(FL_RED);
         }
-        fl_draw(sym.value()->c_str(), x + 2, y, w, h, FL_ALIGN_LEFT);
+        if (auto val = sym.value())
+        {
+            fl_draw(val->c_str(), x + 2, y, w, h, FL_ALIGN_LEFT);
+        }
         break;
 
     case COL_VarType:
@@ -174,15 +177,30 @@ void Fl_VarTable::event_callback()
 void Fl_VarTable::resize(int x, int y, int w, int h)
 {
     Fl_Table::resize(x, y, w, h);
-    col_width(COL_VarValue, w - col_width(COL_VarName) - col_width(COL_VarType) - 2);
+    int width = w - col_width(COL_VarName) - col_width(COL_VarValue) - 2;
+    col_width(COL_VarValue, width);
 }
 
 
 ////////////////////////////////////////////////////////////////
-FlLocalsView::FlLocalsView(ui::Controller& c)
-    : base_type(c, this, 0, 0, 0, 0, "Locals")
+FlVarView::FlVarView(ui::Controller& c)
+    : base_type(c, this, 0, 0, 0, 0, nullptr)
 {
-    widget()->tooltip("Local variables");
+}
+
+
+void FlVarView::update(const ui::State& state)
+{
+    base_type::update(state);
+    widget()->rows(variable_count());
+}
+
+
+////////////////////////////////////////////////////////////////
+FlLocalsView::FlLocalsView(ui::Controller& c, const char* label)
+    : base_type(c, this, 0, 0, 0, 0, label)
+{
+    widget()->tooltip("Local Variables");
 }
 
 

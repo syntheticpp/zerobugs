@@ -14,6 +14,9 @@
 
 namespace ui
 {
+    class State;
+
+
     class Dialog
     {
     public:
@@ -24,13 +27,34 @@ namespace ui
         explicit Dialog(Controller&);
         virtual ~Dialog();
 
-        virtual void show_modal() { }
+        void popup(const ui::State& s) {
+            update(s);
+            show();
+        }
+
+        virtual void update(const ui::State& s) {
+            for (auto v = begin(views_); v != end(views_); ++v)
+                (*v)->update(s);
+        }
+
 
     protected:
-        virtual void add_action(const std::string&, Callback);
-        virtual void add_view(const RefPtr<View>&) { }
+        void add_action(const std::string&, Callback);
+
+        void add_view(const RefPtr<View>& v) {
+            views_.push_back(v);
+        }
+
+        Controller& controller() {
+            return controller_;
+        }
+
+        virtual void show() = 0;
 
     private:
+        // non-copyable
+        Dialog(const Dialog&);
+        Dialog& operator=(const Dialog&);
 
     private:
         Controller& controller_;

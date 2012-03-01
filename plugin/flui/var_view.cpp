@@ -9,8 +9,8 @@
 #include "controller.h"
 #include "flvar_view.h"
 #include "var_view.h"
-//#include <iostream>
-//using namespace std;
+#include <iostream>
+using namespace std;
 
 
 struct VarState
@@ -18,6 +18,7 @@ struct VarState
     bool            expand_;
     SharedStringPtr value_;
 };
+
 
 /**
  * Track state associated with variables
@@ -92,10 +93,18 @@ ui::VarView::~VarView() throw()
 }
 
 
-void ui::VarView::update(const ui::State& s)
+void ui::VarView::clear(bool resetScope)
 {
     variables_.clear();
+    if (resetScope)
+    {
+        scope_.reset();
+    }
+}
 
+
+void ui::VarView::update_scope(const ui::State& s)
+{
     RefPtr<Thread> thread = s.current_thread();
 
     if (thread && thread_finished(*thread))
@@ -104,7 +113,7 @@ void ui::VarView::update(const ui::State& s)
     }
     else if (RefPtr<Frame> f = thread_current_frame(thread.get()))
     {
-        const bool sameScope = is_same_scope(f->function()); 
+        const bool sameScope = is_same_scope(f->function());
         current_ = f->function();
 
         if (sameScope && scope_)
@@ -133,6 +142,12 @@ void ui::VarView::update(const ui::State& s)
     {
         scope_ = new ui::VarView::Scope;
     }
+}
+
+
+void ui::VarView::update(const ui::State& s)
+{
+    update_scope(s);
 }
 
 

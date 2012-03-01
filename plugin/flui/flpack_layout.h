@@ -30,6 +30,10 @@ protected:
 
     CallbackPtr make_callback(ui::ViewType);
 
+    void resize(int x, int y, int w, int h) {
+        group_->resize(x, y, w, h);
+    }
+
 private:
     void update_status(const ui::State&);
 

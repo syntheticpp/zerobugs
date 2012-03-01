@@ -19,11 +19,13 @@ namespace ui
      * Base class for viewing program variables.
      */
     class VarView
-        : public    View
-        , protected DebugSymbolEvents
+        : public View
+        , public DebugSymbolEvents
     {
     public:
         explicit VarView(ui::Controller&);
+
+        void clear(bool resetScope = false);
 
         DebugSymbol& get_variable(size_t n) const;
 
@@ -38,14 +40,6 @@ namespace ui
         void expand(size_t row, bool = true);
 
         bool has_variable_changed(const DebugSymbol&) const;
-
-    protected:
-        ~VarView() throw();
-
-        BEGIN_INTERFACE_MAP(VarView)
-        END_INTERFACE_MAP()
-
-        bool is_same_scope(Symbol*) const;
 
         /// DebugSymbolEvents interface
         bool notify(DebugSymbol*);
@@ -73,8 +67,16 @@ namespace ui
          */
         virtual void symbol_change (
             DebugSymbol* newSym,
-            DebugSymbol* old )
-        { }
+            DebugSymbol* old ) {
+        }
+
+    protected:
+        ~VarView() throw();
+
+        BEGIN_INTERFACE_MAP(VarView)
+        END_INTERFACE_MAP()
+
+        bool is_same_scope(Symbol*) const;
 
         /// View interface
         virtual ViewType type() const {
@@ -83,10 +85,12 @@ namespace ui
 
         virtual void update(const State&);
 
+        void update_scope(const State&);
+
     private:
         // @note: just to be consistent with the fact that this
         // view (and its derived classses) show program variables
-        // to the user the Variables name is used here; the 
+        // to the user the Variables name is used here; the
         // debugger engine uses DebugSymbols to model variables;
         // DebugSymbols may model other types of program artifacts,
         // so they are more general. In the context of VarViews

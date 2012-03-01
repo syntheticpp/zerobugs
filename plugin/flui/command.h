@@ -95,6 +95,9 @@ namespace ui
             complete_ = false;
         }
 
+        //void execute_on_main_thread() {
+        //}
+
         void continue_on_ui_thread(Controller& controller) {
             callable_(controller);
             complete_ = true;
@@ -107,6 +110,12 @@ namespace ui
 
 
     typedef RefPtr<Command> CommandPtr;
+
+
+    template<typename C, typename F>
+    void call_main_thread(C& controller, F f) {
+        controller.call_main_thread_async(new MainThreadCommand<F>(f));
+    }
 }
 #endif // COMMAND_H__924DE56A_4E47_4F94_A8B5_BF0BF6BEDEF2
 

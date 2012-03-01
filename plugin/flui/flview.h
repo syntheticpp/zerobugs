@@ -7,13 +7,14 @@
 // $Id: $
 //
 #include "view.h"
+
 class Fl_Group;
 class Fl_Widget;
 
 void insert(Fl_Widget&, ui::LayoutCallback&);
 
 
-template<typename W> 
+template<typename W>
 class FlViewImpl : public W
 {
 public:
@@ -39,23 +40,20 @@ class FlView : public T, public FlViewBase
 {
 public:
     template<typename... Args>
-    FlView(ui::Controller& controller, Args... args) 
+    FlView(ui::Controller& controller, Args... args)
         : T(controller)
         , impl_(new FlViewImpl<W>(args...))
     { }
 
-protected:
-    typedef FlView<T, W> base_type;
-
-    virtual void insert_self(ui::LayoutCallback& cb) {
-        insert(*impl_, cb);
+    void resize(int x, int y, int w, int h) {
+        base_widget()->resize(x, y, w, h);
     }
 
     W* widget() {
         assert(impl_);
         return impl_;
     }
-    
+
     const W* widget() const {
         assert(impl_);
         return impl_;
@@ -65,6 +63,12 @@ protected:
         return widget();
     }
 
+protected:
+    typedef FlView<T, W> base_type;
+
+    virtual void insert_self(ui::LayoutCallback& cb) {
+        insert(*impl_, cb);
+    }
 private:
     FlViewImpl<W>* impl_;
 };

@@ -17,7 +17,12 @@ ui::LocalsView::LocalsView(ui::Controller& c)
 
 void ui::LocalsView::update(const ui::State& state)
 {
+    clear();
+#if 0
     VarView::update(state);
+#else
+    update_scope(state);
+#endif
 
     if (auto t = state.current_thread())
     {

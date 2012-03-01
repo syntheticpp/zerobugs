@@ -90,6 +90,8 @@ namespace ui
 
         void awaken_main_thread();
 
+        virtual void resize(int x, int y, int w, int h) = 0;
+
     protected:
         virtual ~View() throw() { }
 

@@ -37,8 +37,12 @@ protected:
     int w() const;
     int h() const;
 
+    void show_eval_dialog();
+
     // --- RefCounted
     virtual void release();
+
+    virtual void run();
 
     // --- DebuggerPlugin interface
     /**

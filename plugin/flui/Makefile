@@ -22,6 +22,7 @@ SRCS=	code_view.cpp		\
 		flcode_view.cpp		\
 		flcode_table.cpp	\
 		fldialog.cpp		\
+		fleval_dlg.cpp		\
 		flui.cpp 			\
 		flmain_window.cpp	\
 		flmenu.cpp			\
