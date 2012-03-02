@@ -82,7 +82,7 @@ void Fl_StackTable::draw_cell(
 
     case CONTEXT_CELL:
         {
-            fl_font(FL_HELVETICA, 10);
+            fl_font(FL_HELVETICA, 11);
             fl_push_clip(x, y, w, h);
             const Fl_Color color = row_selected(row) ? FL_BACKGROUND_COLOR : FL_WHITE;
 

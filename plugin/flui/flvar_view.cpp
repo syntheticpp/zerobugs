@@ -12,9 +12,12 @@
 #include <FL/fl_draw.H>
 #include <FL/Enumerations.H>
 
+#include <iostream>
+using namespace std;
 
 static std::vector<const char*> header = { "Variable", "Value", "Type" };
 static const int pix_width = 16;
+static const int min_width = 80;
 
 
 Fl_VarTable::Fl_VarTable(
@@ -37,10 +40,10 @@ Fl_VarTable::Fl_VarTable(
 
     cols(header.size());
 
-    col_width(COL_VarName, 200);
+    col_width(COL_VarName,  200);
     col_width(COL_VarValue, 300);
-    col_width(COL_VarType, 100);
-    col_resize_min(100);
+    col_width(COL_VarType,  100);
+    col_resize_min(min_width);
 
     callback(event_callback, this);
     when(FL_WHEN_RELEASE | FL_WHEN_CHANGED);
@@ -70,7 +73,7 @@ void Fl_VarTable::draw_cell(
         break;
 
     case CONTEXT_CELL:
-        fl_font(FL_HELVETICA, 10);
+        fl_font(FL_HELVETICA, 11);
         fl_push_clip(x, y, w, h);
         fl_draw_box(FL_BORDER_BOX, x, y, w, h, FL_WHITE);
         fl_frame("XXRR", x, y, w, h);
@@ -177,8 +180,9 @@ void Fl_VarTable::event_callback()
 void Fl_VarTable::resize(int x, int y, int w, int h)
 {
     Fl_Table::resize(x, y, w, h);
+
     int width = w - col_width(COL_VarName) - col_width(COL_VarValue) - 2;
-    col_width(COL_VarValue, width);
+    col_width(COL_VarType, max(min_width, width));
 }
 
 

@@ -19,7 +19,7 @@
 #include "dharma/system_error.h"
 #include <pthread.h>
 #include <iostream>
-#include <typeinfo>
+// #include <typeinfo>
 
 // properties
 #define WINDOW_X        "flui.window.x"
@@ -444,9 +444,6 @@ RefPtr<ui::Command> ui::Controller::update(
     {
         command_ = idle_;
     }
-#if DEBUG
-    clog << __func__ << ": current command=" << typeid(*command_).name() << endl;
-#endif
 
     return command_;
 }

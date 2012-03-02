@@ -122,7 +122,7 @@ void ui::VarView::update_scope(const ui::State& s)
         }
 
         RefPtr<ZObject> obj = f->get_user_object(".scope");
-        // ensure that there's scope object
+        // ensure that there's a scope object
         // associated with the stack frame object
         if (!obj)
         {
