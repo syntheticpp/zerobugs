@@ -28,6 +28,7 @@ SRCS=	code_view.cpp		\
 		flmain_window.cpp	\
 		flmenu.cpp			\
 		flpack_layout.cpp	\
+		flsplitter.cpp		\
 		flstack_view.cpp	\
 		fltoolbar.cpp		\
 		flvar_view.cpp		\

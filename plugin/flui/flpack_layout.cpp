@@ -6,14 +6,13 @@
 //
 #include "const.h"
 #include "flpack_layout.h"
+#include "flsplitter.h"
 #include "zdk/thread_util.h"
 #include <FL/Fl_Box.H>
 #include <FL/Fl_Output.H>
 #include <FL/Fl_Pack.H>
 #include <FL/Fl_Scroll.H>
 #include <FL/Fl_Tabs.H>
-#include <FL/Fl_Tile.H>
-//#include <iostream>
 
 using namespace ui;
 using namespace std;
@@ -21,18 +20,17 @@ using namespace std;
 
 FlPackLayout::FlPackLayout(ui::Controller& c, int x, int y, int w, int h)
     : ui::Layout(c)
-    , group_(new Fl_Tile(x, Const::layout_y(y), w, Const::layout_height(h)))
+    , group_(new FlSplitter(x, Const::layout_y(y), w, Const::layout_height(h)))
     , code_(nullptr)
     , bottomL_(nullptr)
     , bottomR_(nullptr)
     , right_(nullptr)
     , status_(nullptr)
 {
-    group_ = new Fl_Tile(x, Const::layout_y(y), w, Const::layout_height(h));
-    Fl_Tile* vtile = new Fl_Tile(group_->x(), Const::layout_y(y), w, code_height());
-    vtile->type(Fl_Pack::VERTICAL);
+    auto vtile = new FlSplitter(group_->x(), Const::layout_y(y), w, code_height());
     vtile->box(FL_DOWN_BOX);
-
+    vtile->type(FlSplitter::HORIZONTAL);
+    vtile->set_min_size(250);
     // area where source or assembly code is displayed
     code_ = new Fl_Group(vtile->x(), Const::layout_y(y),
         vtile->w() - Const::thread_regs_width, code_height());
@@ -80,11 +78,12 @@ FlPackLayout::FlPackLayout(ui::Controller& c, int x, int y, int w, int h)
         group_->w(),
         h - code_height() - Const::menubar_height - Const::statbar_height);
 
+    group_->enforce_vertical();
     g->box(FL_DOWN_BOX);
     {   // horizontal tile contains a left-side tabs
         // and a right-side tabs widget
-        Fl_Tile* tile = new Fl_Tile(g->x() + 2, g->y(), g->w() - 4, g->h());
-        tile->type(Fl_Pack::HORIZONTAL);
+        auto tile = new FlSplitter(g->x() + 2, g->y(), g->w() - 4, g->h());
+        tile->type(FlSplitter::HORIZONTAL);
         tile->box(FL_DOWN_BOX);
         auto flat = new Fl_Group(tile->x(), tile->y(), tile->w() / 2, tile->h());
         flat->box(FL_BORDER_BOX);
@@ -106,7 +105,6 @@ FlPackLayout::FlPackLayout(ui::Controller& c, int x, int y, int w, int h)
     }
     g->end();
     group_->end();
-
     init_status_bar(x, y, w, h);
 }
 
@@ -177,5 +175,11 @@ void FlPackLayout::status_message(const std::string& msg)
     {
         status_->value(msg.c_str(), msg.length());
     }
+}
+
+
+void FlPackLayout::resize(int x, int y, int w, int h)
+{
+    group_->resize(x, y, w, h);
 }
 
