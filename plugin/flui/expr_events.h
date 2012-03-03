@@ -16,13 +16,20 @@ namespace ui
 {
     class Controller;
 
-
     /**
      * Handle notifications from the expression evaluator.
      */
     class ExprEvalEvents : public SubjectImpl<ExprEvents>
     {
     public:
+        static RefPtr<ExprEvalEvents> make(
+            Controller&         controller,
+            DebugSymbolEvents*  symEvents ) {
+
+            return new ExprEvalEvents(controller, symEvents);
+        }
+
+    protected:
         ExprEvalEvents (
             Controller&         controller,
             DebugSymbolEvents*  symEvents )
@@ -31,15 +38,16 @@ namespace ui
             , symEvents_(symEvents) {
         }
 
-    private:
-        BEGIN_INTERFACE_MAP(ExprEvalEvents)
-            INTERFACE_ENTRY_INHERIT(SubjectImpl<ExprEvents>)
-        END_INTERFACE_MAP()
-
         ExprEvalEvents(const ExprEvalEvents& other)
             : controller_(other.controller_)
             , symEvents_(other.symEvents_) {
         }
+        ~ExprEvalEvents() throw();
+
+        BEGIN_INTERFACE_MAP(ExprEvalEvents)
+            INTERFACE_ENTRY_INHERIT(SubjectImpl<ExprEvents>)
+        END_INTERFACE_MAP()
+
 
         /**
          * Indicates that the interpreter has finished parsing and

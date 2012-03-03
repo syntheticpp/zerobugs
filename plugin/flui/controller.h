@@ -107,12 +107,10 @@ namespace ui
         }
 
         Dialog* current_dialog() {
-            return dialog_;
+            return dialogStack_.empty() ? nullptr : dialogStack_.back();
         }
 
-        void set_current_dialog(Dialog* dialog) {
-            dialog_ = dialog;
-        }
+        void set_current_dialog(Dialog* dialog);
 
         // --- DebuggerPlugin interface
         /**
@@ -229,16 +227,14 @@ namespace ui
 
     private:
         Debugger*                   debugger_;
-        pthread_t                   uiThreadId_;
-
+        pthread_t                   threadId_;      // UI thread ID
         RefPtr<Layout>              layout_;
         RefPtr<CodeView>            code_;
         RefPtr<CompositeMenu>       menu_;
         RefPtr<Toolbar>             toolbar_;
         std::unique_ptr<StateImpl>  state_;
-
-        bool                        done_; // terminate UI loop?
-        Dialog*                     dialog_; // current modal dlg, if any
+        bool                        done_;          // terminate UI loop?
+        std::vector<Dialog*>        dialogStack_;   // modal dialogs
 
         // mail box for passing requests between main and ui threads
         RefPtr<Command>             command_;

@@ -14,11 +14,11 @@
 
 namespace ui
 {
-    class State;
-
-
     class Dialog
     {
+        Dialog(const Dialog&);  // non-copyable
+        Dialog& operator=(const Dialog&);
+
     public:
         typedef std::vector<RefPtr<View> > Views;
         typedef std::function<void ()> Callback;
@@ -27,7 +27,15 @@ namespace ui
         explicit Dialog(Controller&);
         virtual ~Dialog();
 
+        void add_view(const RefPtr<View>& v) {
+            views_.push_back(v);
+        }
+
         virtual void close() = 0;
+
+        void hide() {
+            show(false);
+        }
 
         void popup(const ui::State& s) {
             update(s);
@@ -36,23 +44,18 @@ namespace ui
 
         virtual void show(bool = true) = 0;
 
+        virtual bool status_message(const char*) {
+            return false;
+        }
+
         virtual void update(const ui::State&);
 
     protected:
         void add_action(const std::string&, Callback);
 
-        void add_view(const RefPtr<View>& v) {
-            views_.push_back(v);
-        }
-
         Controller& controller() {
             return controller_;
         }
-
-    private:
-        // non-copyable
-        Dialog(const Dialog&);
-        Dialog& operator=(const Dialog&);
 
     private:
         Controller& controller_;

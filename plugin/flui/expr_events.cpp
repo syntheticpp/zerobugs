@@ -7,6 +7,15 @@
 #include "expr_events.h"
 #include "controller.h"
 #include "dialog.h"
+//#include <iostream>
+//using namespace std;
+
+
+
+ui::ExprEvalEvents::~ExprEvalEvents() throw()
+{
+    // clog << __PRETTY_FUNCTION__ << endl;
+}
 
 /**
  * An error occurred while interpreting expression

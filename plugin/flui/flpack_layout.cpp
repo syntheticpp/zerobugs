@@ -13,7 +13,7 @@
 #include <FL/Fl_Scroll.H>
 #include <FL/Fl_Tabs.H>
 #include <FL/Fl_Tile.H>
-#include <iostream>
+//#include <iostream>
 
 using namespace ui;
 using namespace std;
@@ -53,7 +53,7 @@ FlPackLayout::FlPackLayout(ui::Controller& c, int x, int y, int w, int h)
         g->y() + 1,
         Const::thread_regs_width - 2,
         code_height() - 2);
-    ////////////////////////////////////////////////////////////
+
     //
     // place holders
     //
@@ -64,10 +64,10 @@ FlPackLayout::FlPackLayout(ui::Controller& c, int x, int y, int w, int h)
         b = new Fl_Box(right_->x(), right_->y(), right_->w(),
             right_->h() - Const::tab_label_height, "Registers");
         b->labelfont(FL_HELVETICA);
-
-        right_->end();
     }
+    right_->end();
     g->end();
+
     vtile->end();
 
     ////////////////////////////////////////////////////////////
@@ -87,7 +87,7 @@ FlPackLayout::FlPackLayout(ui::Controller& c, int x, int y, int w, int h)
         tile->type(Fl_Pack::HORIZONTAL);
         tile->box(FL_DOWN_BOX);
         auto flat = new Fl_Group(tile->x(), tile->y(), tile->w() / 2, tile->h());
-        flat->box(FL_FLAT_BOX);
+        flat->box(FL_BORDER_BOX);
         bottomL_ = new Fl_Tabs(tile->x(), tile->y(), tile->w() / 2, tile->h());
         bottomL_->end();
         flat->end();
@@ -95,7 +95,7 @@ FlPackLayout::FlPackLayout(ui::Controller& c, int x, int y, int w, int h)
         flat = new Fl_Group(
             tile->x() + tile->w() / 2, tile->y(),
             tile->w() - tile->w() / 2, tile->h());
-        flat->box(FL_FLAT_BOX);
+        flat->box(FL_BORDER_BOX);
 
         bottomR_ = new Fl_Tabs(
             tile->x() + tile->w() / 2, tile->y(),
@@ -107,15 +107,7 @@ FlPackLayout::FlPackLayout(ui::Controller& c, int x, int y, int w, int h)
     g->end();
     group_->end();
 
-    // status bar
-    status_ = new Fl_Output(
-        x + 2,
-        y + group_->y() + group_->h() + 1,
-        w - 4,
-        Const::statbar_height - 2);
-    status_->textfont(FL_SCREEN);
-    status_->textsize(12);
-    status_->color(FL_LIGHT1);
+    init_status_bar(x, y, w, h);
 }
 
 
@@ -139,6 +131,23 @@ void FlPackLayout::update(const ui::State& s)
         update_status(s);
     }
     group_->redraw();
+}
+
+
+void FlPackLayout::init_status_bar(int x, int y, int w, int h)
+{
+    status_ = new Fl_Output(
+        x + 2,
+        y + group_->y() + group_->h() + 1,
+        w - 4,
+        Const::statbar_height - 2);
+
+    //status_->textfont(FL_SCREEN);
+    //status_->textsize(12);
+
+    status_->color(FL_BACKGROUND_COLOR);
+    status_->clear_visible_focus(); // do not show cursor
+    status_->box(FL_FLAT_BOX);
 }
 
 

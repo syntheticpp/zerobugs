@@ -11,17 +11,16 @@
 #include "expr_events.h"
 #include <FL/Enumerations.H>
 #include <FL/Fl_Button.H>
-#include <FL/Fl_Group.H>
-#include <FL/Fl_Input.H>
+#include <FL/Fl_Output.H>
 
 
 ////////////////////////////////////////////////////////////////
 FlEvalDialog::FlEvalDialog(ui::Controller& c)
     : FlDialog(c, 0, 0, 600, 400, "Evaluate Expression")
     , input_(nullptr)
+    , status_(nullptr)
 {
-    auto g = new Fl_Group(0, 0, 600, 400);
-    g->box(FL_EMBOSSED_FRAME);
+    group()->box(FL_EMBOSSED_FRAME);
     input_ = new Fl_Input(20, 20, 450, 22);
 
     // todo: get font from VarView
@@ -30,13 +29,22 @@ FlEvalDialog::FlEvalDialog(ui::Controller& c)
 
     auto okBtn = new Fl_Button(480, 19, 100, 24, "&Evaluate");
     okBtn->callback(eval_callback, this);
-    view_ = new FlVarView(c);
-    g->end();
 
-    view_->resize(20, 55, 560, 320);
-    add_view(view_);
+    view_ = new FlVarView(c);
+    view_->widget()->box(FL_DOWN_BOX);
+    view_->widget()->end();
+
+    status_ = new Fl_Output(20, 370, 560, 22);
+    status_->box(FL_FLAT_BOX);
+    status_->color(FL_BACKGROUND_COLOR);
+    status_->clear_visible_focus();
+
+    group()->resizable(view_->widget());
+    group()->end();
+    view_->resize(20, 55, 560, 310);
 
     center();
+    set_resizable(420 /* min width allowed */, 200 /* min height */);
 }
 
 
@@ -45,13 +53,19 @@ FlEvalDialog::~FlEvalDialog()
 }
 
 
-void FlEvalDialog::close()
+void FlEvalDialog::clear()
 {
     view_->clear(true);
     vars_.clear();
+    status_->value("");
+}
 
-    controller().set_current_dialog(nullptr);
-    show(false); // hide
+
+void FlEvalDialog::close()
+{
+    clear();
+    hide();
+    FlDialog::close();
 }
 
 
@@ -68,16 +82,23 @@ void FlEvalDialog::eval()
     {
         return;
     }
-    view_->clear(true);
-    vars_.clear();
+    clear();
 
-    RefPtr<ui::ExprEvalEvents> events = new ui::ExprEvalEvents(controller(), this);
+    auto events = ui::ExprEvalEvents::make(controller(), this);
 
     auto* d = controller().debugger();
 
     ui::call_main_thread(controller(), [d, expr, thread_, events]() {
         d->evaluate(expr.c_str(), thread_.get(), 0, events.get());
     });
+}
+
+
+bool FlEvalDialog::status_message(const char* msg)
+{
+    assert(status_);
+    status_->value(msg);
+    return true;
 }
 
 

@@ -38,6 +38,7 @@ protected:
     void status_message(const std::string&);
 
 private:
+    void init_status_bar(int x, int y, int w, int h);
     void update_status(const ui::State&);
 
     Fl_Group*   group_; // this group

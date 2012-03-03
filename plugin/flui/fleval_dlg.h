@@ -14,6 +14,7 @@ class ExprEvents;   // zdk/expr.h"
 typedef RefPtr<ExprEvents> ExprEventsPtr;
 
 class Fl_Input;
+class Fl_Output;
 class FlVarView;
 
 
@@ -35,8 +36,12 @@ private:
 
     static void eval_callback(Fl_Widget*, void*);
 
+    void clear();
     void close();
     void eval();
+
+    bool status_message(const char* msg);
+
     void update(const ui::State&);
 
     // --- DebugSymbolEvents interface
@@ -81,6 +86,7 @@ private:
 
     ExprEventsPtr       events_;
     Fl_Input*           input_;
+    Fl_Output*          status_;
 
     // thread in the context of which expressions are evaluated
     RefPtr<Thread>      thread_;

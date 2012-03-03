@@ -9,10 +9,16 @@
 #include "dialog.h"
 #include <memory>
 
+class Fl_Group;
 class Fl_Widget;
 class Fl_Window;
 
 
+/**
+ * Base class for dialogs. Implemented as a top-level Fl_Window
+ * containing a Fl_Group. All dialog elements are children of
+ * the group.
+ */
 class FlDialog : public ui::Dialog
 {
 public:
@@ -23,17 +29,19 @@ public:
 protected:
     void center();
 
-    virtual void close() {
-        delete this;
-    }
+    void set_resizable(int minWidth, int minHeight);
 
-    void set_resizable();
     void show(bool);
 
+    Fl_Group* group() {
+        return group_;
+    }
 private:
     static void close_callback(Fl_Widget*, void*);
 
+    // dialog owns the window
     std::unique_ptr<Fl_Window> window_;
+    Fl_Group* group_;
 };
 
 

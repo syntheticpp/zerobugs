@@ -23,10 +23,10 @@
 // fltk headers
 #include <FL/Fl.H>
 
-using namespace std;
-
 // properties
 #define WINDOW_TITLE    "ZeroBUGS"
+
+using namespace std;
 
 
 /**
@@ -209,6 +209,8 @@ void Flui::init_main_window(int x, int y, int w, int h)
 
     auto appWnd = new Fl_Window(x, y, w, h, WINDOW_TITLE);
     appWnd->resizable(appWnd);
+    appWnd->size_range(500, 600);
+
     // install custom callback to prevent Escape from closing
     // the main window (http://www.fltk.org/doc-1.1/Fl_Widget.html#Fl_Widget.callback)
     default_callback = appWnd->callback();

@@ -12,10 +12,10 @@
 #include <algorithm>
 #include <FL/fl_draw.H>
 #include <FL/Enumerations.H>
-//#include <iostream>
+#include <iostream>
 using namespace std;
 
-static std::vector<const char*> header = { "Variable", "Value", "Type" };
+static vector<const char*> header = { "Variable", "Value", "Type" };
 
 static const int pix_width = 16;
 static const int min_width = 40;
@@ -43,7 +43,7 @@ Fl_VarTable::Fl_VarTable(
 
     col_width(COL_VarName,  200);
     col_width(COL_VarValue, 300);
-    //col_width(COL_VarType,  200);
+
     col_resize_min(min_width);
 
     callback(event_callback, this);
@@ -154,13 +154,10 @@ void Fl_VarTable::event_callback()
         return;
     }
 
+    // which row did we click on?
     const size_t row = callback_row();
-    if (row >= view_->variable_count())
-    {
-        return;
-    }
 
-    if (callback_col() == COL_VarName)
+    if (row < view_->variable_count() && callback_col() == COL_VarName)
     {
         // check if user clicked on the tree expand / unexpand icon
         DebugSymbol& sym = view_->get_variable(row);
@@ -175,6 +172,7 @@ void Fl_VarTable::event_callback()
             view_->expand(row, !expanded);
         }
     }
+    redraw();
 }
 
 

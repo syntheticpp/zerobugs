@@ -7,8 +7,8 @@
 #include "fldialog.h"
 #include "controller.h"
 #include <FL/Fl_Double_Window.H>
-#include <iostream>
-using namespace std;
+#include <FL/Fl_Group.H>
+#include <FL/Fl.H>
 
 
 FlDialog::FlDialog(
@@ -23,6 +23,7 @@ FlDialog::FlDialog(
 
     : ui::Dialog(controller)
     , window_(new Fl_Double_Window(x, y, w, h, title))
+    , group_(new Fl_Group(0, 0, w, h))
 {
     window_->callback(close_callback, this);
 }
@@ -30,9 +31,6 @@ FlDialog::FlDialog(
 
 FlDialog::~FlDialog()
 {
-#ifdef DEBUG
-    clog << __PRETTY_FUNCTION__ << endl;
-#endif
 }
 
 
@@ -51,9 +49,12 @@ void FlDialog::close_callback(Fl_Widget* w, void* data)
 }
 
 
-void FlDialog::set_resizable()
+void FlDialog::set_resizable(
+    int minWidth,
+    int minHeight)
 {
     window_->resizable(*window_);
+    window_->size_range(minWidth, minHeight);
 }
 
 
@@ -63,11 +64,12 @@ void FlDialog::show(bool doShow)
     {
         window_->set_modal();
         window_->show();
+        assert(Fl::modal() == window_.get());
     }
     else
     {
-        window_->set_non_modal();
         window_->hide();
+        assert(Fl::modal() != window_.get());
     }
 }
 

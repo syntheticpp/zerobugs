@@ -19,7 +19,6 @@
 #include "dharma/system_error.h"
 #include <pthread.h>
 #include <iostream>
-// #include <typeinfo>
 
 // properties
 #define WINDOW_X        "flui.window.x"
@@ -180,10 +179,9 @@ void ui::IdleCommand::set_cancel()
 //
 ui::Controller::Controller()
     : debugger_(nullptr)
-    , uiThreadId_(0)
+    , threadId_(0)
     , state_(init_state())
     , done_(false)
-    , dialog_(nullptr)
     , idle_(new IdleCommand)
 {
 }
@@ -381,9 +379,9 @@ void ui::Controller::update(
     state_->update(thread, eventType);
 
     // update modal dialog if any
-    if (dialog_)
+    if (auto dialog = current_dialog())
     {
-        dialog_->update(*state_);
+        dialog->update(*state_);
     }
 
     //
@@ -498,7 +496,7 @@ void* ui::Controller::run(void* p)
 ////////////////////////////////////////////////////////////////
 void ui::Controller::start()
 {
-    int r = pthread_create(&uiThreadId_, nullptr, run, this);
+    int r = pthread_create(&threadId_, nullptr, run, this);
 
     if (r < 0)
     {
@@ -515,7 +513,7 @@ void ui::Controller::shutdown()
         save_configuration();
         done_ = true;
     }
-    pthread_join(uiThreadId_, nullptr);
+    pthread_join(threadId_, nullptr);
 }
 
 
@@ -662,9 +660,31 @@ ui::State& ui::Controller::state()
 ////////////////////////////////////////////////////////////////
 void ui::Controller::status_message(const std::string& msg)
 {
+    if (auto dialog = current_dialog())
+    {
+        if (dialog->status_message(msg.c_str()))
+        {
+            return;
+        }
+    }
     if (layout_)
     {
         layout_->status_message(msg);
+    }
+}
+
+
+////////////////////////////////////////////////////////////////
+void ui::Controller::set_current_dialog(Dialog* dialog)
+{
+    if (dialog)
+    {
+        dialogStack_.push_back(dialog);
+    }
+    else
+    {
+        assert(!dialogStack_.empty());
+        dialogStack_.pop_back();
     }
 }
 

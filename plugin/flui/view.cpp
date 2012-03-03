@@ -5,11 +5,16 @@
 // $Id: $
 //
 #include "controller.h"
+#include "dialog.h"
 #include "view.h"
 
 
 ui::View::View(ui::Controller& c) : c_(c)
 {
+    if (auto d = c.current_dialog())
+    {
+        d->add_view(this);
+    }
 }
 
 

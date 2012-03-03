@@ -6,10 +6,16 @@
 //
 #include "controller.h"
 #include "dialog.h"
+#if 0
+ #include <iostream>
+ #include <typeinfo>
+ using namespace std;
+#endif
+
 using namespace ui;
 
 
-Dialog::Dialog( Controller& controller )
+Dialog::Dialog(Controller& controller)
     : controller_(controller)
 {
 }
@@ -17,21 +23,23 @@ Dialog::Dialog( Controller& controller )
 
 Dialog::~Dialog()
 {
-    //TODO: support stacked dialogs?
-    controller_.set_current_dialog(nullptr);
 }
 
 
 void Dialog::add_action(
-
     const std::string&  name,
     Callback            callback )
-
 {
     actions_[name] = callback;
 }
 
-        
+
+void Dialog::close()
+{
+    controller_.set_current_dialog(nullptr);
+}
+
+
 void Dialog::update(const ui::State& s)
 {
     for (auto v = begin(views_); v != end(views_); ++v)
