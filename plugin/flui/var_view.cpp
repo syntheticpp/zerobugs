@@ -43,13 +43,6 @@ private:
 };
 
 
-ui::VarView::Scope& ui::VarView::scope() const
-{
-    assert(scope_);
-    return *scope_;
-}
-
-
 bool ui::VarView::Scope::is_expanding(const DebugSymbol& sym) const
 {
     SymKey key(sym);
@@ -83,7 +76,9 @@ bool ui::VarView::Scope::has_variable_changed(const DebugSymbol& sym)
 
 
 ////////////////////////////////////////////////////////////////
-ui::VarView::VarView(ui::Controller& c) : View(c)
+ui::VarView::VarView(ui::Controller& c)
+    : View(c)
+    , scope_(new Scope)
 {
 }
 
@@ -93,12 +88,19 @@ ui::VarView::~VarView() throw()
 }
 
 
+ui::VarView::Scope& ui::VarView::scope() const
+{
+    assert(scope_);
+    return *scope_;
+}
+
+
 void ui::VarView::clear(bool resetScope)
 {
     variables_.clear();
     if (resetScope)
     {
-        scope_.reset();
+        scope_.reset(new Scope);
     }
 }
 

@@ -27,16 +27,16 @@ namespace ui
         explicit Dialog(Controller&);
         virtual ~Dialog();
 
+        virtual void close() = 0;
+
         void popup(const ui::State& s) {
             update(s);
             show();
         }
 
-        virtual void update(const ui::State& s) {
-            for (auto v = begin(views_); v != end(views_); ++v)
-                (*v)->update(s);
-        }
+        virtual void show(bool = true) = 0;
 
+        virtual void update(const ui::State&);
 
     protected:
         void add_action(const std::string&, Callback);
@@ -48,8 +48,6 @@ namespace ui
         Controller& controller() {
             return controller_;
         }
-
-        virtual void show() = 0;
 
     private:
         // non-copyable

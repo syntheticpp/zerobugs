@@ -17,6 +17,7 @@ namespace ui
 class FlMainWindow : public Fl_Double_Window
 {
 public:
+
     FlMainWindow(
         ui::Controller&,
         int x,

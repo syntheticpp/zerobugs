@@ -57,15 +57,17 @@ void FlDialog::set_resizable()
 }
 
 
-void FlDialog::show()
+void FlDialog::show(bool doShow)
 {
-    window_->set_modal();
-    window_->show();
-}
-
-
-void FlDialog::hide()
-{
-    window_->hide();
+    if (doShow)
+    {
+        window_->set_modal();
+        window_->show();
+    }
+    else
+    {
+        window_->set_non_modal();
+        window_->hide();
+    }
 }
 

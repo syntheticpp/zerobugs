@@ -119,6 +119,7 @@ namespace ui
         }
 
         virtual void show(View&, bool) = 0;
+        virtual void status_message(const std::string&) = 0;
 
         virtual void update(const State&);
 

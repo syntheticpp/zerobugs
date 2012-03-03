@@ -79,7 +79,8 @@ namespace ui
         /**
          * Display an error message (possibly in a message box)
          */
-        virtual void error_message(const std::string&) const;
+        virtual void error_message(const std::string&) = 0;
+        virtual void status_message(const std::string&);
 
         // UI thread entry point
         static void* run(void*);
@@ -105,7 +106,7 @@ namespace ui
             return debugger_;
         }
 
-        const Dialog* current_dialog() const {
+        Dialog* current_dialog() {
             return dialog_;
         }
 
@@ -205,6 +206,7 @@ namespace ui
         // These are called from build(). The initXYZ are factory
         // methods, and the actual widgets that correspond to menu,
         // layout, etc. are "populated" by the buildXYZ methods.
+
         virtual RefPtr<CodeView>        init_code_view() = 0;
         virtual RefPtr<CompositeMenu>   init_menu() = 0;
         virtual RefPtr<Layout>          init_layout() = 0;

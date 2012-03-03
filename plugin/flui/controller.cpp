@@ -321,12 +321,6 @@ void ui::Controller::build_toolbar()
 
 
 ////////////////////////////////////////////////////////////////
-void ui::Controller::error_message(const string&) const
-{
-}
-
-
-////////////////////////////////////////////////////////////////
 /**
  * UI event loop
  */
@@ -369,9 +363,6 @@ bool ui::Controller::initialize(
 ////////////////////////////////////////////////////////////////
 void ui::Controller::done()
 {
-#if DEBUG
-    clog << __FUNCTION__ << endl;
-#endif
     call_main_thread_async(new MainThreadCommand<>([this]() {
         debugger_->quit();
     }));
@@ -422,6 +413,11 @@ void ui::Controller::update(
             mgr->enum_breakpoints(&updater);
         }
     }
+
+    if (state_->current_event() == E_TARGET_FINISHED)
+    {
+        status_message("Target disconnected");
+    }
 }
 
 
@@ -451,6 +447,8 @@ RefPtr<ui::Command> ui::Controller::update(
 
 /**
  * Called from the main debugger thread.
+ *
+ * @return true to indicate that the event was handled.
  */
 bool ui::Controller::on_event(
 
@@ -467,8 +465,9 @@ bool ui::Controller::on_event(
     {
         c = new CommandError(e.what());
     }
+
     notify_ui_thread();
-    return true; // event handled
+    return true;
 }
 
 
@@ -657,5 +656,15 @@ void ui::Controller::save_configuration()
 ui::State& ui::Controller::state()
 {
     return *CHKPTR(state_.get());
+}
+
+
+////////////////////////////////////////////////////////////////
+void ui::Controller::status_message(const std::string& msg)
+{
+    if (layout_)
+    {
+        layout_->status_message(msg);
+    }
 }
 

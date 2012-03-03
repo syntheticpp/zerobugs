@@ -9,6 +9,7 @@
 #include "code_view.h"
 #include <FL/Fl_Group.H>
 
+class Fl_Input;
 class Fl_Output;
 
 
@@ -33,6 +34,8 @@ protected:
     void resize(int x, int y, int w, int h) {
         group_->resize(x, y, w, h);
     }
+
+    void status_message(const std::string&);
 
 private:
     void update_status(const ui::State&);

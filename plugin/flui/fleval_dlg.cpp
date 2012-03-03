@@ -15,7 +15,6 @@
 #include <FL/Fl_Input.H>
 
 
-
 ////////////////////////////////////////////////////////////////
 FlEvalDialog::FlEvalDialog(ui::Controller& c)
     : FlDialog(c, 0, 0, 600, 400, "Evaluate Expression")
@@ -23,16 +22,18 @@ FlEvalDialog::FlEvalDialog(ui::Controller& c)
 {
     auto g = new Fl_Group(0, 0, 600, 400);
     g->box(FL_EMBOSSED_FRAME);
-    input_ = new Fl_Input(20, 20, 600 - 150, 22);
+    input_ = new Fl_Input(20, 20, 450, 22);
+
     // todo: get font from VarView
     input_->textfont(FL_HELVETICA);
     input_->textsize(11);
-    auto okBtn = new Fl_Button(600 - 150 + 20 + 10, 20 - 1, 100, 24, "&Evaluate");
+
+    auto okBtn = new Fl_Button(480, 19, 100, 24, "&Evaluate");
     okBtn->callback(eval_callback, this);
     view_ = new FlVarView(c);
     g->end();
 
-    view_->resize(20, 55, 600 - 40, 400 - 80);
+    view_->resize(20, 55, 560, 320);
     add_view(view_);
 
     center();
@@ -50,7 +51,7 @@ void FlEvalDialog::close()
     vars_.clear();
 
     controller().set_current_dialog(nullptr);
-    hide();
+    show(false); // hide
 }
 
 
@@ -62,7 +63,7 @@ void FlEvalDialog::eval_callback(Fl_Widget* w, void* data)
 
 void FlEvalDialog::eval()
 {
-    string expr = input_->value();
+    std::string expr = input_->value();
     if (expr.empty())
     {
         return;
@@ -70,7 +71,7 @@ void FlEvalDialog::eval()
     view_->clear(true);
     vars_.clear();
 
-    RefPtr<ui::ExprEvalEvents> events(new ui::ExprEvalEvents(this));
+    RefPtr<ui::ExprEvalEvents> events = new ui::ExprEvalEvents(controller(), this);
 
     auto* d = controller().debugger();
 

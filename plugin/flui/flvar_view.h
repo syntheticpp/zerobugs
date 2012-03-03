@@ -17,9 +17,12 @@
 class Fl_VarTable : public Fl_Table
 {
 public:
-    static const int COL_VarName     = 0;
-    static const int COL_VarValue    = 1;
-    static const int COL_VarType     = 2;
+    enum {
+        COL_VarName     = 0,
+        COL_VarValue    = 1,
+        COL_VarType     = 2,
+        COL_Last        = COL_VarType
+    };
 
     explicit Fl_VarTable(
         ui::VarView*    view,
@@ -30,7 +33,7 @@ public:
         const char*     label);
 
 private:
-    /** 
+    /**
      * implements custom drawing
      * @see http://seriss.com/people/erco/Fl_Table/documentation/Fl_Table.html#draw_cell
      */
@@ -42,7 +45,7 @@ private:
         int             y,
         int             w,
         int             h);
-    
+
     void draw_symbol(
         int             row,
         int             col,
@@ -58,6 +61,8 @@ private:
     static void event_callback(Fl_Widget*, void*);
 
 private:
+    void resize(int w);
+
     ui::VarView* view_;
 };
 
@@ -67,8 +72,6 @@ class FlVarView : public FlView<ui::VarView, Fl_VarTable>
 {
 public:
     explicit FlVarView(ui::Controller&);
-
-    virtual void update(const ui::State&);
 };
 
 

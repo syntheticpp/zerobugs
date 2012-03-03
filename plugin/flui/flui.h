@@ -39,6 +39,8 @@ protected:
 
     void show_eval_dialog();
 
+    virtual void error_message(const std::string&);
+
     // --- RefCounted
     virtual void release();
 

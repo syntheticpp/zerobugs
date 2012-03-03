@@ -13,11 +13,11 @@
 #include <FL/Fl_Scroll.H>
 #include <FL/Fl_Tabs.H>
 #include <FL/Fl_Tile.H>
+#include <iostream>
 
 using namespace ui;
+using namespace std;
 
-
-//todo: change name to FlTileLayout
 
 FlPackLayout::FlPackLayout(ui::Controller& c, int x, int y, int w, int h)
     : ui::Layout(c)
@@ -28,6 +28,7 @@ FlPackLayout::FlPackLayout(ui::Controller& c, int x, int y, int w, int h)
     , right_(nullptr)
     , status_(nullptr)
 {
+    group_ = new Fl_Tile(x, Const::layout_y(y), w, Const::layout_height(h));
     Fl_Tile* vtile = new Fl_Tile(group_->x(), Const::layout_y(y), w, code_height());
     vtile->type(Fl_Pack::VERTICAL);
     vtile->box(FL_DOWN_BOX);
@@ -52,6 +53,7 @@ FlPackLayout::FlPackLayout(ui::Controller& c, int x, int y, int w, int h)
         g->y() + 1,
         Const::thread_regs_width - 2,
         code_height() - 2);
+    ////////////////////////////////////////////////////////////
     //
     // place holders
     //
@@ -68,6 +70,7 @@ FlPackLayout::FlPackLayout(ui::Controller& c, int x, int y, int w, int h)
     g->end();
     vtile->end();
 
+    ////////////////////////////////////////////////////////////
     //
     // area for stack traces, local variables and watches
     //
@@ -83,18 +86,22 @@ FlPackLayout::FlPackLayout(ui::Controller& c, int x, int y, int w, int h)
         Fl_Tile* tile = new Fl_Tile(g->x() + 2, g->y(), g->w() - 4, g->h());
         tile->type(Fl_Pack::HORIZONTAL);
         tile->box(FL_DOWN_BOX);
-        auto flat = new Fl_Tabs(tile->x(), tile->y(), tile->w() / 2, tile->h());
+        auto flat = new Fl_Group(tile->x(), tile->y(), tile->w() / 2, tile->h());
         flat->box(FL_FLAT_BOX);
         bottomL_ = new Fl_Tabs(tile->x(), tile->y(), tile->w() / 2, tile->h());
         bottomL_->end();
         flat->end();
 
+        flat = new Fl_Group(
+            tile->x() + tile->w() / 2, tile->y(),
+            tile->w() - tile->w() / 2, tile->h());
+        flat->box(FL_FLAT_BOX);
+
         bottomR_ = new Fl_Tabs(
-            tile->x() + tile->w() / 2,
-            tile->y(),
-            tile->w() - tile->w() / 2,
-            tile->h());
+            tile->x() + tile->w() / 2, tile->y(),
+            tile->w() - tile->w() / 2, tile->h());
         bottomR_->end();
+        flat->end();
         tile->end();
     }
     g->end();
@@ -127,7 +134,7 @@ void FlPackLayout::update(const ui::State& s)
 {
     ui::Layout::update(s);
 
-    if (status_)
+    if (status_ && s.current_event() != E_PROMPT)
     {
         update_status(s);
     }
@@ -139,15 +146,11 @@ void FlPackLayout::update_status(const ui::State& s)
 {
     assert(status_);
 
-    if (s.current_event() == E_TARGET_FINISHED)
-    {
-        status_->value("Target disconnected");
-    }
-    else if (s.current_thread())
+    if (s.current_thread())
     {
         if (auto descr = thread_get_event_description(*s.current_thread()))
         {
-            status_->value(descr->c_str());
+            status_->value(descr->c_str(), descr->length());
         }
     }
 }
@@ -155,5 +158,15 @@ void FlPackLayout::update_status(const ui::State& s)
 
 void FlPackLayout::show(ui::View& view, bool show)
 {
+    // TODO
+}
+
+
+void FlPackLayout::status_message(const std::string& msg)
+{
+    if (status_)
+    {
+        status_->value(msg.c_str(), msg.length());
+    }
 }
 

@@ -10,20 +10,25 @@
 #include "zdk/expr.h"
 #include "zdk/observer_impl.h"
 #include "zdk/variant.h"
-#include <iostream>
-using namespace std;
 
 
 namespace ui
 {
+    class Controller;
+
+
     /**
      * Handle notifications from the expression evaluator.
      */
     class ExprEvalEvents : public SubjectImpl<ExprEvents>
     {
     public:
-        explicit ExprEvalEvents(DebugSymbolEvents* symEvents)
-            : symEvents_(symEvents) {
+        ExprEvalEvents (
+            Controller&         controller,
+            DebugSymbolEvents*  symEvents )
+
+            : controller_(controller)
+            , symEvents_(symEvents) {
         }
 
     private:
@@ -32,7 +37,8 @@ namespace ui
         END_INTERFACE_MAP()
 
         ExprEvalEvents(const ExprEvalEvents& other)
-            : symEvents_(other.symEvents_) {
+            : controller_(other.controller_)
+            , symEvents_(other.symEvents_) {
         }
 
         /**
@@ -47,9 +53,7 @@ namespace ui
             Variant*            variant,
             bool*               interactive,
             DebugSymbolEvents*  /* symEvents */)
-         {
-            // assert(symEvents);
-
+        {
             if (variant)
             {
                 if (auto sym = variant->debug_symbol())
@@ -58,22 +62,14 @@ namespace ui
                 }
             }
             return true;
-         }
+        }
 
         /**
          * An error occurred while interpreting expression
          */
-        virtual void on_error(const char* msg) {
-        #if DEBUG
-            clog << __func__ << ": " << msg << endl;
-        #endif
-        }
+        virtual void on_error(const char* msg);
 
-        virtual void on_warning(const char* msg) {
-        #if DEBUG
-            clog << __func__ << ": " << msg << endl;
-        #endif
-        }
+        virtual void on_warning(const char* msg);
 
         /**
          * An event occurred on thread while interpreting expression
@@ -81,12 +77,7 @@ namespace ui
          * by the interpreter).
          * @return true if handled
          */
-        virtual bool on_event(Thread*, Platform::addr_t) {
-        #if DEBUG
-            clog << __func__ << endl;
-        #endif
-            return true;
-        }
+        virtual bool on_event(Thread*, Platform::addr_t);
 
         /**
          * The interpreter calls a function inside the debugged program.
@@ -95,17 +86,14 @@ namespace ui
          * the function of the corresponding symbol table entry; if the
          * symbol is NULL, the function has returned.
          */
-        virtual void on_call(Platform::addr_t retAddr, Symbol* = nullptr) {
-        #if DEBUG
-            clog << __func__ << endl;
-        #endif
-        }
+        virtual void on_call(Platform::addr_t retAddr, Symbol* = nullptr);
 
         virtual ExprEvents* clone() const {
             return new ExprEvalEvents(*this);
         }
 
     private:
+        Controller&         controller_;
         DebugSymbolEvents*  symEvents_;
     };
 }

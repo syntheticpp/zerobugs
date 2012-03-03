@@ -27,9 +27,8 @@ protected:
         delete this;
     }
 
-    void hide();
     void set_resizable();
-    void show();
+    void show(bool);
 
 private:
     static void close_callback(Fl_Widget*, void*);

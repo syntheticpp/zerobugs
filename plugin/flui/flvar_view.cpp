@@ -9,15 +9,16 @@
 #include "flvar_view.h"
 #include "icons/tree_expanded.xpm"
 #include "icons/tree_unexpanded.xpm"
+#include <algorithm>
 #include <FL/fl_draw.H>
 #include <FL/Enumerations.H>
-
-#include <iostream>
+//#include <iostream>
 using namespace std;
 
 static std::vector<const char*> header = { "Variable", "Value", "Type" };
+
 static const int pix_width = 16;
-static const int min_width = 80;
+static const int min_width = 40;
 
 
 Fl_VarTable::Fl_VarTable(
@@ -42,7 +43,7 @@ Fl_VarTable::Fl_VarTable(
 
     col_width(COL_VarName,  200);
     col_width(COL_VarValue, 300);
-    col_width(COL_VarType,  100);
+    //col_width(COL_VarType,  200);
     col_resize_min(min_width);
 
     callback(event_callback, this);
@@ -149,7 +150,7 @@ void Fl_VarTable::event_callback()
 {
     if (callback_context() == CONTEXT_RC_RESIZE)
     {
-        col_width(COL_VarValue, w() - col_width(COL_VarName) - col_width(COL_VarType) - 2);
+        resize(w());
         return;
     }
 
@@ -177,12 +178,20 @@ void Fl_VarTable::event_callback()
 }
 
 
+void Fl_VarTable::resize(int w)
+{
+    int width = w - col_width(COL_VarName) - col_width(COL_VarValue) - 2;
+    if (width > min_width)
+    {
+        col_width(COL_Last, width);
+    }
+}
+
+
 void Fl_VarTable::resize(int x, int y, int w, int h)
 {
     Fl_Table::resize(x, y, w, h);
-
-    int width = w - col_width(COL_VarName) - col_width(COL_VarValue) - 2;
-    col_width(COL_VarType, max(min_width, width));
+    resize(w);
 }
 
 
@@ -193,18 +202,11 @@ FlVarView::FlVarView(ui::Controller& c)
 }
 
 
-void FlVarView::update(const ui::State& state)
-{
-    base_type::update(state);
-    widget()->rows(variable_count());
-}
-
-
 ////////////////////////////////////////////////////////////////
 FlLocalsView::FlLocalsView(ui::Controller& c, const char* label)
     : base_type(c, this, 0, 0, 0, 0, label)
 {
-    widget()->tooltip("Local Variables");
+    widget()->tooltip("Local variables");
 }
 
 

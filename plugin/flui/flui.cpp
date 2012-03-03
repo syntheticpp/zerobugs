@@ -76,7 +76,6 @@ Flui::~Flui()
 ////////////////////////////////////////////////////////////////
 void Flui::run()
 {
-    Fl_Group::current(nullptr);
     ui::Controller::run();
 }
 
@@ -291,5 +290,12 @@ void Flui::show_eval_dialog()
     dlg.popup(state());
 
     set_current_dialog(&dlg);
+}
+
+
+////////////////////////////////////////////////////////////////
+void Flui::error_message(const std::string&)
+{
+    // TODO
 }
 

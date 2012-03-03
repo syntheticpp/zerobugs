@@ -31,3 +31,12 @@ void Dialog::add_action(
     actions_[name] = callback;
 }
 
+        
+void Dialog::update(const ui::State& s)
+{
+    for (auto v = begin(views_); v != end(views_); ++v)
+    {
+        (*v)->update(s);
+    }
+}
+
