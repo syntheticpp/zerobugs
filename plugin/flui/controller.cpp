@@ -7,6 +7,7 @@
 #include "zdk/check_ptr.h"
 #include "zdk/log.h"
 #include "zdk/thread_util.h"
+#include "generic/temporary.h"
 #include "const.h"
 #include "code_view.h"
 #include "controller.h"
@@ -182,6 +183,7 @@ ui::Controller::Controller()
     , threadId_(0)
     , state_(init_state())
     , done_(false)
+    , probing_(false)
     , idle_(new IdleCommand)
 {
 }
@@ -354,6 +356,11 @@ bool ui::Controller::initialize(
     char***     /* argv */)
 {
     debugger_ = debugger;
+
+    if (probe_interactive_plugins())
+    {
+        return false;
+    }
     return true;
 }
 
@@ -454,6 +461,11 @@ bool ui::Controller::on_event(
     EventType   eventType )
 
 {
+    if (eventType == E_PROBE_INTERACTIVE)
+    {
+        return !probing_;
+    }
+
     RefPtr<Command> c = update(thread, eventType);
     try
     {
@@ -686,5 +698,14 @@ void ui::Controller::set_current_dialog(Dialog* dialog)
         assert(!dialogStack_.empty());
         dialogStack_.pop_back();
     }
+}
+
+
+////////////////////////////////////////////////////////////////
+bool ui::Controller::probe_interactive_plugins()
+{
+    Temporary<bool> temp(probing_, true);
+    bool result = debugger()->publish_event(nullptr, E_PROBE_INTERACTIVE);
+    return result;
 }
 

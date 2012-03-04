@@ -12,7 +12,7 @@
 // -------------------------------------------------------------------------
 
 #define ZERO_API_MAJOR  1
-#define ZERO_API_MINOR 23
+#define ZERO_API_MINOR 24
 
 #define ZDK_MAJOR ZERO_API_MAJOR
 #define ZDK_MINOR ZERO_API_MINOR
@@ -643,6 +643,8 @@ DECLARE_ZDK_INTERFACE_(Debugger, Unknown2)
      * C++ fully-qualified names and C++ casts are okay.
      * @return true if expression evaluation is complete,
      * false if more steps are pending.
+     * 
+     * @note events MUST be heap-allocated, never stack-based.
      */
     virtual bool evaluate(
         const char* expr,
@@ -890,12 +892,14 @@ DECLARE_ZDK_INTERFACE_(Debugger, Unknown2)
         EnumCallback<SymbolTable*>*) const = 0;
 
     /**
-     * For internal use only: enter TargetManager critical section.
+     * For internal use only: enter/leave TargetManager critical section.
      */
     virtual void enter() = 0;
     virtual void leave() = 0;
 
     virtual void set_breakpoint_at_throw(Thread*, bool permanent = true) = 0;
+
+    virtual bool publish_event(Thread*, EventType) = 0;
 };
 
 

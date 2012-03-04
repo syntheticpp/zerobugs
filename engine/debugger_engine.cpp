@@ -602,8 +602,8 @@ typedef ExprObserver::Events Events;
  * an expression evaluation is pending
  */
 static bool notify_expr_events(
-    Thread& thread,
-    addr_t addr,
+    Thread&                     thread,
+    addr_t                      addr,
     const RefPtr<ExprObserver>& obs)
 {
     bool handled = false;
@@ -1305,17 +1305,6 @@ void DebuggerEngine::execute_actions(
         on_single_step_or_syscall(runnable, thread);
     }
 
-#if 0
-    const BreakPoint::Type type = bpnt.type();
-    if (verbose() > 2)
-    {
-        if (type == BreakPoint::SOFTWARE)
-        {
-            DebuggerBase::on_event(thread);
-        }
-        interface_cast<BreakPointBase&>(bpnt).print(clog);
-    }
-#endif
     bpnt.execute_actions(&thread);
 
     if (bpnt.action_count() == 0)
@@ -2045,9 +2034,9 @@ void DebuggerEngine::schedule_interactive_mode(
 
 ////////////////////////////////////////////////////////////////
 bool DebuggerEngine::next_line_hack(
-    ThreadImpl& thread,
-    const RefPtr<BreakPoint>& bptr,
-    EventType eventType)
+    ThreadImpl&                 thread,
+    const RefPtr<BreakPoint>&   bptr,
+    EventType                   eventType)
 {
     RefPtr<Symbol> sym;
 
@@ -2186,7 +2175,10 @@ void DebuggerEngine::break_at_throw(
 
 
 ////////////////////////////////////////////////////////////////
-bool DebuggerEngine::publish_event(Thread* thread, EventType type)
+bool DebuggerEngine::publish_event(
+
+    Thread*     thread,
+    EventType   eventType)
 {
     bool result = false;
 
@@ -2198,10 +2190,11 @@ bool DebuggerEngine::publish_event(Thread* thread, EventType type)
     DebuggerPlugin* actor = thread
         ? interface_cast<DebuggerPlugin*>(thread->action_context())
         : NULL;
+
     if (actor)
     {
         ActionScope scope(actionContextStack_, actor);
-        result = actor->on_event(thread, type);
+        result = actor->on_event(thread, eventType);
     }
 
     if (!result)
@@ -2217,7 +2210,7 @@ bool DebuggerEngine::publish_event(Thread* thread, EventType type)
             if (i->get() != actor)
             {
                 ActionScope scope(actionContextStack_, *i);
-                result = (*i)->on_event(thread, type);
+                result = (*i)->on_event(thread, eventType);
             }
         }
     }
@@ -2378,7 +2371,8 @@ void GlobalsHelper::notify(DebuggerPlugin* plugin)
 
 
 ////////////////////////////////////////////////////////////////
-void GlobalsHelper::try_fully_qualified_name(DebugInfoReader& reader)
+void
+GlobalsHelper::try_fully_qualified_name(DebugInfoReader& reader)
 {
     assert(thread_);
 
@@ -2442,8 +2436,10 @@ void GlobalsHelper::try_fully_qualified_name(DebugInfoReader& reader)
         }
         if (s.size() > 1)
         {
-            clog << "*** Warning: " << s.size();
-            clog << " matches found for: " << name_ << endl;
+            clog << "*** Warning: " << s.size()
+                 << " matches found for: " << name_ << endl;
+            dbgout(0) << "*** Warning: " << s.size()
+                 << " matches found for: " << name_ << endl;
         }
         const addr_t addr = s.front()->addr();
 
@@ -3141,9 +3137,8 @@ bool DebuggerEngine::message (
 
     if (!result) // no plugin has handled the message?
     {
-        dbgout(0) << msg << endl;
-
-        clog << msg << endl;
+        dbgout(0) << msg << endl;   // log it...
+        clog << msg << endl;        // and send it to stdlog
     }
     return result;
 }
@@ -3271,8 +3266,9 @@ static inline Priority::Class priority_class(Plugin* plugin)
 
 ////////////////////////////////////////////////////////////////
 static void
-register_plugin(DebuggerEngine::PluginList& list,
-                ImportPtr<DebuggerPlugin>& plugin)
+register_plugin(
+    DebuggerEngine::PluginList& list,
+    ImportPtr<DebuggerPlugin>&  plugin)
 {
     switch (priority_class(plugin.get()))
     {
@@ -3459,15 +3455,39 @@ static void start_plugin(
 
 ////////////////////////////////////////////////////////////////
 //
-// After the scan is complete, procede to initialize plugins
+// Proceed to initialize plugins after the scan is complete.
 //
 void DebuggerEngine::on_scan_plugins_complete()
 {
     set<string> err;
+#if HAVE_LAMBDA_SUPPORT
+    //
+    // sort in reverse priority order
+    //
+    typedef GenericPlugins::value_type PluginPtr;
 
+    sort(genericPlugins_.begin(), genericPlugins_.end(),
+        [](PluginPtr lhs, PluginPtr rhs) -> bool
+        {
+            Priority::Class pleft = Priority::NORMAL;
+            Priority::Class pright = Priority::NORMAL;
+            if (auto p = interface_cast<Priority*>(lhs.get()))
+            {
+                pleft = p->priority_class();
+            }
+            if (auto p = interface_cast<Priority*>(rhs.get()))
+            {
+                pright = p->priority_class();
+            }
+            return pleft >= pright;
+        });
+ #endif
     GenericPlugins::iterator i = genericPlugins_.begin();
     for (; i != genericPlugins_.end(); )
     {
+    #if DEBUG
+        clog << " Initializing... " << (*i)->_name() << endl;
+    #endif
         // pass the command line arguments to plug-ins
         if (init_plugin(*i, this, argc_, argv_, err))
         {
@@ -3484,6 +3504,7 @@ void DebuggerEngine::on_scan_plugins_complete()
             i = genericPlugins_.erase(i);
         }
     }
+
     unload_unreferenced();
     check_unknown_cmdline_opts();
 

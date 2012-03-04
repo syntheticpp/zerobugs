@@ -26,6 +26,7 @@ SRCS=\
 	traced.cpp			\
 	uuid.cpp 			\
 	uuid2.cpp 			\
+	utility.cpp			\
 	variant_print.cpp	\
 	variant_true.cpp	\
 	variant_type.cpp	\

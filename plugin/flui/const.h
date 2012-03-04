@@ -12,7 +12,7 @@ namespace ui
     {
         static const int asm_window_size    = 256;
 
-        static const int label_height       = 25;
+        static const int label_height       = 24;
 
         static const int margin             = 2;
         static const int menubar_height     = 25 + 30 /* toolbar height == 30  */;

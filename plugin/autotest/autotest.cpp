@@ -182,7 +182,7 @@ bool AutoTest::on_message(const char* msg, Debugger::MessageType type, Thread*, 
 }
 
 
-bool AutoTest::on_event(Thread* thread, EventType)
+bool AutoTest::on_event(Thread* thread, EventType eventType)
 {
     if (!commands_.empty())
     {
@@ -260,7 +260,7 @@ bool AutoTest::on_event(Thread* thread, EventType)
         }
         return true;
     }
-    return false;
+    return eventType == E_PROBE_INTERACTIVE;
 }
 
 

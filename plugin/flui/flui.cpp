@@ -18,7 +18,7 @@
 
 // C++ headers
 #include <cassert>
-#include <iostream>
+// #include <iostream>
 
 // fltk headers
 #include <FL/Fl.H>
@@ -95,9 +95,13 @@ bool Flui::initialize(
 
     Debugger*   debugger,
     int*        argc,
-    char***     argv)
+    char***     argv )
 {
-    ui::Controller::initialize( debugger, argc, argv );
+    if (!ui::Controller::initialize( debugger, argc, argv ))
+    {
+        return false;
+    }
+
     if (argc)
     {
         args_.push_back( (*argv)[0] );

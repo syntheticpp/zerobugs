@@ -391,13 +391,20 @@ void GUI::on_detach (Thread* thread)
 
 
 ////////////////////////////////////////////////////////////////
-bool GUI::on_event(Thread* thread, EventType event)
+bool GUI::on_event(Thread* thread, EventType eventType)
 {
     bool result = false;
 
-    if (!disabled_ && mainWindow_)
+    if (!disabled_)
     {
-        result = mainWindow_->on_debug_event(thread, event);
+        if (eventType == E_PROBE_INTERACTIVE)
+        {
+            result = true;
+        }
+        else if (mainWindow_)
+        {
+            result = mainWindow_->on_debug_event(thread, eventType);
+        }
     }
     return result;
 }

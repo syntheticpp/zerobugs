@@ -44,6 +44,10 @@ enum EventType
 
     E_TARGET_RESUMED,
 
+    // not a real debug event; sent by the engine to
+    // probe for interactive plugins
+    E_PROBE_INTERACTIVE,
+
     // force to sizeof(uint)
     E_NONE = UINT_MAX,
     E_DEFAULT = E_NONE

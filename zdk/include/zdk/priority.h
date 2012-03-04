@@ -20,9 +20,10 @@ DECLARE_ZDK_INTERFACE_(Priority, struct Unknown)
 
     enum Class
     {
+        EXPERIMENTAL = -1,
         LOW,
         NORMAL,
-        HIGH
+        HIGH,
     };
 
     virtual Class priority_class() const = 0;

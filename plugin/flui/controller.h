@@ -225,6 +225,8 @@ namespace ui
         RefPtr<Command> update(Thread*, EventType);
         void update(LockedScope&, Thread*, EventType);
 
+        bool probe_interactive_plugins();
+
     private:
         Debugger*                   debugger_;
         pthread_t                   threadId_;      // UI thread ID
@@ -233,7 +235,9 @@ namespace ui
         RefPtr<CompositeMenu>       menu_;
         RefPtr<Toolbar>             toolbar_;
         std::unique_ptr<StateImpl>  state_;
+
         bool                        done_;          // terminate UI loop?
+        bool                        probing_;
         std::vector<Dialog*>        dialogStack_;   // modal dialogs
 
         // mail box for passing requests between main and ui threads
@@ -245,3 +249,4 @@ namespace ui
 } // namespace
 
 #endif // USER_INTERFACE_H__9D4F2D44_5193_4023_9688_2AB5F7BBB634
+

@@ -175,15 +175,17 @@ void PluginManager::scan()
     Tokenizer tok(path_, Delim(":"));
 
     for_each(tok.begin(), tok.end(),
-        DirectoryScan(*this, &PluginManager::on_interface));
+        DirectoryScan(*this, &PluginManager::on_interface)
+    );
 }
 
 
 ////////////////////////////////////////////////////////////////
 bool
-PluginManager::on_interface(DynamicLibPtr lib,
-                            uuidref_t iid,
-                            Unknown2*&)
+PluginManager::on_interface(
+    DynamicLibPtr   lib,
+    uuidref_t       iid,
+    Unknown2*&  /* uknown */)
 {
     assert(lib);
     assert(iid);

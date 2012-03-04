@@ -6,6 +6,7 @@
 //
 // $Id$
 //
+#include "zdk/priority.h"
 #include "zdk/version_info_impl.h"
 #include "controller.h"
 #include "dharma/sarray.h"
@@ -19,6 +20,7 @@ class FlMainWindow;
  */
 class Flui
     : public ui::Controller
+    , public Priority
     , VersionInfoImpl<ZERO_API_MAJOR, ZERO_API_MINOR>
 {
 public:
@@ -29,6 +31,7 @@ protected:
 
     BEGIN_INTERFACE_MAP(Flui)
         INTERFACE_ENTRY(DebuggerPlugin)
+        INTERFACE_ENTRY(Priority)
         INTERFACE_ENTRY(VersionInfo)
     END_INTERFACE_MAP()
 
@@ -45,6 +48,11 @@ protected:
     virtual void release();
 
     virtual void run();
+
+    // -- Priority interface
+    Priority::Class priority_class() const {
+        return Priority::EXPERIMENTAL;
+    }
 
     // --- DebuggerPlugin interface
     /**

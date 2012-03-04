@@ -118,7 +118,9 @@ END_INTERFACE_MAP()
 
     virtual bool on_message(const char*, Debugger::MessageType, Thread*, bool);
 
-    Priority::Class priority_class() const { return Priority::LOW; }
+    Priority::Class priority_class() const {
+        return Priority::LOW;
+   }
 
 private:
     /* read and parse a script file */
