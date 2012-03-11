@@ -102,9 +102,21 @@ void ui::Controller::StateImpl::update(
 class BreakPointUpdater : public EnumCallback<volatile BreakPoint*>
 {
 public:
-    explicit BreakPointUpdater(const RefPtr<ui::CodeView> view)
-        : view_(view)
+    BreakPointUpdater()
     { }
+
+    // Add view to the internal list of views to be updated
+    void push_back(RefPtr<ui::View> view)
+    {
+        if (view)
+        {
+            views_.push_back(view);
+        }
+    }
+
+    bool empty() const {
+        return views_.empty();
+    }
 
     void notify(volatile BreakPoint* bp)
     {
@@ -113,12 +125,15 @@ public:
         // are not shown
         if (bp->enum_actions("USER"))
         {
-            view_->update_breakpoint(const_cast<BreakPoint&>(*bp));
+            for (auto v = begin(views_); v != end(views_); ++v)
+            {
+                (*v)->update_breakpoint(const_cast<BreakPoint&>(*bp));
+            }
         }
     }
 
 private:
-    RefPtr<ui::CodeView> view_;
+    vector<RefPtr<ui::View> > views_;
 };
 
 
@@ -242,9 +257,10 @@ void ui::Controller::build_layout()
         layout_->add(*v);
     }
 
-    if (auto v = init_breakpoint_view())
+    breakpoints_ = init_breakpoint_view();
+    if (breakpoints_)
     {
-        layout_->add(*v);
+        layout_->add(*breakpoints_);
     }
 }
 
@@ -416,9 +432,13 @@ void ui::Controller::update(
     // @note: Updating the layout automatically updates code views
     // and we want to update breakpoints last;
     // DO NOT CHANGE this order of operations.
-    if (code_)
+    BreakPointUpdater updater;
+
+    updater.push_back(breakpoints_);
+    updater.push_back(code_);
+
+    if (!updater.empty())
     {
-        BreakPointUpdater updater(code_);
         if (RefPtr<BreakPointManager> mgr = debugger_->breakpoint_manager())
         {
             mgr->enum_breakpoints(&updater);

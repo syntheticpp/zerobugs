@@ -28,9 +28,10 @@ namespace ui
         ~BreakPointView() throw();
 
         void update(const ui::State&);
+        virtual void update_breakpoint(BreakPoint&);
 
     private:
-        BreakPoints     breakpoints_;
+        BreakPoints breakpoints_;
     };
 }
 

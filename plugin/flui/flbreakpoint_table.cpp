@@ -18,4 +18,16 @@ FlBreakPointTable::FlBreakPointTable(
 }
 
 
+void
+FlBreakPointTable::draw_cell(
+
+    TableContext    ctxt,
+    int             row,
+    int             col,
+    int             x,
+    int             y,
+    int             w,
+    int             h)
+{
+}
 

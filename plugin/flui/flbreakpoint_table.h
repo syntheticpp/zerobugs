@@ -13,6 +13,9 @@ class FlBreakPointTable : public Fl_Table_Row
 {
 public:
     FlBreakPointTable(int x, int y, int w, int h, const char* label);
+
+protected:
+    void draw_cell(TableContext, int row, int col, int x, int y, int w, int h);
 };
 
 

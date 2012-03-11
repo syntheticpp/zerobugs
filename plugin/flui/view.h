@@ -36,8 +36,8 @@ namespace ui
     struct State
     {
         virtual ~State() { }
-        
-        /** 
+
+        /**
          * @note: this method is expected to be called on the
          * main debugger thread only
          */
@@ -80,9 +80,15 @@ namespace ui
         explicit View (Controller&);
 
         virtual ViewType type() const = 0;
-        
+
         virtual void insert_self(LayoutCallback&) = 0;
         virtual void update(const State&) = 0;
+
+        /**
+         * Optional: update view to show breakpoint
+         */
+        virtual void update_breakpoint(BreakPoint&) {
+        }
 
         Controller& controller() const {
             return c_;
@@ -130,11 +136,11 @@ namespace ui
 
     protected:
         virtual ~Layout() throw() { }
-        
+
         void add(View&, LayoutCallback&);
-        
+
         virtual CallbackPtr make_callback(ViewType) = 0;
-        
+
         virtual void insert_self(LayoutCallback&)
         {
         }

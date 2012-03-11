@@ -35,11 +35,6 @@ namespace ui
          */
         virtual void show(RefPtr<Thread>, RefPtr<Symbol>) = 0;
 
-        /**
-         * update view to show breakpoint, if necessary
-         */
-        virtual void update_breakpoint(BreakPoint&) = 0;
-
         virtual const CodeListing* get_listing() = 0;
 
         MultiCodeView* parent() const {

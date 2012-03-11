@@ -233,6 +233,7 @@ namespace ui
         Debugger*                   debugger_;
         pthread_t                   threadId_;      // UI thread ID
         RefPtr<Layout>              layout_;
+        RefPtr<View>                breakpoints_;
         RefPtr<CodeView>            code_;
         RefPtr<CompositeMenu>       menu_;
         RefPtr<Toolbar>             toolbar_;

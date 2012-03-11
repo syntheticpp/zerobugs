@@ -23,5 +23,12 @@ BreakPointView::~BreakPointView() throw()
 
 void BreakPointView::update(const ui::State&)
 {
+    breakpoints_.clear();
+}
+
+
+void BreakPointView::update_breakpoint(BreakPoint& bp)
+{
+    breakpoints_.push_back(&bp);
 }
 
