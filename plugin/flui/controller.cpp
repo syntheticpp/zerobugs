@@ -8,6 +8,7 @@
 #include "zdk/log.h"
 #include "zdk/thread_util.h"
 #include "generic/temporary.h"
+#include "breakpoint_view.h"
 #include "const.h"
 #include "code_view.h"
 #include "controller.h"
@@ -237,6 +238,11 @@ void ui::Controller::build_layout()
     }
 
     if (auto v = init_locals_view())
+    {
+        layout_->add(*v);
+    }
+
+    if (auto v = init_breakpoint_view())
     {
         layout_->add(*v);
     }

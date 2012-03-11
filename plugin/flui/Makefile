@@ -16,12 +16,15 @@ LDLIBS+=-lfltk -lpthread
 LDFLAGS+=-Wl,--no-undefined
 
 ################################################################
-SRCS=	code_view.cpp		\
+SRCS=	breakpoint_view.cpp	\
+		code_view.cpp		\
 		controller.cpp		\
 		dialog.cpp			\
 		expr_events.cpp		\
 		flcode_view.cpp		\
 		flcode_table.cpp	\
+		flbreakpoint_table.cpp 	\
+		flbreakpoint_view.cpp 	\
 		fldialog.cpp		\
 		fleval_dlg.cpp		\
 		flui.cpp 			\

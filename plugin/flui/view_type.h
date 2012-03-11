@@ -12,6 +12,7 @@ namespace ui
     {
         VIEW_None,
 
+        VIEW_BreakPoints,
         VIEW_Code,
         VIEW_Layout,    // composite view
         VIEW_Modules,

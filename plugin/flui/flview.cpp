@@ -30,6 +30,11 @@ FlPackLayout::make_callback(ViewType type)
 
     switch (type)
     {
+    case VIEW_BreakPoints:
+        callback.reset(new ::Callback(bottomL_, bottomL_,
+            0, 0, -1, -Const::tab_label_height));
+        break;
+
     case VIEW_Code:
         callback.reset(new ::Callback(code_, code_));
         break;

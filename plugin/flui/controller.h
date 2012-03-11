@@ -18,6 +18,7 @@ namespace ui
 {
     class CodeView;
     class CompositeMenu;
+    class BreakPointView;
     class Dialog;
     class VarView;
     class StackView;
@@ -207,6 +208,7 @@ namespace ui
 
         virtual RefPtr<CodeView>        init_code_view() = 0;
         virtual RefPtr<CompositeMenu>   init_menu() = 0;
+        virtual RefPtr<BreakPointView>  init_breakpoint_view() = 0;
         virtual RefPtr<Layout>          init_layout() = 0;
         virtual RefPtr<VarView>         init_locals_view() = 0;
         virtual RefPtr<StackView>       init_stack_view() = 0;

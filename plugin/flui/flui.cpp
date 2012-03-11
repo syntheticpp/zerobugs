@@ -8,6 +8,7 @@
 #include "zdk/check_ptr.h"
 #include "flcode_view.h"
 #include "fleval_dlg.h"
+#include "flbreakpoint_view.h"
 #include "flvar_view.h"
 #include "flmain_window.h"
 #include "flmenu.h"
@@ -147,6 +148,13 @@ int Flui::w() const
 int Flui::h() const
 {
     return WINDOW_COORD(window_, h);
+}
+
+
+////////////////////////////////////////////////////////////////
+RefPtr<ui::BreakPointView> Flui::init_breakpoint_view()
+{
+    return new FlBreakPointView(*this);
 }
 
 
