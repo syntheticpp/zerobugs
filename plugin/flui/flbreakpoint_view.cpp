@@ -4,6 +4,7 @@
 //
 // $Id: $
 //
+#include "zdk/breakpoint.h"
 #include "flbreakpoint_view.h"
 
 
@@ -15,7 +16,14 @@ FlBreakPointView::FlBreakPointView(
     int             w,
     int             h)
 
-: base_type(c, x, y, w, h, "Breakpoints")
+: base_type(c, this, x, y, w, h, "Breakpoints")
 {
+}
+
+
+void FlBreakPointView::update_breakpoint(BreakPoint& bp)
+{
+    base_type::update_breakpoint(bp);
+    widget()->rows(size());
 }
 

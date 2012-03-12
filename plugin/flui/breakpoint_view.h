@@ -24,6 +24,22 @@ namespace ui
             return VIEW_BreakPoints;
         }
 
+        size_t size() const {
+            return breakpoints_.size();
+        }
+
+        BreakPoints::const_iterator begin() const {
+            return breakpoints_.begin();
+        }
+
+        BreakPoints::const_iterator end() const {
+            return breakpoints_.end();
+        }
+
+        BreakPointPtr operator[](size_t n) const {
+            return breakpoints_[n];
+        }
+
     protected:
         ~BreakPointView() throw();
 

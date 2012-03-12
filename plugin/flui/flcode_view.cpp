@@ -128,7 +128,14 @@ void FlAsmView::update_breakpoint(BreakPoint& bpnt)
         ? Fl_CodeTable::mark_stop_enabled
         : Fl_CodeTable::mark_stop_disabled;
 
-    widget()->set_mark_at_line(addr_to_line(addr), mark);
+    try
+    {
+        widget()->set_mark_at_line(addr_to_line(addr), mark);
+    }
+    catch (const out_of_range&)
+    {
+        // does not fit in view, ok
+    }
 }
 
 

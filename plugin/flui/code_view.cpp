@@ -15,7 +15,8 @@
 #include "controller.h"
 #include "flcode_table.h"
 #include <fstream>
-#include <iostream>
+#include <sstream>
+//#include <iostream>
 
 using namespace std;
 
@@ -262,7 +263,9 @@ addr_t ui::LineAddrMap::line_to_addr(int lineNum) const
     auto i = lineToAddr_.find(lineNum);
     if (i == lineToAddr_.end())
     {
-        throw out_of_range(__func__);
+        ostringstream s;
+        s << __func__ << ": line number " << lineNum << " is out of range";
+        throw out_of_range(s.str());
     }
     return i->second;
 }
@@ -273,7 +276,9 @@ int ui::LineAddrMap::addr_to_line(addr_t addr) const
     auto i = addrToLine_.find(addr);
     if (i == addrToLine_.end())
     {
-        throw out_of_range(__func__);
+        ostringstream s;
+        s << __func__ << ": 0x" << hex << addr << dec << " is out of range";
+        throw out_of_range(s.str());
     }
     return i->second;
 }

@@ -15,6 +15,9 @@ class FlBreakPointView : public FlView<ui::BreakPointView, FlBreakPointTable>
 {
 public:
     FlBreakPointView(ui::Controller&, int x = 0, int y = 0, int w = 0, int h = 0);
+
+protected:
+    virtual void update_breakpoint(BreakPoint&);
 };
 
 
