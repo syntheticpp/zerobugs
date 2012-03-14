@@ -7,17 +7,19 @@
 #include "zdk/symbol.h"
 #include "breakpoint_view.h"
 #include "flbreakpoint_table.h"
+#include "icons/checkedbox.xpm"
+#include "icons/uncheckedbox.xpm"
 #include <FL/fl_draw.H>
+#include <FL/Fl_Pixmap.H>
 
 using namespace std;
 
 
-static vector<const char*> header = { "", "", "File", "Line", "Address" };
+static vector<const char*> header = { "", "File", "Line", "Address" };
 
 enum ColType
 {
     COL_Pixmap,
-    COL_Enabled,
     COL_File,
     COL_Line,
     COL_Address
@@ -34,6 +36,8 @@ FlBreakPointTable::FlBreakPointTable(
 
     : Fl_Table_Row( x, y, w, h, label )
     , view_(v)
+    , checked_(new Fl_Pixmap(checkedbox_xpm))
+    , unchecked_(new Fl_Pixmap(uncheckedbox_xpm))
 {
     color(FL_WHITE);
     labelfont(FL_HELVETICA);
@@ -44,7 +48,6 @@ FlBreakPointTable::FlBreakPointTable(
     cols(header.size());
     col_resize_min(20);
     col_width(COL_Pixmap, 20);
-    col_width(COL_Enabled, 20);
     col_width(COL_File, 200);
     col_width(COL_Line, 40);
     col_width(COL_Address, 1000);
@@ -61,10 +64,13 @@ FlBreakPointTable::draw_cell(
     int          w,
     int          h )
 {
-    RefPtr<Symbol> sym;
+    RefPtr<BreakPoint>  bp;
+    RefPtr<Symbol>      sym;
+
     if (row >= 0 && row < view_->size())
     {
-        sym = (*view_)[row]->symbol();
+        bp  = (*view_)[row];
+        sym = bp->symbol();
     }
 
     switch (ctxt)
@@ -87,6 +93,20 @@ FlBreakPointTable::draw_cell(
         fl_color(FL_BLACK);
         switch (col)
         {
+        case COL_Pixmap:
+            if (bp)
+            {
+                if (bp->is_enabled())
+                {
+                    checked_->draw(x, y);
+                }
+                else
+                {
+                    unchecked_->draw(x, y);
+                }
+            }
+            break;
+
         case COL_File:
             if (sym)
             {
@@ -104,10 +124,10 @@ FlBreakPointTable::draw_cell(
             break;
 
         case COL_Address:
-            if (sym)
+            if (bp)
             {
                 ostringstream s;
-                s << hex << (*view_)[row]->addr();
+                s << hex << bp->addr();
                 fl_draw(s.str().c_str(), x, y, w, h, FL_ALIGN_LEFT);
             }
             break;

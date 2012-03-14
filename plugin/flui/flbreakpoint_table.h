@@ -6,6 +6,7 @@
 //
 // $Id: $
 //
+#include <FL/Fl_Pixmap.H>
 #include <FL/Fl_Table_Row.H>
 
 namespace ui
@@ -14,9 +15,14 @@ namespace ui
 }
 
 
+/**
+ * Draw a table of breakpoints. Used by FlBreakPointView.
+ */
 class FlBreakPointTable : public Fl_Table_Row
 {
     typedef ui::BreakPointView View;
+    typedef std::unique_ptr<Fl_Pixmap> PixmapPtr;
+
 public:
     FlBreakPointTable(
         View*       v,
@@ -38,6 +44,9 @@ protected:
 
 private:
     ui::BreakPointView* view_;
+
+    PixmapPtr           checked_;
+    PixmapPtr           unchecked_;
 };
 
 

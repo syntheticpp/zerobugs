@@ -21,6 +21,11 @@ FlBreakPointView::FlBreakPointView(
 }
 
 
+FlBreakPointView::~FlBreakPointView() throw()
+{
+}
+
+
 void FlBreakPointView::update_breakpoint(BreakPoint& bp)
 {
     base_type::update_breakpoint(bp);
