@@ -18,19 +18,25 @@ namespace ui
 /**
  * Draw a table of breakpoints. Used by FlBreakPointView.
  */
-class FlBreakPointTable : public Fl_Table_Row
+class Fl_BreakPointTable : public Fl_Table_Row
 {
+public:
     typedef ui::BreakPointView View;
     typedef std::unique_ptr<Fl_Pixmap> PixmapPtr;
+    typedef std::function<void ()> EventCallback;
 
-public:
-    FlBreakPointTable(
+    Fl_BreakPointTable(
         View*       v,
         int         x,
         int         y,
         int         w,
         int         h,
         const char* label);
+
+    template<typename F>
+    void set_event_callback(F f) {
+        eventCallback_ = f;
+    }
 
 protected:
     virtual void draw_cell(
@@ -42,11 +48,16 @@ protected:
         int          w,
         int          h);
 
+    static void event_callback(Fl_Widget*, void*);
+
+    void event_callback();
+
 private:
     ui::BreakPointView* view_;
 
     PixmapPtr           checked_;
     PixmapPtr           unchecked_;
+    EventCallback       eventCallback_;
 };
 
 

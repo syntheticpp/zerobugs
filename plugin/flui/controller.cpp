@@ -3,6 +3,7 @@
 //
 // $Id$
 //
+#include "zdk/breakpoint_util.h"
 #include "zdk/check_ptr.h"
 #include "zdk/log.h"
 #include "zdk/thread_util.h"
@@ -310,7 +311,7 @@ void ui::Controller::build_menu()
     menu_->add_item("&Breakpoints/&Toggle", FL_F + 9, MenuElem::Enable_IfStopped,
         [this]()
         {
-            toggle_breakpoint();
+            toggle_user_breakpoint();
         });
 
     menu_->add_ui_item("&Tools/E&valuate", FL_ALT + 'v', MenuElem::Enable_IfStopped,
@@ -723,7 +724,7 @@ bool ui::Controller::probe_interactive_plugins()
 
 
 ////////////////////////////////////////////////////////////////
-void ui::Controller::toggle_breakpoint(addr_t addr)
+void ui::Controller::toggle_user_breakpoint(addr_t addr)
 {
     if (auto t = state_->current_thread())
     {
@@ -738,15 +739,42 @@ void ui::Controller::toggle_breakpoint(addr_t addr)
 
 
 ////////////////////////////////////////////////////////////////
-void ui::Controller::toggle_breakpoint()
+void ui::Controller::toggle_user_breakpoint()
 {
     if (code_)  // have a code view?
     {
         if (auto listing = code_->get_listing())
         {
             addr_t addr = listing->selected_addr();
-            toggle_breakpoint(addr);
+            toggle_user_breakpoint(addr);
         }
+    }
+}
+
+
+////////////////////////////////////////////////////////////////
+void ui::Controller::enable_user_breakpoint(
+    addr_t          addr,
+    ui::EnableMode  mode )
+{
+    CHKPTR(debugger_);
+
+    switch (mode)
+    {
+    case ui::Enable:
+        enable_user_breakpoint_actions(*debugger_, addr);
+        break;
+
+    case ui::Disable:
+        disable_user_breakpoint_actions(*debugger_, addr);
+        break;
+
+    case ui::Toggle:
+        mode = has_enabled_user_breakpoint_actions(*debugger_, addr)
+            ? ui::Disable : ui::Enable;
+
+        enable_user_breakpoint( addr, mode );
+        break;
     }
 }
 

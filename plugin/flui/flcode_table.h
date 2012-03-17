@@ -31,7 +31,7 @@ public:
         COL_Asm,
         COL_Addr = COL_Line
     };
-    typedef std::function<void (Fl_CodeTable&)> EventCallback;
+    typedef std::function<void ()> EventCallback;
 
     static const SharedStringPtr mark_arrow;
     static const SharedStringPtr mark_stop_enabled;
@@ -61,7 +61,7 @@ public:
         return selected_ < 0 ? highlight_ - 1 : selected_;
     }
 
-    void select_callback_row() { 
+    void select_callback_row() {
         selected_ = callback_row();
     }
 
@@ -169,7 +169,7 @@ public:
 
 private:
     void draw_cell(TableContext, int row, int col, int x, int y, int w, int h);
-    
+
     virtual void resize(int x, int y, int w, int h);
 
 private:

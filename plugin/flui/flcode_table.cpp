@@ -26,7 +26,6 @@ const SharedStringPtr Fl_CodeTable::mark_stop_enabled = shared_string( "__stop_o
 const SharedStringPtr Fl_CodeTable::mark_stop_disabled = shared_string( "__stop_off");
 
 
-
 ////////////////////////////////////////////////////////////////
 
 Fl_CodeTable::Fl_CodeTable(int x, int y, int w, int h, const char* label)
@@ -39,7 +38,7 @@ Fl_CodeTable::Fl_CodeTable(int x, int y, int w, int h, const char* label)
     set_mark_pixmap(Fl_CodeTable::mark_arrow, arrow_xpm);
     set_mark_pixmap(Fl_CodeTable::mark_stop_enabled, stop_red_xpm);
     set_mark_pixmap(Fl_CodeTable::mark_stop_disabled, stop_pink_xpm);
-    
+
     callback(event_callback, this);
     when(FL_WHEN_RELEASE);
 }
@@ -159,7 +158,7 @@ void Fl_CodeTable::event_callback()
 {
     if (eventCallback_)
     {
-        eventCallback_(*this);
+        eventCallback_();
     }
 }
 
@@ -377,7 +376,7 @@ void Fl_AsmTable::draw_cell(
         fl_push_clip(x, y, width, height);
         fl_color(cell_background(row, col));
         fl_rectf(x, y, width, height);
-        
+
         fl_color(text_color());
 
         switch (col)
@@ -392,7 +391,7 @@ void Fl_AsmTable::draw_cell(
                 fl_draw(rowData_[0].c_str(), x, y, width, height, FL_ALIGN_LEFT);
             }
             break;
-            
+
         case COL_Text:
             if (rowData_.size() > 1)
             {
@@ -409,7 +408,7 @@ void Fl_AsmTable::draw_cell(
                 if (strncmp(asmText.c_str(), "invalid", 7) == 0)
                 {
                     break;
-                }               
+                }
                 if (asmText.length() > maxAsmLen_)
                 {
                     maxAsmLen_ = asmText.length();

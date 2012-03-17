@@ -23,17 +23,17 @@ static void set_event_callback(
     ui::CodeView*   view,
     Fl_CodeTable*   widget )
 {
-    widget->set_event_callback([view](Fl_CodeTable& w) {
+    widget->set_event_callback([view, widget]() {
 
         if (Fl::event_button1() && Fl::event_is_click())
         {
-            w.select_callback_row();
+            widget->select_callback_row();
 
-            if (w.callback_col() == Fl_CodeTable::COL_Mark)
+            if (widget->callback_col() == Fl_CodeTable::COL_Mark)
             {
                 auto& controller = view->controller();
                 ui::call_main_thread(controller,[&controller](){
-                    controller.toggle_breakpoint();
+                    controller.toggle_user_breakpoint();
                 });
             }
 
@@ -134,10 +134,12 @@ void FlAsmView::update_breakpoint(BreakPoint& bpnt)
     addr_t addr = bpnt.symbol()->addr();
     if (bpnt.is_deferred())
     {
-        // TODO: adjust address
+        //
+        // TODO: adjust the address
+        //
     }
 
-    SharedStringPtr mark = bpnt.is_enabled()
+    SharedStringPtr mark = has_enabled_actions(bpnt)
         ? Fl_CodeTable::mark_stop_enabled
         : Fl_CodeTable::mark_stop_disabled;
 

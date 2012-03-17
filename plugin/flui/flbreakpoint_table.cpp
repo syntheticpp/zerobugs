@@ -16,7 +16,9 @@
 using namespace std;
 
 
-static vector<const char*> header = { "", "File", "Line", "Address" };
+static vector<const char*> header = {
+    "", "File", "Line", "Address"
+};
 
 enum ColType
 {
@@ -26,8 +28,9 @@ enum ColType
     COL_Address
 };
 
+static const int check_mark_size = 22;
 
-FlBreakPointTable::FlBreakPointTable(
+Fl_BreakPointTable::Fl_BreakPointTable(
     View*       v,
     int         x,
     int         y,
@@ -45,18 +48,20 @@ FlBreakPointTable::FlBreakPointTable(
 
     col_header(true);
     col_resize(true);
-
     cols(header.size());
-    col_resize_min(20);
-    col_width(COL_Pixmap, 20);
+    col_resize_min(check_mark_size);
+    col_width(COL_Pixmap, check_mark_size);
     col_width(COL_File, 200);
     col_width(COL_Line, 40);
     col_width(COL_Address, 1000);
+
+    callback(event_callback, this);
+    when(FL_WHEN_RELEASE | FL_WHEN_CHANGED);
 }
 
 
 void
-FlBreakPointTable::draw_cell(
+Fl_BreakPointTable::draw_cell(
     TableContext ctxt,
     int          row,
     int          col,
@@ -68,7 +73,7 @@ FlBreakPointTable::draw_cell(
     RefPtr<BreakPoint>  bp;
     RefPtr<Symbol>      sym;
 
-    if (row >= 0 && row < view_->size())
+    if (row >= 0 && size_t(row) < view_->size())
     {
         bp  = (*view_)[row];
         sym = bp->symbol();
@@ -138,6 +143,29 @@ FlBreakPointTable::draw_cell(
 
     default:
         break;
+    }
+}
+
+
+void
+Fl_BreakPointTable::event_callback( Fl_Widget* w, void* v )
+{
+    reinterpret_cast<Fl_BreakPointTable*>(w)->event_callback();
+}
+
+
+void
+Fl_BreakPointTable::event_callback( )
+{
+    if (callback_context() == CONTEXT_RC_RESIZE)
+    {
+        // disallow resizing of first column
+        // where the check "buttons" are shown
+        col_width(COL_Pixmap, check_mark_size);
+    }
+    else if (eventCallback_)
+    {
+        eventCallback_();
     }
 }
 

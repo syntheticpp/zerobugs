@@ -24,6 +24,13 @@ namespace ui
     class StackView;
     class Toolbar;
 
+    enum EnableMode
+    {
+        Disable,
+        Enable,
+        Toggle
+    };
+
     /**
      * Controller executes this command when idle.
      */
@@ -113,8 +120,12 @@ namespace ui
 
         void set_current_dialog(Dialog* dialog);
 
-        void toggle_breakpoint();
-        void toggle_breakpoint(addr_t);
+        // insert/remove breakpoint
+        void toggle_user_breakpoint();
+        void toggle_user_breakpoint(addr_t);
+
+        // enable/disable breakpoint
+        void enable_user_breakpoint(addr_t, EnableMode);
 
         // --- DebuggerPlugin interface
         /**

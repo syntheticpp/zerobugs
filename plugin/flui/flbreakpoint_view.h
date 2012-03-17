@@ -11,7 +11,7 @@
 #include "flview.h"
 
 
-class FlBreakPointView : public FlView<ui::BreakPointView, FlBreakPointTable>
+class FlBreakPointView : public FlView<ui::BreakPointView, Fl_BreakPointTable>
 {
 public:
     FlBreakPointView(ui::Controller&, int x = 0, int y = 0, int w = 0, int h = 0);
