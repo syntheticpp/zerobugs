@@ -26,15 +26,6 @@ const SharedStringPtr Fl_CodeTable::mark_stop_enabled = shared_string( "__stop_o
 const SharedStringPtr Fl_CodeTable::mark_stop_disabled = shared_string( "__stop_off");
 
 
-enum ColumnType
-{
-    COL_Mark,
-    COL_Line,
-    COL_Text,
-    COL_Asm,
-    COL_Addr = COL_Line
-};
-
 
 ////////////////////////////////////////////////////////////////
 

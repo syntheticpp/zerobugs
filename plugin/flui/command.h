@@ -95,9 +95,6 @@ namespace ui
             complete_ = false;
         }
 
-        //void execute_on_main_thread() {
-        //}
-
         void continue_on_ui_thread(Controller& controller) {
             callable_(controller);
             complete_ = true;

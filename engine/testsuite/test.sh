@@ -218,7 +218,7 @@ COMMON_TESTS=(
     test_ret_obj,no-ppc
     test_ret_val,no-ppc
 #    test_strcmp,no-ppc
-	test_step_over
+    test_step_over
     test_shadow,stabs+,no-ppc
     test_shared_ptr,stabs+,no-ppc
     test_symbol_map
@@ -227,7 +227,7 @@ COMMON_TESTS=(
     test_sigtrap,no-ppc
     test_threads,stabs+,no-ppc
     test_threads_stop,stabs+,no-ppc
-   test_threads_static,stabs+,no-ppc
+#   test_threads_static,stabs+,no-ppc
     test_vector
 
     # NOTE this test may create problems on Virtual PC

@@ -113,6 +113,9 @@ namespace ui
 
         void set_current_dialog(Dialog* dialog);
 
+        void toggle_breakpoint();
+        void toggle_breakpoint(addr_t);
+
         // --- DebuggerPlugin interface
         /**
          * Pass pointer to debugger and the command line params

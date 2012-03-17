@@ -23,6 +23,14 @@
 class Fl_CodeTable : public Fl_Table_Row
 {
 public:
+    enum ColumnType
+    {
+        COL_Mark,
+        COL_Line,
+        COL_Text,
+        COL_Asm,
+        COL_Addr = COL_Line
+    };
     typedef std::function<void (Fl_CodeTable&)> EventCallback;
 
     static const SharedStringPtr mark_arrow;

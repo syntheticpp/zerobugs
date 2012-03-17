@@ -4,6 +4,7 @@
 //
 // $Id: $
 //
+#include "zdk/breakpoint_util.h"
 #include "zdk/symbol.h"
 #include "breakpoint_view.h"
 #include "flbreakpoint_table.h"
@@ -96,7 +97,7 @@ FlBreakPointTable::draw_cell(
         case COL_Pixmap:
             if (bp)
             {
-                if (bp->is_enabled())
+                if (has_enabled_actions(*bp))
                 {
                     checked_->draw(x, y);
                 }

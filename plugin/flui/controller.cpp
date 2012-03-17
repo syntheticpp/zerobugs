@@ -4,6 +4,30 @@
 //
 // $Id$
 //
+//
+// -*- tab-width: 4; indent-tabs-mode: nil;  -*-
+// vim: tabstop=4:softtabstop=4:expandtab:shiftwidth=4
+//
+// $Id$
+//
+//
+// -*- tab-width: 4; indent-tabs-mode: nil;  -*-
+// vim: tabstop=4:softtabstop=4:expandtab:shiftwidth=4
+//
+// $Id$
+//
+//
+// -*- tab-width: 4; indent-tabs-mode: nil;  -*-
+// vim: tabstop=4:softtabstop=4:expandtab:shiftwidth=4
+//
+// $Id$
+//
+//
+// -*- tab-width: 4; indent-tabs-mode: nil;  -*-
+// vim: tabstop=4:softtabstop=4:expandtab:shiftwidth=4
+//
+// $Id$
+//
 #include "zdk/check_ptr.h"
 #include "zdk/log.h"
 #include "zdk/thread_util.h"
@@ -311,20 +335,7 @@ void ui::Controller::build_menu()
     menu_->add_item("&Breakpoints/&Toggle", FL_F + 9, MenuElem::Enable_IfStopped,
         [this]()
         {
-            if (!code_ || !state_->current_thread())
-            {
-                return;
-            }
-            if (auto listing = code_->get_listing())
-            {
-                addr_t addr = listing->selected_addr();
-
-                auto t = state_->current_thread().get();
-                if (!debugger_->set_user_breakpoint(get_runnable(t), addr))
-                {
-                    debugger_->remove_user_breakpoint(0, 0, addr);
-                }
-            }
+            toggle_breakpoint();
         });
 
     menu_->add_ui_item("&Tools/E&valuate", FL_ALT + 'v', MenuElem::Enable_IfStopped,
@@ -733,5 +744,34 @@ bool ui::Controller::probe_interactive_plugins()
     Temporary<bool> temp(probing_, true);
     bool result = debugger()->publish_event(nullptr, E_PROBE_INTERACTIVE);
     return result;
+}
+
+
+////////////////////////////////////////////////////////////////
+void ui::Controller::toggle_breakpoint(addr_t addr)
+{
+    if (auto t = state_->current_thread())
+    {
+        if (!debugger_->set_user_breakpoint(get_runnable(t.get()), addr))
+        {
+            // failed to set breakpoint? it means
+            // that it exists already, so remove it
+            debugger_->remove_user_breakpoint(0, 0, addr);
+        }
+    }
+}
+
+
+////////////////////////////////////////////////////////////////
+void ui::Controller::toggle_breakpoint()
+{
+    if (code_)  // have a code view?
+    {
+        if (auto listing = code_->get_listing())
+        {
+            addr_t addr = listing->selected_addr();
+            toggle_breakpoint(addr);
+        }
+    }
 }
 

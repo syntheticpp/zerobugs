@@ -5,7 +5,10 @@
 // $Id$
 //
 #include "zdk/zero.h"
+#include "zdk/breakpoint_util.h"
+#include "command.h"
 #include "const.h"
+#include "controller.h"
 #include "flcallback.h"
 #include "flcode_view.h"
 #include "flcode_table.h"
@@ -13,6 +16,7 @@
 #include <FL/Enumerations.H>
 
 using namespace std;
+
 
 static void set_event_callback(
 
@@ -24,6 +28,15 @@ static void set_event_callback(
         if (Fl::event_button1() && Fl::event_is_click())
         {
             w.select_callback_row();
+
+            if (w.callback_col() == Fl_CodeTable::COL_Mark)
+            {
+                auto& controller = view->controller();
+                ui::call_main_thread(controller,[&controller](){
+                    controller.toggle_breakpoint();
+                });
+            }
+
             if (auto parent = view->parent())
             {
                 parent->set_current_view(view);
@@ -74,7 +87,7 @@ void FlSourceView::update_breakpoint(BreakPoint& bpnt)
 {
     const size_t line = bpnt.symbol()->line();
 
-    SharedStringPtr mark = bpnt.is_enabled()
+    SharedStringPtr mark = has_enabled_actions(bpnt)
         ? Fl_CodeTable::mark_stop_enabled
         : Fl_CodeTable::mark_stop_disabled;
 
