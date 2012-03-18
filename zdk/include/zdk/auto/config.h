@@ -66,7 +66,7 @@
 #define HAVE_LIBELF_H 1
 
 /* Define to 1 if you have <libelf/libelf.h>. */
-#define HAVE_LIBELF_LIBELF_H 1
+/* #undef HAVE_LIBELF_LIBELF_H */
 
 /* Define to 1 if you have the <libgen.h> header file. */
 #define HAVE_LIBGEN_H 1

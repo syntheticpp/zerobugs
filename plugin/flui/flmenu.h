@@ -13,28 +13,15 @@
 ////////////////////////////////////////////////////////////////
 class FlCompositeMenu : public ui::CompositeMenu
 {
-public:
-    FlCompositeMenu(ui::Controller&, Fl_Menu_*);
-
 protected:
+    explicit FlCompositeMenu(ui::Controller&);
+
     ~FlCompositeMenu() throw();
 
-    //@note: pure method defined in base class
-    //
-    virtual void add(
-            const std::string&  name,
-            int                 shortcut,
-            ui::EnableCondition enable,
-            RefPtr<ui::Command> command);
-
-private:
     void exec_command(const char* path);
-
-    static void exec_command(Fl_Widget*, void*);
 
 private:
     ui::Controller& controller_;
-    Fl_Menu_*       menu_;
 };
 
 
@@ -47,6 +34,19 @@ public:
 
 protected:
     ~FlMenuBar() throw();
+
+    virtual void add(
+            const std::string&  name,
+            int                 shortcut,
+            ui::EnableCondition enable,
+            RefPtr<ui::Command> command);
+
+    using FlCompositeMenu::exec_command;
+
+    static void exec_command(Fl_Widget*, void*);
+
+private:
+    Fl_Menu_*       menu_;
 };
 
 

@@ -36,7 +36,7 @@
 #define HAVE_LIBELF_H 1
 
 /* Define to 1 if you have the <libelf/libelf.h> header file. */
-#define HAVE_LIBELF_LIBELF_H 1
+/* #undef HAVE_LIBELF_LIBELF_H */
 
 /* Define 1 if off64 is defined via libelf with GNU_SOURCE. */
 #define HAVE_LIBELF_OFF64_OK 1

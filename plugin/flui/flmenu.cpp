@@ -11,49 +11,16 @@ using namespace std;
 
 
 ////////////////////////////////////////////////////////////////
-FlCompositeMenu::FlCompositeMenu(
-
-    ui::Controller& c,
-    Fl_Menu_*       menu )
+FlCompositeMenu::FlCompositeMenu(ui::Controller& c)
 
   : ui::CompositeMenu()
   , controller_(c)
-  , menu_(menu)
 {
 }
 
 
 FlCompositeMenu::~FlCompositeMenu() throw()
 {
-}
-
-
-void FlCompositeMenu::add(
-
-    const string&       name,
-    int                 shortcut,
-    ui::EnableCondition enable,
-    RefPtr<ui::Command> command)
-
-{
-    int i = menu_->add(name.c_str(), shortcut, exec_command, this);
-    RefPtr<ui::MenuElem> item(
-        new FlMenuItem(name, shortcut, enable, command, menu_, i));
-
-    ui::CompositeMenu::add(item);
-}
-
-
-/* static */
-void FlCompositeMenu::exec_command(Fl_Widget* /* w */, void* p)
-{
-    FlMenuBar* menubar = reinterpret_cast<FlMenuBar*>(p);
-
-    char path[100] = { 0 };
-    assert(menubar->menu_);
-
-    menubar->menu_->item_pathname(path, sizeof(path) - 1);
-    menubar->exec_command(path);
 }
 
 
@@ -79,7 +46,8 @@ FlMenuBar::FlMenuBar(
     int             width,
     int             height )
 
-: FlCompositeMenu(controller, new Fl_Menu_Bar(0, 0, width, height))
+: FlCompositeMenu(controller)
+, menu_(new Fl_Menu_Bar(0, 0, width, height))
 
 {
 }
@@ -90,18 +58,44 @@ FlMenuBar::~FlMenuBar() throw()
 }
 
 
+void FlMenuBar::add(
+
+    const string&       name,
+    int                 shortcut,
+    ui::EnableCondition enable,
+    RefPtr<ui::Command> command)
+
+{
+    int i = menu_->add(name.c_str(), shortcut, exec_command, this);
+    RefPtr<ui::MenuElem> item(
+        new FlMenuItem(name, shortcut, enable, command, menu_, i));
+
+    ui::CompositeMenu::add(item);
+}
+
+
+/* static */
+void FlMenuBar::exec_command(Fl_Widget* /* w */, void* p)
+{
+    auto* menu = reinterpret_cast<FlMenuBar*>(p);
+
+    char path[100] = { 0 };
+    assert(menu->menu_);
+
+    menu->menu_->item_pathname(path, sizeof(path) - 1);
+    menu->exec_command(path);
+}
+
+
 ////////////////////////////////////////////////////////////////
 FlPopupMenu::FlPopupMenu( ui::Controller& controller )
-
-    : FlCompositeMenu(controller, nullptr)
-
+    : FlCompositeMenu(controller)
 {
 }
 
 
 FlPopupMenu::~FlPopupMenu() throw()
 {
-    clog << __PRETTY_FUNCTION__ << endl;
 }
 
 
@@ -110,10 +104,12 @@ void FlPopupMenu::show(int x, int y)
     if (!items_.empty())
     {
         items_.push_back(Fl_Menu_Item { 0 });
-        items_.front().popup(x, y);
+        if (auto* mi = items_.front().popup(x, y))
+        {
+            exec_command(mi->label());
+        }
     }
 }
-
 
 void FlPopupMenu::add(
 
@@ -164,5 +160,4 @@ void FlMenuItem::enable(bool activate)
         menu_->mode(index_, flags | FL_MENU_INACTIVE);
     }
 }
-
 
