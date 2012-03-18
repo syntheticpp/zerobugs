@@ -4,7 +4,7 @@
 // -*- tab-width: 4; indent-tabs-mode: nil;  -*-
 // vim: tabstop=4:softtabstop=4:expandtab:shiftwidth=4
 //
-// $Id: $
+// $Id$
 //
 #include "flcode_table.h"
 #include "flview.h"
@@ -52,7 +52,7 @@ protected:
     virtual void set_row_count(int n) {
         widget()->rows(n);
     }
-    
+
     virtual int selected_line() const;
 };
 

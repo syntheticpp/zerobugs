@@ -12,7 +12,6 @@
 #include "flcallback.h"
 #include "flcode_view.h"
 #include "flcode_table.h"
-#include "flpack_layout.h"
 #include <FL/Enumerations.H>
 
 using namespace std;
@@ -41,6 +40,10 @@ static void set_event_callback(
             {
                 parent->set_current_view(view);
             }
+        }
+        else if (Fl::event_button3() && Fl::event_is_click())
+        {
+            view->show_contextual_menu(Fl::event_x(), Fl::event_y());
         }
     });
 }

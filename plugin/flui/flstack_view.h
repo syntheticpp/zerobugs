@@ -4,7 +4,7 @@
 // -*- tab-width: 4; indent-tabs-mode: nil;  -*-
 // vim: tabstop=4:softtabstop=4:expandtab:shiftwidth=4
 //
-// $Id: $
+// $Id$
 //
 #include "flview.h"
 #include "stack_view.h"
@@ -19,7 +19,7 @@ public:
 private:
     virtual void resize(int x, int y, int w, int h);
 
-    /** 
+    /**
      * implements custom drawing
      * @see http://seriss.com/people/erco/Fl_Table/documentation/Fl_Table.html#draw_cell
      */
@@ -31,8 +31,8 @@ private:
         int             y,
         int             w,
         int             h);
-    
-    void draw_frame(
+
+    void draw_stack_frame(
         int             row,
         int             col,
         int             x,

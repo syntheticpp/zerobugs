@@ -15,6 +15,13 @@
 
 namespace ui
 {
+    enum EnableCondition
+    {
+        Enable_Always,
+        Enable_IfStopped,
+        Enable_IfRunning,
+    };
+
     /**
      * Toolkit-agnostic menu element.
      */
@@ -33,13 +40,6 @@ namespace ui
         { }
 
     public:
-        enum EnableCondition
-        {
-            Enable_Always,
-            Enable_IfStopped,
-            Enable_IfRunning,
-        };
-
         const std::string& name() const
         {
             return name_;
@@ -133,6 +133,10 @@ namespace ui
         }
 
         virtual void update(const State& state);
+
+    // TODO: this may not be the best place for this method
+        virtual void show(int x, int y) {
+        }
 
     protected:
         virtual void add(

@@ -13,6 +13,7 @@
 #include "zdk/zero.h"
 #include "command.h"
 #include "controller.h"
+#include "menu.h"
 #include "flcode_table.h"
 #include <fstream>
 #include <sstream>
@@ -36,6 +37,11 @@ ui::CodeView::~CodeView() throw()
 void ui::CodeView::set_current_symbol(const RefPtr<Symbol>& sym)
 {
     current_ = sym;
+}
+
+
+void ui::CodeView::show_contextual_menu(int x, int y)
+{
 }
 
 
@@ -148,6 +154,21 @@ bool ui::SourceView::refresh(
     }
     read_file(t.get(), filename);
     return true;
+}
+
+
+void ui::SourceView::show_contextual_menu(int x, int y)
+{
+    RefPtr<CompositeMenu> menu(controller().init_contextual_menu());
+
+    menu->add_item("Test 1", 0, ui::Enable_IfStopped, [](){
+        clog << "Hello Test 1" << endl;
+    });
+    menu->add_item("Test 2", 0, ui::Enable_IfStopped, [](){
+        clog << "Hello Test 2" << endl;
+    });
+
+    menu->show(x, y);
 }
 
 
@@ -446,3 +467,7 @@ bool ui::AsmView::refresh(
     return true;
 }
 
+
+void ui::AsmView::show_contextual_menu(int x, int y)
+{
+}

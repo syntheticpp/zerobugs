@@ -1,5 +1,11 @@
-#ifndef USER_INTERFACE_H__9D4F2D44_5193_4023_9688_2AB5F7BBB634
-#define USER_INTERFACE_H__9D4F2D44_5193_4023_9688_2AB5F7BBB634
+#ifndef CONTROLLER_H__45E9C688_9B30_4AE2_92FD_5D064B56EFC7
+#define CONTROLLER_H__45E9C688_9B30_4AE2_92FD_5D064B56EFC7
+//
+// -*- tab-width: 4; indent-tabs-mode: nil;  -*-
+// vim: tabstop=4:softtabstop=4:expandtab:shiftwidth=4
+//
+// $Id$
+//
 //
 // -*- tab-width: 4; indent-tabs-mode: nil;  -*-
 // vim: tabstop=4:softtabstop=4:expandtab:shiftwidth=4
@@ -205,6 +211,8 @@ namespace ui
             Thread*,
             bool        /* async */);
 
+        virtual RefPtr<CompositeMenu>   init_contextual_menu() = 0;
+
     protected:
         void build();
         void build_layout();
@@ -265,5 +273,6 @@ namespace ui
 
 } // namespace
 
-#endif // USER_INTERFACE_H__9D4F2D44_5193_4023_9688_2AB5F7BBB634
+
+#endif // CONTROLLER_H__45E9C688_9B30_4AE2_92FD_5D064B56EFC7
 

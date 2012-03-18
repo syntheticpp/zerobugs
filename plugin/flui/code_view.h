@@ -4,7 +4,7 @@
 // -*- tab-width: 4; indent-tabs-mode: nil;  -*-
 // vim: tabstop=4:softtabstop=4:expandtab:shiftwidth=4
 //
-// $Id: $
+// $Id$
 //
 // Toolkit-independent logic for displaying source and assembly code.
 //
@@ -19,6 +19,7 @@ namespace ui
 {
     using Platform::addr_t;
 
+    class CompositeMenu;
     class Controller;
     class MultiCodeView;
 
@@ -36,6 +37,9 @@ namespace ui
         virtual void show(RefPtr<Thread>, RefPtr<Symbol>) = 0;
 
         virtual const CodeListing* get_listing() = 0;
+
+        // Right-click menu
+        virtual void show_contextual_menu(int x, int y);
 
         MultiCodeView* parent() const {
             return parent_;
@@ -109,6 +113,8 @@ namespace ui
             return this;
         }
 
+        virtual void show_contextual_menu(int x, int y);
+
         //
         // CodeListing interface
         //
@@ -164,6 +170,8 @@ namespace ui
 
     protected:
         virtual ~AsmView() throw();
+
+        virtual void show_contextual_menu(int x, int y);
 
         //
         // CodeListing interface

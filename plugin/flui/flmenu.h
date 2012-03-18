@@ -10,18 +10,21 @@
 #include <FL/Fl_Menu_Bar.H>
 
 
-class FlMenuBar : public ui::CompositeMenu
+////////////////////////////////////////////////////////////////
+class FlCompositeMenu : public ui::CompositeMenu
 {
 public:
-    FlMenuBar(ui::Controller&, int w, int h);
+    FlCompositeMenu(ui::Controller&, Fl_Menu_*);
 
 protected:
-    ~FlMenuBar() throw();
+    ~FlCompositeMenu() throw();
 
+    //@note: pure method defined in base class
+    //
     virtual void add(
             const std::string&  name,
             int                 shortcut,
-            EnableCondition     enable,
+            ui::EnableCondition enable,
             RefPtr<ui::Command> command);
 
 private:
@@ -31,10 +34,46 @@ private:
 
 private:
     ui::Controller& controller_;
-    Fl_Menu_Bar*    menu_;
+    Fl_Menu_*       menu_;
 };
 
 
+
+////////////////////////////////////////////////////////////////
+class FlMenuBar : public FlCompositeMenu
+{
+public:
+    FlMenuBar(ui::Controller&, int w, int h);
+
+protected:
+    ~FlMenuBar() throw();
+};
+
+
+////////////////////////////////////////////////////////////////
+class FlPopupMenu : public FlCompositeMenu
+{
+public:
+    explicit FlPopupMenu(ui::Controller&);
+
+    // pop goes the weasel
+    void show(int x, int y);
+
+protected:
+    ~FlPopupMenu() throw();
+
+    virtual void add(
+            const std::string&  name,
+            int                 shortcut,
+            ui::EnableCondition enable,
+            RefPtr<ui::Command> command);
+
+private:
+    std::vector<Fl_Menu_Item>   items_;
+};
+
+
+////////////////////////////////////////////////////////////////
 
 class FlMenuItem : public ui::MenuItem
 {
@@ -42,9 +81,9 @@ public:
     FlMenuItem(
         const std::string&  name,
         int                 shortcut,
-        EnableCondition     enable,
+        ui::EnableCondition enable,
         RefPtr<ui::Command> command,
-        Fl_Menu_Bar*        menu,
+        Fl_Menu_*           menu,
         int                 index );
 
 protected:
@@ -53,7 +92,7 @@ protected:
     virtual void enable(bool);
 
 private:
-    Fl_Menu_Bar*    menu_;
+    Fl_Menu_*       menu_;
     int             index_;
 };
 

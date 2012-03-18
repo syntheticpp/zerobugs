@@ -270,19 +270,19 @@ void ui::Controller::build_menu()
 {
     menu_ = init_menu();
 
-    menu_->add_item("&File/&Quit", FL_ALT + 'q', MenuElem::Enable_Always,
+    menu_->add_item("&File/&Quit", FL_ALT + 'q', Enable_Always,
         [this]()
         {
             debugger_->quit();
         });
 
-    menu_->add_item("&Run/&Continue", FL_F + 5, MenuElem::Enable_IfStopped,
+    menu_->add_item("&Run/&Continue", FL_F + 5, Enable_IfStopped,
         [this]()
         {
             debugger_->resume();
         });
 
-    menu_->add_item("&Run/&Next", FL_F + 10, MenuElem::Enable_IfStopped,
+    menu_->add_item("&Run/&Next", FL_F + 10, Enable_IfStopped,
         [this]()
         {
             if (auto t = state_->current_thread())
@@ -292,7 +292,7 @@ void ui::Controller::build_menu()
             }
         });
 
-    menu_->add_item("&Run/&Step", FL_F + 11, MenuElem::Enable_IfStopped,
+    menu_->add_item("&Run/&Step", FL_F + 11, Enable_IfStopped,
         [this]()
         {
             if (auto t = state_->current_thread())
@@ -302,19 +302,19 @@ void ui::Controller::build_menu()
             }
         });
 
-    menu_->add_item("&Run/&Break", FL_CTRL + 'c', MenuElem::Enable_IfRunning,
+    menu_->add_item("&Run/&Break", FL_CTRL + 'c', Enable_IfRunning,
         [this]()
         {   // nothing to do here, call_async_on_main_thread
             // will ensure the target breaks into the debugger
         });
 
-    menu_->add_item("&Breakpoints/&Toggle", FL_F + 9, MenuElem::Enable_IfStopped,
+    menu_->add_item("&Breakpoints/&Toggle", FL_F + 9, Enable_IfStopped,
         [this]()
         {
             toggle_user_breakpoint();
         });
 
-    menu_->add_ui_item("&Tools/E&valuate", FL_ALT + 'v', MenuElem::Enable_IfStopped,
+    menu_->add_ui_item("&Tools/E&valuate", FL_ALT + 'v', Enable_IfStopped,
         [this](Controller& controller)
         {
             controller.show_eval_dialog();

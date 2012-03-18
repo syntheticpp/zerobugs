@@ -6,42 +6,46 @@
 //
 #include "controller.h"
 #include "flmenu.h"
+
 using namespace std;
 
 
-FlMenuBar::FlMenuBar(
+////////////////////////////////////////////////////////////////
+FlCompositeMenu::FlCompositeMenu(
 
     ui::Controller& c,
-    int             w,
-    int             h )
+    Fl_Menu_*       menu )
 
   : ui::CompositeMenu()
   , controller_(c)
-  , menu_(new Fl_Menu_Bar(0, 0, w, h))
+  , menu_(menu)
 {
 }
 
 
-FlMenuBar::~FlMenuBar() throw()
+FlCompositeMenu::~FlCompositeMenu() throw()
 {
 }
 
 
-void FlMenuBar::add(
+void FlCompositeMenu::add(
 
     const string&       name,
     int                 shortcut,
-    EnableCondition     enable,
+    ui::EnableCondition enable,
     RefPtr<ui::Command> command)
+
 {
     int i = menu_->add(name.c_str(), shortcut, exec_command, this);
     RefPtr<ui::MenuElem> item(
         new FlMenuItem(name, shortcut, enable, command, menu_, i));
+
     ui::CompositeMenu::add(item);
 }
 
 
-void FlMenuBar::exec_command(Fl_Widget* /* w */, void* p)
+/* static */
+void FlCompositeMenu::exec_command(Fl_Widget* /* w */, void* p)
 {
     FlMenuBar* menubar = reinterpret_cast<FlMenuBar*>(p);
 
@@ -53,7 +57,7 @@ void FlMenuBar::exec_command(Fl_Widget* /* w */, void* p)
 }
 
 
-void FlMenuBar::exec_command(const char* path)
+void FlCompositeMenu::exec_command(const char* path)
 {
     // find the menu item that issued the command
 
@@ -67,18 +71,82 @@ void FlMenuBar::exec_command(const char* path)
     }
 }
 
+
+////////////////////////////////////////////////////////////////
+FlMenuBar::FlMenuBar(
+
+    ui::Controller& controller,
+    int             width,
+    int             height )
+
+: FlCompositeMenu(controller, new Fl_Menu_Bar(0, 0, width, height))
+
+{
+}
+
+
+FlMenuBar::~FlMenuBar() throw()
+{
+}
+
+
+////////////////////////////////////////////////////////////////
+FlPopupMenu::FlPopupMenu( ui::Controller& controller )
+
+    : FlCompositeMenu(controller, nullptr)
+
+{
+}
+
+
+FlPopupMenu::~FlPopupMenu() throw()
+{
+    clog << __PRETTY_FUNCTION__ << endl;
+}
+
+
+void FlPopupMenu::show(int x, int y)
+{
+    if (!items_.empty())
+    {
+        items_.push_back(Fl_Menu_Item { 0 });
+        items_.front().popup(x, y);
+    }
+}
+
+
+void FlPopupMenu::add(
+
+    const string&       name,
+    int                 shortcut,
+    ui::EnableCondition enable,
+    RefPtr<ui::Command> command)
+
+{
+    RefPtr<ui::MenuElem> item =
+        new ui::MenuItem(name, shortcut, enable, command);
+
+    auto i = Fl_Menu_Item { item->name().c_str(), shortcut };
+    items_.push_back(i);
+
+    ui::CompositeMenu::add(item);
+}
+
+
+////////////////////////////////////////////////////////////////
 FlMenuItem::FlMenuItem(
 
     const string&       name,
     int                 shortcut,
-    EnableCondition     cond,
+    ui::EnableCondition cond,
     RefPtr<ui::Command> cmd,
-    Fl_Menu_Bar*        menu,
+    Fl_Menu_*           menu,
     int                 index )
 
     : ui::MenuItem(name, shortcut, cond, cmd)
     , menu_(menu)
     , index_(index)
+
 {
 }
 

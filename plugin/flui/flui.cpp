@@ -238,6 +238,13 @@ void Flui::init_main_window(int x, int y, int w, int h)
 
 
 ////////////////////////////////////////////////////////////////
+RefPtr<ui::CompositeMenu> Flui::init_contextual_menu()
+{
+    return new FlPopupMenu(*this);
+}
+
+
+////////////////////////////////////////////////////////////////
 RefPtr<ui::CompositeMenu> Flui::init_menu()
 {
     assert(window_);

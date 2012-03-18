@@ -2,7 +2,7 @@
 // -*- tab-width: 4; indent-tabs-mode: nil;  -*-
 // vim: tabstop=4:softtabstop=4:expandtab:shiftwidth=4
 //
-// $Id: $
+// $Id$
 //
 #include "zdk/stack.h"
 #include "zdk/symbol_table.h"
@@ -90,7 +90,7 @@ void Fl_StackTable::draw_cell(
             fl_frame("XXRR", x, y, w, h);
             fl_color(FL_BLACK);
 
-            draw_frame(row, col, x, y, w, h);
+            draw_stack_frame(row, col, x, y, w, h);
             fl_pop_clip();
         }
         break;
@@ -101,7 +101,7 @@ void Fl_StackTable::draw_cell(
 }
 
 
-void Fl_StackTable::draw_frame(
+void Fl_StackTable::draw_stack_frame(
 
     int row,
     int col,
