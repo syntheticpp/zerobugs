@@ -12,7 +12,7 @@
 //
 // $Id$
 //
-#include "zdk/zero.h"   // DebuggerPlugin
+#include "zdk/zero.h"
 #include "zdk/plugin.h"
 #include "command.h"
 #include "view.h"
@@ -126,12 +126,17 @@ namespace ui
 
         void set_current_dialog(Dialog* dialog);
 
+        // --- Breakpoint management
         // insert/remove breakpoint
         void toggle_user_breakpoint();
         void toggle_user_breakpoint(addr_t);
 
         // enable/disable breakpoint
         void enable_user_breakpoint(addr_t, EnableMode);
+
+        // set temporary breakpoint at given address, for the current thread
+        void set_temp_breakpoint(addr_t);
+        void set_user_breakpoint(addr_t, bool);
 
         // --- DebuggerPlugin interface
         /**

@@ -43,6 +43,7 @@ static void set_event_callback(
         }
         else if (Fl::event_button3() && Fl::event_is_click())
         {
+            widget->select_callback_row();
             view->show_contextual_menu(Fl::event_x(), Fl::event_y());
         }
     });

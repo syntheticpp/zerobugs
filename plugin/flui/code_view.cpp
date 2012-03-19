@@ -7,7 +7,7 @@
 #include "code_view.h"
 #include "const.h"
 #include "zdk/align.h"
-#include "zdk/breakpoint.h"
+#include "zdk/breakpoint_util.h"
 #include "zdk/check_ptr.h"
 #include "zdk/shared_string_impl.h"
 #include "zdk/zero.h"
@@ -42,6 +42,52 @@ void ui::CodeView::set_current_symbol(const RefPtr<Symbol>& sym)
 
 void ui::CodeView::show_contextual_menu(int x, int y)
 {
+    RefPtr<CompositeMenu> menu(controller().init_contextual_menu());
+
+    if (auto listing = get_listing())
+    {
+        const addr_t addr = listing->selected_addr();
+        auto& d = *CHKPTR(controller().debugger());
+
+        if (has_enabled_user_breakpoint_actions(d, addr))
+        {
+            menu->add_item("Disable breakpoint", 0, ui::Enable_IfStopped,
+                [this, &d, addr] {
+                disable_user_breakpoint_actions(d, addr);
+            });
+            menu->add_item("Remove breakpoint", 0, ui::Enable_IfStopped,
+                [this, addr] {
+                controller().set_user_breakpoint(addr, false);
+            });
+        }
+        else if (has_disabled_user_breakpoint_actions(d, addr))
+        {
+            menu->add_item("Enable breakpoint", 0, ui::Enable_IfStopped,
+                [&d, addr] {
+                enable_user_breakpoint_actions(d, addr);
+            });
+            menu->add_item("Remove breakpoint", 0, ui::Enable_IfStopped,
+                [this, addr] {
+                controller().set_user_breakpoint(addr, false);
+            });
+        }
+        else
+        {
+            menu->add_item("Insert breakpoint", 0, ui::Enable_IfStopped,
+                [this, addr] {
+                controller().set_user_breakpoint(addr, true);
+            });
+        }
+
+        menu->add_item("Run to cursor", 0, ui::Enable_IfStopped, [this, addr]()
+        {
+            controller().set_temp_breakpoint(addr);
+            controller().debugger()->resume();
+        });
+
+    }
+
+    menu->show(x, y);
 }
 
 
@@ -159,20 +205,12 @@ bool ui::SourceView::refresh(
 
 void ui::SourceView::show_contextual_menu(int x, int y)
 {
-    RefPtr<CompositeMenu> menu(controller().init_contextual_menu());
-
-    menu->add_item("Test 1", 0, ui::Enable_IfStopped, [](){
-        clog << "Hello Test 1" << endl;
-    });
-    menu->add_item("Test 2", 0, ui::Enable_IfStopped, [](){
-        clog << "Hello Test 2" << endl;
-    });
-
-    menu->show(x, y);
+    ui::CodeView::show_contextual_menu(x, y);
 }
 
 
 ////////////////////////////////////////////////////////////////
+
 ui::MultiCodeView::MultiCodeView(ui::Controller& controller)
     : ui::CodeView(controller)
 {
@@ -470,4 +508,5 @@ bool ui::AsmView::refresh(
 
 void ui::AsmView::show_contextual_menu(int x, int y)
 {
+    ui::CodeView::show_contextual_menu(x, y);
 }

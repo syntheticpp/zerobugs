@@ -221,7 +221,7 @@ unique_ptr<ui::Controller::StateImpl> ui::Controller::init_state( )
 ////////////////////////////////////////////////////////////////
 void ui::Controller::build()
 {
-    Properties& prop = *debugger_->properties();
+    Properties& prop = *CHKPTR(debugger_)->properties();
     // get coordinates and dimensions from saved properties
     const word_t x = prop.get_word(WINDOW_X, 0);
     const word_t y = prop.get_word(WINDOW_Y, 0);
@@ -273,13 +273,13 @@ void ui::Controller::build_menu()
     menu_->add_item("&File/&Quit", FL_ALT + 'q', Enable_Always,
         [this]()
         {
-            debugger_->quit();
+            CHKPTR(debugger_)->quit();
         });
 
     menu_->add_item("&Run/&Continue", FL_F + 5, Enable_IfStopped,
         [this]()
         {
-            debugger_->resume();
+            CHKPTR(debugger_)->resume();
         });
 
     menu_->add_item("&Run/&Next", FL_F + 10, Enable_IfStopped,
@@ -287,8 +287,8 @@ void ui::Controller::build_menu()
         {
             if (auto t = state_->current_thread())
             {
-                debugger_->step(t.get(), Debugger::STEP_OVER_SOURCE_LINE);
-                debugger_->resume();
+                CHKPTR(debugger_)->step(t.get(), Debugger::STEP_OVER_SOURCE_LINE);
+                CHKPTR(debugger_)->resume();
             }
         });
 
@@ -297,14 +297,14 @@ void ui::Controller::build_menu()
         {
             if (auto t = state_->current_thread())
             {
-                debugger_->step(t.get(), Debugger::STEP_SOURCE_LINE);
-                debugger_->resume();
+                CHKPTR(debugger_)->step(t.get(), Debugger::STEP_SOURCE_LINE);
+                CHKPTR(debugger_)->resume();
             }
         });
 
     menu_->add_item("&Run/&Break", FL_CTRL + 'c', Enable_IfRunning,
         [this]()
-        {   // nothing to do here, call_async_on_main_thread
+        {   // nothing to do here, call_main_thread
             // will ensure the target breaks into the debugger
         });
 
@@ -378,8 +378,9 @@ bool ui::Controller::initialize(
 void ui::Controller::done()
 {
     call_main_thread_async(new MainThreadCommand<>([this]() {
-        debugger_->quit();
+        CHKPTR(debugger_)->quit();
     }));
+
     unlock();
 }
 
@@ -419,6 +420,7 @@ void ui::Controller::update(
     // @note: Updating the layout automatically updates code views
     // and we want to update breakpoints last;
     // DO NOT CHANGE this order of operations.
+
     BreakPointUpdater updater;
 
     updater.push_back(breakpoints_);
@@ -426,7 +428,7 @@ void ui::Controller::update(
 
     if (!updater.empty())
     {
-        if (RefPtr<BreakPointManager> mgr = debugger_->breakpoint_manager())
+        if (RefPtr<BreakPointManager> mgr = CHKPTR(debugger_)->breakpoint_manager())
         {
             mgr->enum_breakpoints(&updater);
         }
@@ -644,7 +646,7 @@ void ui::Controller::call_main_thread_async(RefPtr<Command> c)
     {
         if (state_->is_target_running())
         {
-            debugger_->stop();
+            CHKPTR(debugger_)->stop();
         }
         else
         {
@@ -666,6 +668,10 @@ void ui::Controller::awaken_main_thread()
 ////////////////////////////////////////////////////////////////
 void ui::Controller::save_configuration()
 {
+    if (!debugger_)
+    {
+        return;
+    }
     Properties& prop = *debugger_->properties();
 
     prop.set_word(WINDOW_X, x());
@@ -728,11 +734,11 @@ void ui::Controller::toggle_user_breakpoint(addr_t addr)
 {
     if (auto t = state_->current_thread())
     {
-        if (!debugger_->set_user_breakpoint(get_runnable(t.get()), addr))
+        if (!CHKPTR(debugger_)->set_user_breakpoint(get_runnable(t.get()), addr))
         {
             // failed to set breakpoint? it means
             // that it exists already, so remove it
-            debugger_->remove_user_breakpoint(0, 0, addr);
+            CHKPTR(debugger_)->remove_user_breakpoint(0, 0, addr);
         }
     }
 }
@@ -775,6 +781,33 @@ void ui::Controller::enable_user_breakpoint(
 
         enable_user_breakpoint( addr, mode );
         break;
+    }
+}
+
+
+////////////////////////////////////////////////////////////////
+void ui::Controller::set_temp_breakpoint(addr_t addr)
+{
+    if (auto r = get_runnable(state_->current_thread()))
+    {
+        CHKPTR(debugger_)->set_temp_breakpoint(r, addr);
+    }
+}
+
+
+////////////////////////////////////////////////////////////////
+void ui::Controller::set_user_breakpoint(addr_t addr, bool set)
+{
+    if (auto r = get_runnable(state_->current_thread()))
+    {
+        if (set)
+        {
+            CHKPTR(debugger_)->set_user_breakpoint(r, addr);
+        }
+        else
+        {
+            CHKPTR(debugger_)->remove_user_breakpoint(0, 0, addr);
+        }
     }
 }
 

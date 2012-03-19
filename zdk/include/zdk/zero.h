@@ -1102,8 +1102,14 @@ DECLARE_ZDK_INTERFACE_(SymbolMonitor, Unknown2)
  * @throw logic_error if the passed thread object
  * does not implement the Runnable interface.
  */
-Runnable* get_runnable(Thread* thread);
-Runnable* get_runnable(Thread* thread, std::nothrow_t);
+Runnable* ZDK_EXPORT get_runnable(Thread* thread);
+Runnable* ZDK_EXPORT get_runnable(Thread* thread, std::nothrow_t);
+
+
+inline Runnable* get_runnable(const RefPtr<Thread>& thread) 
+{
+    return get_runnable(thread.get());
+}
 
 
 #endif // ZERO_H__82331446_EC88_46A0_9C85_8EEDD168EA79
