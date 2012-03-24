@@ -11,35 +11,6 @@ using namespace std;
 
 
 ////////////////////////////////////////////////////////////////
-FlCompositeMenu::FlCompositeMenu(ui::Controller& c)
-
-  : ui::CompositeMenu()
-  , controller_(c)
-{
-}
-
-
-FlCompositeMenu::~FlCompositeMenu() throw()
-{
-}
-
-
-void FlCompositeMenu::exec_command(const char* path)
-{
-    // find the menu item that issued the command
-
-    for (auto mi = begin(children_); mi != end(children_); ++mi)
-    {
-        if (strcmp((*mi)->name().c_str(), path) == 0)
-        {
-            controller_.call_main_thread_async((*mi)->emit_command());
-            break;
-        }
-    }
-}
-
-
-////////////////////////////////////////////////////////////////
 FlMenuBar::FlMenuBar(
 
     ui::Controller& controller,
@@ -63,7 +34,8 @@ void FlMenuBar::add(
     const string&       name,
     int                 shortcut,
     ui::EnableCondition enable,
-    RefPtr<ui::Command> command)
+    RefPtr<ui::Command> command,
+    bool             /* divider */ ) // ignore dividers in menu bar
 
 {
     int i = menu_->add(name.c_str(), shortcut, exec_command, this);
@@ -88,8 +60,9 @@ void FlMenuBar::exec_command(Fl_Widget* /* w */, void* p)
 
 
 ////////////////////////////////////////////////////////////////
-FlPopupMenu::FlPopupMenu( ui::Controller& controller )
-    : FlCompositeMenu(controller)
+
+FlPopupMenu::FlPopupMenu(ui::Controller& controller)
+    : FlCompositeMenu<base_type>(controller)
 {
 }
 
@@ -111,18 +84,26 @@ void FlPopupMenu::show(int x, int y)
     }
 }
 
+
 void FlPopupMenu::add(
 
     const string&       name,
     int                 shortcut,
     ui::EnableCondition enable,
-    RefPtr<ui::Command> command)
+    RefPtr<ui::Command> command,
+    bool                divider)
 
 {
     RefPtr<ui::MenuElem> item =
         new ui::MenuItem(name, shortcut, enable, command);
 
     auto i = Fl_Menu_Item { item->name().c_str(), shortcut };
+    i.labelfont_ = FL_HELVETICA;
+    i.labelsize_ = 12;
+    if ( divider )
+    {
+        i.flags |= FL_MENU_DIVIDER;
+    }
     items_.push_back(i);
 
     ui::CompositeMenu::add(item);

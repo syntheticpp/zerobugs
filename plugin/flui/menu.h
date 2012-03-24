@@ -100,8 +100,7 @@ namespace ui
     class CompositeMenu : public MenuElem
     {
     public:
-        CompositeMenu()
-        { }
+        CompositeMenu() { }
 
         explicit CompositeMenu(const std::string& name, int shortcut = 0)
             : MenuElem(name, shortcut)
@@ -114,38 +113,64 @@ namespace ui
         void add(RefPtr<MenuElem> menu);
 
     public:
+        /**
+         * Add menu item, the callback associated with the menu
+         * item runs on the *** main thread ***.
+         * @param divider if true, follow the menu item with a divider.
+         */
         template<typename T> void add_item(
             const std::string&  name,
             int                 shortcut,
             EnableCondition     enable,
-            T                   callable )
+            T                   callable,
+            bool                divider = false)
         {
-            add(name, shortcut, enable, new MainThreadCommand<T>(callable));
+            add(name, shortcut, enable, new MainThreadCommand<T>(callable), divider);
         }
 
+        /**
+         * Add menu item, the callback associated with the menu
+         * item runs on the *** UI thread ***.
+         */
         template<typename T> void add_ui_item(
             const std::string&  name,
             int                 shortcut,
             EnableCondition     enable,
-            T                   callable )
+            T                   callable,
+            bool                divider = false)
         {
-            add(name, shortcut, enable, new UIThreadCommand<T>(callable));
+            add(name, shortcut, enable, new UIThreadCommand<T>(callable), divider);
         }
 
         virtual void update(const State& state);
-
-    // TODO: this may not be the best place for this method
-        virtual void show(int x, int y) {
-        }
 
     protected:
         virtual void add(
             const std::string&  name,
             int                 shortcut,
             EnableCondition     enable,
-            RefPtr<Command>     command ) = 0;
+            RefPtr<Command>     command,
+            bool                appendDivider) = 0;
 
         std::vector<RefPtr<MenuElem> >  children_;
+    };
+
+
+
+    class PopupMenu : public CompositeMenu
+    {
+    public:
+        PopupMenu()
+        {
+        }
+
+        explicit PopupMenu(const std::string& name, int shortcut = 0)
+            : CompositeMenu(name, shortcut)
+        { }
+
+        virtual void show(int x, int y)
+        {
+        }
     };
 }
 

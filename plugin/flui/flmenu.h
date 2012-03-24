@@ -11,14 +11,34 @@
 
 
 ////////////////////////////////////////////////////////////////
-class FlCompositeMenu : public ui::CompositeMenu
+template<typename Base = ui::CompositeMenu>
+class FlCompositeMenu : public Base
 {
 protected:
-    explicit FlCompositeMenu(ui::Controller&);
+    typedef Base base_type;
 
-    ~FlCompositeMenu() throw();
+    explicit FlCompositeMenu(ui::Controller& controller)
+        : Base(), controller_(controller)
+    {
+    }
 
-    void exec_command(const char* path);
+    ~FlCompositeMenu() throw()
+    {
+    }
+
+    void exec_command(const char* path)
+    {
+        // find the menu item that issued the command
+
+        for (auto mi = begin(this->children_); mi != end(this->children_); ++mi)
+        {
+            if (strcmp((*mi)->name().c_str(), path) == 0)
+            {
+                this->controller_.call_main_thread_async((*mi)->emit_command());
+                break;
+            }
+        }
+    }
 
 private:
     ui::Controller& controller_;
@@ -27,7 +47,7 @@ private:
 
 
 ////////////////////////////////////////////////////////////////
-class FlMenuBar : public FlCompositeMenu
+class FlMenuBar : public FlCompositeMenu<>
 {
 public:
     FlMenuBar(ui::Controller&, int w, int h);
@@ -36,10 +56,11 @@ protected:
     ~FlMenuBar() throw();
 
     virtual void add(
-            const std::string&  name,
-            int                 shortcut,
-            ui::EnableCondition enable,
-            RefPtr<ui::Command> command);
+        const std::string&  name,
+        int                 shortcut,
+        ui::EnableCondition enable,
+        RefPtr<ui::Command> command,
+        bool                divider);
 
     using FlCompositeMenu::exec_command;
 
@@ -51,7 +72,7 @@ private:
 
 
 ////////////////////////////////////////////////////////////////
-class FlPopupMenu : public FlCompositeMenu
+class FlPopupMenu : public FlCompositeMenu<ui::PopupMenu>
 {
 public:
     explicit FlPopupMenu(ui::Controller&);
@@ -63,10 +84,11 @@ protected:
     ~FlPopupMenu() throw();
 
     virtual void add(
-            const std::string&  name,
-            int                 shortcut,
-            ui::EnableCondition enable,
-            RefPtr<ui::Command> command);
+        const std::string&  name,
+        int                 shortcut,
+        ui::EnableCondition enable,
+        RefPtr<ui::Command> command,
+        bool                divider);
 
 private:
     std::vector<Fl_Menu_Item>   items_;

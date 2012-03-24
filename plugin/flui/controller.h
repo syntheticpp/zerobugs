@@ -26,9 +26,10 @@ namespace ui
     class CompositeMenu;
     class BreakPointView;
     class Dialog;
-    class VarView;
+    class PopupMenu;
     class StackView;
     class Toolbar;
+    class VarView;
 
     enum EnableMode
     {
@@ -216,7 +217,7 @@ namespace ui
             Thread*,
             bool        /* async */);
 
-        virtual RefPtr<CompositeMenu>   init_contextual_menu() = 0;
+        virtual RefPtr<PopupMenu>       init_contextual_menu() = 0;
 
     protected:
         void build();

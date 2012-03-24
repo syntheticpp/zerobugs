@@ -4,7 +4,7 @@
 // -*- tab-width: 4; indent-tabs-mode: nil;  -*-
 // vim: tabstop=4:softtabstop=4:expandtab:shiftwidth=4
 //
-// $Id: $
+// $Id$
 //
 #include "zdk/ref_counted_impl.h"
 #include "zdk/ref_ptr.h"
@@ -33,7 +33,7 @@ namespace ui
         // request from ui to main thread
         virtual void execute_on_main_thread() { }
         // response to ui thread
-        virtual void continue_on_ui_thread(Controller&) { }
+        virtual void continue_on_ui_thread() { }
 
         virtual bool is_complete() const { return true; }
 
@@ -76,7 +76,7 @@ namespace ui
     };
 
 
-    template<typename Callable = std::function<void (Controller&)> >
+    template<typename Callable = std::function<void ()> >
     class UIThreadCommand : public Command
     {
         Callable    callable_;
@@ -95,8 +95,8 @@ namespace ui
             complete_ = false;
         }
 
-        void continue_on_ui_thread(Controller& controller) {
-            callable_(controller);
+        void continue_on_ui_thread() {
+            callable_();
             complete_ = true;
         }
 

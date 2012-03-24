@@ -146,17 +146,18 @@ private:
  */
 class CommandError : public ui::Command
 {
-    string msg_;
+    ui::Controller& controller_;
+    string          msg_;
 
 public:
-    explicit CommandError(const char* m) : msg_(m)
+    CommandError(ui::Controller& controller, const char* m)
+        : controller_(controller), msg_(m)
     { }
 
     virtual ~CommandError() throw() { }
 
-    void continue_on_ui_thread(ui::Controller& controller)
-    {
-        controller.error_message(msg_);
+    void continue_on_ui_thread() {
+        controller_.error_message(msg_);
     }
 };
 
@@ -271,7 +272,7 @@ void ui::Controller::build_menu()
     menu_ = init_menu();
 
     menu_->add_item("&File/&Quit", FL_ALT + 'q', Enable_Always,
-        [this]()
+        [this]
         {
             CHKPTR(debugger_)->quit();
         });
@@ -283,7 +284,7 @@ void ui::Controller::build_menu()
         });
 
     menu_->add_item("&Run/&Next", FL_F + 10, Enable_IfStopped,
-        [this]()
+        [this]
         {
             if (auto t = state_->current_thread())
             {
@@ -293,7 +294,7 @@ void ui::Controller::build_menu()
         });
 
     menu_->add_item("&Run/&Step", FL_F + 11, Enable_IfStopped,
-        [this]()
+        [this]
         {
             if (auto t = state_->current_thread())
             {
@@ -303,21 +304,21 @@ void ui::Controller::build_menu()
         });
 
     menu_->add_item("&Run/&Break", FL_CTRL + 'c', Enable_IfRunning,
-        [this]()
+        [this]
         {   // nothing to do here, call_main_thread
             // will ensure the target breaks into the debugger
         });
 
     menu_->add_item("&Breakpoints/&Toggle", FL_F + 9, Enable_IfStopped,
-        [this]()
+        [this]
         {
             toggle_user_breakpoint();
         });
 
     menu_->add_ui_item("&Tools/E&valuate", FL_ALT + 'v', Enable_IfStopped,
-        [this](Controller& controller)
+        [this]
         {
-            controller.show_eval_dialog();
+            show_eval_dialog();
         });
 }
 
@@ -339,7 +340,7 @@ void ui::Controller::run()
     {
         if (command_) try
         {
-            command_->continue_on_ui_thread(*this);
+            command_->continue_on_ui_thread();
         }
         catch (const exception& e)
         {
@@ -488,7 +489,7 @@ bool ui::Controller::on_event(
     }
     catch (const exception& e)
     {
-        c = new CommandError(e.what());
+        c = new CommandError(*this, e.what());
     }
 
     notify_ui_thread();

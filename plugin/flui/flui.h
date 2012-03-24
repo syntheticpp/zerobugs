@@ -71,7 +71,7 @@ protected:
 private:
     virtual RefPtr<ui::BreakPointView>  init_breakpoint_view();
     virtual RefPtr<ui::CodeView>        init_code_view();
-    virtual RefPtr<ui::CompositeMenu>   init_contextual_menu();
+    virtual RefPtr<ui::PopupMenu>       init_contextual_menu();
     virtual RefPtr<ui::Layout>          init_layout();
     virtual RefPtr<ui::VarView>         init_locals_view();
     virtual RefPtr<ui::CompositeMenu>   init_menu();
