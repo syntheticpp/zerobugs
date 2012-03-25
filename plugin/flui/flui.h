@@ -42,6 +42,7 @@ protected:
     int w() const;
     int h() const;
 
+    void show_edit_breakpoint_dialog(addr_t);
     void show_eval_dialog();
 
     virtual void error_message(const std::string&);

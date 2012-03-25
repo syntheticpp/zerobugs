@@ -7,6 +7,7 @@
 #include "zdk/argv_util.h"
 #include "zdk/check_ptr.h"
 #include "flcode_view.h"
+#include "fledit_breakpoint_dlg.h"
 #include "fleval_dlg.h"
 #include "flbreakpoint_view.h"
 #include "flvar_view.h"
@@ -19,7 +20,7 @@
 
 // C++ headers
 #include <cassert>
-// #include <iostream>
+#include <thread>
 
 // fltk headers
 #include <FL/Fl.H>
@@ -304,13 +305,36 @@ const char* Flui::copyright() const
 
 
 ////////////////////////////////////////////////////////////////
+
+template<typename T>
+static void popup(ui::Controller& controller, once_flag& f)
+{
+    static T* dialog = nullptr;
+
+    // initialize dialog lazily
+    call_once(f, [&dialog, &controller] {
+        Fl_Group::current(nullptr);
+        dialog = new T(controller);
+    });
+
+    controller.set_current_dialog(dialog);
+    dialog->popup(controller.state());
+}
+
+
+////////////////////////////////////////////////////////////////
+void Flui::show_edit_breakpoint_dialog(addr_t addr)
+{
+    static once_flag once;
+    popup<FlEditBreakPointDlg>(*this, once);
+}
+
+
+////////////////////////////////////////////////////////////////
 void Flui::show_eval_dialog()
 {
-    Fl_Group::current(nullptr); // HACK
-    static FlEvalDialog dlg(*this);
-    dlg.popup(state());
-
-    set_current_dialog(&dlg);
+    static once_flag once;
+    popup<FlEvalDialog>(*this, once);
 }
 
 

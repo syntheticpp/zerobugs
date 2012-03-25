@@ -2,7 +2,7 @@
 // -*- tab-width: 4; indent-tabs-mode: nil;  -*-
 // vim: tabstop=4:softtabstop=4:expandtab:shiftwidth=4
 //
-// $Id: $
+// $Id$
 //
 #include "fleval_dlg.h"
 #include "flvar_view.h"
@@ -15,6 +15,7 @@
 
 
 ////////////////////////////////////////////////////////////////
+
 FlEvalDialog::FlEvalDialog(ui::Controller& c)
     : FlDialog(c, 0, 0, 600, 400, "Evaluate Expression")
     , input_(nullptr)

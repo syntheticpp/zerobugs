@@ -108,6 +108,8 @@ namespace ui
         virtual int w() const = 0;
         virtual int h() const = 0;
 
+        // *** Dialogs ***
+        virtual void show_edit_breakpoint_dialog(addr_t) = 0;
         virtual void show_eval_dialog() = 0;
 
         // schedule command for execution on main thread
@@ -217,6 +219,8 @@ namespace ui
             Thread*,
             bool        /* async */);
 
+        State& state();
+
         virtual RefPtr<PopupMenu>       init_contextual_menu() = 0;
 
     protected:
@@ -248,8 +252,6 @@ namespace ui
         virtual int wait_for_event() = 0;
 
         virtual void save_configuration();
-
-        State& state();
 
     private:
         RefPtr<Command> update(Thread*, EventType);

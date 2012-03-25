@@ -17,18 +17,11 @@ using namespace std;
 
 
 static vector<const char*> header = {
-    "", "File", "Line", "Address"
-};
-
-enum ColType
-{
-    COL_Pixmap,
-    COL_File,
-    COL_Line,
-    COL_Address
+    "", "File", "Line", "Address", "Condition"
 };
 
 static const int check_mark_size = 22;
+
 
 Fl_BreakPointTable::Fl_BreakPointTable(
     View*       v,
@@ -53,7 +46,8 @@ Fl_BreakPointTable::Fl_BreakPointTable(
     col_width(COL_Pixmap, check_mark_size);
     col_width(COL_File, 200);
     col_width(COL_Line, 40);
-    col_width(COL_Address, 1000);
+    col_width(COL_Address, 100);
+    col_width(COL_Condition, 1000);
 
     callback(event_callback, this);
     when(FL_WHEN_RELEASE | FL_WHEN_CHANGED);

@@ -23,9 +23,10 @@ SRCS=	breakpoint_view.cpp	\
 		expr_events.cpp		\
 		flcode_view.cpp		\
 		flcode_table.cpp	\
-		flbreakpoint_table.cpp 	\
-		flbreakpoint_view.cpp 	\
+		flbreakpoint_table.cpp 		\
+		flbreakpoint_view.cpp 		\
 		fldialog.cpp		\
+		fledit_breakpoint_dlg.cpp	\
 		fleval_dlg.cpp		\
 		flui.cpp 			\
 		flmain_window.cpp	\

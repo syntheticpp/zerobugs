@@ -8,7 +8,6 @@
 #include "command.h"
 #include "controller.h"
 #include "flbreakpoint_view.h"
-#include <iostream>
 
 using namespace std;
 
@@ -25,20 +24,26 @@ FlBreakPointView::FlBreakPointView(
 {
     auto table = widget();
 
-    table->set_event_callback([table, this]() {
+    table->set_event_callback([table, this] {
+
         if (Fl::event_button1() && Fl::event_is_click())
         {
-            size_t row = table->callback_row();
-            size_t col = table->callback_col();
+            const size_t row = table->callback_row();
+            const size_t col = table->callback_col();
 
-            if (row < this->size() && col == 0)
+            if (row < this->size())
             {
-                addr_t addr = (*this)[row]->addr();
-
-                auto& controller = this->controller();
-                ui::call_main_thread(controller, [&controller, addr](){
-                    controller.enable_user_breakpoint(addr, ui::Toggle);
-                });
+                const addr_t addr = (*this)[row]->addr();
+                if (col == Fl_BreakPointTable::COL_Pixmap)
+                {
+                    ui::call_main_thread(controller(), [this, addr] {
+                        controller().enable_user_breakpoint(addr, ui::Toggle);
+                    });
+                }
+                else if (col == Fl_BreakPointTable::COL_Condition)
+                {
+                    controller().show_edit_breakpoint_dialog(addr);
+                }
             }
         }
     });

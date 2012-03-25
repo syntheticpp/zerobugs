@@ -74,11 +74,8 @@ void ui::CodeView::show_contextual_menu(int x, int y)
         if (haveBreakPoint)
         {
             menu->add_ui_item("Edit breakpoint", 0, ui::Enable_IfStopped,
-                [this, addr]() {
-                //
-                // todo
-                //
-                clog << "Not implemented" << endl;
+                [this, addr] {
+                controller().show_edit_breakpoint_dialog(addr);
             });
             menu->add_item("Remove breakpoint", 0, ui::Enable_IfStopped,
                 [this, addr] {
@@ -95,8 +92,8 @@ void ui::CodeView::show_contextual_menu(int x, int y)
             true /* append menu divider */);
         }
 
-        menu->add_item("Run to here", 0, ui::Enable_IfStopped, [this, addr]()
-        {
+        menu->add_item("Run to here", 0, ui::Enable_IfStopped,
+            [this, addr] {
             controller().set_temp_breakpoint(addr);
             controller().debugger()->resume();
         });

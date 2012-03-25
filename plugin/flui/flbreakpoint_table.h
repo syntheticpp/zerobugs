@@ -25,6 +25,15 @@ public:
     typedef std::unique_ptr<Fl_Pixmap> PixmapPtr;
     typedef std::function<void ()> EventCallback;
 
+    enum ColType
+    {
+        COL_Pixmap,
+        COL_File,
+        COL_Line,
+        COL_Address,
+        COL_Condition
+    };
+
     Fl_BreakPointTable(
         View*       v,
         int         x,
