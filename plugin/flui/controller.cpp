@@ -102,7 +102,8 @@ void ui::Controller::StateImpl::update(
 class BreakPointUpdater : public EnumCallback<volatile BreakPoint*>
 {
 public:
-    BreakPointUpdater()
+    explicit BreakPointUpdater(ui::Controller& controller)
+        : controller_(controller)
     { }
 
     // Add view to the internal list of views to be updated
@@ -123,17 +124,28 @@ public:
         // we only care about user-defined breakpoints,
         // the internal breakpoints used by the engine
         // are not shown
+
         if (bp->enum_actions("USER"))
         {
+            auto& breakPoint = const_cast<BreakPoint&>(*bp);
+
+            if (auto d = controller_.current_dialog())
+            {
+                d->update_breakpoint(breakPoint);
+            }
+
             for (auto v = begin(views_); v != end(views_); ++v)
             {
-                (*v)->update_breakpoint(const_cast<BreakPoint&>(*bp));
+                (*v)->update_breakpoint(breakPoint);
             }
         }
     }
 
 private:
-    vector<RefPtr<ui::View> > views_;
+    typedef vector<RefPtr<ui::View> > Views;
+
+    ui::Controller& controller_;
+    Views           views_;
 };
 
 
@@ -422,7 +434,7 @@ void ui::Controller::update(
     // and we want to update breakpoints last;
     // DO NOT CHANGE this order of operations.
 
-    BreakPointUpdater updater;
+    BreakPointUpdater updater(*this);
 
     updater.push_back(breakpoints_);
     updater.push_back(code_);

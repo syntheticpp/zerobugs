@@ -4,7 +4,7 @@
 // -*- tab-width: 4; indent-tabs-mode: nil;  -*-
 // vim: tabstop=4:softtabstop=4:expandtab:shiftwidth=4
 //
-// $Id: $
+// $Id$
 //
 #include "view.h"
 #include <functional>
@@ -31,7 +31,7 @@ namespace ui
             views_.push_back(v);
         }
 
-        virtual void close() = 0;
+        void close();
 
         void hide() {
             show(false);
@@ -49,9 +49,14 @@ namespace ui
         }
 
         virtual void update(const ui::State&);
+        
+        virtual void update_breakpoint(BreakPoint&);
 
     protected:
         void add_action(const std::string&, Callback);
+        void exec_action(const std::string&);
+
+        virtual void close_impl() = 0;
 
         Controller& controller() {
             return controller_;

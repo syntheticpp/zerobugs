@@ -33,7 +33,7 @@ FlBreakPointView::FlBreakPointView(
 
             if (row < this->size())
             {
-                const addr_t addr = (*this)[row]->addr();
+                const addr_t addr = (*this)[row].bpoint->addr();
                 if (col == Fl_BreakPointTable::COL_Pixmap)
                 {
                     ui::call_main_thread(controller(), [this, addr] {

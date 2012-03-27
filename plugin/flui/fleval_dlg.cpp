@@ -9,6 +9,7 @@
 #include "command.h"
 #include "controller.h"
 #include "expr_events.h"
+#include "utils.h"
 #include <FL/Enumerations.H>
 #include <FL/Fl_Button.H>
 #include <FL/Fl_Output.H>
@@ -18,11 +19,10 @@
 
 FlEvalDialog::FlEvalDialog(ui::Controller& c)
     : FlDialog(c, 0, 0, 600, 400, "Evaluate Expression")
-    , input_(nullptr)
+    , input_(new Fl_Input(20, 20, 450, 22))
     , status_(nullptr)
 {
     group()->box(FL_EMBOSSED_FRAME);
-    input_ = new Fl_Input(20, 20, 450, 22);
 
     // todo: get font from VarView
     input_->textfont(FL_HELVETICA);
@@ -35,10 +35,7 @@ FlEvalDialog::FlEvalDialog(ui::Controller& c)
     view_->widget()->box(FL_DOWN_BOX);
     view_->widget()->end();
 
-    status_ = new Fl_Output(20, 370, 560, 22);
-    status_->box(FL_FLAT_BOX);
-    status_->color(FL_BACKGROUND_COLOR);
-    status_->clear_visible_focus();
+    status_ = static_text(20, 370, 560, 22);
 
     group()->resizable(view_->widget());
     group()->end();
@@ -62,11 +59,9 @@ void FlEvalDialog::clear()
 }
 
 
-void FlEvalDialog::close()
+void FlEvalDialog::close_impl()
 {
     clear();
-    hide();
-    FlDialog::close();
 }
 
 
@@ -79,6 +74,7 @@ void FlEvalDialog::eval_callback(Fl_Widget* w, void* data)
 void FlEvalDialog::eval()
 {
     std::string expr = input_->value();
+
     if (expr.empty())
     {
         return;
@@ -90,6 +86,7 @@ void FlEvalDialog::eval()
     auto* d = controller().debugger();
 
     ui::call_main_thread(controller(), [d, expr, thread_, events]() {
+
         d->evaluate(expr.c_str(), thread_.get(), 0, events.get());
     });
 }

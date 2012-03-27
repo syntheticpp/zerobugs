@@ -3,7 +3,7 @@ static char const *stop_pink_xpm[] = {
 /* width height ncolors chars_per_pixel */
 "20 16 2 1",
 /* colors */
-"  c pink",
+"  c #ffa0a0",
 ". c none",
 /* pixels */
 ".......      .......",

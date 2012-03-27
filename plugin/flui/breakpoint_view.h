@@ -6,16 +6,28 @@
 //
 // $Id: $
 //
+#include "zdk/weak_ptr.h"
 #include "view.h"
 #include <vector>
 
+class BreakPointAction;
+
+
 namespace ui
 {
+    struct UserBreakPoint
+    {
+        RefPtr<BreakPoint>          bpoint;
+        RefPtr<BreakPointAction>    action;
+    };
+
     typedef RefPtr<BreakPoint> BreakPointPtr;
-    typedef std::vector<BreakPointPtr> BreakPoints;
+    typedef std::vector<UserBreakPoint> BreakPoints;
 
 
-    class BreakPointView : public View
+    class BreakPointView
+        : public View
+        , EnumCallback<BreakPointAction*>
     {
     public:
         explicit BreakPointView(Controller&);
@@ -36,7 +48,7 @@ namespace ui
             return breakpoints_.end();
         }
 
-        BreakPointPtr operator[](size_t n) const {
+        UserBreakPoint operator[](size_t n) const {
             return breakpoints_[n];
         }
 
@@ -44,10 +56,17 @@ namespace ui
         ~BreakPointView() throw();
 
         void update(const ui::State&);
+
         virtual void update_breakpoint(BreakPoint&);
 
+        // EnumCallback interface
+        void notify(BreakPointAction*);
+
     private:
-        BreakPoints breakpoints_;
+        // valid during update_breakpoint
+        WeakPtr<BreakPoint> current_;
+
+        BreakPoints         breakpoints_;
     };
 }
 

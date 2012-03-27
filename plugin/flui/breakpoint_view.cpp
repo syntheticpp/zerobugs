@@ -29,6 +29,13 @@ void BreakPointView::update(const ui::State&)
 
 void BreakPointView::update_breakpoint(BreakPoint& bp)
 {
-    breakpoints_.push_back(&bp);
+    current_ = &bp;
+    bp.enum_actions("USER", this);
+}
+
+
+void BreakPointView::notify(BreakPointAction* action)
+{
+    breakpoints_.push_back(UserBreakPoint{ current_.ref_ptr(), action });
 }
 

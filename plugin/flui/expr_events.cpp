@@ -7,27 +7,21 @@
 #include "expr_events.h"
 #include "controller.h"
 #include "dialog.h"
-//#include <iostream>
-//using namespace std;
-
 
 
 ui::ExprEvalEvents::~ExprEvalEvents() throw()
 {
-    // clog << __PRETTY_FUNCTION__ << endl;
 }
 
 /**
  * An error occurred while interpreting expression
  */
-void
-ui::ExprEvalEvents::on_error(const char* msg)
+void ui::ExprEvalEvents::on_error(const char* msg)
 {
     controller_.status_message(msg);
 }
 
-void
-ui::ExprEvalEvents::on_warning(const char* msg)
+void ui::ExprEvalEvents::on_warning(const char* msg)
 {
     controller_.status_message(msg);
 }
@@ -38,8 +32,7 @@ ui::ExprEvalEvents::on_warning(const char* msg)
  * by the interpreter).
  * @return true if handled
  */
-bool
-ui::ExprEvalEvents::on_event(Thread*, Platform::addr_t)
+bool ui::ExprEvalEvents::on_event(Thread*, Platform::addr_t)
 {
     return true;
 }
@@ -51,8 +44,7 @@ ui::ExprEvalEvents::on_event(Thread*, Platform::addr_t)
  * the function of the corresponding symbol table entry; if the
  * symbol is NULL, the function has returned.
  */
-void
-ui::ExprEvalEvents::on_call(
+void ui::ExprEvalEvents::on_call(
 
     Platform::addr_t    retAddr,
     Symbol*             sym /* = nullptr */)

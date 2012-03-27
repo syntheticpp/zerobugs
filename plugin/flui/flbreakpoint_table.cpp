@@ -5,6 +5,7 @@
 // $Id: $
 //
 #include "zdk/breakpoint_util.h"
+#include "zdk/switchable.h"
 #include "zdk/symbol.h"
 #include "breakpoint_view.h"
 #include "flbreakpoint_table.h"
@@ -64,13 +65,13 @@ Fl_BreakPointTable::draw_cell(
     int          w,
     int          h )
 {
-    RefPtr<BreakPoint>  bp;
+    ui::UserBreakPoint  ubp;
     RefPtr<Symbol>      sym;
 
     if (row >= 0 && size_t(row) < view_->size())
     {
-        bp  = (*view_)[row];
-        sym = bp->symbol();
+        ubp = (*view_)[row];
+        sym = ubp.bpoint->symbol();
     }
 
     switch (ctxt)
@@ -94,9 +95,9 @@ Fl_BreakPointTable::draw_cell(
         switch (col)
         {
         case COL_Pixmap:
-            if (bp)
+            if (ubp.bpoint)
             {
-                if (has_enabled_actions(*bp))
+                if (has_enabled_actions(*ubp.bpoint))
                 {
                     checked_->draw(x, y);
                 }
@@ -124,14 +125,25 @@ Fl_BreakPointTable::draw_cell(
             break;
 
         case COL_Address:
-            if (bp)
+            if (ubp.bpoint)
             {
                 ostringstream s;
-                s << hex << bp->addr();
+                s << hex << ubp.bpoint->addr();
                 fl_draw(s.str().c_str(), x, y, w, h, FL_ALIGN_LEFT);
             }
             break;
+
+        case COL_Condition:
+            if (auto s = interface_cast<Switchable*>(ubp.action.get()))
+            {
+                // breakpoint condition
+                const char* expr = s->activation_expr();
+
+                fl_draw(expr, x, y, w, h, FL_ALIGN_LEFT);
+            }
+            break;
         }
+
         fl_pop_clip();
         break;
 

@@ -73,13 +73,14 @@ void ui::CodeView::show_contextual_menu(int x, int y)
 
         if (haveBreakPoint)
         {
-            menu->add_ui_item("Edit breakpoint", 0, ui::Enable_IfStopped,
-                [this, addr] {
-                controller().show_edit_breakpoint_dialog(addr);
-            });
             menu->add_item("Remove breakpoint", 0, ui::Enable_IfStopped,
                 [this, addr] {
                 controller().set_user_breakpoint(addr, false);
+            });
+
+            menu->add_ui_item("Edit breakpoint", 0, ui::Enable_IfStopped,
+                [this, addr] {
+                controller().show_edit_breakpoint_dialog(addr);
             },
             true /* append menu divider */);
         }

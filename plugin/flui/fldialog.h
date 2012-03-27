@@ -4,7 +4,7 @@
 // -*- tab-width: 4; indent-tabs-mode: nil;  -*-
 // vim: tabstop=4:softtabstop=4:expandtab:shiftwidth=4
 //
-// $Id: $
+// $Id$
 //
 #include "dialog.h"
 #include <memory>
@@ -12,6 +12,8 @@
 class Fl_Group;
 class Fl_Widget;
 class Fl_Window;
+
+typedef void (Fl_Callback)(Fl_Widget*, void*);
 
 
 /**
@@ -27,7 +29,17 @@ public:
     ~FlDialog();
 
 protected:
+    template<typename F>
+    void add_button(int x, int y, int w, int h, const char* label, F f) {
+        add_action(label, f);
+        add_button(x, y, w, h, label, action_callback);
+    }
+
+    void add_button(int x, int y, int w, int h, const char* label, Fl_Callback);
+
     void center();
+
+    void close_impl();
 
     void set_resizable(int minWidth, int minHeight);
 
@@ -36,12 +48,14 @@ protected:
     Fl_Group* group() {
         return group_;
     }
+
 private:
+    static void action_callback(Fl_Widget*, void*);
     static void close_callback(Fl_Widget*, void*);
 
     // dialog owns the window
-    std::unique_ptr<Fl_Window> window_;
-    Fl_Group* group_;
+    std::unique_ptr<Fl_Window>  window_;
+    Fl_Group*                   group_;
 };
 
 

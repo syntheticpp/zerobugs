@@ -305,20 +305,26 @@ const char* Flui::copyright() const
 
 
 ////////////////////////////////////////////////////////////////
-
-template<typename T>
-static void popup(ui::Controller& controller, once_flag& f)
+//
+// Utility for constructing and popping up singleton dialogs
+//
+template<typename T, typename... Args>
+static void popup(
+    ui::Controller& controller,
+    once_flag&      f,
+    Args...         args)
 {
     static T* dialog = nullptr;
-
+    //
     // initialize dialog lazily
+    //
     call_once(f, [&dialog, &controller] {
         Fl_Group::current(nullptr);
         dialog = new T(controller);
     });
 
     controller.set_current_dialog(dialog);
-    dialog->popup(controller.state());
+    dialog->popup(controller.state(), args...);
 }
 
 
@@ -326,7 +332,7 @@ static void popup(ui::Controller& controller, once_flag& f)
 void Flui::show_edit_breakpoint_dialog(addr_t addr)
 {
     static once_flag once;
-    popup<FlEditBreakPointDlg>(*this, once);
+    popup<FlEditBreakPointDlg>(*this, once, addr);
 }
 
 

@@ -16,34 +16,35 @@ LDLIBS+=-lfltk -lpthread
 LDFLAGS+=-Wl,--no-undefined
 
 ################################################################
-SRCS=	breakpoint_view.cpp	\
-		code_view.cpp		\
-		controller.cpp		\
-		dialog.cpp			\
-		expr_events.cpp		\
-		flcode_view.cpp		\
-		flcode_table.cpp	\
+SRCS=	breakpoint_view.cpp			\
+		code_view.cpp				\
+		controller.cpp				\
+		dialog.cpp					\
+		expr_events.cpp				\
+		flcode_view.cpp				\
+		flcode_table.cpp			\
 		flbreakpoint_table.cpp 		\
 		flbreakpoint_view.cpp 		\
-		fldialog.cpp		\
+		fldialog.cpp				\
 		fledit_breakpoint_dlg.cpp	\
-		fleval_dlg.cpp		\
-		flui.cpp 			\
-		flmain_window.cpp	\
-		flmenu.cpp			\
-		flpack_layout.cpp	\
-		flsplitter.cpp		\
-		flstack_view.cpp	\
-		fltoolbar.cpp		\
-		flvar_view.cpp		\
-		flview.cpp			\
-		locals_view.cpp		\
-		menu.cpp			\
-		var_view.cpp		\
-		view.cpp			\
-		stack_view.cpp		\
-		symkey.cpp			\
-		toolbar.cpp			\
+		fleval_dlg.cpp				\
+		flui.cpp 					\
+		flmain_window.cpp			\
+		flmenu.cpp					\
+		flpack_layout.cpp			\
+		flsplitter.cpp				\
+		flstack_view.cpp			\
+		fltoolbar.cpp				\
+		flvar_view.cpp				\
+		flview.cpp					\
+		locals_view.cpp				\
+		menu.cpp					\
+		var_view.cpp				\
+		view.cpp					\
+		stack_view.cpp				\
+		symkey.cpp					\
+		toolbar.cpp					\
+		utils.cpp					\
 		$(NULL)
 
 PLUGIN=$(PLUGIN_PATH)zflui.so

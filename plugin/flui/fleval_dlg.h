@@ -37,7 +37,7 @@ private:
     static void eval_callback(Fl_Widget*, void*);
 
     void clear();
-    void close();
+    void close_impl();
     void eval();
 
     bool status_message(const char* msg);
