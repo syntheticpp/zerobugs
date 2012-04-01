@@ -349,8 +349,8 @@ size_t SymbolMapImpl::enum_needed_tables(SymbolTableCallback* callback) const
         scan_needed_tables(); // populate the tables
         assert(scannedNeededTables_);
     }
-    SymbolTableGroup::const_iterator i = neededTables_.begin();
-    for (; i != neededTables_.end(); ++i)
+
+    for (auto i = begin(neededTables_); i != end(neededTables_); ++i)
     {
         if (is_mapped(i->first.c_str()))
         {
@@ -885,9 +885,9 @@ size_t SymbolMapImpl::enum_needed_symbols (
 }
 
 
-// NOTE: looks weird for this method to be const. 
+// NOTE: looks weird for this method to be const.
 // It is OK, it updates mutable stuff, and it HAS to be const
-// as it is being called from enum_needed_tables, which the 
+// as it is being called from enum_needed_tables, which the
 // ZDK interface defines as const (for better or worse)
 
 void SymbolMapImpl::add_needed_tables(const char* moduleFileName) const

@@ -329,10 +329,10 @@ static void popup(
 
 
 ////////////////////////////////////////////////////////////////
-void Flui::show_edit_breakpoint_dialog(addr_t addr)
+void Flui::show_edit_breakpoint_dialog(ui::UserBreakPoint& ubp)
 {
     static once_flag once;
-    popup<FlEditBreakPointDlg>(*this, once, addr);
+    popup<FlEditBreakPointDlg>(*this, once, ubp);
 }
 
 

@@ -31,6 +31,8 @@ namespace ui
     class Toolbar;
     class VarView;
 
+    struct UserBreakPoint;  // defined in breakpoint_view.h
+
     enum EnableMode
     {
         Disable,
@@ -109,7 +111,9 @@ namespace ui
         virtual int h() const = 0;
 
         // *** Dialogs ***
-        virtual void show_edit_breakpoint_dialog(addr_t) = 0;
+        virtual void show_edit_breakpoint_dialog(addr_t);
+
+        virtual void show_edit_breakpoint_dialog(UserBreakPoint&) = 0;
         virtual void show_eval_dialog() = 0;
 
         // schedule command for execution on main thread
@@ -263,7 +267,7 @@ namespace ui
         Debugger*                   debugger_;
         pthread_t                   threadId_;      // UI thread ID
         RefPtr<Layout>              layout_;
-        RefPtr<View>                breakpoints_;
+        RefPtr<BreakPointView>      breakpoints_;
         RefPtr<CodeView>            code_;
         RefPtr<CompositeMenu>       menu_;
         RefPtr<Toolbar>             toolbar_;

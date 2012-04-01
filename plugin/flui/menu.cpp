@@ -56,6 +56,10 @@ void ui::MenuItem::update(const State& state)
     case Enable_IfRunning:
         enable(state.is_target_running());
         break;
+    
+    case Enable_IfNotRunning:
+        enable(!state.is_target_running());
+        break;
     }
 }
 

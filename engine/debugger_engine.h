@@ -108,7 +108,7 @@ public:
     static const int ENGINE_MAJOR = ZERO_API_MAJOR;
     static const int ENGINE_MINOR = ZERO_API_MINOR;
 
-    static const int ENGINE_REVISION = 141;
+    static const int ENGINE_REVISION = 142;
 
     /**
      * Parse the command line arguments.

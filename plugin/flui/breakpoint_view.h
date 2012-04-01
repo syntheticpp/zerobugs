@@ -6,11 +6,14 @@
 //
 // $Id: $
 //
+#include "zdk/enum.h"
+#include "zdk/platform.h"
 #include "zdk/weak_ptr.h"
 #include "view.h"
+#include <unordered_map>
 #include <vector>
 
-class BreakPointAction;
+class BreakPointAction; // defined in the zdk
 
 
 namespace ui
@@ -21,8 +24,9 @@ namespace ui
         RefPtr<BreakPointAction>    action;
     };
 
-    typedef RefPtr<BreakPoint> BreakPointPtr;
-    typedef std::vector<UserBreakPoint> BreakPoints;
+    typedef RefPtr<BreakPoint>                  BreakPointPtr;
+    typedef std::vector<UserBreakPoint>         BreakPoints;
+    typedef std::unordered_map<addr_t, size_t>  BreakPointAddrIndex;
 
 
     class BreakPointView
@@ -52,6 +56,8 @@ namespace ui
             return breakpoints_[n];
         }
 
+        UserBreakPoint addr_to_breakpoint(addr_t) const;
+
     protected:
         ~BreakPointView() throw();
 
@@ -67,6 +73,7 @@ namespace ui
         WeakPtr<BreakPoint> current_;
 
         BreakPoints         breakpoints_;
+        BreakPointAddrIndex index_;
     };
 }
 

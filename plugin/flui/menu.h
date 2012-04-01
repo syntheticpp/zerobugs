@@ -20,6 +20,9 @@ namespace ui
         Enable_Always,
         Enable_IfStopped,
         Enable_IfRunning,
+        Enable_IfCore,
+        Enable_IfNotRunning, // stopped or core
+
     };
 
     /**

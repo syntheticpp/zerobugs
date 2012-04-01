@@ -44,7 +44,10 @@ void ui::CodeView::show_contextual_menu(int x, int y)
 {
     RefPtr<PopupMenu> menu(controller().init_contextual_menu());
 
-    if (auto listing = get_listing())
+    auto listing = get_listing();
+
+    if (listing && controller().state().current_thread()
+                && controller().state().current_thread()->is_live())
     {
         const addr_t addr = listing->selected_addr();
         auto& d = *CHKPTR(controller().debugger());

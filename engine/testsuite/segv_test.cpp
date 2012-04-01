@@ -28,7 +28,7 @@ int main()
     struct sigaction sa = { 0 };
     sa.sa_handler = ignore_segv;
     sa.sa_flags = SA_NODEFER | SA_RESTART;
-    sigaction( SIGSEGV, &sa, NULL );
+    //sigaction( SIGSEGV, &sa, NULL );
 #else
     set_handler();
 #endif

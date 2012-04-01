@@ -88,7 +88,9 @@ void ui::Controller::StateImpl::update(
 
     if (currentThread && eventType != E_TARGET_RESUMED)
     {
-        isTargetStopped_ = thread_stopped(*currentThread);
+        isTargetStopped_ = thread_stopped(*currentThread)
+            // core dumps are neither "running" or "stopped"
+            && currentThread->is_live();
 
         addr_t pc = currentThread->program_count();
         assert(currentThread->symbols());
@@ -327,7 +329,7 @@ void ui::Controller::build_menu()
             toggle_user_breakpoint();
         });
 
-    menu_->add_ui_item("&Tools/E&valuate", FL_ALT + 'v', Enable_IfStopped,
+    menu_->add_ui_item("&Tools/E&valuate", FL_ALT + 'v', Enable_IfNotRunning,
         [this]
         {
             show_eval_dialog();
@@ -434,16 +436,19 @@ void ui::Controller::update(
     // and we want to update breakpoints last;
     // DO NOT CHANGE this order of operations.
 
-    BreakPointUpdater updater(*this);
-
-    updater.push_back(breakpoints_);
-    updater.push_back(code_);
-
-    if (!updater.empty())
+    if (thread->is_live())
     {
-        if (RefPtr<BreakPointManager> mgr = CHKPTR(debugger_)->breakpoint_manager())
+        BreakPointUpdater updater(*this);
+
+        updater.push_back(breakpoints_);
+        updater.push_back(code_);
+
+        if (!updater.empty())
         {
-            mgr->enum_breakpoints(&updater);
+            if (RefPtr<BreakPointManager> mgr = CHKPTR(debugger_)->breakpoint_manager())
+            {
+                mgr->enum_breakpoints(&updater);
+            }
         }
     }
 
@@ -822,5 +827,13 @@ void ui::Controller::set_user_breakpoint(addr_t addr, bool set)
             CHKPTR(debugger_)->remove_user_breakpoint(0, 0, addr);
         }
     }
+}
+
+
+////////////////////////////////////////////////////////////////
+void ui::Controller::show_edit_breakpoint_dialog(addr_t addr)
+{
+    UserBreakPoint ubp = breakpoints_->addr_to_breakpoint(addr);
+    show_edit_breakpoint_dialog(ubp);
 }
 

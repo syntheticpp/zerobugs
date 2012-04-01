@@ -91,6 +91,7 @@ SwitchableAction::SwitchableAction
 ////////////////////////////////////////////////////////////////
 SwitchableAction::~SwitchableAction() throw()
 {
+    assert(!pending_);
 }
 
 
@@ -111,6 +112,7 @@ bool SwitchableAction::execute(Thread* thread, BreakPoint* bpnt)
     {
         execute_(thread, bpnt);
     }
+
     if (!evalResult_)
     {
         pending_ = false;
@@ -149,13 +151,9 @@ void SwitchableAction::execute_(Thread* thread, BreakPoint* bpnt)
         // fallthru
 
     case COND_FALSE:
-        // execute() takes care of reseting the
-        // pending_ flag on its way out
-        assert(!pending_);
         break;
 
     case COND_PENDING:
-        //bpnt->disable();
         pending_ = true; // defer execution until on_done notification
         break;
     }
@@ -173,7 +171,7 @@ SwitchableAction::eval_condition(Debugger&       eng,
         return COND_TRUE;
     }
 #ifdef DEBUG
-    clog << __func__ << ": " << expr_ << endl;
+    clog << __func__ << ": expr=" << expr_ << endl;
 #endif
 
     if (!evalResult_)
@@ -230,9 +228,11 @@ SwitchableAction::EvalEvents::EvalEvents
 
 ////////////////////////////////////////////////////////////////
 bool
-SwitchableAction::EvalEvents::on_done(Variant* result,
-                                      bool*,
-                                      DebugSymbolEvents*)
+SwitchableAction::EvalEvents::on_done(
+
+    Variant*            result,
+    bool*               /* ignored */,
+    DebugSymbolEvents*  /* ignored */)
 {
     assert(result_);
     result_->copy(result, true);
