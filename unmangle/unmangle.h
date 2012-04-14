@@ -66,7 +66,7 @@ cplus_unmangle(const std::string& mangled, int opts = UNMANGLE_DEFAULT)
     size_t len = mangled.length();
     if (char* str = unmangle(mangled.c_str(), &len, 0, opts))
     {
-        assert(strlen(str) == len);
+        assert(strlen(str) <= len);
         result.assign(str, str + len);
         free(str);
     }
@@ -85,7 +85,7 @@ cplus_unmangle(const char* mangled, int opts = UNMANGLE_DEFAULT)
     size_t len = 0;
     if (char* str = unmangle(mangled, &len, 0, opts))
     {
-        assert(strlen(str) == len);
+        assert(strlen(str) <= len);
         result.assign(str, str + len);
         free(str);
     }

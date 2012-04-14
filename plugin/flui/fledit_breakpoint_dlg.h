@@ -12,6 +12,7 @@
 
 using namespace Platform;
 
+class Fl_Int_Input;
 class Fl_Input;
 class Fl_Output;
 
@@ -30,6 +31,7 @@ protected:
 private:
     Fl_Input*           condition_;
     Fl_Output*          descr_;
+    Fl_Int_Input*       hitCount_;
     ui::UserBreakPoint  ubp_;
 };
 

@@ -436,7 +436,7 @@ void ui::Controller::update(
     // and we want to update breakpoints last;
     // DO NOT CHANGE this order of operations.
 
-    if (thread->is_live())
+    if (thread && thread->is_live())
     {
         BreakPointUpdater updater(*this);
 

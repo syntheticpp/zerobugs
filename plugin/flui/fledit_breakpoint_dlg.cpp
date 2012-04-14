@@ -12,6 +12,7 @@
 #include "fledit_breakpoint_dlg.h"
 #include "utils.h"
 #include <FL/Fl_Group.H>
+#include <FL/Fl_Int_Input.H>
 #include <FL/Fl_Output.H>
 #include <FL/Enumerations.H>
 //#include <iostream>
@@ -27,6 +28,7 @@ FlEditBreakPointDlg::FlEditBreakPointDlg(
     : FlDialog(controller, 0, 0, 500, 350, "Edit Breakpoint")
     , condition_(new Fl_Input(20, 66, 460, 22))
     , descr_(static_text(20, 12, 460, 22))
+    , hitCount_(new Fl_Int_Input(20, 100, 100, 22))
 
 {
     group()->box(FL_EMBOSSED_FRAME);

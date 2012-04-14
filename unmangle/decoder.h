@@ -27,6 +27,14 @@
 #include "dictionary.h"
 #include "unmangle.h"
 
+#define USE_CXXABI  1
+
+#if USE_CXXABI
+ #include <cxxabi.h>
+ using namespace __cxxabiv1;
+#endif
+
+
 
 #if defined(CPLUS_DEMANGLE_COMPAT) && !defined(USE_SHORT_STD_SUBST)
  #define USE_SHORT_STD_SUBST
@@ -120,8 +128,6 @@ public:
         , anonymous_(false)
         , status_(0)
     {
-        //subst_.reserve((size_ + 1) / 2);
-        //templateArgs_.reserve((size_ + 1) / 2);
     }
     ~Decoder()
     {
@@ -159,7 +165,21 @@ public:
         {
             DECODER_ERROR__(INVALID_NAME);
         }
-        if (status) { *status = status_; }
+        if (status)
+        {
+            *status = status_;
+        }
+
+    #if USE_CXXABI
+        // My demangler is not up-to-date and does not handle lambdas
+        // fallback to C++ ABI implementation :(
+
+        if (!result || status_ != UNMANGLE_STATUS_SUCCESS)
+        {
+            result = __cxa_demangle(name_, NULL, len, status);
+        }
+
+    #endif
         return result;
     }
 
@@ -220,7 +240,6 @@ private:
     /// This method deals with the first 2 productions
     void parse_data_or_func_name(Output& out)
     {
-        //NUTS_ASSERT(pos_ < size_);
         if (pos_ >= size_)
         {
             DECODER_ERROR__(INVALID_NAME);
@@ -340,15 +359,27 @@ private:
     /// @return true when an UNSCOPED-NAME is recognized.
     bool parse_unscoped_name(Output& out, NameFlags& nameFlags)
     {
-        // NUTS_ASSERT(pos_ < size_);
+    #if 0
+        NUTS_ASSERT(pos_ < size_);
         // the name production above has already checked for this case:
-        //if ((pos_ + 1 < size_) && name_[pos_] == 'S' && name_[pos_+1] == 't')
-        //{
-        //    out.append("std", 3);
-        //    pos_ += 2;
-        //}
+        if ((pos_ + 1 < size_) && name_[pos_] == 'S' && name_[pos_+1] == 't')
+        {
+            out.append("std", 3);
+            pos_ += 2;
+        }
+    #endif
         return (pos_ < size_) ? parse_unqualified_name(out, nameFlags) : false;
     }
+
+    ///<lambda-sig> ::= <parameter type>+  # Parameter types or "v" if the lambda has no parameters
+    void parse_lambda_sig(Output& out)
+    {
+        NUTS_ASSERT(name_[pos_] == 'l');
+//
+// TODO
+//
+    }
+
     ///<local-name> ::= Z <function encoding> E <entity name> [<discriminator>]
     ///             ::= Z <function encoding> E s [<discriminator>]
     ///<discriminator> ::= _ <non-negative number>
@@ -395,8 +426,10 @@ private:
     ///                  ::= <ctor-dtor-name>
     ///                  ::= <source-name>
     ///                  ::= <local source-name>
-    ///
+    ///                  ::= <unnamed-type-name>
     /// <local-source-name> ::= L <source-name> <discriminator>
+    /// <unnamed-type-name> ::= <closure-type-name>
+    /// <closure-type-name> ::= <Ul <lambda-sig> E [ <nonnegative number> ] _
     ///
     bool parse_unqualified_name(Output& out, NameFlags& nameFlags)
     {
@@ -415,6 +448,19 @@ private:
             nameFlags.isDtor_ = true;
             result = true;
         }
+        /* else if (c == 'U')
+        {
+            c = name_[++pos_];
+            if (c == 't')
+            {
+                NUTS_ASSERT(!"unhandled");
+            }
+            else if (c == 'l')
+            {
+                parse_lambda_sig(out);
+                result = true;
+            }
+        } */
         else if (c != 'E')
         {
             if (c == 'L')
@@ -807,6 +853,9 @@ private:
         {
             NUTS_ASSERT(pos_ < size_);
             parse_prefix(out, nameFlags);
+            //
+            // TODO: deal with lambdas
+            //
             if ((pos_ >= size_) || (name_[pos_] != 'E'))
             {
                 DECODER_ERROR__(INVALID_NAME);
@@ -846,8 +895,6 @@ private:
         }
         else
         {
-            //NUTS_ASSERT(out.delim_ && out.delim_[0] == ':'
-            //    && out.delim_[1] == ':' && out.delim_[2] == 0);
     #ifdef DEBUG
             if (sourceNamePos_ == (size_t)-1)
             {

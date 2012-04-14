@@ -95,6 +95,10 @@ Fl_BreakPointTable::draw_cell(
         switch (col)
         {
         case COL_Pixmap:
+            if (ubp.bpoint.is_null())
+            {
+                break;
+            }
             if (has_enabled_actions(*ubp.bpoint))
             {
                 checked_->draw(x, y);
@@ -122,6 +126,7 @@ Fl_BreakPointTable::draw_cell(
             break;
 
         case COL_Address:
+            if (ubp.bpoint)
             {
                 ostringstream s;
                 s << hex << ubp.bpoint->addr();

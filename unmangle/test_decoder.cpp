@@ -59,7 +59,7 @@ static void test(const char* mangledName, const char* decoded)
     }
     else
     {
-        cout << "Expected: " << decoded << endl;
+        cout << "EXPECTED: " << decoded << endl;
         assert(false);
     }
 }
@@ -400,6 +400,10 @@ goto _skip;
 
     test("_ZN3Gtk11TreeElementC1ILj3EEERAT__PKc",
         "Gtk::TreeElement::TreeElement<(unsigned int)3>(char const* (&) [(unsigned int)3])");
+
+    test("_ZNSt8functionIFvvEEC1IZN16FlBreakPointViewC1ERN2ui10ControllerEiiiiEUlvE_EET_NSt9enable_ifIXntsrSt11is_integralIS8_E5valueENS1_8_UselessEE4typeE",
+        "std::function<void ()>::function<FlBreakPointView::FlBreakPointView(ui::Controller&, int, int, int, int)::{lambda()#1}>(FlBreakPointView::FlBreakPointView(ui::Controller&, int, int, int, int)::{lambda()#1}, std::enable_if<!(std::is_integral<FlBreakPointView::FlBreakPointView(ui::Controller&, int, int, int, int)::{lambda()#1}>::value), std::function<void ()>::_Useless>::type)");
+
 
 
 #ifdef CPLUS_DEMANGLE_COMPAT
