@@ -24,7 +24,7 @@ typedef void (Fl_Callback)(Fl_Widget*, void*);
 class FlDialog : public ui::Dialog
 {
 public:
-    FlDialog(ui::Controller&, int x, int y, int w, int hi, const char* = nullptr);
+    FlDialog(ui::Controller&, int x, int y, int w, int h, const char* = nullptr);
 
     ~FlDialog();
 
@@ -47,6 +47,11 @@ protected:
 
     Fl_Group* group() {
         return group_;
+    }
+
+    const Fl_Window& window() const {
+        assert(window_);
+        return *window_;
     }
 
 private:

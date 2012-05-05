@@ -96,8 +96,10 @@ namespace ui
         }
 
         void continue_on_ui_thread() {
-            callable_();
-            complete_ = true;
+            if (!complete_) {
+                callable_();
+                complete_ = true;
+            }
         }
 
         bool is_complete() const {
@@ -113,6 +115,7 @@ namespace ui
     void call_main_thread(C& controller, F f) {
         controller.call_main_thread_async(new MainThreadCommand<F>(f));
     }
-}
+} // namespace ui
+
 #endif // COMMAND_H__924DE56A_4E47_4F94_A8B5_BF0BF6BEDEF2
 

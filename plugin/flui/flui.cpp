@@ -18,6 +18,10 @@
 #include "fltoolbar.h"
 #include "flui.h"
 
+#include <FL/Fl_Native_File_Chooser.H>
+
+#include <iostream>
+
 // C++ headers
 #include <cassert>
 #include <thread>
@@ -300,6 +304,7 @@ const char* Flui::description() const
 ////////////////////////////////////////////////////////////////
 const char* Flui::copyright() const
 {
+    // TODO
     return "";
 }
 
@@ -348,5 +353,19 @@ void Flui::show_eval_dialog()
 void Flui::error_message(const std::string&)
 {
     // TODO
+}
+
+void save_input_file(Fl_File_Chooser *w, void *userdata)
+{
+}
+
+////////////////////////////////////////////////////////////////
+void Flui::open_file_dialog (
+    const char*     message,
+    const char*     pattern,
+    const char*     initialFile )
+{
+    auto dialog = new Fl_Native_File_Chooser();
+    dialog->show();
 }
 

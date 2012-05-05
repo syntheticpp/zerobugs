@@ -17,7 +17,9 @@
 #include "stack_view.h"
 #include "toolbar.h"
 #include "menu.h"
+// FIXME:
 #include <FL/Enumerations.H>
+
 #include "dharma/system_error.h"
 #include <pthread.h>
 #include <iostream>
@@ -285,6 +287,11 @@ void ui::Controller::build_menu()
 {
     menu_ = init_menu();
 
+    menu_->add_ui_item("&File/&Open", 0, Enable_IfStopped,
+        [this]
+        {
+            open_file_dialog("Open", "*", nullptr);
+        });
     menu_->add_item("&File/&Quit", FL_ALT + 'q', Enable_Always,
         [this]
         {
@@ -383,7 +390,7 @@ bool ui::Controller::initialize(
 
     if (probe_interactive_plugins())
     {
-        return false;
+        return false; // back off if interactive plugins detected
     }
     return true;
 }
@@ -836,4 +843,5 @@ void ui::Controller::show_edit_breakpoint_dialog(addr_t addr)
     UserBreakPoint ubp = breakpoints_->addr_to_breakpoint(addr);
     show_edit_breakpoint_dialog(ubp);
 }
+
 

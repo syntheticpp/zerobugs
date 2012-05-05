@@ -14,8 +14,8 @@
 #include <FL/Fl_Group.H>
 #include <FL/Fl_Int_Input.H>
 #include <FL/Fl_Output.H>
+#include <FL/Fl_Window.H>
 #include <FL/Enumerations.H>
-//#include <iostream>
 #include <sstream>
 
 using namespace std;
@@ -25,12 +25,22 @@ FlEditBreakPointDlg::FlEditBreakPointDlg(
 
     ui::Controller& controller )
 
+#if 0
     : FlDialog(controller, 0, 0, 500, 350, "Edit Breakpoint")
     , condition_(new Fl_Input(20, 66, 460, 22))
     , descr_(static_text(20, 12, 460, 22))
     , hitCount_(new Fl_Int_Input(20, 100, 100, 22))
-
+#else
+    // will deal later with activating breakpoints
+    // only after being hit a number of times
+    // (activation count)
+    : FlDialog(controller, 0, 0, 500, 150, "Edit Breakpoint")
+    , condition_(new Fl_Input(20, 66, 460, 22))
+    , descr_(static_text(20, 12, 460, 22))
+#endif
 {
+    const int yButtons = window().h() - 40;
+
     group()->box(FL_EMBOSSED_FRAME);
 
     static_text(20, 44, 460, 22, "Condition");
@@ -38,7 +48,7 @@ FlEditBreakPointDlg::FlEditBreakPointDlg(
     //
     // OK button applies changes
     //
-    add_button(305, 310, 85, 22, "&OK", [this] {
+    add_button(305, yButtons, 85, 22, "&OK", [this] {
         if (auto* s = interface_cast<Switchable*>(ubp_.action.get()))
         {
             s->set_activation_expr(condition_->value());
@@ -47,7 +57,7 @@ FlEditBreakPointDlg::FlEditBreakPointDlg(
         close();
     });
 
-    add_button(395, 310, 85, 22, "&Cancel", [this] {
+    add_button(395, yButtons, 85, 22, "&Cancel", [this] {
         close();
     });
 

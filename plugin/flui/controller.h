@@ -111,10 +111,17 @@ namespace ui
         virtual int h() const = 0;
 
         // *** Dialogs ***
+        virtual void open_file_dialog (
+            const char*     message,
+            const char*     pattern,
+            const char*     initialFile ) = 0;
+
         virtual void show_edit_breakpoint_dialog(addr_t);
 
         virtual void show_edit_breakpoint_dialog(UserBreakPoint&) = 0;
         virtual void show_eval_dialog() = 0;
+
+        virtual RefPtr<PopupMenu> init_contextual_menu() = 0;
 
         // schedule command for execution on main thread
         void call_main_thread_async(RefPtr<Command>);
@@ -122,16 +129,19 @@ namespace ui
         // wake up main thread if in idle state
         void awaken_main_thread();
 
-        Debugger* debugger() {
-            assert(debugger_);
-            return debugger_;
-        }
 
         Dialog* current_dialog() {
             return dialogStack_.empty() ? nullptr : dialogStack_.back();
         }
 
         void set_current_dialog(Dialog* dialog);
+
+        State& state();
+        
+        Debugger* debugger() {
+            assert(debugger_);
+            return debugger_;
+        }
 
         // --- Breakpoint management
         // insert/remove breakpoint
@@ -222,10 +232,6 @@ namespace ui
             Debugger::MessageType,
             Thread*,
             bool        /* async */);
-
-        State& state();
-
-        virtual RefPtr<PopupMenu>       init_contextual_menu() = 0;
 
     protected:
         void build();

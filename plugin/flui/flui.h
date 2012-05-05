@@ -44,6 +44,11 @@ protected:
 
     using ui::Controller::show_edit_breakpoint_dialog;
 
+    void open_file_dialog (
+            const char*     message,
+            const char*     pattern,
+            const char*     initialFile );
+
     void show_edit_breakpoint_dialog(ui::UserBreakPoint&);
     void show_eval_dialog();
 
