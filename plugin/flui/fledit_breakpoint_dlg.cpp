@@ -14,9 +14,7 @@
 #include <FL/Fl_Group.H>
 #include <FL/Fl_Int_Input.H>
 #include <FL/Fl_Output.H>
-#include <FL/Fl_Window.H>
 #include <FL/Enumerations.H>
-#include <sstream>
 
 using namespace std;
 
@@ -39,8 +37,6 @@ FlEditBreakPointDlg::FlEditBreakPointDlg(
     , descr_(static_text(20, 12, 460, 22))
 #endif
 {
-    const int yButtons = window().h() - 40;
-
     group()->box(FL_EMBOSSED_FRAME);
 
     static_text(20, 44, 460, 22, "Condition");
@@ -48,17 +44,12 @@ FlEditBreakPointDlg::FlEditBreakPointDlg(
     //
     // OK button applies changes
     //
-    add_button(305, yButtons, 85, 22, "&OK", [this] {
+    add_ok_cancel([this] {
         if (auto* s = interface_cast<Switchable*>(ubp_.action.get()))
         {
             s->set_activation_expr(condition_->value());
             this->controller().awaken_main_thread();
         }
-        close();
-    });
-
-    add_button(395, yButtons, 85, 22, "&Cancel", [this] {
-        close();
     });
 
     center();

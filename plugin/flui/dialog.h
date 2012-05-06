@@ -17,7 +17,7 @@ namespace ui
     class Dialog
     {
         Dialog(const Dialog&);  // non-copyable
-        Dialog& operator=(const Dialog&);
+        Dialog& operator=(const Dialog&); // non-assignable
 
     public:
         typedef std::vector<RefPtr<View> > Views;

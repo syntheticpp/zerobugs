@@ -31,7 +31,7 @@ protected:
 private:
     Fl_Input*           condition_;
     Fl_Output*          descr_;
-    Fl_Int_Input*       hitCount_;
+    Fl_Int_Input*       hitCount_;  // NOT USED
     ui::UserBreakPoint  ubp_;
 };
 

@@ -13,12 +13,11 @@
 #include "code_view.h"
 #include "controller.h"
 #include "dialog.h"
+#include "hotkey.h"
 #include "locals_view.h"
 #include "stack_view.h"
 #include "toolbar.h"
 #include "menu.h"
-// FIXME:
-#include <FL/Enumerations.H>
 
 #include "dharma/system_error.h"
 #include <pthread.h>
@@ -292,19 +291,19 @@ void ui::Controller::build_menu()
         {
             open_file_dialog("Open", "*", nullptr);
         });
-    menu_->add_item("&File/&Quit", FL_ALT + 'q', Enable_Always,
+    menu_->add_item("&File/&Quit", *HotKey::alt('q'), Enable_Always,
         [this]
         {
             CHKPTR(debugger_)->quit();
         });
 
-    menu_->add_item("&Run/&Continue", FL_F + 5, Enable_IfStopped,
+    menu_->add_item("&Run/&Continue", *HotKey::fn(5), Enable_IfStopped,
         [this]()
         {
             CHKPTR(debugger_)->resume();
         });
 
-    menu_->add_item("&Run/&Next", FL_F + 10, Enable_IfStopped,
+    menu_->add_item("&Run/&Next", *HotKey::fn(10), Enable_IfStopped,
         [this]
         {
             if (auto t = state_->current_thread())
@@ -314,7 +313,7 @@ void ui::Controller::build_menu()
             }
         });
 
-    menu_->add_item("&Run/&Step", FL_F + 11, Enable_IfStopped,
+    menu_->add_item("&Run/&Step", *HotKey::fn(11), Enable_IfStopped,
         [this]
         {
             if (auto t = state_->current_thread())
@@ -324,19 +323,19 @@ void ui::Controller::build_menu()
             }
         });
 
-    menu_->add_item("&Run/&Break", FL_CTRL + 'c', Enable_IfRunning,
+    menu_->add_item("&Run/&Break", *HotKey::ctrl('c'), Enable_IfRunning,
         [this]
         {   // nothing to do here, call_main_thread
             // will ensure the target breaks into the debugger
         });
 
-    menu_->add_item("&Breakpoints/&Toggle", FL_F + 9, Enable_IfStopped,
+    menu_->add_item("&Breakpoints/&Toggle", *HotKey::fn (9), Enable_IfStopped,
         [this]
         {
             toggle_user_breakpoint();
         });
 
-    menu_->add_ui_item("&Tools/E&valuate", FL_ALT + 'v', Enable_IfNotRunning,
+    menu_->add_ui_item("&Tools/E&valuate", *HotKey::alt('v'), Enable_IfNotRunning,
         [this]
         {
             show_eval_dialog();

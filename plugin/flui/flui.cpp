@@ -10,6 +10,7 @@
 #include "fledit_breakpoint_dlg.h"
 #include "fleval_dlg.h"
 #include "flbreakpoint_view.h"
+#include "flfile_dlg.h"
 #include "flvar_view.h"
 #include "flmain_window.h"
 #include "flmenu.h"
@@ -17,8 +18,7 @@
 #include "flstack_view.h"
 #include "fltoolbar.h"
 #include "flui.h"
-
-#include <FL/Fl_Native_File_Chooser.H>
+#include <FL/Fl_File_Icon.H>
 
 #include <iostream>
 
@@ -69,6 +69,7 @@ Flui::Flui()
     : ui::Controller()
     , window_(nullptr)
 {
+    // Fl_File_Icon::load_system_icons();
 }
 
 
@@ -350,14 +351,11 @@ void Flui::show_eval_dialog()
 
 
 ////////////////////////////////////////////////////////////////
-void Flui::error_message(const std::string&)
+void Flui::error_message(const std::string& message)
 {
-    // TODO
+    clog << "Not implemented: " << __FUNCTION__ << ": " << message << endl;
 }
 
-void save_input_file(Fl_File_Chooser *w, void *userdata)
-{
-}
 
 ////////////////////////////////////////////////////////////////
 void Flui::open_file_dialog (
@@ -365,7 +363,7 @@ void Flui::open_file_dialog (
     const char*     pattern,
     const char*     initialFile )
 {
-    auto dialog = new Fl_Native_File_Chooser();
-    dialog->show();
+    static once_flag once;
+    popup<FlFileDialog>(*this, once, ".");
 }
 

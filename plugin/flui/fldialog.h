@@ -8,10 +8,11 @@
 //
 #include "dialog.h"
 #include <memory>
+#include <FL/Fl_Window.H>
 
 class Fl_Group;
 class Fl_Widget;
-class Fl_Window;
+
 
 typedef void (Fl_Callback)(Fl_Widget*, void*);
 
@@ -26,16 +27,35 @@ class FlDialog : public ui::Dialog
 public:
     FlDialog(ui::Controller&, int x, int y, int w, int h, const char* = nullptr);
 
-    ~FlDialog();
+    virtual ~FlDialog();
 
 protected:
+    static const int wButtons = 85;
+    static const int hButtons = 22;
+
+    void add_button(int x, int y, int w, int h, const char* label, Fl_Callback);
+
     template<typename F>
     void add_button(int x, int y, int w, int h, const char* label, F f) {
         add_action(label, f);
         add_button(x, y, w, h, label, action_callback);
     }
 
-    void add_button(int x, int y, int w, int h, const char* label, Fl_Callback);
+    // add "standard" Ok and Cancel buttons
+    template<typename F>
+    void add_ok_cancel(F f) {
+        const int xButtons = window_->w() - 195;
+        const int yButtons = window_->h() - 40;
+
+        add_button(xButtons, yButtons, wButtons, hButtons, "&OK", [this, f] {
+            f();
+            close();
+        });
+
+        add_button(xButtons + 90, yButtons, wButtons, hButtons, "&Cancel", [this] {
+            close();
+        });
+    }
 
     void center();
 
@@ -49,10 +69,12 @@ protected:
         return group_;
     }
 
+#if 0
     const Fl_Window& window() const {
         assert(window_);
         return *window_;
     }
+#endif
 
 private:
     static void action_callback(Fl_Widget*, void*);

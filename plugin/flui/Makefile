@@ -11,7 +11,7 @@ include $(TOP)/zdk/make/Common.mak
 LIBS=-ldharma -lzdk
 
 # other libs
-LDLIBS+=-lfltk -lpthread
+LDLIBS+=-lfltk -lfltk_images -lpthread
 
 LDFLAGS+=-Wl,--no-undefined
 
@@ -28,6 +28,8 @@ SRCS=	breakpoint_view.cpp			\
 		fldialog.cpp				\
 		fledit_breakpoint_dlg.cpp	\
 		fleval_dlg.cpp				\
+		flfile_dlg.cpp				\
+		flhotkey.cpp				\
 		flui.cpp 					\
 		flmain_window.cpp			\
 		flmenu.cpp					\
