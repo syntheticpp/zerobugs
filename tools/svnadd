@@ -3,6 +3,6 @@
 file=$1
 
 svn add $file
-svn propset svn:keyword Id $file
+svn propset svn:keywords "Id" $file
 svn propset svn:mime-type text/plain $file
 

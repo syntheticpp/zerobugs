@@ -286,7 +286,7 @@ void ui::Controller::build_menu()
 {
     menu_ = init_menu();
 
-    menu_->add_ui_item("&File/&Open", 0, Enable_IfStopped,
+    menu_->add_ui_item("&File/&Open...", 0, Enable_IfStopped,
         [this]
         {
             open_file_dialog("Open", "*", nullptr);

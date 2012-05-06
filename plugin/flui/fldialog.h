@@ -29,6 +29,11 @@ public:
 
     virtual ~FlDialog();
 
+    // Derived classes can override and do custom event handling.
+    virtual int handle(int /* eventType */) {
+        return 0;
+    }
+
 protected:
     static const int wButtons = 85;
     static const int hButtons = 22;
@@ -41,7 +46,7 @@ protected:
         add_button(x, y, w, h, label, action_callback);
     }
 
-    // add "standard" Ok and Cancel buttons
+    // Add "standard" Ok and Cancel buttons
     template<typename F>
     void add_ok_cancel(F f) {
         const int xButtons = window_->w() - 195;

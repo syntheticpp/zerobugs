@@ -15,6 +15,29 @@
 using namespace std;
 
 
+/**
+ * Allows the dialog to do custom event handling.
+ */
+class DialogWindow : public Fl_Double_Window
+{
+    FlDialog* dlg_;
+
+    int handle(int e) {
+        int result = dlg_->handle(e);
+        if (result == 0) {
+            result = Fl_Double_Window::handle(e);
+        }
+        return result;
+    }
+
+public:
+    DialogWindow(FlDialog* dlg, int x, int y, int w, int h, const char* title)
+        : Fl_Double_Window(x, y, w, h, title)
+        , dlg_(dlg)
+    { }
+};
+
+
 FlDialog::FlDialog(
 
     ui::Controller& controller,
@@ -26,7 +49,7 @@ FlDialog::FlDialog(
     )
 
     : ui::Dialog(controller)
-    , window_(new Fl_Double_Window(x, y, w, h, title))
+    , window_(new DialogWindow(this, x, y, w, h, title))
     , group_(new Fl_Group(0, 0, w, h))
 {
     window_->callback(close_callback, static_cast<ui::Dialog*>(this));
