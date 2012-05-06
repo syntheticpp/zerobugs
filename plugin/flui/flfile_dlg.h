@@ -27,10 +27,12 @@ private:
         void*           data );
 
     void on_browser_selection( const char* );
+    void load(std::string&&);
 
 private:
     Fl_File_Browser*    fileBrowser_;
     Fl_File_Input*      fileInput_;
+    std::string         directory_;
 };
 
 #endif // FLFILE_DIALOG_H__C47A015E_A95D_47A4_874F_799450A47AFE

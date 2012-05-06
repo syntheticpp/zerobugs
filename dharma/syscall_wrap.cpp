@@ -199,17 +199,25 @@ pid_t sys::fork()
 }
 
 
-void sys::stat(const string& path, struct stat& stbuf)
+void sys::stat(const char* path, struct stat& stbuf)
 {
     memset(&stbuf, 0, sizeof stbuf);
 
-    while (::stat(path.c_str(), &stbuf) < 0)
+    while (::stat(path, &stbuf) < 0)
     {
         if (errno != EINTR)
         {
-            throw SystemError("could not stat " + path);
+            throw SystemError(string("could not stat ") + path);
         }
     }
+}
+
+
+bool sys::is_dir(const char* path)
+{
+    struct stat stbuf;
+    stat(path, stbuf);
+    return S_ISDIR(stbuf.st_mode);
 }
 
 

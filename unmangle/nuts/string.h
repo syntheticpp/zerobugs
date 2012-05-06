@@ -49,9 +49,9 @@ namespace nuts
             {
                 NUTS_ASSERT(capacity_);
                 A::dealocate(buf_ /*, capacity_ * sizeof(CharT) */);
-    #if DEBUG
+        #if DEBUG
                 buf_ = (CharT*)0xDeadCaca;
-    #endif
+       #endif
             }
         }
         CharT operator[](size_t i) const
@@ -99,12 +99,19 @@ namespace nuts
                 {
                     CharT* oldptr = 0;
                     NUTS_ASSERT(capacity_ >= size_);
+
+                    if (size > ctraits::length(chars))
+                    {
+                        throw std::overflow_error("size argument exceeds source string length");
+                    }
+
                     if (capacity_ - size_ <= size)
                     {
                         oldptr = reallocate_to_fit_extra(size);
                     }
                     NUTS_ASSERT(capacity_ >= size_ + size + 1);
                     NUTS_ASSERT(size <= ctraits::length(chars));
+
                     ctraits::copy(buf_ + size_, chars, size); // append
                     size_ += size;
                     buf_[size_] = CharT(); // null-end the string

@@ -400,10 +400,11 @@ goto _skip;
 
     test("_ZN3Gtk11TreeElementC1ILj3EEERAT__PKc",
         "Gtk::TreeElement::TreeElement<(unsigned int)3>(char const* (&) [(unsigned int)3])");
-
+#if 1
+// LAMBDA
     test("_ZNSt8functionIFvvEEC1IZN16FlBreakPointViewC1ERN2ui10ControllerEiiiiEUlvE_EET_NSt9enable_ifIXntsrSt11is_integralIS8_E5valueENS1_8_UselessEE4typeE",
         "std::function<void ()>::function<FlBreakPointView::FlBreakPointView(ui::Controller&, int, int, int, int)::{lambda()#1}>(FlBreakPointView::FlBreakPointView(ui::Controller&, int, int, int, int)::{lambda()#1}, std::enable_if<!(std::is_integral<FlBreakPointView::FlBreakPointView(ui::Controller&, int, int, int, int)::{lambda()#1}>::value), std::function<void ()>::_Useless>::type)");
-
+#endif
 
 
 #ifdef CPLUS_DEMANGLE_COMPAT
@@ -424,10 +425,10 @@ _skip:
 
     test("_ZN5boost6detail8function15trivial_managerIPFvvEE3getENS1_11any_pointerENS1_30functor_manager_operation_typeE",
         "boost::detail::function::trivial_manager<void (*)()>::get(boost::detail::function::any_pointer, boost::detail::function::functor_manager_operation_type)");
+    test("_ZL16test_addr_lookupPKc", "test_addr_lookup(char const*)");
 
     test("_ZN5boost6detail8function15trivial_managerINS_6python7objects119_GLOBAL__N__usr_src_build_710630_i386_BUILD_boost_1_33_1_libs_python_build_.._src_object_function.cpp_00000000_E803402111bind_returnEE3getENS1_11any_pointerENS1_30functor_manager_operation_typeE",
     "boost::detail::function::trivial_manager<boost::python::objects::(anonymous namespace)::bind_return>::get(boost::detail::function::any_pointer, boost::detail::function::functor_manager_operation_type)");
-    test("_ZL16test_addr_lookupPKc", "test_addr_lookup(char const*)");
   }
   catch (const std::exception& e)
   {

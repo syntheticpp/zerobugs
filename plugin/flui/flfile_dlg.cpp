@@ -7,7 +7,12 @@
 #include "flfile_dlg.h"
 #include <FL/Fl_File_Browser.H>
 #include <FL/Fl_File_Input.H>
+
 #include "dharma/canonical_path.h"
+#include "dharma/syscall_wrap.h"
+
+#include <iostream>
+using namespace std;
 
 
 FlFileDialog::FlFileDialog(ui::Controller& controller)
@@ -16,7 +21,7 @@ FlFileDialog::FlFileDialog(ui::Controller& controller)
     , fileInput_(new Fl_File_Input(20, 350, 460, 40))
 
 {
-    fileBrowser_->type(FL_HOLD_BROWSER);
+    fileBrowser_->type(FL_SELECT_BROWSER);
     fileBrowser_->callback(browser_callback, this);
 
     // set_resizable(500, 400);
@@ -29,11 +34,24 @@ FlFileDialog::FlFileDialog(ui::Controller& controller)
 }
 
 
+void FlFileDialog::load(string&& dir)
+{
+    if (!dir.empty() && dir[dir.length()-1] != '/')
+    {
+        dir += '/';
+    }
+
+    directory_.swap(dir);
+    fileBrowser_->load(directory_.c_str());
+}
+
+
 void FlFileDialog::popup(
     const ui::State&    state,
     const char*         directory )
 {
-    fileBrowser_->load(directory);
+    assert(directory);
+    load(abspath(directory));
 
     center();
     FlDialog::popup(state);
@@ -45,17 +63,31 @@ FlFileDialog::browser_callback(
     Fl_Widget*  w,
     void*       data )
 {
+    assert(w);
+    assert(data);
+
     auto browser = static_cast<Fl_File_Browser*>(w);
     int index = browser->value();
-    const char* path = browser->text(index);
 
-    static_cast<FlFileDialog*>(data)->on_browser_selection(path);
+    if (const char* path = browser->text(index))
+    {
+        reinterpret_cast<FlFileDialog*>(data)->on_browser_selection(path);
+    }
 }
 
 
 void FlFileDialog::on_browser_selection(const char* path)
 {
-    fileInput_->value(abspath(path));
+    assert(path);
+
+    string fullpath(CanonicalPath(directory_ + path));
+
+    fileInput_->value(fullpath.c_str());
+
+    if (sys::is_dir(fullpath.c_str()))
+    {
+        load(move(fullpath));
+    }
 }
 
 

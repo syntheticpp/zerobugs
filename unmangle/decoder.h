@@ -178,8 +178,8 @@ public:
         {
             result = __cxa_demangle(name_, NULL, len, status);
         }
-
     #endif
+
         return result;
     }
 
@@ -895,14 +895,22 @@ private:
         }
         else
         {
-    #ifdef DEBUG
+        #ifdef DEBUG
             if (sourceNamePos_ == (size_t)-1)
             {
                 std::clog << name_ << std::endl;
                 std::clog << std::string(pos_, ' ') << '^' << std::endl;
             }
-    #endif
+        #endif
+        #if 0
             NUTS_ASSERT(sourceNamePos_ != (size_t)-1);
+        #else
+            if (sourceNamePos_ == (size_t)-1)
+            {
+                throw std::runtime_error(std::string(__func__) + ": invalid state");
+            }
+        #endif
+
             ++pos_;
             const size_t size = sourceNameSize_
                 ? sourceNameSize_ : out.size() - sourceNamePos_;

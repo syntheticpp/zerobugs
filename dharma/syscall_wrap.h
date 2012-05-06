@@ -63,7 +63,13 @@ namespace sys
 
     void rmdir(const std::string&, bool deleteRecursive = false);
 
-    void stat(const std::string&, struct stat&);
+    void stat(const char*, struct stat&);
+
+    inline void stat(const std::string& path, struct stat& stbuf) {
+        return stat(path.c_str(), stbuf);
+    }
+
+    bool is_dir(const char*);
 
     int open(const char*, int flags);
 

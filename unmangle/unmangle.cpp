@@ -82,12 +82,16 @@ char* unmangle( const char* mangled,
 {
     if (mangled)
     {
+        bool cxxABI = false;
+
         try
         {
             const size_t length = buflen ? *buflen : 0;
 
             if (mangled[0] == '_' && mangled[1] == 'Z')
             {
+                cxxABI = true;
+
                 Decoder<char> decoder(mangled, length, optionFlags);
                 return decoder.parse(status, buflen);
             }
@@ -98,6 +102,7 @@ char* unmangle( const char* mangled,
 	            switch (mangled[10])
                 {
                 case '_':
+                    cxxABI = true;
                     {
                         Decoder<char> d1(mangled, length, optionFlags);
                         return d1.parse_global_ctor_dtor(status, buflen);
@@ -108,7 +113,7 @@ char* unmangle( const char* mangled,
                         return d2.parse_global_ctor_dtor(status, buflen);
                     }
                 }
-                return 0;
+                return NULL;
             }
             else // fallback to legacy (g++ 2.95) mangling scheme
             {
@@ -117,7 +122,7 @@ char* unmangle( const char* mangled,
                 {
                     if (result[0] == '<' && result[1] == '>')
                     {
-                        return 0;
+                        return NULL;
                     }
                     return result;
                 }
@@ -157,8 +162,14 @@ char* unmangle( const char* mangled,
             }
             cerr << __func__ << ": unknown exception\n";
         }
+    #if USE_CXXABI
+        if (cxxABI)
+        {
+            return __cxa_demangle(mangled, NULL, buflen, status);
+        }
+    #endif
     }
-    return 0;
+    return NULL;
 }
 
 
