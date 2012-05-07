@@ -64,7 +64,7 @@ protected:
 
     void center();
 
-    void close_impl();
+    virtual void close_impl();
 
     void set_resizable(int minWidth, int minHeight);
 
@@ -72,6 +72,12 @@ protected:
 
     Fl_Group* group() {
         return group_;
+    }
+
+    bool enable_button(const char* label, bool enable);
+
+    bool enable_ok(bool enable) {
+        return enable_button("&OK", enable);
     }
 
 #if 0

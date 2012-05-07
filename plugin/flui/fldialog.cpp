@@ -125,3 +125,33 @@ void FlDialog::show(bool doShow)
     }
 }
 
+
+bool FlDialog::enable_button(
+    const char* label,
+    bool        enable )
+{
+    const int count = group_->children();
+    for (int i = 0; i != count; ++i)
+    {
+        auto w = group_->child(i);
+        if (!w || !w->label())
+        {
+            continue;
+        }
+        if (strcmp(w->label(), label) == 0)
+        {
+            if (enable)
+            {
+                w->activate();
+            }
+            else
+            {
+                w->deactivate();
+            }
+            return true;
+        }
+    }
+    return false;
+}
+
+

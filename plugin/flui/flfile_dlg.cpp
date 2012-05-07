@@ -29,10 +29,7 @@ FlFileDialog::FlFileDialog(ui::Controller& controller)
     //TODO: make sure it gets resized properly
     // set_resizable(500, 400);
 
-    add_ok_cancel([this] {
-        //
-        // TODO
-        //
+    add_ok_cancel([] {
     });
 }
 
@@ -90,7 +87,11 @@ FlFileDialog::file_callback(
     auto input = static_cast<Fl_File_Input*>(w);
     if (const char* path = input->value())
     {
-        clog << __func__ << ": " << path << endl;
+        struct stat stbuf = { 0 };
+        if (stat(path, &stbuf) == 0)
+        {
+            reinterpret_cast<FlFileDialog*>(data)->set_browser_selection(path);
+        }
     }
 }
 
@@ -101,36 +102,40 @@ void FlFileDialog::on_browser_selection(const char* path)
 
     string fullpath(CanonicalPath(directory_ + path));
 
-    fileInput_->value(fullpath.c_str());
-
-    if (isDoubleClick_ && sys::is_dir(fullpath.c_str()))
+    if (sys::is_dir(fullpath.c_str()))
     {
-        load(move(fullpath));
+        enable_ok(false);
+
+        if (isDoubleClick_)
+        {
+            fileInput_->value(fullpath.c_str(), fullpath.length());
+            load(move(fullpath));
+        }
+    }
+    else
+    {
+        selected_.swap(fullpath);
+        fileInput_->value(selected_.c_str(), selected_.length());
+        enable_ok(true);
     }
 }
 
 
-/*
-static bool is_ancestor(
-    const Fl_Group* grp,
-    const Fl_Widget* w )
+void FlFileDialog::set_browser_selection(const char* path)
 {
-    while (true)
-    {
-        if (w == nullptr)
-        {
-            break;
-        }
+    assert(path);
 
-        if (w->parent() == grp)
-        {
-            return true;
-        }
-        w = w->parent();
+    if (sys::is_dir(path))
+    {
+        enable_ok(false);
+        load(string(path));
     }
-    return false;
+    else
+    {
+        selected_ = path;
+        enable_ok(true);
+    }
 }
-*/
 
 
 int FlFileDialog::handle(int eventType)
@@ -146,5 +151,11 @@ int FlFileDialog::handle(int eventType)
     }
 
     return 0;   // don't hide event from dialog window
+}
+
+
+void FlFileDialog::close_impl()
+{
+    selected_.clear();
 }
 

@@ -25,19 +25,26 @@ public:
         const ui::State&    state,
         const char*         directory );
 
+    const std::string& selected() const {
+        return selected_;
+    }
+
 private:
     static void browser_callback(
         Fl_Widget*      w,
         void*           data );
 
-    static void file_callback( 
+    static void file_callback(
         Fl_Widget*      w,
         void*           data );
 
-    int handle(int eventType);
+    virtual void close_impl();
+
+    virtual int handle(int eventType);
 
     void on_browser_selection(const char*);
-  
+    void set_browser_selection(const char*);
+
     // load the file browser with content of directory
     void load(std::string&& directory);
 
@@ -45,6 +52,7 @@ private:
     Fl_File_Browser*    fileBrowser_;
     Fl_File_Input*      fileInput_;
     std::string         directory_;
+    std::string         selected_;
     bool                isDoubleClick_;
 };
 
