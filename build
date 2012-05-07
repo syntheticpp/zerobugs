@@ -17,6 +17,7 @@ export CFLAGS=-O3
 export CPPFLAGS=-O3
 
 export CXXVER=`cc zdk/make/gcc_ver.c -o gcc_ver && ./gcc_ver`
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:`pwd`/lib
 
 cpu_count=`cat /proc/cpuinfo  | grep processor | wc -l`
 make_jobs=`expr \( $cpu_count \* 3 + 1 \) / 2`

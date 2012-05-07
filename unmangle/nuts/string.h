@@ -99,18 +99,13 @@ namespace nuts
                 {
                     CharT* oldptr = 0;
                     NUTS_ASSERT(capacity_ >= size_);
-
-                    if (size > ctraits::length(chars))
-                    {
-                        throw std::overflow_error("size argument exceeds source string length");
-                    }
+                    NUTS_ASSERT(size <= ctraits::length(chars));
 
                     if (capacity_ - size_ <= size)
                     {
                         oldptr = reallocate_to_fit_extra(size);
                     }
                     NUTS_ASSERT(capacity_ >= size_ + size + 1);
-                    NUTS_ASSERT(size <= ctraits::length(chars));
 
                     ctraits::copy(buf_ + size_, chars, size); // append
                     size_ += size;

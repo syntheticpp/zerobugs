@@ -169,17 +169,6 @@ public:
         {
             *status = status_;
         }
-
-    #if USE_CXXABI
-        // My demangler is not up-to-date and does not handle lambdas
-        // fallback to C++ ABI implementation :(
-
-        if (!result || status_ != UNMANGLE_STATUS_SUCCESS)
-        {
-            result = __cxa_demangle(name_, NULL, len, status);
-        }
-    #endif
-
         return result;
     }
 
@@ -902,14 +891,7 @@ private:
                 std::clog << std::string(pos_, ' ') << '^' << std::endl;
             }
         #endif
-        #if 0
             NUTS_ASSERT(sourceNamePos_ != (size_t)-1);
-        #else
-            if (sourceNamePos_ == (size_t)-1)
-            {
-                throw std::runtime_error(std::string(__func__) + ": invalid state");
-            }
-        #endif
 
             ++pos_;
             const size_t size = sourceNameSize_

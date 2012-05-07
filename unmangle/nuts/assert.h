@@ -21,9 +21,15 @@
 #include <stdexcept>
 
 
-// Place holder, so that we can change the behavior
-// on failure, from calling abort() to throwing an exception.
-#define NUTS_ASSERT assert
+#if 0
+ #define NUTS_ASSERT assert
+#else
+ #define __STR(x) #x
+ #define TO_STRING(x) __STR(x)
+
+ #define NUTS_ASSERT(e) while(!(e)) { \
+    throw std::runtime_error(__FILE__ ":" TO_STRING(__LINE__)": Assertion failed: " # e); }
+#endif
 
 #if DEBUG
  #define NUTS_EXHAUSTED_FIXED_MEM() exhausted_fixed_mem(__func__)
