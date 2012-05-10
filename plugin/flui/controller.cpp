@@ -286,6 +286,9 @@ void ui::Controller::build_menu()
 {
     menu_ = init_menu();
 
+    // --------------------------------------------------------
+    // File
+    //
     menu_->add_ui_item("&File/&Open...", 0, Enable_IfNotRunning,
         [this]
         {
@@ -297,6 +300,9 @@ void ui::Controller::build_menu()
             CHKPTR(debugger_)->quit();
         });
 
+    // --------------------------------------------------------
+    // Run
+    //
     menu_->add_item("&Run/&Continue", *HotKey::fn(5), Enable_IfStopped,
         [this]()
         {
@@ -313,6 +319,12 @@ void ui::Controller::build_menu()
             }
         });
 
+    menu_->add_item("&Run/&Return from function", 0, Enable_IfStopped,
+        [this]
+        {
+            CHKPTR(debugger_)->command("ret", state_->current_thread().get());
+        });
+
     menu_->add_item("&Run/&Step", *HotKey::fn(11), Enable_IfStopped,
         [this]
         {
@@ -322,19 +334,36 @@ void ui::Controller::build_menu()
                 CHKPTR(debugger_)->resume();
             }
         });
-
+/* TODO
+    menu_->add_item("&Run/Ste&p Instruction", *HotKey::fn(11), Enable_IfStopped,
+        [this]
+        {
+        });
+ */
     menu_->add_item("&Run/&Break", *HotKey::ctrl('c'), Enable_IfRunning,
         [this]
         {   // nothing to do here, call_main_thread
             // will ensure the target breaks into the debugger
+        }, true /* append divider */);
+
+    menu_->add_item("&Run/Restart", 0, Enable_IfStopped,
+        [this]
+        {
+            CHKPTR(debugger_)->command("restart", state_->current_thread().get());
         });
 
+    // --------------------------------------------------------
+    // Breakpoints
+    //
     menu_->add_item("&Breakpoints/&Toggle", *HotKey::fn (9), Enable_IfStopped,
         [this]
         {
             toggle_user_breakpoint();
         });
 
+    // --------------------------------------------------------
+    // Tools
+    //
     menu_->add_ui_item("&Tools/E&valuate", *HotKey::alt('v'), Enable_IfNotRunning,
         [this]
         {

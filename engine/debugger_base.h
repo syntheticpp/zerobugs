@@ -252,13 +252,7 @@ public:
 
     virtual void critical_error(Thread*, const char*) { }
 
-    void save_lwpid_and_status(pid_t pid, int status)
-    {
-        if (unhandled_)
-        {
-            unhandled_->add_status(pid, status);
-        }
-    }
+    void save_lwpid_and_status(pid_t pid, int status);
 
     UnhandledMap* unhandled_map() { return unhandled_.get(); }
 

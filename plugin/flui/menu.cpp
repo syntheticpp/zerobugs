@@ -60,6 +60,11 @@ void ui::MenuItem::update(const State& state)
     case Enable_IfNotRunning:
         enable(!state.is_target_running());
         break;
+
+    case Enable_IfCore:
+        // core dump specific menu item
+        //todo
+        break;
     }
 }
 

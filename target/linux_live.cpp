@@ -604,10 +604,10 @@ void LinuxLiveTarget::detach_internal()
 
     ThreadList threadList(threads_begin(), threads_end());
 
-    vector<RefPtr<Thread> >::iterator i = threadList.begin();
-    for (; i != threadList.end(); ++i)
+    for (auto i = threadList.begin(); i != threadList.end(); ++i)
     {
         const RefPtr<Thread>& thread = *i;
+
         thread->detach();
         remove_thread(thread);
     }

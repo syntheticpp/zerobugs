@@ -67,7 +67,7 @@
 using namespace std;
 
 
-static const word_t defaultOpts = 
+static const word_t defaultOpts =
 
     Debugger::OPT_HARDWARE_BREAKPOINTS |
     Debugger::OPT_START_AT_MAIN        |
@@ -641,6 +641,7 @@ void DebuggerBase::detach_all_targets()
         {
             const pid_t pid = proc->pid();
             target->detach();
+
             dbgout(Log::ALWAYS) << "Detached from process " << pid << endl;
         }
 
@@ -863,7 +864,7 @@ void DebuggerBase::cleanup(Thread& thread)
         // if the number of remaining threads after cleanup
         // is zero, then remove this target
         remove_target(target);
-       
+
         dbgout(0) << __func__ << ": " << size() << " target(s)" << endl;
     #if 0
         stop_all_threads(&thread);
@@ -973,7 +974,7 @@ RefPtr<ThreadImpl> DebuggerBase::peek_event(bool remove)
 
         result->set_event_pending(false);
 
-        dbgout(0) << __func__ << " pid=" << result->lwpid() 
+        dbgout(0) << __func__ << " pid=" << result->lwpid()
                   << ", status=" << hex << result->status()
                   << dec << endl;
     }
@@ -1075,7 +1076,7 @@ void DebuggerBase::stop_all_threads(Thread* skipThread)
 void DebuggerBase::queue_event(const RefPtr<ThreadImpl>& thread)
 {
     int status = 0;
-	
+
     if (thread->exited(&status))
     {
         dbgout(0) << __func__ << ": exited: " << thread->lwpid() << endl;
@@ -1148,7 +1149,7 @@ bool DebuggerBase::check_unhandled_events(const Lock<Mutex>& lock)
         const pid_t pid = i->first;
         const int status = i->second;
 
-        // We should not see this -- if we missed handling a 
+        // We should not see this -- if we missed handling a
         // debug event it is very likely due to a programming error
         // (or, less likely due to some ptrace / kernel change).
 
@@ -1184,7 +1185,7 @@ bool DebuggerBase::check_unhandled_events(const Lock<Mutex>& lock)
         target->read_state(pid, state, command);
 
         target = find_target(state.ppid_);
-        
+
         if (!target)
         {
             target = find_target(state.gid_);
@@ -1345,10 +1346,10 @@ size_t DebuggerBase::enum_processes(EnumCallback<Process*>* cb) const
 static uid_t get_config_owner(const string& path)
 {
     string ownerPath = sys::dirname(path.c_str());
-   
+
     // go up one more level
     ownerPath = sys::dirname(ownerPath.c_str());
-        
+
     struct stat stat = { 0 };
     sys::stat(ownerPath, stat);
 
@@ -1642,7 +1643,7 @@ void DebuggerBase::read_process_history(Process& process)
                     // test that the file still exists
                     struct stat s;
                     sys::stat(mod->name()->c_str(), s);
-                    
+
                     symbols->add_module(mod->name()->c_str());
                 }
                 catch (const exception& e)
@@ -1966,6 +1967,20 @@ bool DebuggerBase::map_path(const Process* proc, string& path) const
     }
     dbgout(2) << __func__ << ": " << path << "=" << result << endl;
     return result;
+}
+
+////////////////////////////////////////////////////////////////
+void DebuggerBase::save_lwpid_and_status(pid_t pid, int status)
+{
+    // Do not save for later processing if __WSTOPSIG == 0, it may
+    // simply mean the child is reporting to the parent (remember we
+    // call wait with WUNTRACED flag so we can get events after we
+    // have detached).
+
+    if ( unhandled_ && __WSTOPSIG(status) )
+    {
+        unhandled_->add_status(pid, status);
+    }
 }
 
 // Copyright (c) 2004 - 2012 Cristian L. Vlasceanu

@@ -35,14 +35,19 @@ void FlMenuBar::add(
     int                 shortcut,
     ui::EnableCondition enable,
     RefPtr<ui::Command> command,
-    bool             /* divider */ ) // ignore dividers in menu bar
+    bool                divider )
 
 {
     int i = menu_->add(name.c_str(), shortcut, exec_command, this);
     RefPtr<ui::MenuElem> item(
         new FlMenuItem(name, shortcut, enable, command, menu_, i));
-
     ui::CompositeMenu::add(item);
+
+    if (divider)
+    {
+        const int flags = menu_->mode(i);
+        menu_->mode(i, flags | FL_MENU_DIVIDER);
+    }
 }
 
 
@@ -100,7 +105,8 @@ void FlPopupMenu::add(
     auto i = Fl_Menu_Item { item->name().c_str(), shortcut };
     i.labelfont_ = FL_HELVETICA;
     i.labelsize_ = 12;
-    if ( divider )
+
+    if (divider)
     {
         i.flags |= FL_MENU_DIVIDER;
     }
